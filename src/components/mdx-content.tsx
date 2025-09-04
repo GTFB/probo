@@ -393,6 +393,7 @@ export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) 
           setContent(`# Ошибка загрузки контента для раздела ${sectionId}`)
         }
       } catch (error) {
+        console.error('Error loading MDX:', error)
         setContent(`# Ошибка загрузки контента для раздела ${sectionId}`)
       } finally {
         setLoading(false)
