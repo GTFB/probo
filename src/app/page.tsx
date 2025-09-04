@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Navigation } from '@/components/navigation'
 import { Button } from '@/components/ui/button'
 import { MDXContent } from '@/components/mdx-content'
@@ -30,19 +30,19 @@ export default function HomePage() {
   const [activeSection, setActiveSection] = useState('intro')
   const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
 
-  const handleSectionChange = (sectionId: string) => {
+  const handleSectionChange = useCallback((sectionId: string) => {
     setActiveSection(sectionId)
-  }
+  }, [])
 
-  const handleNextSection = () => {
+  const handleNextSection = useCallback(() => {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const nextIndex = (currentIndex + 1) % navigationItems.length
     setActiveSection(navigationItems[nextIndex].id)
-  }
+  }, [activeSection])
 
-  const handleFrontmatterChange = (frontmatter: MDXFrontmatter) => {
+  const handleFrontmatterChange = useCallback((frontmatter: MDXFrontmatter) => {
     setCurrentFrontmatter(frontmatter)
-  }
+  }, [])
 
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
 

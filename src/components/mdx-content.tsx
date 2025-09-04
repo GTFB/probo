@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { MDXLayout } from './mdx-layout'
 
 interface MDXFrontmatter {
@@ -20,6 +20,12 @@ export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) 
   const [content, setContent] = useState<string>('')
   const [frontmatter, setFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [loading, setLoading] = useState(true)
+  const onFrontmatterChangeRef = useRef(onFrontmatterChange)
+
+  // Обновляем ref при изменении callback
+  useEffect(() => {
+    onFrontmatterChangeRef.current = onFrontmatterChange
+  }, [onFrontmatterChange])
 
   useEffect(() => {
     const loadMDX = async () => {
@@ -30,7 +36,7 @@ export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) 
           const data = await response.json()
           setContent(data.content)
           setFrontmatter(data.frontmatter)
-          onFrontmatterChange?.(data.frontmatter)
+          onFrontmatterChangeRef.current?.(data.frontmatter)
         } else {
           setContent(`# Ошибка загрузки контента для раздела ${sectionId}`)
         }
@@ -42,7 +48,7 @@ export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) 
     }
 
     loadMDX()
-  }, [sectionId, onFrontmatterChange])
+  }, [sectionId])
 
   if (loading) {
     return (
