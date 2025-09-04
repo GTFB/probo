@@ -100,23 +100,60 @@
     @apply transition-all duration-200;
   }
   
-  .nav-link.active {
-    @apply bg-foreground text-background font-semibold;
+  /* MDX Content Styles */
+  .mdx-content h1 {
+    @apply text-4xl font-heading font-extrabold mb-6 text-foreground;
   }
   
-  .nav-link:not(.active):hover {
-    @apply bg-secondary text-foreground;
+  .mdx-content h2 {
+    @apply text-3xl font-heading font-bold mb-4 text-foreground;
   }
   
-  .tariff-card {
-    @apply transition-all duration-200;
+  .mdx-content h3 {
+    @apply text-2xl font-heading font-bold mb-3 text-foreground;
   }
   
-  .tariff-card:hover {
-    @apply -translate-y-1 shadow-lg;
+  .mdx-content h4 {
+    @apply text-lg font-bold mb-2 text-foreground;
   }
   
-  .highlight-card {
-    @apply border-primary scale-105;
+  .mdx-content p {
+    @apply text-muted-foreground mb-4 leading-relaxed;
+  }
+  
+  .mdx-content ul {
+    @apply space-y-2 mb-4;
+  }
+  
+  .mdx-content li {
+    @apply text-muted-foreground;
+  }
+  
+  .mdx-content strong {
+    @apply text-primary font-semibold;
+  }
+  
+  .mdx-content a {
+    @apply text-primary hover:underline transition-colors;
+  }
+  
+  .mdx-content div {
+    @apply mb-4;
+  }
+  
+  .mdx-content span {
+    @apply inline;
+  }
+  
+  .mdx-content blockquote {
+    @apply border-l-4 border-primary pl-4 italic text-muted-foreground;
+  }
+  
+  .mdx-content code {
+    @apply bg-muted px-1 py-0.5 rounded text-sm font-mono;
+  }
+  
+  .mdx-content pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto;
   }
 }
