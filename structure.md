@@ -7,6 +7,7 @@
 - `postcss.config.js` - PostCSS configuration
 - `README.md` - Project documentation
 - `Makefile` - Build and development commands
+- `LICENSE` - MIT License
 
 ## Source Code (`src/`)
 - `app/` - Next.js app directory (pages and layouts)
