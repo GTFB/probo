@@ -3,6 +3,14 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 import { compileMDX } from 'next-mdx-remote/rsc'
 
+interface MDXFrontmatter {
+  title: string
+  icon: string
+  nextButtonText: string
+  ctaLink?: string
+  ctaText?: string
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { sectionId: string } }
@@ -13,12 +21,15 @@ export async function GET(
     
     const source = readFileSync(mdxPath, 'utf8')
     
-    const { content } = await compileMDX({
+    const { content, frontmatter } = await compileMDX({
       source,
       options: { parseFrontmatter: true }
     })
 
-    return NextResponse.json({ content: content.toString() })
+    return NextResponse.json({ 
+      content: content.toString(),
+      frontmatter: frontmatter as MDXFrontmatter
+    })
   } catch (error) {
     console.error('Error loading MDX:', error)
     return NextResponse.json(

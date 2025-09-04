@@ -7,6 +7,14 @@ import { MDXContent } from '@/components/mdx-content'
 import { ArrowRight } from 'lucide-react'
 import { NavigationItem } from '@/types/proposal'
 
+interface MDXFrontmatter {
+  title: string
+  icon: string
+  nextButtonText: string
+  ctaLink?: string
+  ctaText?: string
+}
+
 const navigationItems: NavigationItem[] = [
   { id: 'intro', title: 'Главная идея', icon: 'Lightbulb', href: '#intro' },
   { id: 'market', title: 'Анализ рынка', icon: 'TrendingUp', href: '#market' },
@@ -18,30 +26,9 @@ const navigationItems: NavigationItem[] = [
   { id: 'next', title: 'Следующие шаги', icon: 'Rocket', href: '#next' },
 ]
 
-const sectionTitles = {
-  intro: 'Главная идея',
-  market: 'Анализ рынка',
-  product: 'Концепция продукта',
-  tech: 'Технологический стек',
-  roadmap: 'Этапы и сроки',
-  offer: 'Ваши инвестиции',
-  team: 'Наша экспертиза',
-  next: 'Следующие шаги'
-}
-
-const nextButtonTexts = {
-  intro: 'К анализу рынка',
-  market: 'Что мы строим?',
-  product: 'На чем мы это строим?',
-  tech: 'Посмотреть план работ',
-  roadmap: 'Перейти к инвестициям',
-  offer: 'Почему мы?',
-  team: 'Начать работу',
-  next: 'Начать сначала'
-}
-
 export default function HomePage() {
   const [activeSection, setActiveSection] = useState('intro')
+  const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
 
   const handleSectionChange = (sectionId: string) => {
     setActiveSection(sectionId)
@@ -51,6 +38,10 @@ export default function HomePage() {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const nextIndex = (currentIndex + 1) % navigationItems.length
     setActiveSection(navigationItems[nextIndex].id)
+  }
+
+  const handleFrontmatterChange = (frontmatter: MDXFrontmatter) => {
+    setCurrentFrontmatter(frontmatter)
   }
 
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
@@ -71,19 +62,21 @@ export default function HomePage() {
                 Раздел {sectionNumber} из 8
               </h3>
               <h2 className="text-2xl font-heading font-bold">
-                {sectionTitles[activeSection as keyof typeof sectionTitles]}
+                {currentFrontmatter?.title || navigationItems.find(item => item.id === activeSection)?.title}
               </h2>
             </div>
 
-            {/* MDX контент для всех секций */}
             <div className="mb-8">
-              <MDXContent sectionId={activeSection} />
+              <MDXContent 
+                sectionId={activeSection} 
+                onFrontmatterChange={handleFrontmatterChange}
+              />
             </div>
 
             <div className="flex justify-end">
               <Button onClick={handleNextSection} className="gap-2">
                 <span>
-                  {nextButtonTexts[activeSection as keyof typeof nextButtonTexts]}
+                  {currentFrontmatter?.nextButtonText || 'Следующий раздел'}
                 </span>
                 <ArrowRight className="w-4 h-4" />
               </Button>

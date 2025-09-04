@@ -3,12 +3,22 @@
 import { useState, useEffect } from 'react'
 import { MDXLayout } from './mdx-layout'
 
-interface MDXContentProps {
-  sectionId: string
+interface MDXFrontmatter {
+  title: string
+  icon: string
+  nextButtonText: string
+  ctaLink?: string
+  ctaText?: string
 }
 
-export function MDXContent({ sectionId }: MDXContentProps) {
+interface MDXContentProps {
+  sectionId: string
+  onFrontmatterChange?: (frontmatter: MDXFrontmatter) => void
+}
+
+export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) {
   const [content, setContent] = useState<string>('')
+  const [frontmatter, setFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -19,6 +29,8 @@ export function MDXContent({ sectionId }: MDXContentProps) {
         if (response.ok) {
           const data = await response.json()
           setContent(data.content)
+          setFrontmatter(data.frontmatter)
+          onFrontmatterChange?.(data.frontmatter)
         } else {
           setContent(`# Ошибка загрузки контента для раздела ${sectionId}`)
         }
@@ -30,7 +42,7 @@ export function MDXContent({ sectionId }: MDXContentProps) {
     }
 
     loadMDX()
-  }, [sectionId])
+  }, [sectionId, onFrontmatterChange])
 
   if (loading) {
     return (
