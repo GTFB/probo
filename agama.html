@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коммерческое предложение: Платформа лояльности "ДЮЖИНА"</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800|inter-tight:400,500,600,700,800" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafafa;
+            color: #171717;
+        }
+        .font-heading {
+            font-family: 'Inter Tight', sans-serif;
+        }
+        .main {
+            justify-items: center;
+        }
+        .main-content {
+            max-width: 1200px;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .nav-link {
+            transition: all 0.2s;
+        }
+        .nav-link.active {
+            background-color: #171717;
+            color: #fafafa;
+            font-weight: 600;
+        }
+        .nav-link:not(.active):hover {
+            background-color: #f5f5f5;
+            color: #171717;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .tariff-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .tariff-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .highlight-card {
+            border-color: #e11d48;
+            transform: scale(1.03);
+        }
+        .mobile-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: #fafafa;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .mobile-nav {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .mobile-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .mobile-nav-btn {
+            flex-shrink: 0;
+            padding: 0.3rem 0.7rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-size: 0.875rem;
+        }
+        .mobile-nav-btn.active {
+            background-color: #171717;
+            color: #fafafa;
+        }
+        .mobile-nav-btn:not(.active):hover {
+            background-color: #f5f5f5;
+        }
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .main {
+            overflow-y: auto;
+            height: 100vh;
+        }
+        .logo-container {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Мобильный хедер -->
+        <header class="mobile-header md:hidden">
+            <div class="p-4">
+                <h1 class="text-2xl font-heading font-extrabold text-gray-900 mb-2">ДЮЖИНА</h1>
+                <p class="text-sm text-gray-600 mb-4">Платформа лояльности</p>
+                <nav class="mobile-nav gap-2">
+                    <a href="#intro" data-section="intro" class="mobile-nav-btn active">1</a>
+                    <a href="#market" data-section="market" class="mobile-nav-btn">2</a>
+                    <a href="#product" data-section="product" class="mobile-nav-btn">3</a>
+                    <a href="#tech" data-section="tech" class="mobile-nav-btn">4</a>
+                    <a href="#roadmap" data-section="roadmap" class="mobile-nav-btn">5</a>
+                    <a href="#offer" data-section="offer" class="mobile-nav-btn">6</a>
+                    <a href="#team" data-section="team" class="mobile-nav-btn">7</a>
+                    <a href="#next" data-section="next" class="mobile-nav-btn">8</a>
+                </nav>
+            </div>
+        </header>
+
+                 <!-- Десктопная навигация -->
+         <aside class="hidden md:block w-72 bg-white border-r border-gray-200 p-6 flex-shrink-0 flex flex-col sidebar">
+             <div>
+                 <h1 class="text-2xl font-heading font-extrabold text-gray-900 mb-2">ДЮЖИНА</h1>
+                 <p class="text-sm text-gray-600 mb-8">Платформа лояльности</p>
+                 <nav id="navigation" class="flex flex-col gap-2">
+                <a href="#intro" data-section="intro" class="nav-link active flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="lightbulb" class="w-4 h-4"></i>
+                    <span>Главная идея</span>
+                </a>
+                <a href="#market" data-section="market" class="nav-link flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="trending-up" class="w-4 h-4"></i>
+                    <span>Анализ рынка</span>
+                </a>
+                <a href="#product" data-section="product" class="nav-link flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="package" class="w-4 h-4"></i>
+                    <span>Концепция продукта</span>
+                </a>
+                <a href="#tech" data-section="tech" class="nav-link flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="cpu" class="w-4 h-4"></i>
+                    <span>Технологический стек</span>
+                </a>
+                <a href="#roadmap" data-section="roadmap" class="nav-link flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="map" class="w-4 h-4"></i>
+                    <span>Этапы и сроки</span>
+                </a>
+                <a href="#offer" data-section="offer" class="nav-link flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="gem" class="w-4 h-4"></i>
+                    <span>Ваши инвестиции</span>
+                </a>
+                <a href="#team" data-section="team" class="nav-link flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>Наша экспертиза</span>
+                </a>
+                <a href="#next" data-section="next" class="nav-link flex items-center gap-3 p-3 rounded-lg text-gray-600">
+                    <i data-lucide="rocket" class="w-4 h-4"></i>
+                                         <span>Следующие шаги</span>
+                 </a>
+             </nav>
+             </div>
+             <div class="pt-6 border-t border-gray-200 pb-0 logo-container">
+                 <div class="w-32 h-auto">
+                    <svg width="208" height="48" viewBox="0 0 208 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M178.541 33.2035V27.8755H199.085V33.2035H178.541ZM170.812 39.9715L185.405 8.91553H192.317L207.053 39.9715H200.093L187.325 11.9875H190.396L177.725 39.9715H170.812Z" fill="black"/>
+                        <path d="M145.102 36.8035H142.078L159.934 8.91553H166.318V39.9715H159.934V17.4115L161.47 17.8435L147.214 39.9715H140.062L125.806 17.9395L127.342 17.5075V39.9715H120.958V8.91553H127.342L145.102 36.8035Z" fill="black"/>
+                        <path d="M87.9311 33.2035V27.8755H108.475V33.2035H87.9311ZM80.2031 39.9715L94.7951 8.91553H101.707L116.443 39.9715H109.483L96.7151 11.9875H99.7871L87.1151 39.9715H80.2031Z" fill="black"/>
+                        <path d="M47.2891 5.75684C61.8704 -2.85422 79.3169 -1.66912 86.2559 8.40234C92.5316 17.5123 88.0615 30.7721 76.3604 39.5938V24.8516H57.832V28.9316H69.749C69.2554 29.9738 68.5156 30.9339 67.5283 31.8115C66.3763 32.8035 64.936 33.6039 63.208 34.2119C61.512 34.7879 59.5437 35.0762 57.3037 35.0762C54.3921 35.0761 51.9923 34.66 50.1045 33.8281C48.2485 32.9961 46.8726 31.8114 45.9766 30.2754C45.0806 28.7075 44.6319 26.8519 44.6318 24.708C44.6318 22.5002 45.1441 20.5802 46.168 18.9482C47.1919 17.3163 48.68 16.0522 50.6318 15.1562C52.6158 14.2603 55.0002 13.8115 57.7842 13.8115C59.9601 13.8115 61.8166 14.0839 63.3525 14.6279C64.8883 15.1399 66.1199 15.8761 67.0479 16.8359C68.0078 17.7639 68.6963 18.8676 69.1123 20.1475H75.2559C75.0638 17.7156 74.2317 15.6193 72.7598 13.8594C71.3198 12.0996 69.3354 10.7402 66.8076 9.78027C64.2797 8.78835 61.272 8.292 57.7842 8.29199C54.8402 8.29199 52.1517 8.65951 49.7197 9.39551C47.32 10.0995 45.2403 11.1557 43.4805 12.5635C41.7525 13.9715 40.4082 15.7 39.4482 17.748C38.5203 19.764 38.0557 22.0841 38.0557 24.708C38.0557 27.2999 38.5044 29.5883 39.4004 31.5723C40.2964 33.556 41.5764 35.2196 43.2402 36.5635C44.9362 37.9075 46.9362 38.9159 49.2402 39.5879C51.5762 40.2599 54.1845 40.5957 57.0645 40.5957C61.5123 40.5956 65.0806 39.4436 67.7686 37.1396C69.6203 35.571 70.9369 33.5791 71.7207 31.165L71.5117 32.6279C71.3197 33.9398 71.1602 35.2516 71.0322 36.5635C70.9042 37.8434 70.8399 38.9797 70.8398 39.9717H75.8496C74.764 40.7641 73.6193 41.5194 72.417 42.2295C57.8358 50.8403 40.3912 49.6571 33.4521 39.5859C26.5138 29.5143 32.7082 14.368 47.2891 5.75684Z" fill="#E11D48"/>
+                        <path d="M7.728 33.2035V27.8755H28.272V33.2035H7.728ZM0 39.9715L14.592 8.91553H21.504L36.24 39.9715H29.28L16.512 11.9875H19.584L6.912 39.9715H0Z" fill="black"/>
+                        </svg>                                                        
+                 </div>
+             </div>
+         </aside>
+
+        <main class="flex-1 p-4 sm:p-6 md:p-10 main">
+            <div id="content-container">
+                <section id="intro" class="main-content">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 1 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Главная идея</h2>
+                    </div>
+                    <h2 class="text-4xl font-heading font-extrabold mb-4 text-gray-900">Вы строите не программу лояльности. <span class="text-rose-600">Вы становитесь владельцем цифрового актива.</span></h2>
+                    <p class="text-lg text-gray-600 mb-8">Ваша цель — не разовый проект, а масштабируемый бизнес, приносящий стабильный доход. Наша задача — дать вам для этого технологический фундамент "под ключ", который позволит продавать мощную систему лояльности сотням компаний: от ресторанов и фитнес-залов до онлайн-курсов.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="font-bold text-lg mb-2">Универсальность в ядре</h3>
+                            <p class="text-gray-500">Мы проектируем систему для легкой адаптации под любую бизнес-модель: ритейл, услуги, e-commerce.</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="font-bold text-lg mb-2">Продукт, а не код</h3>
+                            <p class="text-gray-500">Вы получаете готовый к продаже продукт с админ-панелью, документацией и безграничным потенциалом роста.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="font-bold text-lg mb-2">Полное владение</h3>
+                            <p class="text-gray-500">Весь исходный код и интеллектуальная собственность принадлежат вам. Никаких скрытых платежей или роялти.</p>
+                        </div>
+                     </div>
+                     <div class="flex justify-end mt-8">
+                         <button onclick="nextSection('intro')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>К анализу рынка</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                 </section>
+
+                 <section id="market" class="main-content hidden">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 2 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Анализ рынка</h2>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold mb-2">Занять стратегическую нишу</h2>
+                    <p class="text-gray-600 mb-8">Рынок систем лояльности переполнен, но поляризован. С одной стороны — дорогие и сложные "комбайны" для корпораций. С другой — примитивные "коробочные" решения с нулевой гибкостью. Ваша ниша — золотая середина, самый крупный и голодный сегмент рынка.</p>
+                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                             <div class="chart-container">
+                                <canvas id="competitorChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 min-h-[300px] space-y-4">
+                            <div>
+                                <h4 class="font-bold">Ваш продукт: "Дюжина"</h4>
+                                <p class="text-sm text-gray-600">Мы позиционируем вас как идеальный баланс: вся мощь enterprise-решений в простом и понятном интерфейсе по справедливой цене.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-500">WalletFactory (Enterprise)</h4>
+                                <p class="text-sm text-gray-600">Мощно, кастомно, очень дорого. Недоступно для 95% рынка. <strong class="text-rose-600">Мы даем 80% их функционала за 10% цены.</strong></p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-500">OSMI Cards (Середняк)</h4>
+                                <p class="text-sm text-gray-600">Хороший баланс, но с ограничениями по PUSH и жесткими тарифами. <strong class="text-rose-600">Мы даем свободу без искусственных лимитов.</strong></p>
+                            </div>
+                             <div>
+                                <h4 class="font-bold text-gray-500">CardPR (Бюджетник)</h4>
+                                <p class="text-sm text-gray-600">Дешево, но без автоматизации и аналитики. <strong class="text-rose-600">Мы даем мощные инструменты, а не просто "цифровую визитку".</strong></p>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="flex justify-end mt-8">
+                         <button onclick="nextSection('market')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>Что мы строим?</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                 </section>
+
+                 <section id="product" class="main-content hidden">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 3 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Концепция продукта</h2>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold mb-2">Что именно мы строим: Функциональное ядро</h2>
+                    <p class="text-gray-600 mb-8">Мы создаем три взаимосвязанных компонента, которые вместе образуют готовый к продаже продукт. Ничего лишнего, только то, что приносит результат.</p>
+                    <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div>
+                                <h4 class="font-bold text-lg mb-4">A. Панель Владельца Бизнеса</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start"><i data-lucide="bar-chart-3" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Дашборд:</b> Ключевые бизнес-метрики (LTV, ROI).</span></li>
+                                    <li class="flex items-start"><i data-lucide="users" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>CRM:</b> Сегментация по RFM-анализу.</span></li>
+                                    <li class="flex items-start"><i data-lucide="gem" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Программы:</b> Бонусы, скидки, "штампы".</span></li>
+                                    <li class="flex items-start"><i data-lucide="bell-plus" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>PUSH:</b> Триггерные и гео-рассылки.</span></li>
+                                    <li class="flex items-start"><i data-lucide="settings-2" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Интеграции:</b> Готовый API для касс и CRM.</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-4">Б. Опыт Конечного Пользователя</h4>
+                                 <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start"><i data-lucide="qr-code" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Бесшовная установка:</b> Через QR-код или ссылку в Apple Wallet / Google Pay.</span></li>
+                                    <li class="flex items-start"><i data-lucide="smartphone" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Никаких лишних приложений:</b> Все работает нативно в телефоне клиента.</span></li>
+                                    <li class="flex items-start"><i data-lucide="gift" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Прозрачность:</b> Актуальный баланс и спецпредложения всегда под рукой.</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-4">В. Панель Администратора SaaS</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start"><i data-lucide="swords" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Управление клиентами:</b> Создание и администрирование аккаунтов.</span></li>
+                                    <li class="flex items-start"><i data-lucide="credit-card" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Биллинг:</b> Управление тарифами и подписками.</span></li>
+                                    <li class="flex items-start"><i data-lucide="globe" class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0 mt-1"></i><span><b>Глобальная аналитика:</b> Здоровье и рост всей платформы.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="flex justify-end mt-8">
+                         <button onclick="nextSection('product')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>На чем мы это строим?</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                 </section>
+
+                 <section id="tech" class="main-content hidden">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 4 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Технологический стек</h2>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold mb-2">Технологии: Фундамент для роста</h2>
+                    <p class="text-gray-600 mb-8">Мы не используем конструкторы или устаревшие фреймворки. Ваш продукт будет построен на современном, масштабируемом и открытом стеке. Это — ваша гарантия скорости, безопасности и возможности развития без ограничений.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h4 class="font-bold text-lg mb-2">Сердце системы (Backend)</h4>
+                            <p class="text-gray-600"><strong>Payload CMS (Node.js)</strong>. Headless-система, созданная для разработчиков. Дает нам скорость разработки API, гибкую модель данных и готовую, но полностью кастомизируемую админ-панель.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                             <h4 class="font-bold text-lg mb-2">Интерфейс (Frontend)</h4>
+                             <p class="text-gray-600"><strong>Next.js (React) + Tailwind CSS</strong>. Золотой стандарт современного веба. Гарантирует молниеносную загрузку для пользователей и удобство поддержки для нас.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                             <h4 class="font-bold text-lg mb-2">Хранилище данных</h4>
+                             <p class="text-gray-600"><strong>PostgreSQL.</strong> Самая мощная и надежная open-source СУБД в мире. Выдержит экспоненциальный рост вашего бизнеса без компромиссов.</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                             <h4 class="font-bold text-lg mb-2">Инфраструктура</h4>
+                             <p class="text-gray-600"><strong>Docker.</strong> Мы упакуем приложение в контейнеры. Это значит, что его можно будет развернуть на любом сервере одной командой, без головной боли и проблем с совместимостью.</p>
+                        </div>
+                     </div>
+                     <div class="flex justify-end mt-8">
+                         <button onclick="nextSection('tech')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>Посмотреть план работ</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                 </section>
+
+                 <section id="roadmap" class="main-content hidden">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 5 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Этапы и сроки</h2>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold mb-2">Дорожная карта: от идеи до прибыли</h2>
+                    <p class="text-gray-600 mb-8">Мы декомпозировали весь процесс на 4 четких, управляемых этапа. Вы всегда будете знать, на какой стадии находится проект и какой результат будет получен на каждом шаге. <b>Общий срок: ~9,5 недель.</b></p>
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-gray-200 before:hidden md:before:block">
+                        <div class="relative flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold flex-shrink-0 z-10">1</div>
+                            <div class="ml-6 bg-white p-6 rounded-xl shadow-sm border border-gray-200 w-full">
+                                <h4 class="font-bold text-lg">Фаза 1: Архитектура и Дизайн (2 недели)</h4>
+                                <p class="text-gray-600 mt-2">Разработка детального ТЗ. Проектирование UI/UX в Figma. Создание архитектуры базы данных и API.</p>
+                                <p class="mt-2 text-sm font-semibold text-rose-600">Результат: Утвержденное ТЗ, интерактивный прототип.</p>
+                            </div>
+                        </div>
+                        <div class="relative flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold flex-shrink-0 z-10">2</div>
+                            <div class="ml-6 bg-white p-6 rounded-xl shadow-sm border border-gray-200 w-full">
+                                <h4 class="font-bold text-lg">Фаза 2: Разработка MVP-ядра (3 недели)</h4>
+                                <p class="text-gray-600 mt-2">Создание модулей регистрации, выпуска карт, базовых PUSH-уведомлений и админ-панели.</p>
+                                 <p class="mt-2 text-sm font-semibold text-rose-600">Результат: Рабочий прототип с основным функционалом.</p>
+                            </div>
+                        </div>
+                        <div class="relative flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold flex-shrink-0 z-10">3</div>
+                            <div class="ml-6 bg-white p-6 rounded-xl shadow-sm border border-gray-200 w-full">
+                                <h4 class="font-bold text-lg">Фаза 3: Автоматизация и "Полировка" (3 недели)</h4>
+                                <p class="text-gray-600 mt-2">Разработка системы триггеров, сегментации, аналитических дашбордов. Оттачивание пользовательского интерфейса.</p>
+                                 <p class="mt-2 text-sm font-semibold text-rose-600">Результат: Полнофункциональная бета-версия.</p>
+                            </div>
+                        </div>
+                         <div class="relative flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold flex-shrink-0 z-10">4</div>
+                            <div class="ml-6 bg-white p-6 rounded-xl shadow-sm border border-gray-200 w-full">
+                                <h4 class="font-bold text-lg">Фаза 4: Запуск и Передача (1 неделя)</h4>
+                                <p class="text-gray-600 mt-2">Комплексное тестирование, развертывание на вашем сервере, передача исходного кода и документации.</p>
+                                 <p class="mt-2 text-sm font-semibold text-rose-600">Результат: Готовый к продаже продукт.</p>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="flex justify-end mt-8">
+                         <button onclick="nextSection('roadmap')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>Перейти к инвестициям</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                 </section>
+
+                 <section id="offer" class="main-content hidden">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 6 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Ваши инвестиции</h2>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold mb-2">Инвестиции в ваш цифровой актив</h2>
+                    <p class="text-gray-600 mb-8 mx-auto">Мы предлагаем три пакета "под ключ", включающие полный цикл работ: от аналитики и дизайна в Figma до развертывания. Цены отражают ценность и сложность создания SaaS-продукта.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-start">
+                        <!-- Тариф Старт -->
+                        <div class="tariff-card bg-white p-8 rounded-xl shadow-sm border-2 border-transparent h-full flex flex-col">
+                            <h3 class="text-2xl font-bold">MVP Launch</h3>
+                            <p class="text-gray-500 mt-2 mb-6">Надежный MVP для быстрого выхода на рынок и первых продаж.</p>
+                            <p class="text-4xl font-extrabold mb-6">€7,500</p>
+                            <ul class="space-y-3 text-gray-600 mb-8 flex-grow">
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Панель владельца бизнеса</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Базовая CRM</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Конструктор карт (1 шаблон)</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Массовые PUSH-рассылки</span></li>
+                            </ul>
+                            <a href="https://t.me/Loc_Carnal?text=Здравствуйте!%20Меня%20заинтересовала%20ваша%20платформа%20лояльности%20'Дюжина'.%20Хотел%20бы%20обсудить%20детали%20по%20тарифу%20MVP%20Launch" target="_blank"><button class="w-full bg-gray-200 text-gray-800 font-semibold py-3 rounded-lg">Выбрать</button></a>
+                        </div>
+                        <!-- Тариф Рост -->
+                        <div class="tariff-card bg-white p-8 rounded-xl shadow-lg border-2 highlight-card h-full flex flex-col">
+                             <p class="text-center font-semibold bg-rose-600 text-white py-1 px-4 rounded-full -mt-12 mx-auto">Рекомендуем</p>
+                            <h3 class="text-2xl font-bold mt-4">Business Core</h3>
+                            <p class="text-gray-500 mt-2 mb-6">Полнофункциональная платформа для активных продаж.</p>
+                            <p class="text-4xl font-extrabold mb-6">€12,500</p>
+                            <ul class="space-y-3 text-gray-600 mb-8 flex-grow">
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span><b>Все из пакета "MVP Launch"</b></span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Продвинутая сегментация</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Автоматические PUSH</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Расширенная аналитика</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Готовый API для интеграций</span></li>
+                            </ul>
+                            <a href="https://t.me/Loc_Carnal?text=Здравствуйте!%20Меня%20заинтересовала%20ваша%20платформа%20лояльности%20'Дюжина'.%20Хотел%20бы%20обсудить%20детали%20по%20тарифу%20Business%20Core" target="_blank"><button class="w-full bg-rose-600 text-white font-semibold py-3 rounded-lg">Выбрать</button></a>
+                        </div>
+                        <!-- Тариф Империя -->
+                        <div class="tariff-card bg-white p-8 rounded-xl shadow-sm border-2 border-transparent h-full flex flex-col">
+                            <h3 class="text-2xl font-bold">Market Leader</h3>
+                            <p class="text-gray-500 mt-2 mb-6">Платформа для захвата рынка с уникальными функциями.</p>
+                            <p class="text-4xl font-extrabold mb-6">€18,500</p>
+                            <ul class="space-y-3 text-gray-600 mb-8 flex-grow">
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span><b>Все из пакета "Business Core"</b></span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span><b>White-Label</b> функционал</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Базовый AI-модуль</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>PWA-приложение для админов</span></li>
+                                <li class="flex items-start"><span class="text-rose-500 mr-2 mt-1">✓</span><span>Приоритетная поддержка (6 мес.)</span></li>
+                            </ul>
+                            <a href="https://t.me/Loc_Carnal?text=Здравствуйте!%20Меня%20заинтересовала%20ваша%20платформа%20лояльности%20'Дюжина'.%20Хотел%20бы%20обсудить%20детали%20по%20тарифу%20Market%20Leader" target="_blank"><button class="w-full bg-gray-200 text-gray-800 font-semibold py-3 rounded-lg">Выбрать</button></a>
+                        </div>
+                     </div>
+                      <div class="mt-10 bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+                         <h3 class="text-2xl font-heading font-bold mb-4 text-center">Больше чем разработка: Продуктовое партнерство</h3>
+                         <p class="text-gray-600 text-center max-w-3xl mx-auto">Создание продукта — это только старт. Мы предлагаем не расставаться после запуска, а перейти на модель долгосрочного партнерства, где мы выступаем как ваша внешняя продуктовая студия. Мы берем на себя развитие, CustDev, маркетинг и техподдержку, позволяя вам сфокусироваться на продажах и стратегии.</p>
+                         <p class="text-center mt-4 font-semibold">Модель: Фиксированная ежемесячная плата (от €3,500) + % от дохода платформы.</p>
+                     </div>
+                     <div class="flex justify-end mt-8">
+                         <button onclick="nextSection('offer')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>Почему мы?</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                 </section>
+
+                 <section id="team" class="main-content hidden">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 7 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Наша экспертиза</h2>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold mb-2">Больше, чем разработчики: Ваша продуктовая команда</h2>
+                    <p class="text-gray-600 mb-8">Мы — не просто фрилансеры. AIMAX — это слаженная команда инженеров, продакт-менеджеров и дизайнеров с опытом запуска 20+ сложных цифровых продуктов. Мы знаем, как превращать идеи в прибыльный бизнес.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 col-span-1 md:col-span-2 lg:col-span-3">
+                             <h4 class="font-bold text-lg mb-2">Наш главный актив: Altrp Platform</h4>
+                             <p class="text-gray-600">Мы являемся основателями и ключевыми разработчиками <a href="https://altrp.org" target="_blank" class="text-rose-600 font-semibold hover:underline">Altrp.org</a> — open-source low-code платформы. Мы досконально понимаем, как строить масштабируемые и гибкие системы, потому что делаем это каждый день для себя и мирового сообщества.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                             <a href="https://twim.trade" target="_blank" class="text-rose-600 font-semibold hover:underline"><h4 class="font-bold text-lg mb-2">Twim.trade</h4></a>
+                             <p class="text-gray-600">Разработали криптобиржу "под ключ" за 3 месяца. Проект привлек более $1 млн в управление.</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                             <a href="https://magiscan.app" target="_blank" class="text-rose-600 font-semibold hover:underline"><h4 class="font-bold text-lg mb-2">MagiScan.app</h4></a>
+                             <p class="text-gray-600">Техническое соосновательство, разработка сайта и виджета для 3D-сканера (2+ млн скачиваний).</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                             <a href="https://regagro.ru" target="_blank" class="text-rose-600 font-semibold hover:underline"><h4 class="font-bold text-lg mb-2">Экосистема "ЦВС"</h4></a>
+                             <p class="text-gray-600">Архитектура и разработка комплексной B2B-экосистемы для ветеринарной службы (REGAGRO).</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mt-8">
+                                                 <button onclick="nextSection('team')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>Начать работу</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                </section>
+                
+                <section id="next" class="main-content hidden">
+                    <div class="md:hidden mb-6">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Раздел 8 из 8</h3>
+                        <h2 class="text-2xl font-heading font-bold text-gray-900">Следующие шаги</h2>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold mb-2">От идеи к первому камню</h2>
+                    <p class="text-gray-600 mb-8">Мы готовы приступить к работе и превратить вашу идею в успешный продукт. Вот как мы предлагаем двигаться дальше.</p>
+                    <div class="space-y-4">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex items-start">
+                            <div class="text-2xl font-bold text-rose-600 mr-4">1.</div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Согласование и контракт</h4>
+                                <p class="text-gray-600">Отвечаем на ваши вопросы, финализируем пакет и подписываем договор с четко зафиксированными этапами, сроками и стоимостью.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex items-start">
+                             <div class="text-2xl font-bold text-rose-600 mr-4">2.</div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Стратегическая сессия</h4>
+                                <p class="text-gray-600">Проводим установочную встречу (2-3 часа), где детально прорабатываем ТЗ для первого этапа, чтобы на 100% синхронизировать видение.</p>
+                            </div>
+                        </div>
+                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex items-start">
+                             <div class="text-2xl font-bold text-rose-600 mr-4">3.</div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Старт работ</h4>
+                                <p class="text-gray-600">Наша команда приступает к Фазе 1. Вы получаете доступ к нашему проектному трекеру и еженедельные отчеты о прогрессе.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="mt-8 p-6 bg-gray-900 text-white rounded-xl">
+                        <h4 class="font-bold text-xl">Готовы заложить фундамент вашего цифрового актива?</h4>
+                        <p class="mt-2 opacity-80">Свяжитесь с нами, чтобы обсудить детали и начать работу.</p>
+                        <p class="mt-4 font-semibold">Тимур Акчурин, Руководитель отдела развития, AIMAX</p>
+                                                <a href="https://t.me/Loc_Carnal" target="_blank" class="mt-1 opacity-80">Telegram: @Loc_Carnal</a>
+                     </div>
+                     <div class="flex justify-end mt-8">
+                         <button onclick="nextSection('next')" class="bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors flex items-center gap-2">
+                             <span>Начать сначала</span>
+                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                         </button>
+                     </div>
+                 </section>
+            </div>
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        
+        const sections = document.querySelectorAll('.main-content');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileNavBtns = document.querySelectorAll('.mobile-nav-btn');
+        const contentContainer = document.getElementById('content-container');
+        let competitorChart;
+
+        function showSection(id) {
+            contentContainer.style.opacity = '0';
+            // Scroll to top for better mobile experience
+            window.scrollTo(0, 0);
+
+            setTimeout(() => {
+                sections.forEach(section => {
+                    section.classList.toggle('hidden', section.id !== id);
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.section === id);
+                });
+                
+                mobileNavBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.section === id);
+                });
+                
+                contentContainer.style.opacity = '1';
+                // Use history.pushState for cleaner URLs and back button support
+                history.pushState(null, '', `#${id}`);
+                
+                if (id === 'market' && !competitorChart) {
+                    renderCompetitorChart();
+                }
+            }, 300);
+        }
+
+        // Make nextSection available globally
+        window.nextSection = function(currentSection) {
+            const sections = ['intro', 'market', 'product', 'tech', 'roadmap', 'offer', 'team', 'next'];
+            const currentIndex = sections.indexOf(currentSection);
+            const nextIndex = (currentIndex + 1) % sections.length;
+            showSection(sections[nextIndex]);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.dataset.section;
+                showSection(sectionId);
+            });
+        });
+        
+        mobileNavBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = btn.dataset.section;
+                showSection(sectionId);
+            });
+        });
+        
+        function renderCompetitorChart() {
+            const competitorData = {
+                'Дюжина': { scores: [4, 5, 5, 4, 5], color: 'rgba(225, 29, 72, 1)' },
+                'WalletFactory': { scores: [1, 5, 2, 5, 3], color: 'rgba(120, 113, 108, 1)' },
+                'OSMI Cards': { scores: [3, 4, 4, 4, 4], color: 'rgba(22, 163, 74, 1)' },
+                'CardPR': { scores: [5, 2, 5, 1, 2], color: 'rgba(245, 158, 11, 1)' }
+            };
+
+            const datasets = Object.keys(competitorData).map(name => ({
+                label: name,
+                data: competitorData[name].scores,
+                backgroundColor: competitorData[name].color.replace('1)', '0.2)'),
+                borderColor: competitorData[name].color,
+                borderWidth: 2,
+                pointBackgroundColor: competitorData[name].color,
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: competitorData[name].color
+            }));
+
+            const ctx = document.getElementById('competitorChart').getContext('2d');
+            competitorChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Цена (доступность)', 'Функционал', 'Простота', 'Интеграции', 'Гибкость'],
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            pointLabels: { font: { size: 12, family: 'Inter' } },
+                            suggestedMin: 0,
+                            suggestedMax: 5,
+                            ticks: {
+                                stepSize: 1,
+                                backdropColor: 'rgba(255, 255, 255, 0.75)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { 
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: 'Inter'
+                                }
+                            }
+                        },
+                    }
+                }
+            });
+        }
+        
+        const initialSection = window.location.hash.substring(1) || 'intro';
+        showSection(initialSection);
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', () => {
+            const sectionId = window.location.hash.substring(1) || 'intro';
+            showSection(sectionId);
+        });
+    });
+</script>
+
+</body>
+</html>
