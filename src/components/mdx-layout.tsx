@@ -17,6 +17,8 @@ const components = {
   li: (props: any) => <li className="text-muted-foreground" {...props} />,
   strong: (props: any) => <strong className="text-primary font-semibold" {...props} />,
   a: (props: any) => <a className="text-primary hover:underline" {...props} />,
+  div: (props: any) => <div {...props} />,
+  span: (props: any) => <span {...props} />,
 }
 
 export function MDXLayout({ children }: MDXLayoutProps) {
