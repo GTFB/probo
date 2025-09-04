@@ -11,37 +11,59 @@ export function MDXLayout({ children }: MDXLayoutProps) {
     <div className="prose prose-gray dark:prose-invert max-w-none">
       <style jsx global>{`
         .prose h1 {
-          @apply text-4xl font-heading font-extrabold mb-4 text-foreground;
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+          font-weight: 800;
+          margin-bottom: 1rem;
+          color: hsl(var(--foreground));
         }
         .prose h2 {
-          @apply text-3xl font-heading font-bold mb-2 text-foreground;
+          font-size: 1.875rem;
+          line-height: 2.25rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          color: hsl(var(--foreground));
         }
         .prose h3 {
-          @apply text-2xl font-heading font-bold mb-4 text-foreground;
+          font-size: 1.5rem;
+          line-height: 2rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: hsl(var(--foreground));
         }
         .prose h4 {
-          @apply text-lg font-bold mb-2 text-foreground;
+          font-size: 1.125rem;
+          line-height: 1.75rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          color: hsl(var(--foreground));
         }
         .prose p {
-          @apply text-muted-foreground mb-4;
+          color: hsl(var(--muted-foreground));
+          margin-bottom: 1rem;
         }
         .prose ul {
-          @apply space-y-2 mb-4;
+          margin-bottom: 1rem;
         }
         .prose li {
-          @apply text-muted-foreground;
+          color: hsl(var(--muted-foreground));
         }
         .prose strong {
-          @apply text-primary font-semibold;
+          color: hsl(var(--primary));
+          font-weight: 600;
         }
         .prose a {
-          @apply text-primary hover:underline;
+          color: hsl(var(--primary));
+          text-decoration: none;
+        }
+        .prose a:hover {
+          text-decoration: underline;
         }
         .prose div {
-          @apply mb-4;
+          margin-bottom: 1rem;
         }
         .prose span {
-          @apply inline;
+          display: inline;
         }
       `}</style>
       {children}

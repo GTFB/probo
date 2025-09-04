@@ -16,6 +16,30 @@ interface MDXContentProps {
   onFrontmatterChange?: (frontmatter: MDXFrontmatter) => void
 }
 
+// Простая функция для конвертации Markdown в HTML
+function markdownToHtml(markdown: string): string {
+  return markdown
+    // Заголовки
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    // Жирный текст
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Списки
+    .replace(/^- (.*$)/gim, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+    // Параграфы (группируем строки, которые не являются заголовками или списками)
+    .replace(/^(?!<[h|u|d])(.*$)/gim, '<p>$1</p>')
+    // Убираем лишние <p> теги внутри других элементов
+    .replace(/<p><(h[1-6]|ul|li|div)>/g, '<$1>')
+    .replace(/<\/(h[1-6]|ul|li|div)><\/p>/g, '</$1>')
+    // Ссылки
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    // Убираем лишние пустые параграфы
+    .replace(/<p><\/p>/g, '')
+    .replace(/<p>\s*<\/p>/g, '')
+}
+
 // Статические данные для тестирования
 const mdxData = {
   intro: {
@@ -386,15 +410,17 @@ export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) 
         const data = mdxData[sectionId as keyof typeof mdxData]
         
         if (data) {
-          setContent(data.content)
+          // Конвертируем Markdown в HTML
+          const htmlContent = markdownToHtml(data.content)
+          setContent(htmlContent)
           setFrontmatter(data.frontmatter)
           onFrontmatterChangeRef.current?.(data.frontmatter)
         } else {
-          setContent(`# Ошибка загрузки контента для раздела ${sectionId}`)
+          setContent(`<h1>Ошибка загрузки контента для раздела ${sectionId}</h1>`)
         }
       } catch (error) {
         console.error('Error loading MDX:', error)
-        setContent(`# Ошибка загрузки контента для раздела ${sectionId}`)
+        setContent(`<h1>Ошибка загрузки контента для раздела ${sectionId}</h1>`)
       } finally {
         setLoading(false)
       }
