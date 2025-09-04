@@ -14,7 +14,7 @@ export async function GET(
     
     // Простая функция для извлечения frontmatter
     function extractFrontmatter(content: string) {
-      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/)
+      const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
       if (frontmatterMatch) {
         const frontmatterText = frontmatterMatch[1]
         const frontmatter: any = {}
@@ -34,7 +34,7 @@ export async function GET(
     
     // Извлекаем frontmatter и контент
     const frontmatter = extractFrontmatter(source)
-    const content = source.replace(/^---\n[\s\S]*?\n---/, '').trim()
+    const content = source.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
     
     return NextResponse.json({ 
       content,

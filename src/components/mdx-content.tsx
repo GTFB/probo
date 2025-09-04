@@ -20,7 +20,7 @@ interface MDXContentProps {
 // Простая функция для конвертации Markdown в HTML
 function markdownToHtml(markdown: string): string {
   // Сначала удаляем frontmatter из начала файла
-  const contentWithoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---/, '').trim()
+  const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   
   return contentWithoutFrontmatter
     // Заголовки
@@ -47,7 +47,7 @@ function markdownToHtml(markdown: string): string {
 // Функция для извлечения оглавления из Markdown
 function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
   // Сначала удаляем frontmatter
-  const contentWithoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---/, '').trim()
+  const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const lines = contentWithoutFrontmatter.split('\n')
   const toc: Array<{ id: string; title: string; level: number }> = []
   
