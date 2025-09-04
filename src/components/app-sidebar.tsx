@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Rocket,
   Search,
+  PanelLeftClose,
 } from "lucide-react"
 
 import { SearchForm } from "@/components/search-form"
@@ -37,20 +38,28 @@ interface AppSidebarProps {
   items: NavigationItem[]
   activeSection: string
   onSectionChange: (sectionId: string) => void
+  onToggle?: () => void
 }
 
-export function AppSidebar({ items, activeSection, onSectionChange }: AppSidebarProps) {
+export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: AppSidebarProps) {
   return (
     <Sidebar className="hidden lg:block">
       <SidebarHeader className="border-b px-6 py-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <Gem className="w-4 h-4 text-primary-foreground" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <Gem className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold">Дюжина</h2>
+              <p className="text-xs text-muted-foreground">Коммерческое предложение</p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-lg font-semibold">Дюжина</h2>
-            <p className="text-xs text-muted-foreground">Коммерческое предложение</p>
-          </div>
+          {onToggle && (
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={onToggle}>
+              <PanelLeftClose className="h-3 w-3" />
+            </Button>
+          )}
         </div>
       </SidebarHeader>
       <SidebarContent className="px-3 py-2">

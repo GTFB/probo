@@ -1,15 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { compileMDX } from 'next-mdx-remote/rsc'
-
-interface MDXFrontmatter {
-  title: string
-  icon: string
-  nextButtonText: string
-  ctaLink?: string
-  ctaText?: string
-}
 
 export async function GET(
   request: NextRequest,
@@ -21,14 +12,33 @@ export async function GET(
     
     const source = readFileSync(mdxPath, 'utf8')
     
-    const { content, frontmatter } = await compileMDX({
-      source,
-      options: { parseFrontmatter: true }
-    })
-
+    // Простая функция для извлечения frontmatter
+    function extractFrontmatter(content: string) {
+      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/)
+      if (frontmatterMatch) {
+        const frontmatterText = frontmatterMatch[1]
+        const frontmatter: any = {}
+        
+        frontmatterText.split('\n').forEach(line => {
+          const [key, ...valueParts] = line.split(':')
+          if (key && valueParts.length > 0) {
+            const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '')
+            frontmatter[key.trim()] = value
+          }
+        })
+        
+        return frontmatter
+      }
+      return null
+    }
+    
+    // Извлекаем frontmatter и контент
+    const frontmatter = extractFrontmatter(source)
+    const content = source.replace(/^---\n[\s\S]*?\n---/, '').trim()
+    
     return NextResponse.json({ 
-      content: content.toString(),
-      frontmatter: frontmatter as MDXFrontmatter
+      content,
+      frontmatter
     })
   } catch (error) {
     console.error('Error loading MDX:', error)

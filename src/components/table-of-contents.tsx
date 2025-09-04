@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, PanelLeftClose, PanelRightClose } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,9 +18,10 @@ interface TableOfContentsProps {
   }>
   activeSection: string
   onSectionClick: (sectionId: string) => void
+  onToggle?: () => void
 }
 
-export function TableOfContents({ items, activeSection, onSectionClick }: TableOfContentsProps) {
+export function TableOfContents({ items, activeSection, onSectionClick, onToggle }: TableOfContentsProps) {
   const [isOpen, setIsOpen] = React.useState(true)
 
   return (
@@ -28,13 +29,20 @@ export function TableOfContents({ items, activeSection, onSectionClick }: TableO
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold">Оглавление</h3>
-          <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                <ChevronRight className={`h-3 w-3 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+          <div className="flex items-center gap-2">
+            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                  <ChevronRight className={`h-3 w-3 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                </Button>
+              </CollapsibleTrigger>
+            </Collapsible>
+            {onToggle && (
+              <Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={onToggle}>
+                <PanelRightClose className="h-3 w-3" />
               </Button>
-            </CollapsibleTrigger>
-          </Collapsible>
+            )}
+          </div>
         </div>
         
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>

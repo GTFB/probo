@@ -57,6 +57,8 @@ export default function HomePage() {
   const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number }>>([])
+  const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true)
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
 
   const handleSectionChange = useCallback((sectionId: string) => {
     setActiveSection(sectionId)
@@ -82,14 +84,41 @@ export default function HomePage() {
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen">
-        <AppSidebar
-          items={navigationItemsWithIcons}
-          activeSection={activeSection}
-          onSectionChange={handleSectionChange}
-        />
+        {isLeftSidebarOpen && (
+          <AppSidebar
+            items={navigationItemsWithIcons}
+            activeSection={activeSection}
+            onSectionChange={handleSectionChange}
+            onToggle={() => setIsLeftSidebarOpen(false)}
+          />
+        )}
         
-        <main className="flex-1 p-4 sm:p-6 md:p-10 overflow-y-auto xl:pr-80">
+        <main className={`flex-1 p-4 sm:p-6 md:p-10 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''}`}>
           <div className="max-w-4xl mx-auto">
+            {/* Кнопки управления сайдбарами */}
+            <div className="flex gap-2 mb-4">
+              {!isLeftSidebarOpen && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setIsLeftSidebarOpen(true)}
+                >
+                  <Menu className="w-4 h-4 mr-2" />
+                  Показать навигацию
+                </Button>
+              )}
+              {!isRightSidebarOpen && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setIsRightSidebarOpen(true)}
+                >
+                  <X className="w-4 h-4 mr-2" />
+                  Показать оглавление
+                </Button>
+              )}
+            </div>
+
             {/* Мобильная навигация */}
             <div className="lg:hidden mb-6">
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -161,11 +190,14 @@ export default function HomePage() {
           </div>
         </main>
 
-        <TableOfContents
-          items={currentToc}
-          activeSection={activeSection}
-          onSectionClick={handleSectionChange}
-        />
+        {isRightSidebarOpen && (
+          <TableOfContents
+            items={currentToc}
+            activeSection={activeSection}
+            onSectionClick={handleSectionChange}
+            onToggle={() => setIsRightSidebarOpen(false)}
+          />
+        )}
       </div>
     </SidebarProvider>
   )
