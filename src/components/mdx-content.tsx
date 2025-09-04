@@ -14,6 +14,7 @@ interface MDXFrontmatter {
 interface MDXContentProps {
   sectionId: string
   onFrontmatterChange?: (frontmatter: MDXFrontmatter) => void
+  onTocChange?: (toc: Array<{ id: string; title: string; level: number }>) => void
 }
 
 // Простая функция для конвертации Markdown в HTML
@@ -38,6 +39,40 @@ function markdownToHtml(markdown: string): string {
     // Убираем лишние пустые параграфы
     .replace(/<p><\/p>/g, '')
     .replace(/<p>\s*<\/p>/g, '')
+}
+
+// Функция для извлечения оглавления из Markdown
+function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
+  const lines = markdown.split('\n')
+  const toc: Array<{ id: string; title: string; level: number }> = []
+  
+  lines.forEach((line) => {
+    const h1Match = line.match(/^# (.*)$/)
+    const h2Match = line.match(/^## (.*)$/)
+    const h3Match = line.match(/^### (.*)$/)
+    
+    if (h1Match) {
+      toc.push({
+        id: h1Match[1].toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        title: h1Match[1],
+        level: 1
+      })
+    } else if (h2Match) {
+      toc.push({
+        id: h2Match[1].toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        title: h2Match[1],
+        level: 2
+      })
+    } else if (h3Match) {
+      toc.push({
+        id: h3Match[1].toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        title: h3Match[1],
+        level: 3
+      })
+    }
+  })
+  
+  return toc
 }
 
 // Статические данные для тестирования
@@ -390,16 +425,18 @@ Telegram: [@Loc_Carnal](https://t.me/Loc_Carnal)
   }
 }
 
-export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) {
+export function MDXContent({ sectionId, onFrontmatterChange, onTocChange }: MDXContentProps) {
   const [content, setContent] = useState<string>('')
   const [frontmatter, setFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [loading, setLoading] = useState(true)
   const onFrontmatterChangeRef = useRef(onFrontmatterChange)
+  const onTocChangeRef = useRef(onTocChange)
 
   // Обновляем ref при изменении callback
   useEffect(() => {
     onFrontmatterChangeRef.current = onFrontmatterChange
-  }, [onFrontmatterChange])
+    onTocChangeRef.current = onTocChange
+  }, [onFrontmatterChange, onTocChange])
 
   useEffect(() => {
     const loadMDX = async () => {
@@ -415,6 +452,10 @@ export function MDXContent({ sectionId, onFrontmatterChange }: MDXContentProps) 
           setContent(htmlContent)
           setFrontmatter(data.frontmatter)
           onFrontmatterChangeRef.current?.(data.frontmatter)
+          
+          // Извлекаем оглавление
+          const toc = extractToc(data.content)
+          onTocChangeRef.current?.(toc)
         } else {
           setContent(`<h1>Ошибка загрузки контента для раздела ${sectionId}</h1>`)
         }

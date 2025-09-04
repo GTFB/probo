@@ -56,6 +56,7 @@ export default function HomePage() {
   const [activeSection, setActiveSection] = useState('intro')
   const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number }>>([])
 
   const handleSectionChange = useCallback((sectionId: string) => {
     setActiveSection(sectionId)
@@ -72,6 +73,10 @@ export default function HomePage() {
     setCurrentFrontmatter(frontmatter)
   }, [])
 
+  const handleTocChange = useCallback((toc: Array<{ id: string; title: string; level: number }>) => {
+    setCurrentToc(toc)
+  }, [])
+
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
 
   return (
@@ -83,7 +88,7 @@ export default function HomePage() {
           onSectionChange={handleSectionChange}
         />
         
-        <main className="flex-1 p-4 sm:p-6 md:p-10 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 md:p-10 overflow-y-auto xl:pr-80">
           <div className="max-w-4xl mx-auto">
             {/* Мобильная навигация */}
             <div className="lg:hidden mb-6">
@@ -140,6 +145,7 @@ export default function HomePage() {
                 <MDXContent 
                   sectionId={activeSection} 
                   onFrontmatterChange={handleFrontmatterChange}
+                  onTocChange={handleTocChange}
                 />
               </div>
 
@@ -156,11 +162,7 @@ export default function HomePage() {
         </main>
 
         <TableOfContents
-          items={navigationItems.map((item, index) => ({
-            id: item.id,
-            title: item.title,
-            level: 1
-          }))}
+          items={currentToc}
           activeSection={activeSection}
           onSectionClick={handleSectionChange}
         />

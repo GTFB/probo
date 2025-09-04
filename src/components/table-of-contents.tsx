@@ -24,10 +24,10 @@ export function TableOfContents({ items, activeSection, onSectionClick }: TableO
   const [isOpen, setIsOpen] = React.useState(true)
 
   return (
-    <div className="hidden xl:block w-64 border-l bg-muted/10">
+    <div className="hidden xl:block w-80 border-l bg-muted/10 fixed right-0 top-0 h-screen overflow-y-auto">
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold">Содержание</h3>
+          <h3 className="text-sm font-semibold">Оглавление</h3>
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
@@ -44,13 +44,13 @@ export function TableOfContents({ items, activeSection, onSectionClick }: TableO
                 key={item.id}
                 variant="ghost"
                 size="sm"
-                className={`w-full justify-start text-left h-auto py-1 px-2 ${
+                className={`w-full justify-start text-left h-auto py-2 px-3 ${
                   activeSection === item.id ? "bg-accent text-accent-foreground" : ""
                 }`}
-                style={{ paddingLeft: `${(item.level - 1) * 12 + 8}px` }}
+                style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
                 onClick={() => onSectionClick(item.id)}
               >
-                <span className="text-xs truncate">{item.title}</span>
+                <span className="text-sm truncate">{item.title}</span>
               </Button>
             ))}
           </CollapsibleContent>
