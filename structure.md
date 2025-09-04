@@ -1,33 +1,112 @@
-# Project Structure
+# Probo - Commercial Proposal Generator
 
-## Root Directory
-- `package.json` - Project dependencies and scripts
-- `tsconfig.json` - TypeScript configuration
-- `tailwind.config.js` - Tailwind CSS configuration
-- `postcss.config.js` - PostCSS configuration
-- `README.md` - Project documentation
-- `Makefile` - Build and development commands
-- `LICENSE` - MIT License
+## Описание проекта
 
-## Source Code (`src/`)
-- `app/` - Next.js app directory (pages and layouts)
-- `components/` - React components
-- `lib/` - Utility functions and helpers
-- `types/` - TypeScript type definitions
-- `mdx/` - MDX templates and content files
+Система для генерации коммерческих предложений на основе MDX файлов с использованием современного веб-стека.
 
-## Documentation (`docs/`)
-- `TECH_STACK.md` - Technology stack documentation
-- `structure.md` - This file (auto-updated)
+## Технологический стек
 
-## Static Assets (`public/`)
-- Images, fonts, and other static files
+- **Runtime:** Bun
+- **Framework:** Next.js 14
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **UI Components:** Shadcn/ui
+- **Icons:** Lucide React
+- **Theming:** next-themes
+- **Content:** MDX
+- **MDX Processing:** next-mdx-remote
+- **Typography:** @tailwindcss/typography
+- **Code Highlighting:** Shiki/Rehype Pretty Code
+- **Charts:** Recharts
 
-## External Storage (`external-storage/`)
-- `.env` - Environment variables
-- `database.db` - Database file
+## Структура проекта
 
-## Generated Files
-- `dist/` - Build output
-- `node_modules/` - Dependencies
-- `.next/` - Next.js build cache
+```
+probo/
+├── docs/
+│   ├── TECH_STACK.md
+│   └── structure.md
+├── src/
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── ui/
+│   │   │   ├── button.tsx
+│   │   │   └── card.tsx
+│   │   ├── navigation.tsx
+│   │   ├── competitor-chart.tsx
+│   │   └── tariff-card.tsx
+│   ├── lib/
+│   │   └── utils.ts
+│   ├── types/
+│   │   └── proposal.ts
+│   └── mdx/
+│       ├── intro.mdx
+│       ├── market.mdx
+│       ├── product.mdx
+│       ├── tech.mdx
+│       ├── roadmap.mdx
+│       ├── offer.mdx
+│       ├── team.mdx
+│       └── next.mdx
+├── public/
+├── external-storage/
+├── .env
+├── .gitignore
+├── LICENSE
+├── Makefile
+├── package.json
+├── postcss.config.js
+├── README.md
+├── structure.md
+├── tailwind.config.js
+└── tsconfig.json
+```
+
+## Основные функции
+
+- ✅ Генерация коммерческих предложений на основе MDX
+- ✅ Адаптивный дизайн с мобильной навигацией
+- ✅ Интерактивные графики и диаграммы
+- ✅ Тарифные карточки с CTA
+- ✅ Современный UI с Shadcn/ui компонентами
+- ✅ Типизация TypeScript
+- ✅ Оптимизация производительности
+
+## Разработка
+
+### Установка зависимостей
+```bash
+make install
+```
+
+### Запуск в режиме разработки
+```bash
+make dev
+```
+
+### Сборка проекта
+```bash
+make build
+```
+
+### Запуск продакшн версии
+```bash
+make start
+```
+
+### Линтинг и форматирование
+```bash
+make lint
+make format
+```
+
+## Окружение
+
+Файлы `.env` и `database.db` находятся в директории `external-storage/`.
+
+## Лицензия
+
+MIT License
