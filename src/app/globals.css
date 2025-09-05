@@ -109,6 +109,11 @@
   .h-25 {
     height: 6.25rem; /* 100px */
   }
+  
+  /* Force nowrap for sidebar header */
+  .sidebar-header-nowrap {
+    flex-flow: nowrap !important;
+  }
   .mdx-content h1 {
     @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden;
   }
