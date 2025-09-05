@@ -10,11 +10,8 @@ import {
   Gem,
   ShieldCheck,
   Rocket,
-  Search,
   PanelLeftClose,
 } from "lucide-react"
-
-import { SearchForm } from "@/components/search-form"
 import {
   Sidebar,
   SidebarContent,
@@ -25,7 +22,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 
 interface NavigationItem {
   id: string
@@ -61,10 +57,6 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
         )}
       </SidebarHeader>
       <SidebarContent className="px-3 py-2">
-        <div className="px-3 py-2">
-          <SearchForm />
-        </div>
-        <Separator className="my-2" />
         <SidebarMenu>
           {items.map((item) => {
             const Icon = item.icon
