@@ -102,15 +102,15 @@
   
   /* MDX Content Styles */
   .mdx-content h1 {
-    @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground;
+    @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20;
   }
   
   .mdx-content h2 {
-    @apply text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground;
+    @apply text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20;
   }
   
   .mdx-content h3 {
-    @apply text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground;
+    @apply text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20;
   }
   
   .mdx-content h4 {

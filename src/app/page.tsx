@@ -169,10 +169,10 @@ export default function HomePage() {
                             }`}
                             style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
                             onClick={() => {
-                              // Прокручиваем к элементу на странице
-                              const element = document.querySelector(`h${item.level}`)
+                              // Прокручиваем к элементу на странице по ID
+                              const element = document.getElementById(item.id)
                               if (element) {
-                                element.scrollIntoView({ behavior: 'smooth' })
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' })
                               }
                             }}
                           >

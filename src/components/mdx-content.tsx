@@ -22,11 +22,23 @@ function markdownToHtml(markdown: string): string {
   // Сначала удаляем frontmatter из начала файла
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   
-  return contentWithoutFrontmatter
-    // Заголовки
-    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+  // Удаляем все \r символы
+  const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
+  
+  let html = cleanContent
+    // Заголовки с ID
+    .replace(/^### (.*$)/gim, (match, title) => {
+      const id = `h3-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      return `<h3 id="${id}">${title}</h3>`
+    })
+    .replace(/^## (.*$)/gim, (match, title) => {
+      const id = `h2-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      return `<h2 id="${id}">${title}</h2>`
+    })
+    .replace(/^# (.*$)/gim, (match, title) => {
+      const id = `h1-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      return `<h1 id="${id}">${title}</h1>`
+    })
     // Жирный текст
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     // Списки
@@ -42,6 +54,8 @@ function markdownToHtml(markdown: string): string {
     // Убираем лишние пустые параграфы
     .replace(/<p><\/p>/g, '')
     .replace(/<p>\s*<\/p>/g, '')
+  
+  return html
 }
 
 // Функция для извлечения оглавления из Markdown
@@ -59,27 +73,32 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
     const trimmedLine = line.trim()
     
     if (trimmedLine.startsWith('# ')) {
+      const title = trimmedLine.substring(2)
+      const id = `h1-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
       toc.push({
-        id: `h1-${toc.length + 1}`,
-        title: trimmedLine.substring(2),
+        id,
+        title,
         level: 1
       })
     } else if (trimmedLine.startsWith('## ')) {
+      const title = trimmedLine.substring(3)
+      const id = `h2-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
       toc.push({
-        id: `h2-${toc.length + 1}`,
-        title: trimmedLine.substring(3),
+        id,
+        title,
         level: 2
       })
     } else if (trimmedLine.startsWith('### ')) {
+      const title = trimmedLine.substring(4)
+      const id = `h3-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
       toc.push({
-        id: `h3-${toc.length + 1}`,
-        title: trimmedLine.substring(4),
+        id,
+        title,
         level: 3
       })
     }
   })
   
-  console.log('Final TOC:', toc)
   return toc
 }
 
