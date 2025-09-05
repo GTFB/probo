@@ -99,55 +99,60 @@ export default function HomePage() {
           />
         )}
         
-                            {/* Основной контент */}
-                    <main className={`flex-1 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''}`}>
-                      {/* Sticky Header для десктопа */}
-                      <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-                        <div className="px-6 py-4">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                                <Gem className="w-4 h-4 text-primary-foreground" />
-                              </div>
-                              <div>
-                                <h1 className="text-2xl font-heading font-bold text-foreground">
-                                  {currentH1Title || currentFrontmatter?.title || navigationItems.find(item => item.id === activeSection)?.title}
-                                </h1>
-                                <p className="text-sm text-muted-foreground">
-                                  Раздел {sectionNumber} из {navigationItems.length}
-                                </p>
-                              </div>
-                            </div>
-                            
-                            {/* Кнопки управления сайдбарами */}
-                            <div className="flex gap-2">
-                              {!isLeftSidebarOpen && (
-                                <Button 
-                                  variant="outline" 
-                                  size="sm" 
-                                  onClick={() => setIsLeftSidebarOpen(true)}
-                                >
-                                  <Menu className="w-4 h-4 mr-2" />
-                                  Показать навигацию
-                                </Button>
-                              )}
-                              {!isRightSidebarOpen && (
-                                <Button 
-                                  variant="outline" 
-                                  size="sm" 
-                                  onClick={() => setIsRightSidebarOpen(true)}
-                                >
-                                  <X className="w-4 h-4 mr-2" />
-                                  Показать оглавление
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+        {/* Sticky Header для десктопа */}
+        <div className="hidden lg:block fixed top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b" 
+             style={{ 
+               left: isLeftSidebarOpen ? '16rem' : '0', 
+               right: isRightSidebarOpen ? '20rem' : '0' 
+             }}>
+          <div className="px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <Gem className="w-4 h-4 text-primary-foreground" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-heading font-bold text-foreground">
+                    {currentH1Title || currentFrontmatter?.title || navigationItems.find(item => item.id === activeSection)?.title}
+                  </h1>
+                  <p className="text-sm text-muted-foreground">
+                    Раздел {sectionNumber} из {navigationItems.length}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Кнопки управления сайдбарами */}
+              <div className="flex gap-2">
+                {!isLeftSidebarOpen && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setIsLeftSidebarOpen(true)}
+                  >
+                    <Menu className="w-4 h-4 mr-2" />
+                    Показать навигацию
+                  </Button>
+                )}
+                {!isRightSidebarOpen && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setIsRightSidebarOpen(true)}
+                  >
+                    <X className="w-4 h-4 mr-2" />
+                    Показать оглавление
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Основной контент */}
+        <main className={`flex-1 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''} ${isLeftSidebarOpen ? 'lg:ml-64' : ''}`}>
           {/* Мобильная навигация */}
           <div className="lg:hidden">
-            <div className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+            <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
               <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-3">
                   <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -237,7 +242,7 @@ export default function HomePage() {
           </div>
 
           {/* Контент */}
-          <div className="p-4 sm:p-6 md:p-10">
+          <div className="p-4 sm:p-6 md:p-10 lg:pt-20 pt-20">
             <div className="max-w-4xl mx-auto">
 
               <section>
