@@ -232,6 +232,7 @@ export default function HomePage() {
                             })
                           }
                         }}
+                        onSectionChange={handleSectionChange}
                       />
                     </div>
                   </SheetContent>
@@ -276,6 +277,7 @@ export default function HomePage() {
             items={currentToc}
             activeSection={activeSection}
             onSectionClick={handleSectionChange}
+            onSectionChange={handleSectionChange}
             onToggle={() => setIsRightSidebarOpen(false)}
           />
         )}

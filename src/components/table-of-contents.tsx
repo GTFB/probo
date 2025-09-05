@@ -19,10 +19,11 @@ interface TableOfContentsProps {
   }>
   activeSection: string
   onSectionClick: (sectionId: string) => void
+  onSectionChange?: (sectionId: string) => void
   onToggle?: () => void
 }
 
-export function TableOfContents({ items, activeSection, onSectionClick, onToggle }: TableOfContentsProps) {
+export function TableOfContents({ items, activeSection, onSectionClick, onSectionChange, onToggle }: TableOfContentsProps) {
   const [isOpen, setIsOpen] = React.useState(true)
   const [activeTab, setActiveTab] = React.useState<'toc' | 'search'>('toc')
 
@@ -127,7 +128,10 @@ export function TableOfContents({ items, activeSection, onSectionClick, onToggle
         )}
 
         {activeTab === 'search' && (
-          <SearchEngine onResultClick={handleSearchResultClick} />
+          <SearchEngine 
+            onResultClick={handleSearchResultClick}
+            onSectionChange={onSectionChange}
+          />
         )}
       </div>
     </div>

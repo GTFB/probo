@@ -11,6 +11,7 @@ interface SearchIndex {
   title: string
   content: string
   section: string
+  sectionId: string
   level: number
   position: number
 }
@@ -20,6 +21,7 @@ interface SearchResult {
   title: string
   content: string
   section: string
+  sectionId: string
   level: number
   position: number
   relevance: number
@@ -28,10 +30,11 @@ interface SearchResult {
 
 interface SearchEngineProps {
   onResultClick: (result: SearchResult) => void
+  onSectionChange?: (sectionId: string) => void
   className?: string
 }
 
-export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
+export function SearchEngine({ onResultClick, onSectionChange, className }: SearchEngineProps) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
   const [isSearching, setIsSearching] = useState(false)
@@ -43,17 +46,26 @@ export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
     try {
       setIsSearching(true)
       
-      // Получаем все MDX файлы
+      // Получаем все MDX файлы с их названиями разделов
       const mdxFiles = [
-        'intro', 'problem', 'solution', 'features', 'benefits', 
-        'pricing', 'competitors', 'implementation', 'support', 'faq', 'cta'
+        { id: 'intro', name: 'Главная идея' },
+        { id: 'problem', name: 'Проблема' },
+        { id: 'solution', name: 'Решение' },
+        { id: 'features', name: 'Функции' },
+        { id: 'benefits', name: 'Преимущества' },
+        { id: 'pricing', name: 'Ценообразование' },
+        { id: 'competitors', name: 'Конкуренты' },
+        { id: 'implementation', name: 'Реализация' },
+        { id: 'support', name: 'Поддержка' },
+        { id: 'faq', name: 'FAQ' },
+        { id: 'cta', name: 'Призыв к действию' }
       ]
       
       const index: SearchIndex[] = []
       
       for (const file of mdxFiles) {
         try {
-          const response = await fetch(`/api/mdx/${file}`)
+          const response = await fetch(`/api/mdx/${file.id}`)
           if (!response.ok) continue
           
           const data = await response.json()
@@ -61,7 +73,7 @@ export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
           
           // Парсим заголовки и контент
           const lines = content.split('\n')
-          let currentSection = ''
+          let currentSection = file.name
           let position = 0
           
           for (const line of lines) {
@@ -78,6 +90,7 @@ export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
                 title,
                 content: title,
                 section: currentSection,
+                sectionId: file.id,
                 level: 1,
                 position: position++
               })
@@ -90,6 +103,7 @@ export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
                 title,
                 content: title,
                 section: currentSection,
+                sectionId: file.id,
                 level: 2,
                 position: position++
               })
@@ -102,6 +116,7 @@ export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
                 title,
                 content: title,
                 section: currentSection,
+                sectionId: file.id,
                 level: 3,
                 position: position++
               })
@@ -114,6 +129,7 @@ export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
                   title: words.slice(0, 5).join(' ') + (words.length > 5 ? '...' : ''),
                   content: trimmedLine,
                   section: currentSection,
+                  sectionId: file.id,
                   level: 0,
                   position: position++
                 })
@@ -272,6 +288,19 @@ export function SearchEngine({ onResultClick, className }: SearchEngineProps) {
                         <span className="text-xs text-muted-foreground truncate">
                           {result.section}
                         </span>
+                        {onSectionChange && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-5 px-2 text-xs"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              onSectionChange(result.sectionId)
+                            }}
+                          >
+                            Перейти
+                          </Button>
+                        )}
                       </div>
                       <div 
                         className="text-sm font-medium mb-1"
