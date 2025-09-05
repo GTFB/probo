@@ -207,7 +207,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
 
   return (
     <MDXLayout>
-      <div dangerouslySetInnerHTML={{ __html: content }} />
+      <div className="mt-8" dangerouslySetInnerHTML={{ __html: content }} />
     </MDXLayout>
   )
 }
