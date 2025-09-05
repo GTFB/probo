@@ -101,8 +101,13 @@
   }
   
   /* Custom spacing for header */
-  .pt-22 {
-    padding-top: 5.5rem;
+  .pt-25 {
+    padding-top: 6.25rem; /* 100px */
+  }
+  
+  /* Custom height for sidebar header */
+  .h-25 {
+    height: 6.25rem; /* 100px */
   }
   .mdx-content h1 {
     @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden;

@@ -105,7 +105,7 @@ export default function HomePage() {
                left: isLeftSidebarOpen ? '16rem' : '0', 
                right: isRightSidebarOpen ? '20rem' : '0' 
              }}>
-          <div className="px-6 py-6">
+          <div className="px-6 h-25 flex items-center">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -153,7 +153,7 @@ export default function HomePage() {
           {/* Мобильная навигация */}
           <div className="lg:hidden">
             <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-              <div className="flex items-center justify-between p-6">
+              <div className="flex items-center justify-between p-6 h-25">
                 <div className="flex items-center gap-3">
                   <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                     <SheetTrigger asChild>
@@ -242,7 +242,7 @@ export default function HomePage() {
           </div>
 
           {/* Контент */}
-          <div className={`pt-22 px-4 sm:px-6 md:px-10 pb-4 sm:pb-6 md:pb-10 ${isLeftSidebarOpen ? 'lg:pl-6' : 'lg:pl-10'}`}>
+          <div className={`pt-25 px-4 sm:px-6 md:px-10 pb-4 sm:pb-6 md:pb-10 ${isLeftSidebarOpen ? 'lg:pl-6' : 'lg:pl-10'}`}>
             <div className="max-w-4xl mx-auto">
 
               <section>
