@@ -60,6 +60,7 @@ export default function HomePage() {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true)
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
   const [currentH1Title, setCurrentH1Title] = useState<string>('')
+  const [isContentLoading, setIsContentLoading] = useState(true)
 
   const handleSectionChange = useCallback((sectionId: string) => {
     setActiveSection(sectionId)
@@ -82,6 +83,10 @@ export default function HomePage() {
 
   const handleH1Change = useCallback((h1Title: string) => {
     setCurrentH1Title(h1Title)
+  }, [])
+
+  const handleLoadingChange = useCallback((loading: boolean) => {
+    setIsContentLoading(loading)
   }, [])
 
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
@@ -252,16 +257,19 @@ export default function HomePage() {
                     onFrontmatterChange={handleFrontmatterChange}
                     onTocChange={handleTocChange}
                     onH1Change={handleH1Change}
+                    onLoadingChange={handleLoadingChange}
                   />
                 </div>
 
                 <div className="flex justify-end">
-                  <Button onClick={handleNextSection} className="gap-2">
-                    <span>
-                      {currentFrontmatter?.nextButtonText || navigationItems.find(item => item.id === activeSection)?.title || 'Следующий раздел'}
-                    </span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
+                  {!isContentLoading && (
+                    <Button onClick={handleNextSection} className="gap-2">
+                      <span>
+                        {currentFrontmatter?.nextButtonText || 'Следующий раздел'}
+                      </span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
               </section>
             </div>

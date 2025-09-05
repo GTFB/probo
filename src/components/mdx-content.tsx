@@ -16,6 +16,7 @@ interface MDXContentProps {
   onFrontmatterChange?: (frontmatter: MDXFrontmatter) => void
   onTocChange?: (toc: Array<{ id: string; title: string; level: number }>) => void
   onH1Change?: (h1Title: string) => void
+  onLoadingChange?: (loading: boolean) => void
 }
 
 // Простая функция для конвертации Markdown в HTML
@@ -120,7 +121,7 @@ function extractH1Title(markdown: string): string | null {
   return null
 }
 
-export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Change }: MDXContentProps) {
+export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Change, onLoadingChange }: MDXContentProps) {
   const [content, setContent] = useState<string>('')
   const [frontmatter, setFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [loading, setLoading] = useState(true)
@@ -128,18 +129,21 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   const onFrontmatterChangeRef = useRef(onFrontmatterChange)
   const onTocChangeRef = useRef(onTocChange)
   const onH1ChangeRef = useRef(onH1Change)
+  const onLoadingChangeRef = useRef(onLoadingChange)
 
   // Обновляем ref при изменении callback
   useEffect(() => {
     onFrontmatterChangeRef.current = onFrontmatterChange
     onTocChangeRef.current = onTocChange
     onH1ChangeRef.current = onH1Change
-  }, [onFrontmatterChange, onTocChange, onH1Change])
+    onLoadingChangeRef.current = onLoadingChange
+  }, [onFrontmatterChange, onTocChange, onH1Change, onLoadingChange])
 
   useEffect(() => {
     const loadMDX = async () => {
       try {
         setLoading(true)
+        onLoadingChangeRef.current?.(true)
         setError(null)
         
         const response = await fetch(`/api/mdx/${sectionId}`)
@@ -176,12 +180,15 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           onH1ChangeRef.current?.(h1Title)
         }
         
+        onLoadingChangeRef.current?.(false)
+        
       } catch (error) {
         console.error('Error loading MDX:', error)
         setError(error instanceof Error ? error.message : 'Failed to load content')
         setContent(`<h1>Ошибка загрузки контента для раздела ${sectionId}</h1>`)
       } finally {
         setLoading(false)
+        onLoadingChangeRef.current?.(false)
       }
     }
 
