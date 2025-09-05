@@ -58,19 +58,19 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
     
     if (h1Match) {
       toc.push({
-        id: h1Match[1].toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        id: `h1-${toc.length + 1}`,
         title: h1Match[1],
         level: 1
       })
     } else if (h2Match) {
       toc.push({
-        id: h2Match[1].toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        id: `h2-${toc.length + 1}`,
         title: h2Match[1],
         level: 2
       })
     } else if (h3Match) {
       toc.push({
-        id: h3Match[1].toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        id: `h3-${toc.length + 1}`,
         title: h3Match[1],
         level: 3
       })

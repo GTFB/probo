@@ -168,7 +168,13 @@ export default function HomePage() {
                               activeSection === item.id ? "bg-accent text-accent-foreground" : ""
                             }`}
                             style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
-                            onClick={() => handleSectionChange(item.id)}
+                            onClick={() => {
+                              // Прокручиваем к элементу на странице
+                              const element = document.querySelector(`h${item.level}`)
+                              if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' })
+                              }
+                            }}
                           >
                             <span className="text-sm truncate">{item.title}</span>
                           </Button>
