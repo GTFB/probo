@@ -50,7 +50,6 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
           leftPadding: 75,
           gridLineStartPadding: 35,
           fontSize: 11,
-          fontFamily: '"Open-Sans", "sans-serif"',
           sectionFontSize: 24,
           numberSectionStyles: 4
         }
