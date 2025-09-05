@@ -100,7 +100,10 @@
     @apply transition-all duration-200;
   }
   
-  /* MDX Content Styles */
+  /* Custom spacing for header */
+  .pt-22 {
+    padding-top: 5.5rem;
+  }
   .mdx-content h1 {
     @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden;
   }
