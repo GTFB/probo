@@ -242,7 +242,7 @@ export default function HomePage() {
           </div>
 
           {/* Контент */}
-          <div className={`pt-25 px-4 sm:px-6 md:px-10 pb-4 sm:pb-6 md:pb-10 ${isLeftSidebarOpen ? 'lg:pl-6' : 'lg:pl-10'}`}>
+          <div className={`pt-20 px-4 sm:px-6 md:px-10 pb-4 sm:pb-6 md:pb-10 ${isLeftSidebarOpen ? 'lg:pl-6' : 'lg:pl-10'}`}>
             <div className="max-w-4xl mx-auto">
 
               <section>
