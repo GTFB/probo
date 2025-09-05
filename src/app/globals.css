@@ -114,6 +114,19 @@
   .sidebar-header-nowrap {
     flex-flow: nowrap !important;
   }
+  
+  /* Search highlighting */
+  mark {
+    background-color: rgb(254 240 138); /* yellow-200 */
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+  }
+  
+  .dark mark {
+    background-color: rgb(133 77 14); /* yellow-800 */
+    color: rgb(254 240 138); /* yellow-200 */
+  }
   .mdx-content h1 {
     @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden;
   }

@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react'
 import { AppSidebar } from '@/components/app-sidebar'
 import { TableOfContents } from '@/components/table-of-contents'
+import { SearchEngine } from '@/components/search-engine'
 import { Button } from '@/components/ui/button'
 import { MDXContent } from '@/components/mdx-content'
 import { ArrowRight, Menu, X, List } from 'lucide-react'
@@ -207,7 +208,7 @@ export default function HomePage() {
                               </div>
                 </div>
                 
-                {/* Мобильное оглавление */}
+                {/* Мобильное оглавление с поиском */}
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button variant="outline" size="sm">
@@ -216,29 +217,22 @@ export default function HomePage() {
                   </SheetTrigger>
                   <SheetContent side="right" className="w-80">
                     <div className="p-4">
-                      <h3 className="text-sm font-semibold mb-4">Оглавление</h3>
-                      <div className="space-y-1">
-                        {currentToc.map((item) => (
-                          <Button
-                            key={item.id}
-                            variant="ghost"
-                            size="sm"
-                            className={`w-full justify-start text-left h-auto py-2 px-3 ${
-                              activeSection === item.id ? "bg-accent text-accent-foreground" : ""
-                            }`}
-                            style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
-                            onClick={() => {
-                              // Прокручиваем к элементу на странице по ID
-                              const element = document.getElementById(item.id)
-                              if (element) {
-                                element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      <h3 className="text-sm font-semibold mb-4">Навигация</h3>
+                      <SearchEngine 
+                        onResultClick={(result) => {
+                          const element = document.getElementById(result.id)
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                          } else {
+                            const headings = document.querySelectorAll('h1, h2, h3')
+                            headings.forEach(heading => {
+                              if (heading.textContent?.trim() === result.title) {
+                                heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
                               }
-                            }}
-                          >
-                            <span className="text-sm truncate">{item.title}</span>
-                          </Button>
-                        ))}
-                      </div>
+                            })
+                          }
+                        }}
+                      />
                     </div>
                   </SheetContent>
                 </Sheet>
