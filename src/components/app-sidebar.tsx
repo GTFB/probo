@@ -44,7 +44,7 @@ interface AppSidebarProps {
 export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: AppSidebarProps) {
   return (
     <Sidebar className="hidden lg:block">
-      <SidebarHeader className="border-b px-6 h-25 flex items-center justify-between">
+      <SidebarHeader className="border-b px-6 h-25 flex items-center justify-between flex-nowrap">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <Gem className="w-4 h-4 text-primary-foreground" />
