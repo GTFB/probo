@@ -28,15 +28,15 @@ function markdownToHtml(markdown: string): string {
   let html = cleanContent
     // Заголовки с ID
     .replace(/^### (.*$)/gim, (match, title) => {
-      const id = `h3-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      const id = `h3-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       return `<h3 id="${id}">${title}</h3>`
     })
     .replace(/^## (.*$)/gim, (match, title) => {
-      const id = `h2-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      const id = `h2-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       return `<h2 id="${id}">${title}</h2>`
     })
     .replace(/^# (.*$)/gim, (match, title) => {
-      const id = `h1-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       return `<h1 id="${id}">${title}</h1>`
     })
     // Жирный текст
@@ -74,7 +74,7 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
     
     if (trimmedLine.startsWith('# ')) {
       const title = trimmedLine.substring(2)
-      const id = `h1-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       toc.push({
         id,
         title,
@@ -82,7 +82,7 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
       })
     } else if (trimmedLine.startsWith('## ')) {
       const title = trimmedLine.substring(3)
-      const id = `h2-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      const id = `h2-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       toc.push({
         id,
         title,
@@ -90,7 +90,7 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
       })
     } else if (trimmedLine.startsWith('### ')) {
       const title = trimmedLine.substring(4)
-      const id = `h3-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+      const id = `h3-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       toc.push({
         id,
         title,
@@ -146,6 +146,8 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange }: MDXC
         
         // Извлекаем оглавление
         const toc = extractToc(data.content)
+        console.log('Generated TOC:', toc)
+        console.log('Generated HTML:', htmlContent)
         onTocChangeRef.current?.(toc)
         
       } catch (error) {

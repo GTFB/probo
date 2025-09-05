@@ -61,9 +61,20 @@ export function TableOfContents({ items, activeSection, onSectionClick, onToggle
                   style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
                   onClick={() => {
                     // Прокручиваем к элементу на странице по ID
+                    console.log('Trying to scroll to ID:', item.id)
                     const element = document.getElementById(item.id)
+                    console.log('Found element:', element)
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    } else {
+                      console.log('Element not found, trying alternative method')
+                      // Попробуем найти по тексту заголовка
+                      const headings = document.querySelectorAll('h1, h2, h3')
+                      headings.forEach(heading => {
+                        if (heading.textContent?.trim() === item.title) {
+                          heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        }
+                      })
                     }
                   }}
                 >
