@@ -258,7 +258,7 @@ export default function HomePage() {
                 <div className="flex justify-end">
                   <Button onClick={handleNextSection} className="gap-2">
                     <span>
-                      {currentFrontmatter?.nextButtonText || 'Следующий раздел'}
+                      {currentFrontmatter?.nextButtonText || navigationItems.find(item => item.id === activeSection)?.title || 'Следующий раздел'}
                     </span>
                     <ArrowRight className="w-4 h-4" />
                   </Button>
