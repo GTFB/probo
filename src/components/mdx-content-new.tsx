@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { MDXLayout } from './mdx-layout'
 import { MermaidDiagram } from './mermaid-diagram'
-import { MDXRenderer } from './mdx-renderer-new'
+import { MDXRenderer } from './mdx-renderer'
 
 interface MDXFrontmatter {
   title: string
@@ -33,8 +33,9 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
   
   // Обрабатываем Mermaid диаграммы
   let processedContent = cleanContent.replace(/```mermaid\s*\n([\s\S]*?)\n```/g, (match, chart) => {
+    const chartId = `mermaid-chart-${chartIndex++}`
     mermaidCharts.push(chart.trim())
-    return `<div class="mermaid-placeholder" data-chart-index="${chartIndex++}"></div>`
+    return `<div data-mermaid-chart="${chartId}" data-chart-index="${chartIndex - 1}"></div>`
   })
   
   // Разбиваем на строки для обработки
@@ -44,10 +45,9 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
   let listItems: string[] = []
   
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-    const trimmedLine = line.trim()
+    const line = lines[i].trim()
     
-    if (!trimmedLine) {
+    if (!line) {
       // Пустая строка - закрываем список если он открыт
       if (inList && listItems.length > 0) {
         htmlLines.push(`<ul>${listItems.join('')}</ul>`)
@@ -59,43 +59,30 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
     }
     
     // Заголовки
-    if (trimmedLine.startsWith('##### ')) {
-      // Игнорируем заголовки уровня 5 - не отображаем их
-      continue
-    } else if (trimmedLine.startsWith('#### ')) {
-      const title = trimmedLine.substring(5).replace(/\*\*/g, '') // Убираем **
+    if (line.startsWith('#### ')) {
+      const title = line.substring(5)
       const id = `h4-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       htmlLines.push(`<h4 id="${id}">${title}</h4>`)
-    } else if (trimmedLine.startsWith('### ')) {
-      const title = trimmedLine.substring(4).replace(/\*\*/g, '') // Убираем **
+    } else if (line.startsWith('### ')) {
+      const title = line.substring(4)
       const id = `h3-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       htmlLines.push(`<h3 id="${id}">${title}</h3>`)
-    } else if (trimmedLine.startsWith('## ')) {
-      const title = trimmedLine.substring(3).replace(/\*\*/g, '') // Убираем **
+    } else if (line.startsWith('## ')) {
+      const title = line.substring(3)
       const id = `h2-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       htmlLines.push(`<h2 id="${id}">${title}</h2>`)
-    } else if (trimmedLine.startsWith('# ')) {
-      const title = trimmedLine.substring(2).replace(/\*\*/g, '') // Убираем **
+    } else if (line.startsWith('# ')) {
+      const title = line.substring(2)
       const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       htmlLines.push(`<h1 id="${id}">${title}</h1>`)
     }
-    // Списки (включая вложенные)
-    else if (trimmedLine.startsWith('* ') || trimmedLine.startsWith('- ')) {
-      const content = trimmedLine.substring(2)
+    // Списки
+    else if (line.startsWith('* ') || line.startsWith('- ')) {
+      const content = line.substring(2)
       listItems.push(`<li>${processInlineMarkdown(content)}</li>`)
       inList = true
-    } else if (/^\d+\. /.test(trimmedLine)) {
-      const content = trimmedLine.replace(/^\d+\. /, '')
-      listItems.push(`<li>${processInlineMarkdown(content)}</li>`)
-      inList = true
-    }
-    // Вложенные списки (с отступами)
-    else if (/^[\s]+[*\-]\s/.test(line)) {
-      const content = trimmedLine.substring(2)
-      listItems.push(`<li>${processInlineMarkdown(content)}</li>`)
-      inList = true
-    } else if (/^[\s]+\d+\.\s/.test(line)) {
-      const content = trimmedLine.replace(/^\d+\. /, '')
+    } else if (/^\d+\. /.test(line)) {
+      const content = line.replace(/^\d+\. /, '')
       listItems.push(`<li>${processInlineMarkdown(content)}</li>`)
       inList = true
     }
@@ -109,7 +96,7 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
       }
       
       // Обрабатываем как параграф
-      htmlLines.push(`<p>${processInlineMarkdown(trimmedLine)}</p>`)
+      htmlLines.push(`<p>${processInlineMarkdown(line)}</p>`)
     }
   }
   
@@ -125,10 +112,10 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
 // Функция для обработки inline Markdown
 function processInlineMarkdown(text: string): string {
   return text
-    // Убираем жирный текст **
-    .replace(/\*\*(.*?)\*\*/g, '$1')
-    // Убираем курсив *
-    .replace(/\*(.*?)\*/g, '$1')
+    // Жирный текст
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Курсив
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
     // Ссылки
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     // Код
@@ -147,23 +134,22 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
     const trimmedLine = line.trim()
     
     if (trimmedLine.startsWith('# ')) {
-      const title = trimmedLine.substring(2).replace(/\*\*/g, '') // Убираем **
+      const title = trimmedLine.substring(2)
       const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       toc.push({ id, title, level: 1 })
     } else if (trimmedLine.startsWith('## ')) {
-      const title = trimmedLine.substring(3).replace(/\*\*/g, '') // Убираем **
+      const title = trimmedLine.substring(3)
       const id = `h2-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       toc.push({ id, title, level: 2 })
     } else if (trimmedLine.startsWith('### ')) {
-      const title = trimmedLine.substring(4).replace(/\*\*/g, '') // Убираем **
+      const title = trimmedLine.substring(4)
       const id = `h3-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       toc.push({ id, title, level: 3 })
     } else if (trimmedLine.startsWith('#### ')) {
-      const title = trimmedLine.substring(5).replace(/\*\*/g, '') // Убираем **
+      const title = trimmedLine.substring(5)
       const id = `h4-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       toc.push({ id, title, level: 4 })
     }
-    // Заголовки ##### игнорируем - не добавляем в оглавление
   })
   
   return toc
@@ -179,7 +165,7 @@ function extractH1Title(markdown: string): string | null {
   for (const line of lines) {
     const trimmedLine = line.trim()
     if (trimmedLine.startsWith('# ')) {
-      return trimmedLine.substring(2).replace(/\*\*/g, '') // Убираем **
+      return trimmedLine.substring(2)
     }
   }
   

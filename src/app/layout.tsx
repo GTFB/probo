@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Дюжина - Коммерческое предложение',
-  description: 'Система создания коммерческих предложений на основе MDX файлов',
+  title: 'INFLUEBALANCE',
+  description: 'Ai-powered outreach platform',
   icons: {
     icon: '/favicon.ico',
   },

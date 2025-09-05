@@ -1,7 +1,9 @@
-# Probo - Commercial Proposal Generator
+# Influbalance
 
-## Description
-A system for generating commercial proposals based on MDX files with dynamic content management and professional formatting.
+Клиентский репозиторий для проекта Influbalance, созданный на основе шаблона Probo.
+
+## Описание
+Система для генерации коммерческих предложений на основе MDX файлов с динамическим управлением контентом и профессиональным форматированием.
 
 ## Tech Stack
 - **Runtime:** Bun
@@ -12,18 +14,20 @@ A system for generating commercial proposals based on MDX files with dynamic con
 - **Theme Management:** next-themes
 - **UI Components:** Shadcn/ui
 
-## Project Structure
+## Структура проекта
 ```
-probo/
-├── src/
-│   ├── app/                 # Next.js app directory
-│   ├── components/          # React components
-│   ├── lib/                # Utility functions
-│   ├── types/              # TypeScript type definitions
-│   └── mdx/                # MDX templates and content
-├── docs/                   # Documentation
-├── public/                 # Static assets
-└── external-storage/       # External storage (.env, database.db)
+influbalance/
+├── .github/workflows/      # GitHub Actions для автоматизации
+├── docs/                   # Документация проекта
+├── scripts/                # Скрипты для автоматизации
+├── src/                    # Исходный код приложения
+│   ├── app/                # Next.js app directory
+│   ├── components/         # React компоненты
+│   ├── lib/               # Утилиты
+│   └── types/             # TypeScript типы
+├── content/                # MDX контент
+├── public/                # Статические файлы
+└── external-storage/       # Внешнее хранилище (.env, database.db)
 ```
 
 ## Features
@@ -34,7 +38,42 @@ probo/
 - Responsive design
 - Type-safe development
 
-## Development
+## Работа с шаблоном
+
+Этот проект создан на основе шаблона [Probo](https://github.com/GTFB/probo) и настроен для получения обновлений.
+
+### Получение обновлений из шаблона
+
+```bash
+# Автоматический способ
+./scripts/update-from-template.sh
+
+# Ручной способ
+git checkout update-from-template
+git fetch upstream
+git merge upstream/main
+git push origin update-from-template
+```
+
+### Создание новых функций
+
+```bash
+# Создать feature ветку
+./scripts/create-feature.sh my-feature-name
+
+# Разработать функцию и создать PR в develop
+```
+
+### Структура веток
+
+- `main` - основная ветка (синхронизирована с шаблоном)
+- `develop` - ветка разработки
+- `feature/*` - ветки для новых функций
+- `update-from-template` - ветка для обновлений из шаблона
+
+Подробная документация: [docs/template-workflow.md](docs/template-workflow.md)
+
+## Разработка
 ```bash
 # Install dependencies
 bun install

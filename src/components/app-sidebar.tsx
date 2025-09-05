@@ -42,8 +42,8 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
       <SidebarHeader className="border-b px-6 h-25 flex items-center justify-between sidebar-header-nowrap" style={{ height: 'calc(6.25rem + 1px)' }}>
         <div className="flex items-center gap-2">
           <div>
-            <h2 className="text-lg font-semibold">Дюжина</h2>
-            <p className="text-xs text-muted-foreground">Коммерческое предложение</p>
+            <h2 className="text-lg font-semibold">INFLUBALANCE</h2>
+            <p className="text-xs text-muted-foreground">AI-powered outreach platform</p>
           </div>
         </div>
         {onToggle && (

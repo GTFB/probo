@@ -203,3 +203,41 @@
     @apply text-sm;
   }
 }
+
+/* Mermaid диаграммы */
+.mermaid-container {
+  @apply flex justify-center items-center;
+}
+
+.mermaid-container svg {
+  @apply max-w-full h-auto;
+}
+
+.mermaid-diagram-container {
+  @apply my-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border;
+}
+
+.mermaid-chart {
+  @apply flex justify-center items-center;
+}
+
+.mermaid-chart svg {
+  @apply max-w-full h-auto;
+}
+
+/* Стили для темной темы Mermaid */
+.dark .mermaid-container {
+  @apply bg-gray-900;
+}
+
+/* Плейсхолдеры для Mermaid */
+.mermaid-placeholder {
+  @apply my-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-dashed border-gray-300 dark:border-gray-600;
+  @apply flex items-center justify-center text-gray-500 dark:text-gray-400;
+  @apply min-h-[200px];
+}
+
+.mermaid-placeholder::before {
+  content: "🔄 Загрузка диаграммы...";
+  @apply text-sm;
+}

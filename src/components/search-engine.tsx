@@ -48,15 +48,13 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
       
       // Получаем все MDX файлы с их названиями разделов
       const mdxFiles = [
-        { id: 'intro', name: 'Главная идея' },
-        { id: 'market', name: 'Анализ рынка' },
-        { id: 'product', name: 'Концепция продукта' },
-        { id: 'tech', name: 'Технологический стек' },
-        { id: 'roadmap', name: 'Этапы и сроки' },
-        { id: 'offer', name: 'Ваши инвестиции' },
-        { id: 'team', name: 'Наша экспертиза' },
-        { id: 'components', name: 'Компоненты верстки' },
-        { id: 'next', name: 'Следующие шаги' }
+        { id: '1-intro', name: 'Введение и цели проекта' },
+        { id: '2-functions', name: 'Функциональные требования' },
+        { id: '3-use-cases', name: 'Пользовательские сценарии' },
+        { id: '4-tech-spec', name: 'Технические требования' },
+        { id: '5-api', name: 'Программные интерфейсы (API)' },
+        { id: '6-tests', name: 'Процедура приемки' },
+        { id: '7-finish', name: 'Заключение и План Реализации' }
       ]
       
       const index: SearchIndex[] = []

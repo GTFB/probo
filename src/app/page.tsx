@@ -21,58 +21,52 @@ interface MDXFrontmatter {
 }
 
 const navigationItems: NavigationItem[] = [
-  { id: 'intro', title: 'Главная идея', icon: 'Lightbulb', href: '#intro' },
-  { id: 'market', title: 'Анализ рынка', icon: 'TrendingUp', href: '#market' },
-  { id: 'product', title: 'Концепция продукта', icon: 'Package', href: '#product' },
-  { id: 'tech', title: 'Технологический стек', icon: 'Cpu', href: '#tech' },
-  { id: 'roadmap', title: 'Этапы и сроки', icon: 'Map', href: '#roadmap' },
-  { id: 'offer', title: 'Ваши инвестиции', icon: 'Gem', href: '#offer' },
-  { id: 'team', title: 'Наша экспертиза', icon: 'ShieldCheck', href: '#team' },
-  { id: 'components', title: 'Компоненты верстки', icon: 'Package', href: '#components' },
-  { id: 'next', title: 'Следующие шаги', icon: 'Rocket', href: '#next' },
+  { id: '1-intro', title: 'Введение и цели проекта', icon: 'FileText', href: '#1-intro' },
+  { id: '2-functions', title: 'Функциональные требования', icon: 'Component', href: '#2-functions' },
+  { id: '3-use-cases', title: 'Пользовательские сценарии', icon: 'Users', href: '#3-use-cases' },
+  { id: '4-tech-spec', title: 'Технические требования', icon: 'Cpu', href: '#4-tech-spec' },
+  { id: '5-api', title: 'Программные интерфейсы (API)', icon: 'Share2', href: '#5-api' },
+  { id: '6-tests', title: 'Процедура приемки', icon: 'ClipboardCheck', href: '#6-tests' },
+  { id: '7-finish', title: 'Заключение и План Реализации', icon: 'Rocket', href: '#7-finish' },
 ]
 
 // Импортируем иконки для навигации
 import {
-  Lightbulb,
-  TrendingUp,
-  Package,
+  FileText,
+  Component,
+  Users,
   Cpu,
-  Map,
-  Gem,
-  ShieldCheck,
+  Share2,
+  ClipboardCheck,
   Rocket,
 } from 'lucide-react'
 
 // Функция для получения иконки по имени
 const getIconByName = (iconName: string) => {
   const iconMap: Record<string, any> = {
-    Lightbulb,
-    TrendingUp,
-    Package,
+    FileText,
+    Component,
+    Users,
     Cpu,
-    Map,
-    Gem,
-    ShieldCheck,
+    Share2,
+    ClipboardCheck,
     Rocket,
   }
-  return iconMap[iconName] || Gem // Fallback к Gem если иконка не найдена
+  return iconMap[iconName] || Component // Fallback к Component если иконка не найдена
 }
 
 const navigationItemsWithIcons = [
-  { id: 'intro', title: 'Главная идея', icon: Lightbulb, href: '#intro' },
-  { id: 'market', title: 'Анализ рынка', icon: TrendingUp, href: '#market' },
-  { id: 'product', title: 'Концепция продукта', icon: Package, href: '#product' },
-  { id: 'tech', title: 'Технологический стек', icon: Cpu, href: '#tech' },
-  { id: 'roadmap', title: 'Этапы и сроки', icon: Map, href: '#roadmap' },
-  { id: 'offer', title: 'Ваши инвестиции', icon: Gem, href: '#offer' },
-  { id: 'team', title: 'Наша экспертиза', icon: ShieldCheck, href: '#team' },
-  { id: 'components', title: 'Компоненты верстки', icon: Package, href: '#components' },
-  { id: 'next', title: 'Следующие шаги', icon: Rocket, href: '#next' },
+  { id: '1-intro', title: 'Введение и цели проекта', icon: FileText, href: '#1-intro' },
+  { id: '2-functions', title: 'Функциональные требования', icon: Component, href: '#2-functions' },
+  { id: '3-use-cases', title: 'Пользовательские сценарии', icon: Users, href: '#3-use-cases' },
+  { id: '4-tech-spec', title: 'Технические требования', icon: Cpu, href: '#4-tech-spec' },
+  { id: '5-api', title: 'Программные интерфейсы (API)', icon: Share2, href: '#5-api' },
+  { id: '6-tests', title: 'Процедура приемки', icon: ClipboardCheck, href: '#6-tests' },
+  { id: '7-finish', title: 'Заключение и План Реализации', icon: Rocket, href: '#7-finish' },
 ]
 
 export default function HomePage() {
-  const [activeSection, setActiveSection] = useState('intro')
+  const [activeSection, setActiveSection] = useState('1-intro')
   const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number }>>([])
@@ -247,8 +241,8 @@ export default function HomePage() {
                           })()}
                         </div>
                         <div>
-                          <h2 className="text-lg font-semibold">Дюжина</h2>
-                          <p className="text-xs text-muted-foreground">Коммерческое предложение</p>
+                          <h2 className="text-lg font-semibold">INFLUBALANCE</h2>
+                          <p className="text-xs text-muted-foreground">AI-powered outreach platform</p>
                         </div>
                       </div>
                       <div className="space-y-2">
