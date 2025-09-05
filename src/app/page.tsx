@@ -149,7 +149,7 @@ export default function HomePage() {
         </div>
         
         {/* Основной контент */}
-        <main className={`flex-1 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''} ${isLeftSidebarOpen ? 'lg:ml-64' : ''}`}>
+        <main className={`flex-1 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''}`}>
           {/* Мобильная навигация */}
           <div className="lg:hidden">
             <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
@@ -242,7 +242,7 @@ export default function HomePage() {
           </div>
 
           {/* Контент */}
-          <div className="p-4 sm:p-6 md:p-10 lg:pt-20 pt-20">
+          <div className={`pt-20 px-4 sm:px-6 md:px-10 pb-4 sm:pb-6 md:pb-10 ${isLeftSidebarOpen ? 'lg:pl-6' : 'lg:pl-10'}`}>
             <div className="max-w-4xl mx-auto">
 
               <section>
