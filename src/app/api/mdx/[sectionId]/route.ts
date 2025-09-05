@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { sectionId } = params
-    const mdxPath = join(process.cwd(), 'src', 'mdx', `${sectionId}.mdx`)
+    const mdxPath = join(process.cwd(), 'content', `${sectionId}.mdx`)
     
     const source = readFileSync(mdxPath, 'utf8')
     

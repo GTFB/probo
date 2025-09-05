@@ -49,16 +49,14 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
       // Получаем все MDX файлы с их названиями разделов
       const mdxFiles = [
         { id: 'intro', name: 'Главная идея' },
-        { id: 'problem', name: 'Проблема' },
-        { id: 'solution', name: 'Решение' },
-        { id: 'features', name: 'Функции' },
-        { id: 'benefits', name: 'Преимущества' },
-        { id: 'pricing', name: 'Ценообразование' },
-        { id: 'competitors', name: 'Конкуренты' },
-        { id: 'implementation', name: 'Реализация' },
-        { id: 'support', name: 'Поддержка' },
-        { id: 'faq', name: 'FAQ' },
-        { id: 'cta', name: 'Призыв к действию' }
+        { id: 'market', name: 'Анализ рынка' },
+        { id: 'product', name: 'Концепция продукта' },
+        { id: 'tech', name: 'Технологический стек' },
+        { id: 'roadmap', name: 'Этапы и сроки' },
+        { id: 'offer', name: 'Ваши инвестиции' },
+        { id: 'team', name: 'Наша экспертиза' },
+        { id: 'components', name: 'Компоненты верстки' },
+        { id: 'next', name: 'Следующие шаги' }
       ]
       
       const index: SearchIndex[] = []
@@ -232,12 +230,11 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
       <div className="space-y-4">
         {/* Поисковая строка */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
             placeholder="Поиск по контенту..."
             value={query}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-10 pr-10"
+            className="pr-10"
           />
           {query && (
             <Button
@@ -263,58 +260,71 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
 
         {/* Результаты поиска */}
         {query && results.length > 0 && (
-          <div className="space-y-2 max-h-96 overflow-y-auto">
+          <div className="space-y-2 h-full overflow-y-auto" style={{
+            scrollbarWidth: 'none', /* Firefox */
+            msOverflowStyle: 'none', /* IE and Edge */
+          }}>
+            <style jsx>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
             <div className="text-xs text-muted-foreground">
               Найдено: {results.length} результатов
             </div>
-            {results.map((result) => (
-              <Card 
-                key={result.id} 
-                className="cursor-pointer hover:bg-muted/50 transition-colors"
-                onClick={() => onResultClick(result)}
-              >
-                <CardContent className="p-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-xs px-2 py-1 rounded ${
-                          result.level === 1 ? 'bg-primary/10 text-primary' :
-                          result.level === 2 ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' :
-                          result.level === 3 ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300' :
-                          'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
-                        }`}>
-                          {result.level === 1 ? 'H1' : result.level === 2 ? 'H2' : result.level === 3 ? 'H3' : 'Текст'}
-                        </span>
-                        <span className="text-xs text-muted-foreground truncate">
-                          {result.section}
-                        </span>
-                        {onSectionChange && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-5 px-2 text-xs"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              onSectionChange(result.sectionId)
-                            }}
-                          >
-                            Перейти
-                          </Button>
-                        )}
+            <div className="flex flex-col h-full gap-2" style={{
+              scrollbarWidth: 'none', /* Firefox */
+              msOverflowStyle: 'none', /* IE and Edge */
+            }}>
+              {results.map((result) => (
+                <Card 
+                  key={result.id} 
+                  className="cursor-pointer hover:bg-muted/50 transition-colors flex-1"
+                  onClick={() => onResultClick(result)}
+                >
+                  <CardContent className="p-3 h-full flex flex-col justify-center">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`text-xs px-2 py-1 rounded ${
+                            result.level === 1 ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' :
+                            result.level === 2 ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' :
+                            result.level === 3 ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' :
+                            'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                          }`}>
+                            {result.level === 1 ? 'H1' : result.level === 2 ? 'H2' : result.level === 3 ? 'H3' : 'Текст'}
+                          </span>
+                          <span className="text-xs text-muted-foreground truncate">
+                            {result.section}
+                          </span>
+                          {onSectionChange && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 px-2 text-xs"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onSectionChange(result.sectionId)
+                              }}
+                            >
+                              Перейти
+                            </Button>
+                          )}
+                        </div>
+                        <div 
+                          className="text-sm font-medium mb-1"
+                          dangerouslySetInnerHTML={{ __html: result.highlightedContent }}
+                        />
+                        <div className="text-xs text-muted-foreground">
+                          Релевантность: {result.relevance}%
+                        </div>
                       </div>
-                      <div 
-                        className="text-sm font-medium mb-1"
-                        dangerouslySetInnerHTML={{ __html: result.highlightedContent }}
-                      />
-                      <div className="text-xs text-muted-foreground">
-                        Релевантность: {result.relevance}%
-                      </div>
+                      <ArrowRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                     </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 

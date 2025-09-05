@@ -26,32 +26,81 @@ probo/
 ├── docs/
 │   ├── TECH_STACK.md
 │   └── structure.md
+├── content/
+│   ├── components.mdx
+│   ├── intro.mdx
+│   ├── market.mdx
+│   ├── next.mdx
+│   ├── offer.mdx
+│   ├── product.mdx
+│   ├── roadmap.mdx
+│   ├── team.mdx
+│   └── tech.mdx
 ├── src/
 │   ├── app/
+│   │   ├── api/
+│   │   │   └── mdx/
+│   │   │       └── [sectionId]/
+│   │   │           └── route.ts
+│   │   ├── dashboard/
+│   │   │   ├── data.json
+│   │   │   └── page.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   ├── components/
 │   │   ├── ui/
+│   │   │   ├── avatar.tsx
+│   │   │   ├── badge.tsx
+│   │   │   ├── breadcrumb.tsx
 │   │   │   ├── button.tsx
-│   │   │   └── card.tsx
-│   │   ├── navigation.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── chart.tsx
+│   │   │   ├── checkbox.tsx
+│   │   │   ├── collapsible.tsx
+│   │   │   ├── drawer.tsx
+│   │   │   ├── dropdown-menu.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── label.tsx
+│   │   │   ├── select.tsx
+│   │   │   ├── separator.tsx
+│   │   │   ├── sheet.tsx
+│   │   │   ├── sidebar.tsx
+│   │   │   ├── skeleton.tsx
+│   │   │   ├── sonner.tsx
+│   │   │   ├── table.tsx
+│   │   │   ├── tabs.tsx
+│   │   │   ├── toggle-group.tsx
+│   │   │   ├── toggle.tsx
+│   │   │   └── tooltip.tsx
+│   │   ├── app-sidebar.tsx
+│   │   ├── chart-area-interactive.tsx
 │   │   ├── competitor-chart.tsx
+│   │   ├── data-table.tsx
+│   │   ├── mdx-content.tsx
+│   │   ├── mdx-layout.tsx
+│   │   ├── nav-documents.tsx
+│   │   ├── nav-main.tsx
+│   │   ├── nav-projects.tsx
+│   │   ├── nav-secondary.tsx
+│   │   ├── nav-user.tsx
+│   │   ├── navigation.tsx
+│   │   ├── search-engine.tsx
+│   │   ├── search-form.tsx
+│   │   ├── section-cards.tsx
+│   │   ├── site-header.tsx
+│   │   ├── table-of-contents.tsx
 │   │   └── tariff-card.tsx
+│   ├── hooks/
+│   │   └── use-mobile.tsx
 │   ├── lib/
 │   │   └── utils.ts
-│   ├── types/
-│   │   └── proposal.ts
-│   └── mdx/
-│       ├── intro.mdx
-│       ├── market.mdx
-│       ├── product.mdx
-│       ├── tech.mdx
-│       ├── roadmap.mdx
-│       ├── offer.mdx
-│       ├── team.mdx
-│       └── next.mdx
+│   └── types/
+│       └── proposal.ts
 ├── public/
+│   ├── favicon.ico
+│   ├── index.html
+│   └── probo.svg
 ├── external-storage/
 ├── .env
 ├── .gitignore

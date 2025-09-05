@@ -15,6 +15,7 @@ interface MDXFrontmatter {
   title: string
   icon: string
   nextButtonText: string
+  prevButtonText?: string
   ctaLink?: string
   ctaText?: string
 }
@@ -27,6 +28,7 @@ const navigationItems: NavigationItem[] = [
   { id: 'roadmap', title: 'Этапы и сроки', icon: 'Map', href: '#roadmap' },
   { id: 'offer', title: 'Ваши инвестиции', icon: 'Gem', href: '#offer' },
   { id: 'team', title: 'Наша экспертиза', icon: 'ShieldCheck', href: '#team' },
+  { id: 'components', title: 'Компоненты верстки', icon: 'Package', href: '#components' },
   { id: 'next', title: 'Следующие шаги', icon: 'Rocket', href: '#next' },
 ]
 
@@ -42,6 +44,21 @@ import {
   Rocket,
 } from 'lucide-react'
 
+// Функция для получения иконки по имени
+const getIconByName = (iconName: string) => {
+  const iconMap: Record<string, any> = {
+    Lightbulb,
+    TrendingUp,
+    Package,
+    Cpu,
+    Map,
+    Gem,
+    ShieldCheck,
+    Rocket,
+  }
+  return iconMap[iconName] || Gem // Fallback к Gem если иконка не найдена
+}
+
 const navigationItemsWithIcons = [
   { id: 'intro', title: 'Главная идея', icon: Lightbulb, href: '#intro' },
   { id: 'market', title: 'Анализ рынка', icon: TrendingUp, href: '#market' },
@@ -50,6 +67,7 @@ const navigationItemsWithIcons = [
   { id: 'roadmap', title: 'Этапы и сроки', icon: Map, href: '#roadmap' },
   { id: 'offer', title: 'Ваши инвестиции', icon: Gem, href: '#offer' },
   { id: 'team', title: 'Наша экспертиза', icon: ShieldCheck, href: '#team' },
+  { id: 'components', title: 'Компоненты верстки', icon: Package, href: '#components' },
   { id: 'next', title: 'Следующие шаги', icon: Rocket, href: '#next' },
 ]
 
@@ -94,28 +112,75 @@ export default function HomePage() {
 
   return (
     <SidebarProvider defaultOpen={true}>
+      <style jsx global>{`
+        * {
+          transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+        }
+        
+        /* Единый анимационный стиль для всех элементов */
+        .sidebar-sync-animation {
+          transition: transform 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out, margin-left 0.3s ease-in-out, margin-right 0.3s ease-in-out !important;
+        }
+        
+        /* Простая анимация для сайдбаров */
+        .sidebar-animation {
+          transition: transform 0.3s ease-in-out !important;
+        }
+        
+        .sidebar-animation.hidden {
+          transform: translateX(-100%) !important;
+        }
+        
+        .sidebar-animation.visible {
+          transform: translateX(0) !important;
+        }
+        
+        .right-sidebar-animation {
+          transition: transform 0.3s ease-in-out !important;
+        }
+        
+        .right-sidebar-animation.hidden {
+          transform: translateX(100%) !important;
+        }
+        
+        .right-sidebar-animation.visible {
+          transform: translateX(0) !important;
+        }
+        
+        /* Синхронная анимация тем для всех элементов */
+        .theme-transition {
+          transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+        }
+      `}</style>
       <div className="flex min-h-screen">
         {/* Десктопный левый сайдбар */}
-        {isLeftSidebarOpen && (
+        <div className={`hidden lg:block fixed left-0 top-0 h-full z-40 sidebar-animation ${
+          isLeftSidebarOpen ? 'visible' : 'hidden'
+        }`}>
           <AppSidebar
             items={navigationItemsWithIcons}
             activeSection={activeSection}
             onSectionChange={handleSectionChange}
-            onToggle={() => setIsLeftSidebarOpen(false)}
+            onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
           />
-        )}
+        </div>
         
         {/* Sticky Header для десктопа */}
-        <div className="hidden lg:block fixed top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b" 
-             style={{ 
-               left: isLeftSidebarOpen ? '16rem' : '0', 
-               right: isRightSidebarOpen ? '20rem' : '0' 
-             }}>
-          <div className="px-6 h-25 flex items-center">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Gem className="w-4 h-4 text-primary-foreground" />
+        <div 
+          className="hidden lg:block fixed top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b sidebar-sync-animation theme-transition"
+          style={{
+            left: isLeftSidebarOpen ? '16rem' : '0',
+            right: isRightSidebarOpen ? '20rem' : '0'
+          }}
+        >
+          <div className={`px-4 sm:px-6 md:px-10 h-25 flex items-center transition-all duration-300 ease-in-out`}>
+            <div className="flex items-center justify-between w-full">
+              <div className={`flex items-center gap-4 transition-all duration-300 ease-in-out ${isLeftSidebarOpen ? '' : 'lg:ml-0'}`}>
+                <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg flex items-center justify-center">
+                  {(() => {
+                    const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
+                    return <IconComponent className="w-4 h-4 text-white dark:text-black" />
+                  })()}
                 </div>
                 <div>
                   <h1 className="text-2xl font-heading font-bold text-foreground">
@@ -155,7 +220,13 @@ export default function HomePage() {
         </div>
         
         {/* Основной контент */}
-        <main className={`flex-1 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''}`}>
+        <main 
+          className="flex-1 overflow-y-auto sidebar-sync-animation theme-transition"
+          style={{
+            marginLeft: isLeftSidebarOpen ? '16rem' : '0',
+            marginRight: isRightSidebarOpen ? '20rem' : '0'
+          }}
+        >
           {/* Мобильная навигация */}
           <div className="lg:hidden">
             <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
@@ -169,8 +240,11 @@ export default function HomePage() {
                     </SheetTrigger>
                     <SheetContent side="left" className="w-80">
                       <div className="flex items-center gap-2 mb-6">
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                          <Gem className="w-4 h-4 text-primary-foreground" />
+                        <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg flex items-center justify-center">
+                          {(() => {
+                            const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
+                            return <IconComponent className="w-4 h-4 text-white dark:text-black" />
+                          })()}
                         </div>
                         <div>
                           <h2 className="text-lg font-semibold">Дюжина</h2>
@@ -185,8 +259,8 @@ export default function HomePage() {
                           return (
                             <Button
                               key={item.id}
-                              variant={isActive ? "default" : "ghost"}
-                              className="w-full justify-start"
+                              variant="ghost"
+                              className={`w-full justify-start ${isActive ? "bg-accent" : ""}`}
                               onClick={() => handleSectionChange(item.id)}
                             >
                               <Icon className="w-4 h-4 mr-2" />
@@ -217,23 +291,60 @@ export default function HomePage() {
                   </SheetTrigger>
                   <SheetContent side="right" className="w-80">
                     <div className="p-4">
-                      <h3 className="text-sm font-semibold mb-4">Навигация</h3>
-                      <SearchEngine 
-                        onResultClick={(result) => {
-                          const element = document.getElementById(result.id)
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                          } else {
-                            const headings = document.querySelectorAll('h1, h2, h3')
-                            headings.forEach(heading => {
-                              if (heading.textContent?.trim() === result.title) {
-                                heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                              }
-                            })
-                          }
-                        }}
-                        onSectionChange={handleSectionChange}
-                      />
+                      <h3 className="text-sm font-semibold mb-4">Оглавление</h3>
+                      
+                      {/* TOC - оглавление текущего раздела */}
+                      <div className="space-y-1 mb-6">
+                        {currentToc.length === 0 ? (
+                          <p className="text-sm text-muted-foreground">Нет заголовков</p>
+                        ) : (
+                          currentToc.map((item) => (
+                            <Button
+                              key={item.id}
+                              variant="ghost"
+                              size="sm"
+                              className="w-full justify-start text-left h-auto py-2 px-3"
+                              style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
+                              onClick={() => {
+                                const element = document.getElementById(item.id)
+                                if (element) {
+                                  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                } else {
+                                  const headings = document.querySelectorAll('h1, h2, h3')
+                                  headings.forEach(heading => {
+                                    if (heading.textContent?.trim() === item.title) {
+                                      heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                    }
+                                  })
+                                }
+                              }}
+                            >
+                              <span className="text-sm truncate">{item.title}</span>
+                            </Button>
+                          ))
+                        )}
+                      </div>
+                      
+                      {/* Поиск */}
+                      <div className="border-t pt-4">
+                        <h4 className="text-sm font-semibold mb-2">Поиск</h4>
+                        <SearchEngine 
+                          onResultClick={(result) => {
+                            const element = document.getElementById(result.id)
+                            if (element) {
+                              element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                            } else {
+                              const headings = document.querySelectorAll('h1, h2, h3')
+                              headings.forEach(heading => {
+                                if (heading.textContent?.trim() === result.title) {
+                                  heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                }
+                              })
+                            }
+                          }}
+                          onSectionChange={handleSectionChange}
+                        />
+                      </div>
                     </div>
                   </SheetContent>
                 </Sheet>
@@ -242,8 +353,8 @@ export default function HomePage() {
           </div>
 
           {/* Контент */}
-          <div className={`pt-20 px-4 sm:px-6 md:px-10 pb-4 sm:pb-6 md:pb-10 ${isLeftSidebarOpen ? 'lg:pl-6' : 'lg:pl-10'}`}>
-            <div className="max-w-4xl mx-auto">
+          <div className={`pt-20 px-4 sm:px-6 md:px-10 pb-16 main-content-animation`}>
+            <div className="w-full">
 
               <section>
                 <div className="mb-8">
@@ -256,15 +367,51 @@ export default function HomePage() {
                   />
                 </div>
 
-                <div className="flex justify-end">
-                  {!isContentLoading && (
-                    <Button onClick={handleNextSection} className="gap-2">
-                      <span>
-                        {currentFrontmatter?.nextButtonText || 'Следующий раздел'}
-                      </span>
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  )}
+                {/* Фиксированный футер с навигацией */}
+                <div 
+                  className="fixed bottom-0 left-0 right-0 lg:left-auto lg:right-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t py-2 h-16 z-30 sidebar-sync-animation theme-transition"
+                  style={{
+                    left: isLeftSidebarOpen ? '16rem' : '0',
+                    right: isRightSidebarOpen ? '20rem' : '0'
+                  }}
+                >
+                  <div className="flex flex-col gap-2 p-2 items-center justify-center h-full">
+                    {/* Десктопная навигация */}
+                    <div className="hidden lg:flex gap-2">
+                      {currentFrontmatter?.prevButtonText && (
+                        <Button variant="outline" size="sm" disabled>
+                          <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+                          {currentFrontmatter.prevButtonText}
+                        </Button>
+                      )}
+                      
+                      {!isContentLoading && currentFrontmatter?.nextButtonText && (
+                        <Button variant="outline" size="sm" onClick={handleNextSection}>
+                          <span>
+                            {currentFrontmatter.nextButtonText}
+                          </span>
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* Мобильная навигация */}
+                    <div className="lg:hidden flex gap-2 w-full px-4">
+                      {currentFrontmatter?.prevButtonText && (
+                        <Button variant="outline" size="sm" className="flex-1" disabled>
+                          <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+                          Назад
+                        </Button>
+                      )}
+                      
+                      {!isContentLoading && currentFrontmatter?.nextButtonText && (
+                        <Button variant="outline" size="sm" className="flex-1" onClick={handleNextSection}>
+                          <span>Вперед</span>
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -272,15 +419,17 @@ export default function HomePage() {
         </main>
 
         {/* Десктопное правое оглавление */}
-        {isRightSidebarOpen && (
+        <div className={`fixed right-0 top-0 h-full z-40 right-sidebar-animation ${
+          isRightSidebarOpen ? 'visible' : 'hidden'
+        }`}>
           <TableOfContents
             items={currentToc}
             activeSection={activeSection}
             onSectionClick={handleSectionChange}
             onSectionChange={handleSectionChange}
-            onToggle={() => setIsRightSidebarOpen(false)}
+            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
           />
-        )}
+        </div>
       </div>
     </SidebarProvider>
   )

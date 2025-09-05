@@ -7,7 +7,6 @@ import {
   Package,
   Cpu,
   Map,
-  Gem,
   ShieldCheck,
   Rocket,
   PanelLeftClose,
@@ -39,12 +38,9 @@ interface AppSidebarProps {
 
 export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: AppSidebarProps) {
   return (
-    <Sidebar className="hidden lg:block">
-      <SidebarHeader className="border-b px-6 h-25 flex items-center justify-between sidebar-header-nowrap">
+    <Sidebar className="hidden lg:block transition-transform duration-300 ease-in-out theme-transition">
+      <SidebarHeader className="border-b px-6 h-25 flex items-center justify-between sidebar-header-nowrap" style={{ height: 'calc(6.25rem + 1px)' }}>
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <Gem className="w-4 h-4 text-primary-foreground" />
-          </div>
           <div>
             <h2 className="text-lg font-semibold">Дюжина</h2>
             <p className="text-xs text-muted-foreground">Коммерческое предложение</p>
@@ -76,16 +72,13 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
           })}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="border-t px-6 py-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
-            <ShieldCheck className="w-4 h-4" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-medium">AIMAX</p>
-            <p className="text-xs text-muted-foreground">Ваш технологический партнер</p>
-          </div>
-        </div>
+      <SidebarFooter className="border-t px-6 py-2 h-16 flex items-center justify-center">
+        <img 
+          src="/probo.svg" 
+          alt="Probo Logo" 
+          className="h-8 w-auto"
+          style={{ WebkitWritingMode: 'vertical-lr' }}
+        />
       </SidebarFooter>
     </Sidebar>
   )
