@@ -47,26 +47,30 @@ export function TableOfContents({ items, activeSection, onSectionClick, onToggle
         
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <CollapsibleContent className="space-y-1">
-            {items.map((item) => (
-              <Button
-                key={item.id}
-                variant="ghost"
-                size="sm"
-                className={`w-full justify-start text-left h-auto py-2 px-3 ${
-                  activeSection === item.id ? "bg-accent text-accent-foreground" : ""
-                }`}
-                style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
-                onClick={() => {
-                  // Прокручиваем к элементу на странице
-                  const element = document.querySelector(`h${item.level}`)
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
-              >
-                <span className="text-sm truncate">{item.title}</span>
-              </Button>
-            ))}
+            {items.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Нет заголовков</p>
+            ) : (
+              items.map((item) => (
+                <Button
+                  key={item.id}
+                  variant="ghost"
+                  size="sm"
+                  className={`w-full justify-start text-left h-auto py-2 px-3 ${
+                    activeSection === item.id ? "bg-accent text-accent-foreground" : ""
+                  }`}
+                  style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
+                  onClick={() => {
+                    // Прокручиваем к элементу на странице
+                    const element = document.querySelector(`h${item.level}`)
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }}
+                >
+                  <span className="text-sm truncate">{item.title}</span>
+                </Button>
+              ))
+            )}
           </CollapsibleContent>
         </Collapsible>
       </div>

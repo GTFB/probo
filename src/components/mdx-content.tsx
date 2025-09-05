@@ -48,35 +48,38 @@ function markdownToHtml(markdown: string): string {
 function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
   // Сначала удаляем frontmatter
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
-  const lines = contentWithoutFrontmatter.split('\n')
+  
+  // Удаляем все \r символы
+  const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
+  
+  const lines = cleanContent.split('\n')
   const toc: Array<{ id: string; title: string; level: number }> = []
   
-  lines.forEach((line) => {
-    const h1Match = line.match(/^# (.*)$/)
-    const h2Match = line.match(/^## (.*)$/)
-    const h3Match = line.match(/^### (.*)$/)
+  lines.forEach((line, index) => {
+    const trimmedLine = line.trim()
     
-    if (h1Match) {
+    if (trimmedLine.startsWith('# ')) {
       toc.push({
         id: `h1-${toc.length + 1}`,
-        title: h1Match[1],
+        title: trimmedLine.substring(2),
         level: 1
       })
-    } else if (h2Match) {
+    } else if (trimmedLine.startsWith('## ')) {
       toc.push({
         id: `h2-${toc.length + 1}`,
-        title: h2Match[1],
+        title: trimmedLine.substring(3),
         level: 2
       })
-    } else if (h3Match) {
+    } else if (trimmedLine.startsWith('### ')) {
       toc.push({
         id: `h3-${toc.length + 1}`,
-        title: h3Match[1],
+        title: trimmedLine.substring(4),
         level: 3
       })
     }
   })
   
+  console.log('Final TOC:', toc)
   return toc
 }
 
