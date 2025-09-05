@@ -55,11 +55,9 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
           </div>
         </div>
         {onToggle && (
-          <div className="flex items-center">
-            <Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={onToggle}>
-              <PanelLeftClose className="h-3 w-3" />
-            </Button>
-          </div>
+          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 flex-shrink-0" onClick={onToggle}>
+            <PanelLeftClose className="h-3 w-3" />
+          </Button>
         )}
       </SidebarHeader>
       <SidebarContent className="px-3 py-2">
