@@ -21,13 +21,13 @@ interface MDXFrontmatter {
 }
 
 const navigationItems: NavigationItem[] = [
-  { id: '1-intro', title: 'Введение и цели проекта', icon: 'FileText', href: '#1-intro' },
-  { id: '2-functions', title: 'Функциональные требования', icon: 'Component', href: '#2-functions' },
-  { id: '3-use-cases', title: 'Пользовательские сценарии', icon: 'Users', href: '#3-use-cases' },
-  { id: '4-tech-spec', title: 'Технические требования', icon: 'Cpu', href: '#4-tech-spec' },
-  { id: '5-api', title: 'Программные интерфейсы (API)', icon: 'Share2', href: '#5-api' },
-  { id: '6-tests', title: 'Процедура приемки', icon: 'ClipboardCheck', href: '#6-tests' },
-  { id: '7-finish', title: 'Заключение и План Реализации', icon: 'Rocket', href: '#7-finish' },
+  { id: '1-intro', title: 'Введение и цели проекта', icon: FileText, href: '#1-intro' },
+  { id: '2-functions', title: 'Функциональные требования', icon: Component, href: '#2-functions' },
+  { id: '3-use-cases', title: 'Пользовательские сценарии', icon: Users, href: '#3-use-cases' },
+  { id: '4-tech-spec', title: 'Технические требования', icon: Cpu, href: '#4-tech-spec' },
+  { id: '5-api', title: 'Программные интерфейсы (API)', icon: Share2, href: '#5-api' },
+  { id: '6-tests', title: 'Процедура приемки', icon: ClipboardCheck, href: '#6-tests' },
+  { id: '7-finish', title: 'Заключение и План Реализации', icon: Rocket, href: '#7-finish' },
 ]
 
 // Импортируем иконки для навигации
@@ -41,7 +41,7 @@ import {
   Rocket,
 } from 'lucide-react'
 
-// Функция для получения иконки по имени
+// Функция для получения иконки по имени из frontmatter
 const getIconByName = (iconName: string) => {
   const iconMap: Record<string, any> = {
     FileText,
