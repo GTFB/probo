@@ -59,6 +59,7 @@ export default function HomePage() {
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number }>>([])
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true)
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
+  const [currentH1Title, setCurrentH1Title] = useState<string>('')
 
   const handleSectionChange = useCallback((sectionId: string) => {
     setActiveSection(sectionId)
@@ -79,6 +80,10 @@ export default function HomePage() {
     setCurrentToc(toc)
   }, [])
 
+  const handleH1Change = useCallback((h1Title: string) => {
+    setCurrentH1Title(h1Title)
+  }, [])
+
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
 
   return (
@@ -94,8 +99,52 @@ export default function HomePage() {
           />
         )}
         
-        {/* Основной контент */}
-        <main className={`flex-1 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''}`}>
+                            {/* Основной контент */}
+                    <main className={`flex-1 overflow-y-auto ${isRightSidebarOpen ? 'xl:pr-80' : ''}`}>
+                      {/* Sticky Header для десктопа */}
+                      <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+                        <div className="px-6 py-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                <Gem className="w-4 h-4 text-primary-foreground" />
+                              </div>
+                              <div>
+                                <h1 className="text-2xl font-heading font-bold text-foreground">
+                                  {currentH1Title || currentFrontmatter?.title || navigationItems.find(item => item.id === activeSection)?.title}
+                                </h1>
+                                <p className="text-sm text-muted-foreground">
+                                  Раздел {sectionNumber} из {navigationItems.length}
+                                </p>
+                              </div>
+                            </div>
+                            
+                            {/* Кнопки управления сайдбарами */}
+                            <div className="flex gap-2">
+                              {!isLeftSidebarOpen && (
+                                <Button 
+                                  variant="outline" 
+                                  size="sm" 
+                                  onClick={() => setIsLeftSidebarOpen(true)}
+                                >
+                                  <Menu className="w-4 h-4 mr-2" />
+                                  Показать навигацию
+                                </Button>
+                              )}
+                              {!isRightSidebarOpen && (
+                                <Button 
+                                  variant="outline" 
+                                  size="sm" 
+                                  onClick={() => setIsRightSidebarOpen(true)}
+                                >
+                                  <X className="w-4 h-4 mr-2" />
+                                  Показать оглавление
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
           {/* Мобильная навигация */}
           <div className="lg:hidden">
             <div className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
@@ -138,14 +187,14 @@ export default function HomePage() {
                     </SheetContent>
                   </Sheet>
                   
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                      Раздел {sectionNumber} из 8
-                    </h3>
-                    <h2 className="text-lg font-heading font-bold">
-                      {currentFrontmatter?.title || navigationItems.find(item => item.id === activeSection)?.title}
-                    </h2>
-                  </div>
+                                                <div>
+                                <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                                  Раздел {sectionNumber} из {navigationItems.length}
+                                </h3>
+                                <h1 className="text-lg font-heading font-bold">
+                                  {currentH1Title || currentFrontmatter?.title || navigationItems.find(item => item.id === activeSection)?.title}
+                                </h1>
+                              </div>
                 </div>
                 
                 {/* Мобильное оглавление */}
@@ -190,29 +239,6 @@ export default function HomePage() {
           {/* Контент */}
           <div className="p-4 sm:p-6 md:p-10">
             <div className="max-w-4xl mx-auto">
-              {/* Кнопки управления сайдбарами (только на десктопе) */}
-              <div className="hidden lg:flex gap-2 mb-4">
-                {!isLeftSidebarOpen && (
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setIsLeftSidebarOpen(true)}
-                  >
-                    <Menu className="w-4 h-4 mr-2" />
-                    Показать навигацию
-                  </Button>
-                )}
-                {!isRightSidebarOpen && (
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setIsRightSidebarOpen(true)}
-                  >
-                    <X className="w-4 h-4 mr-2" />
-                    Показать оглавление
-                  </Button>
-                )}
-              </div>
 
               <section>
                 <div className="mb-8">
@@ -220,6 +246,7 @@ export default function HomePage() {
                     sectionId={activeSection} 
                     onFrontmatterChange={handleFrontmatterChange}
                     onTocChange={handleTocChange}
+                    onH1Change={handleH1Change}
                   />
                 </div>
 

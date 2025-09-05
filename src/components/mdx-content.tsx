@@ -15,6 +15,7 @@ interface MDXContentProps {
   sectionId: string
   onFrontmatterChange?: (frontmatter: MDXFrontmatter) => void
   onTocChange?: (toc: Array<{ id: string; title: string; level: number }>) => void
+  onH1Change?: (h1Title: string) => void
 }
 
 // Простая функция для конвертации Markdown в HTML
@@ -102,19 +103,38 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
   return toc
 }
 
-export function MDXContent({ sectionId, onFrontmatterChange, onTocChange }: MDXContentProps) {
+// Функция для извлечения H1 заголовка
+function extractH1Title(markdown: string): string | null {
+  const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
+  const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
+  
+  const lines = cleanContent.split('\n')
+  
+  for (const line of lines) {
+    const trimmedLine = line.trim()
+    if (trimmedLine.startsWith('# ')) {
+      return trimmedLine.substring(2)
+    }
+  }
+  
+  return null
+}
+
+export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Change }: MDXContentProps) {
   const [content, setContent] = useState<string>('')
   const [frontmatter, setFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const onFrontmatterChangeRef = useRef(onFrontmatterChange)
   const onTocChangeRef = useRef(onTocChange)
+  const onH1ChangeRef = useRef(onH1Change)
 
   // Обновляем ref при изменении callback
   useEffect(() => {
     onFrontmatterChangeRef.current = onFrontmatterChange
     onTocChangeRef.current = onTocChange
-  }, [onFrontmatterChange, onTocChange])
+    onH1ChangeRef.current = onH1Change
+  }, [onFrontmatterChange, onTocChange, onH1Change])
 
   useEffect(() => {
     const loadMDX = async () => {
@@ -149,6 +169,12 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange }: MDXC
         console.log('Generated TOC:', toc)
         console.log('Generated HTML:', htmlContent)
         onTocChangeRef.current?.(toc)
+        
+        // Извлекаем H1 заголовок
+        const h1Title = extractH1Title(data.content)
+        if (h1Title) {
+          onH1ChangeRef.current?.(h1Title)
+        }
         
       } catch (error) {
         console.error('Error loading MDX:', error)
