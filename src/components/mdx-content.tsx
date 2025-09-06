@@ -58,9 +58,13 @@ async function highlightCode(code: string, language: string = 'text'): Promise<s
       defaultColor: false,
       transformers: [
         {
-          pre(node) {
-            this.addClassToHast(node, 'shiki-code-block')
+          name: 'add-classes',
+          pre(node: any) {
+            node.properties.class = 'shiki-code-block'
             node.properties['data-language'] = lang
+          },
+          code(node: any) {
+            node.properties.class = 'shiki-code'
           }
         }
       ]
