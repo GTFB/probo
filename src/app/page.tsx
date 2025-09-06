@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react'
 import { AppSidebar } from '@/components/app-sidebar'
 import { TableOfContents } from '@/components/table-of-contents'
+import { PROJECT_SETTINGS, NAVIGATION_ITEMS } from '@/lib/settings'
 import { SearchEngine } from '@/components/search-engine'
 import { Button } from '@/components/ui/button'
 import { MDXContent } from '@/components/mdx-content'
@@ -20,17 +21,15 @@ interface MDXFrontmatter {
   ctaText?: string
 }
 
-const navigationItems: NavigationItem[] = [
-  { id: '1-intro', title: 'Введение и цели проекта', icon: 'FileText', href: '#1-intro' },
-  { id: '2-functions', title: 'Функциональные требования', icon: 'Component', href: '#2-functions' },
-  { id: '3-use-cases', title: 'Пользовательские сценарии', icon: 'Users', href: '#3-use-cases' },
-  { id: '4-tech-spec', title: 'Технические требования', icon: 'Cpu', href: '#4-tech-spec' },
-  { id: '5-api', title: 'Программные интерфейсы (API)', icon: 'Share2', href: '#5-api' },
-  { id: '6-tests', title: 'Процедура приемки', icon: 'ClipboardCheck', href: '#6-tests' },
-  { id: '7-finish', title: 'Заключение и План Реализации', icon: 'Rocket', href: '#7-finish' },
-]
+// Use navigation from settings
+const navigationItems: NavigationItem[] = NAVIGATION_ITEMS.map(item => ({
+  id: item.id,
+  title: item.title,
+  icon: item.icon.name,
+  href: item.href
+}))
 
-// Импортируем иконки для навигации
+// Import icons for navigation (keep only those used in getIconByName)
 import {
   FileText,
   Component,
@@ -41,7 +40,7 @@ import {
   Rocket,
 } from 'lucide-react'
 
-// Функция для получения иконки по имени
+// Function to get icon by name
 const getIconByName = (iconName: string) => {
   const iconMap: Record<string, any> = {
     FileText,
@@ -52,21 +51,14 @@ const getIconByName = (iconName: string) => {
     ClipboardCheck,
     Rocket,
   }
-  return iconMap[iconName] || Component // Fallback к Component если иконка не найдена
+  return iconMap[iconName] || Component // Fallback to Component if icon not found
 }
 
-const navigationItemsWithIcons = [
-  { id: '1-intro', title: 'Введение и цели проекта', icon: FileText, href: '#1-intro' },
-  { id: '2-functions', title: 'Функциональные требования', icon: Component, href: '#2-functions' },
-  { id: '3-use-cases', title: 'Пользовательские сценарии', icon: Users, href: '#3-use-cases' },
-  { id: '4-tech-spec', title: 'Технические требования', icon: Cpu, href: '#4-tech-spec' },
-  { id: '5-api', title: 'Программные интерфейсы (API)', icon: Share2, href: '#5-api' },
-  { id: '6-tests', title: 'Процедура приемки', icon: ClipboardCheck, href: '#6-tests' },
-  { id: '7-finish', title: 'Заключение и План Реализации', icon: Rocket, href: '#7-finish' },
-]
+// Use navigation with icons from settings
+const navigationItemsWithIcons = NAVIGATION_ITEMS
 
 export default function HomePage() {
-  const [activeSection, setActiveSection] = useState('1-intro')
+  const [activeSection, setActiveSection] = useState('1')
   const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number }>>([])
@@ -111,12 +103,12 @@ export default function HomePage() {
           transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
         }
         
-        /* Единый анимационный стиль для всех элементов */
+        /* Unified animation style for all elements */
         .sidebar-sync-animation {
           transition: transform 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out, margin-left 0.3s ease-in-out, margin-right 0.3s ease-in-out !important;
         }
         
-        /* Простая анимация для сайдбаров */
+        /* Simple animation for sidebars */
         .sidebar-animation {
           transition: transform 0.3s ease-in-out !important;
         }
@@ -141,13 +133,13 @@ export default function HomePage() {
           transform: translateX(0) !important;
         }
         
-        /* Синхронная анимация тем для всех элементов */
+        /* Synchronized theme animation for all elements */
         .theme-transition {
           transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
         }
       `}</style>
       <div className="flex min-h-screen">
-        {/* Десктопный левый сайдбар */}
+        {/* Desktop left sidebar */}
         <div className={`hidden lg:block fixed left-0 top-0 h-full z-40 sidebar-animation ${
           isLeftSidebarOpen ? 'visible' : 'hidden'
         }`}>
@@ -159,7 +151,7 @@ export default function HomePage() {
           />
         </div>
         
-        {/* Sticky Header для десктопа */}
+        {/* Sticky Header for desktop */}
         <div 
           className="hidden lg:block fixed top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b sidebar-sync-animation theme-transition"
           style={{
@@ -186,7 +178,7 @@ export default function HomePage() {
                 </div>
               </div>
               
-              {/* Кнопки управления сайдбарами */}
+              {/* Sidebar control buttons */}
               <div className="flex gap-2">
                 {!isLeftSidebarOpen && (
                   <Button 
@@ -213,7 +205,7 @@ export default function HomePage() {
           </div>
         </div>
         
-        {/* Основной контент */}
+        {/* Main content */}
         <main 
           className="flex-1 overflow-y-auto sidebar-sync-animation theme-transition"
           style={{
@@ -221,7 +213,7 @@ export default function HomePage() {
             marginRight: isRightSidebarOpen ? '20rem' : '0'
           }}
         >
-          {/* Мобильная навигация */}
+          {/* Mobile navigation */}
           <div className="lg:hidden">
             <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
               <div className="flex items-center justify-between p-6 h-25">
@@ -241,8 +233,8 @@ export default function HomePage() {
                           })()}
                         </div>
                         <div>
-                          <h2 className="text-lg font-semibold">INFLUBALANCE</h2>
-                          <p className="text-xs text-muted-foreground">AI-powered outreach platform</p>
+                          <h2 className="text-lg font-semibold">{PROJECT_SETTINGS.name}</h2>
+                          <p className="text-xs text-muted-foreground">{PROJECT_SETTINGS.description}</p>
                         </div>
                       </div>
                       <div className="space-y-2">
@@ -287,7 +279,7 @@ export default function HomePage() {
                     <div className="p-4">
                       <h3 className="text-sm font-semibold mb-4">Оглавление</h3>
                       
-                      {/* TOC - оглавление текущего раздела */}
+                      {/* TOC - table of contents for current section */}
                       <div className="space-y-1 mb-6">
                         {currentToc.length === 0 ? (
                           <p className="text-sm text-muted-foreground">Нет заголовков</p>
@@ -319,9 +311,9 @@ export default function HomePage() {
                         )}
                       </div>
                       
-                      {/* Поиск */}
+                      {/* Search */}
                       <div className="border-t pt-4">
-                        <h4 className="text-sm font-semibold mb-2">Поиск</h4>
+                        <h4 className="text-sm font-semibold mb-2">Search</h4>
                         <SearchEngine 
                           onResultClick={(result) => {
                             const element = document.getElementById(result.id)
@@ -346,8 +338,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Контент */}
-          <div className={`pt-20 px-4 sm:px-6 md:px-10 pb-16 main-content-animation`}>
+          {/* Content */}
+          <div className={`pt-20 px-0 sm:px-4 md:px-6 lg:px-10 pb-16 main-content-animation`}>
             <div className="w-full">
 
               <section>
@@ -361,7 +353,7 @@ export default function HomePage() {
                   />
                 </div>
 
-                {/* Фиксированный футер с навигацией */}
+                {/* Fixed footer with navigation */}
                 <div 
                   className="fixed bottom-0 left-0 right-0 lg:left-auto lg:right-auto bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t py-2 h-16 z-30 sidebar-sync-animation theme-transition"
                   style={{
@@ -389,7 +381,7 @@ export default function HomePage() {
                       )}
                     </div>
 
-                    {/* Мобильная навигация */}
+                    {/* Mobile navigation */}
                     <div className="lg:hidden flex gap-2 w-full px-4">
                       {currentFrontmatter?.prevButtonText && (
                         <Button variant="outline" size="sm" className="flex-1" disabled>
@@ -412,7 +404,7 @@ export default function HomePage() {
           </div>
         </main>
 
-        {/* Десктопное правое оглавление */}
+        {/* Desktop right table of contents */}
         <div className={`fixed right-0 top-0 h-full z-40 right-sidebar-animation ${
           isRightSidebarOpen ? 'visible' : 'hidden'
         }`}>

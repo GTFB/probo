@@ -25,26 +25,26 @@ mindmap
   root((Технологический стек Influbalance))
     Frontend
       ::icon(fa fa-desktop)
-      Next.js (Framework)
-      TypeScript (Language)
-      Tailwind CSS (Styling)
-      Shadcn/ui (Components)
+      Framework - Next.js
+      Language - TypeScript
+      Styling - Tailwind CSS
+      Components - Shadcn/ui
     Backend
       ::icon(fa fa-server)
-      Payload CMS (Ядро)
-      Bun / ElysiaJS (Микросервисы)
-      PostgreSQL + pgvector (База данных)
+      Core - Payload CMS
+      Mocroservice - Bun / ElysiaJS
+      Database - PostgreSQL + pgvector
     Интеграции
       ::icon(fa fa-plug)
-      Stripe (Платежи)
-      OpenAI (AI-генерация)
-      Google/MS (Почта)
-      Telegram (Уведомления)
+      Stripe - Stripe API
+      OpenAI - OpenAI API
+      Google/MS - OAuth, SMTP/IMAP
+      Telegram - Telegram Bot API
     DevOps & Tooling
       ::icon(fa fa-tools)
-      Docker (Контейнеризация)
-      GitHub Actions (CI/CD)
-      Vercel / Kubernetes (Хостинг)
+      Docker - Docker
+      GitHub Actions
+      Vercel / Kubernetes
 ```
 
 #### **4.2. Архитектура**
@@ -63,7 +63,7 @@ graph TD
     User --> CDN[CDN / Vercel]
     CDN --> FE[Frontend: Next.js]
 
-    subgraph "Облачная инфраструктура (Kubernetes / Docker Compose)"
+    subgraph "Kubernetes / Docker"
         LB[Load Balancer]
         subgraph "Backend Services"
             Core[Ядро API: Payload CMS]
@@ -112,5 +112,5 @@ graph TD
     C -- Да --> D[Push образа в Docker Registry];
     D --> E[Авто-деплой на Staging];
     E --> F((Ручной деплой на Production));
-    C -- Нет --> G((Сборка провалена. Уведомление в Slack));
+    C -- Нет --> G((Сборка провалена. Уведомление в Telegram));
 ```

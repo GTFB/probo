@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { TrendingUp, Package, Cpu, ShieldCheck } from "lucide-react"
 
-// Навигационные элементы для dashboard
+// Navigation elements for dashboard
 const navigationItems = [
   { id: 'overview', title: 'Обзор', icon: TrendingUp, href: '#overview' },
   { id: 'projects', title: 'Проекты', icon: Package, href: '#projects' },

@@ -15,14 +15,14 @@ export function MDXRenderer({ htmlContent, mermaidCharts }: MDXRendererProps) {
   useEffect(() => {
     if (!htmlContent) return
 
-    // Создаем временный контейнер для обработки HTML
+    // Create temporary container for HTML processing
     const tempDiv = document.createElement('div')
     tempDiv.innerHTML = htmlContent
 
-    // Находим все плейсхолдеры для Mermaid диаграмм
+    // Find all placeholders for Mermaid diagrams
     const mermaidPlaceholders = tempDiv.querySelectorAll('[data-mermaid-chart]')
     
-    // Заменяем плейсхолдеры на специальные маркеры
+    // Replace placeholders with special markers
     mermaidPlaceholders.forEach((placeholder, index) => {
       const marker = document.createElement('div')
       marker.className = 'mermaid-placeholder'

@@ -22,23 +22,23 @@ interface MDXContentProps {
   onLoadingChange?: (loading: boolean) => void
 }
 
-// Улучшенная функция для конвертации Markdown в HTML с поддержкой Mermaid
+// Improved function to convert Markdown to HTML with Mermaid support
 function markdownToHtml(markdown: string): { html: string; mermaidCharts: string[] } {
-  // Удаляем frontmatter
+  // Remove frontmatter
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
   
   const mermaidCharts: string[] = []
   let chartIndex = 0
   
-  // Обрабатываем Mermaid диаграммы
+  // Process Mermaid diagrams
   let processedContent = cleanContent.replace(/```mermaid\s*\n([\s\S]*?)\n```/g, (match, chart) => {
     const chartId = `mermaid-chart-${chartIndex++}`
     mermaidCharts.push(chart.trim())
     return `<div data-mermaid-chart="${chartId}" data-chart-index="${chartIndex - 1}"></div>`
   })
   
-  // Разбиваем на строки для обработки
+  // Split into lines for processing
   const lines = processedContent.split('\n')
   const htmlLines: string[] = []
   let inList = false
@@ -48,7 +48,7 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
     const line = lines[i].trim()
     
     if (!line) {
-      // Пустая строка - закрываем список если он открыт
+      // Empty line - close list if open
       if (inList && listItems.length > 0) {
         htmlLines.push(`<ul>${listItems.join('')}</ul>`)
         listItems = []
@@ -58,7 +58,7 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
       continue
     }
     
-    // Заголовки
+    // Headers
     if (line.startsWith('#### ')) {
       const title = line.substring(5)
       const id = `h4-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
@@ -76,7 +76,7 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
       const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       htmlLines.push(`<h1 id="${id}">${title}</h1>`)
     }
-    // Списки
+    // Lists
     else if (line.startsWith('* ') || line.startsWith('- ')) {
       const content = line.substring(2)
       listItems.push(`<li>${processInlineMarkdown(content)}</li>`)
@@ -86,21 +86,21 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
       listItems.push(`<li>${processInlineMarkdown(content)}</li>`)
       inList = true
     }
-    // Обычный текст
+    // Regular text
     else {
-      // Закрываем список если он открыт
+      // Close list if open
       if (inList && listItems.length > 0) {
         htmlLines.push(`<ul>${listItems.join('')}</ul>`)
         listItems = []
         inList = false
       }
       
-      // Обрабатываем как параграф
+      // Process as paragraph
       htmlLines.push(`<p>${processInlineMarkdown(line)}</p>`)
     }
   }
   
-  // Закрываем список если он остался открытым
+  // Close list if still open
   if (inList && listItems.length > 0) {
     htmlLines.push(`<ul>${listItems.join('')}</ul>`)
   }
@@ -109,20 +109,20 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
   return { html, mermaidCharts }
 }
 
-// Функция для обработки inline Markdown
+// Function to process inline Markdown
 function processInlineMarkdown(text: string): string {
   return text
-    // Жирный текст
+    // Bold text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Курсив
+    // Italic
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    // Ссылки
+    // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Код
+    // Code
     .replace(/`([^`]+)`/g, '<code>$1</code>')
 }
 
-// Функция для извлечения оглавления из Markdown
+// Function to extract table of contents from Markdown
 function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
@@ -155,7 +155,7 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
   return toc
 }
 
-// Функция для извлечения H1 заголовка
+// Function to extract H1 header
 function extractH1Title(markdown: string): string | null {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
@@ -183,7 +183,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   const onH1ChangeRef = useRef(onH1Change)
   const onLoadingChangeRef = useRef(onLoadingChange)
 
-  // Обновляем ref при изменении callback
+  // Update ref when callback changes
   useEffect(() => {
     onFrontmatterChangeRef.current = onFrontmatterChange
     onTocChangeRef.current = onTocChange
@@ -210,24 +210,24 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           throw new Error(data.error)
         }
         
-        // Конвертируем Markdown в HTML
+        // Convert Markdown to HTML
         const { html: htmlContent, mermaidCharts: charts } = markdownToHtml(data.content)
         setContent(htmlContent)
         setMermaidCharts(charts)
         
-        // Устанавливаем frontmatter
+        // Set frontmatter
         if (data.frontmatter) {
           setFrontmatter(data.frontmatter)
           onFrontmatterChangeRef.current?.(data.frontmatter)
         }
         
-        // Извлекаем оглавление
+        // Extract table of contents
         const toc = extractToc(data.content)
         console.log('Generated TOC:', toc)
         console.log('Generated HTML:', htmlContent)
         onTocChangeRef.current?.(toc)
         
-        // Извлекаем H1 заголовок
+        // Extract H1 header
         const h1Title = extractH1Title(data.content)
         if (h1Title) {
           onH1ChangeRef.current?.(h1Title)

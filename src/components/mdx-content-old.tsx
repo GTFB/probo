@@ -21,18 +21,18 @@ interface MDXContentProps {
   onLoadingChange?: (loading: boolean) => void
 }
 
-// Простая функция для конвертации Markdown в HTML с поддержкой Mermaid
+// Simple function to convert Markdown to HTML with Mermaid support
 function markdownToHtml(markdown: string): { html: string; mermaidCharts: string[] } {
-  // Сначала удаляем frontmatter из начала файла
+  // First remove frontmatter from beginning of file
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   
-  // Удаляем все \r символы
+  // Remove all \r characters
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
   
   const mermaidCharts: string[] = []
   let chartIndex = 0
   
-  // Обрабатываем Mermaid диаграммы
+  // Process Mermaid diagrams
   let processedContent = cleanContent.replace(/```mermaid\s*\n([\s\S]*?)\n```/g, (match, chart) => {
     const chartId = `mermaid-chart-${chartIndex++}`
     mermaidCharts.push(chart.trim())
@@ -40,7 +40,7 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
   })
   
   let html = processedContent
-    // Заголовки с ID
+    // Headers with ID
     .replace(/^### (.*$)/gim, (match, title) => {
       const id = `h3-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       return `<h3 id="${id}">${title}</h3>`
@@ -53,38 +53,38 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
       const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
       return `<h1 id="${id}">${title}</h1>`
     })
-    // Жирный текст
+    // Bold text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Списки - улучшенная обработка
+    // Lists - improved processing
     .replace(/^(\s*)\* (.*$)/gim, '<li>$2</li>')
     .replace(/^(\s*)\d+\. (.*$)/gim, '<li>$2</li>')
-    // Группируем соседние li в ul
+    // Group adjacent li into ul
     .replace(/(<li>.*<\/li>)(\s*<li>.*<\/li>)*/gs, (match) => {
       return `<ul>${match}</ul>`
     })
-    // Параграфы (группируем строки, которые не являются заголовками или списками)
+    // Paragraphs (group lines that are not headers or lists)
     .replace(/^(?!<[h|u|d])(.*$)/gim, '<p>$1</p>')
-    // Убираем лишние <p> теги внутри других элементов
+    // Remove extra <p> tags inside other elements
     .replace(/<p><(h[1-6]|ul|li|div)>/g, '<$1>')
     .replace(/<\/(h[1-6]|ul|li|div)><\/p>/g, '</$1>')
-    // Ссылки
+    // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Убираем лишние пустые параграфы
+    // Remove extra empty paragraphs
     .replace(/<p><\/p>/g, '')
     .replace(/<p>\s*<\/p>/g, '')
-    // Убираем пустые параграфы внутри списков
+    // Remove empty paragraphs inside lists
     .replace(/<ul>\s*<p>\s*<\/p>\s*<\/ul>/g, '')
     .replace(/<li><p>\s*<\/p><\/li>/g, '')
   
   return { html, mermaidCharts }
 }
 
-// Функция для извлечения оглавления из Markdown
+// Function to extract table of contents from Markdown
 function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
-  // Сначала удаляем frontmatter
+  // First remove frontmatter
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   
-  // Удаляем все \r символы
+  // Remove all \r characters
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
   
   const lines = cleanContent.split('\n')
@@ -123,7 +123,7 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
   return toc
 }
 
-// Функция для извлечения H1 заголовка
+// Function to extract H1 header
 function extractH1Title(markdown: string): string | null {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
@@ -151,7 +151,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   const onH1ChangeRef = useRef(onH1Change)
   const onLoadingChangeRef = useRef(onLoadingChange)
 
-  // Обновляем ref при изменении callback
+  // Update ref when callback changes
   useEffect(() => {
     onFrontmatterChangeRef.current = onFrontmatterChange
     onTocChangeRef.current = onTocChange
@@ -178,24 +178,24 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           throw new Error(data.error)
         }
         
-        // Конвертируем Markdown в HTML
+        // Convert Markdown to HTML
         const { html: htmlContent, mermaidCharts: charts } = markdownToHtml(data.content)
         setContent(htmlContent)
         setMermaidCharts(charts)
         
-        // Устанавливаем frontmatter
+        // Set frontmatter
         if (data.frontmatter) {
           setFrontmatter(data.frontmatter)
           onFrontmatterChangeRef.current?.(data.frontmatter)
         }
         
-        // Извлекаем оглавление
+        // Extract table of contents
         const toc = extractToc(data.content)
         console.log('Generated TOC:', toc)
         console.log('Generated HTML:', htmlContent)
         onTocChangeRef.current?.(toc)
         
-        // Извлекаем H1 заголовок
+        // Extract H1 header
         const h1Title = extractH1Title(data.content)
         if (h1Title) {
           onH1ChangeRef.current?.(h1Title)
@@ -206,7 +206,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
       } catch (error) {
         console.error('Error loading MDX:', error)
         setError(error instanceof Error ? error.message : 'Failed to load content')
-        setContent(`<h1>Ошибка загрузки контента для раздела ${sectionId}</h1>`)
+        setContent(`<h1>Error loading content for section ${sectionId}</h1>`)
       } finally {
         setLoading(false)
         onLoadingChangeRef.current?.(false)
@@ -221,7 +221,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
       <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
         <div className="flex flex-col items-center gap-4">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="text-muted-foreground">Загрузка контента...</p>
+          <p className="text-muted-foreground">Loading content...</p>
         </div>
       </div>
     )
@@ -230,7 +230,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   if (error) {
     return (
       <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-6">
-        <h2 className="text-destructive font-semibold mb-2">Ошибка загрузки</h2>
+        <h2 className="text-destructive font-semibold mb-2">Loading Error</h2>
         <p className="text-destructive/80">{error}</p>
       </div>
     )

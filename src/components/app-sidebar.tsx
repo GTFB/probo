@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { PROJECT_SETTINGS } from '@/lib/settings'
 import {
   Lightbulb,
   TrendingUp,
@@ -42,8 +43,8 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
       <SidebarHeader className="border-b px-6 h-25 flex items-center justify-between sidebar-header-nowrap" style={{ height: 'calc(6.25rem + 1px)' }}>
         <div className="flex items-center gap-2">
           <div>
-            <h2 className="text-lg font-semibold">INFLUBALANCE</h2>
-            <p className="text-xs text-muted-foreground">AI-powered outreach platform</p>
+            <h2 className="text-lg font-semibold">{PROJECT_SETTINGS.name}</h2>
+            <p className="text-xs text-muted-foreground">{PROJECT_SETTINGS.description}</p>
           </div>
         </div>
         {onToggle && (
@@ -72,10 +73,10 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
           })}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="border-t px-6 py-2 h-16 flex items-center justify-center">
+      <SidebarFooter className="border-t px-6 py-2 h-16 flex items-start justify-center">
         <img 
-          src="/probo.svg" 
-          alt="Probo Logo" 
+          src="/logo.svg" 
+          alt="Logo" 
           className="h-8 w-auto"
           style={{ WebkitWritingMode: 'vertical-lr' }}
         />
