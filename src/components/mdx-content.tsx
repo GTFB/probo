@@ -165,6 +165,84 @@ function processTable(tableLines: string[]): string {
   return html
 }
 
+// Интерфейс для настроек диаграммы
+interface MermaidSettings {
+  enableZoom?: boolean
+  height?: string
+  zoomMin?: number
+  zoomMax?: number
+  zoomInitial?: number
+  tooltipText?: string
+  disableTooltip?: boolean
+}
+
+// Функция для извлечения настроек из комментариев в коде диаграммы
+function extractMermaidSettings(code: string): MermaidSettings {
+  const settings: MermaidSettings = {}
+  
+  // Ищем комментарии с настройками
+  const lines = code.split('\n')
+  
+  for (const line of lines) {
+    const trimmedLine = line.trim()
+    
+    // Пропускаем пустые строки и комментарии без настроек
+    if (!trimmedLine || !trimmedLine.startsWith('%%')) continue
+    
+    // Извлекаем настройки из комментариев вида %% zoom: true
+    if (trimmedLine.includes('zoom:')) {
+      const zoomMatch = trimmedLine.match(/zoom:\s*(true|false)/i)
+      if (zoomMatch) {
+        settings.enableZoom = zoomMatch[1].toLowerCase() === 'true'
+      }
+    }
+    
+    if (trimmedLine.includes('height:')) {
+      const heightMatch = trimmedLine.match(/height:\s*([^\s]+)/i)
+      if (heightMatch) {
+        settings.height = heightMatch[1]
+      }
+    }
+    
+    if (trimmedLine.includes('zoom-min:')) {
+      const zoomMinMatch = trimmedLine.match(/zoom-min:\s*([0-9.]+)/i)
+      if (zoomMinMatch) {
+        settings.zoomMin = parseFloat(zoomMinMatch[1])
+      }
+    }
+    
+    if (trimmedLine.includes('zoom-max:')) {
+      const zoomMaxMatch = trimmedLine.match(/zoom-max:\s*([0-9.]+)/i)
+      if (zoomMaxMatch) {
+        settings.zoomMax = parseFloat(zoomMaxMatch[1])
+      }
+    }
+    
+    if (trimmedLine.includes('zoom-initial:')) {
+      const zoomInitialMatch = trimmedLine.match(/zoom-initial:\s*([0-9.]+)/i)
+      if (zoomInitialMatch) {
+        settings.zoomInitial = parseFloat(zoomInitialMatch[1])
+      }
+    }
+    
+    if (trimmedLine.includes('tooltip:')) {
+      const tooltipMatch = trimmedLine.match(/tooltip:\s*(.+)/i)
+      if (tooltipMatch) {
+        settings.tooltipText = tooltipMatch[1].trim()
+      }
+    }
+    
+    if (trimmedLine.includes('disable-tooltip:')) {
+      const disableTooltipMatch = trimmedLine.match(/disable-tooltip:\s*(true|false)/i)
+      if (disableTooltipMatch) {
+        settings.disableTooltip = disableTooltipMatch[1].toLowerCase() === 'true'
+      }
+    }
+  }
+  
+  return settings
+}
+
 async function markdownToHtml(markdown: string): Promise<{ html: string; mermaidCharts: string[] }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
@@ -178,17 +256,26 @@ async function markdownToHtml(markdown: string): Promise<{ html: string; mermaid
 
   let processedContent = cleanContent.replace(codeBlockRegex, (match, lang, code) => {
     const key = `__CODE_BLOCK_${placeholderId++}__`
-    placeholders.set(key, JSON.stringify({ lang: lang || 'text', code: code.trim() }))
+    
+    // Извлекаем настройки из комментариев перед диаграммой
+    const settings = extractMermaidSettings(code)
+    
+    placeholders.set(key, JSON.stringify({ 
+      lang: lang || 'text', 
+      code: code.trim(),
+      settings: settings
+    }))
     return key
   })
 
   for (const [key, value] of placeholders.entries()) {
-    const { lang, code } = JSON.parse(value)
+    const { lang, code, settings } = JSON.parse(value)
     let replacement = ''
     if (lang === 'mermaid') {
       mermaidCharts.push(code)
       // ИСПРАВЛЕНИЕ: Убираем лишнюю обертку. Оставляем только плейсхолдер.
-      replacement = `<div class="mermaid-placeholder" data-chart-index="${chartIndex++}"></div>`
+      replacement = `<div class="mermaid-placeholder" data-chart-index="${chartIndex}" data-settings='${JSON.stringify(settings || {})}'></div>`
+      chartIndex++
     } else {
       replacement = await highlightCode(code, lang)
     }
