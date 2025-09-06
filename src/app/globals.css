@@ -170,20 +170,122 @@
     @apply text-lg font-bold mb-2 text-foreground;
   }
   
+  .mdx-content h5 {
+    @apply text-base font-semibold mb-2 text-foreground;
+  }
+  
+  .mdx-content h6 {
+    @apply text-sm font-medium mb-2 text-muted-foreground;
+  }
+  
   .mdx-content p {
-    @apply text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base;
+    @apply text-foreground mb-4 leading-relaxed text-sm sm:text-base;
   }
   
   .mdx-content ul {
-    @apply mb-4 space-y-2;
+    @apply mb-4 space-y-1 pl-6 list-disc;
+  }
+  
+  .mdx-content ol {
+    @apply mb-4 space-y-1 pl-6 list-decimal;
   }
   
   .mdx-content li {
-    @apply text-muted-foreground text-sm sm:text-base;
+    @apply text-foreground text-sm sm:text-base leading-relaxed;
+  }
+  
+  .mdx-content ul ul {
+    @apply mt-2 mb-0 pl-6 list-disc;
+  }
+  
+  .mdx-content ol ol {
+    @apply mt-2 mb-0 pl-6 list-decimal;
+  }
+  
+  .mdx-content ul ol {
+    @apply mt-2 mb-0 pl-6 list-decimal;
+  }
+  
+  .mdx-content ol ul {
+    @apply mt-2 mb-0 pl-6 list-disc;
+  }
+  
+  .mdx-content ul ul ul {
+    @apply mt-1 mb-0 pl-6 list-disc;
+  }
+  
+  .mdx-content ol ol ol {
+    @apply mt-1 mb-0 pl-6 list-decimal;
+  }
+  
+  .mdx-content li.nested-list {
+    @apply ml-4;
+  }
+  
+  /* Агрессивные стили для убирания всех маркеров у задач */
+  .mdx-content .task-item,
+  .mdx-content .task-item *,
+  .mdx-content div.task-item,
+  .mdx-content div.task-item * {
+    list-style: none !important;
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  
+  .mdx-content .task-item::marker,
+  .mdx-content .task-item *::marker,
+  .mdx-content div.task-item::marker,
+  .mdx-content div.task-item *::marker {
+    display: none !important;
+    content: none !important;
+  }
+  
+  .mdx-content .task-item::before,
+  .mdx-content .task-item *::before,
+  .mdx-content div.task-item::before,
+  .mdx-content div.task-item *::before {
+    display: none !important;
+    content: none !important;
+  }
+  
+  .mdx-content .task-item {
+    @apply flex items-center text-sm sm:text-base leading-relaxed mb-2;
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  
+  .mdx-content .task-item::marker {
+    display: none !important;
+  }
+  
+  .mdx-content .task-item::before {
+    display: none !important;
+  }
+  
+  .mdx-content .task-icon {
+    @apply mr-2 flex-shrink-0;
+  }
+  
+  .mdx-content .completed-icon {
+    @apply text-green-600 dark:text-green-400;
+  }
+  
+  .mdx-content .pending-icon {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .mdx-content .task-text {
+    @apply text-foreground;
   }
   
   .mdx-content strong {
-    @apply text-primary font-semibold;
+    @apply text-foreground font-semibold;
+  }
+  
+  .mdx-content del {
+    @apply text-muted-foreground line-through;
   }
   
   .mdx-content a {
@@ -195,7 +297,7 @@
   }
   
   .mdx-content span {
-    @apply text-muted-foreground;
+    @apply text-foreground;
   }
   
   .mdx-content blockquote {
@@ -221,6 +323,15 @@
   }
   .mdx-content h3 {
     @apply text-lg;
+  }
+  .mdx-content h4 {
+    @apply text-base;
+  }
+  .mdx-content h5 {
+    @apply text-sm;
+  }
+  .mdx-content h6 {
+    @apply text-xs;
   }
   .mdx-content p {
     @apply text-sm;

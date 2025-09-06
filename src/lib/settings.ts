@@ -21,6 +21,7 @@ const SECTIONS = [
   { id: '5', title: 'Программные интерфейсы (API)', icon: Share2 },
   { id: '6', title: 'Тестирование и валидация', icon: TestTube },
   { id: '7', title: 'Заключение и следующие шаги', icon: CheckCircle },
+  { id: '8', title: 'Примеры стилей MDX', icon: FileText },
 ] as const;
 
 
