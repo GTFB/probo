@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { MDXLayout } from './mdx-layout'
 import { MDXRenderer } from './mdx-renderer-new'
+import { createHighlighter } from 'shiki'
 
 interface MDXFrontmatter {
   title: string
@@ -30,13 +31,52 @@ function processInlineMarkdown(text: string): string {
     .replace(/`([^`]+)`/g, '<code>$1</code>')
 }
 
+let highlighter: any = null
+
+async function getHighlighter() {
+  if (!highlighter) {
+    highlighter = await createHighlighter({
+      themes: ['github-light', 'github-dark'],
+      langs: ['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'sql', 'html', 'css', 'json', 'yaml', 'bash', 'shell', 'markdown'],
+    })
+  }
+  return highlighter
+}
+
+async function highlightCode(code: string, language: string = 'text'): Promise<string> {
+  try {
+    const hl = await getHighlighter()
+    const supportedLangs = hl.getLoadedLanguages()
+    const lang = supportedLangs.includes(language) ? language : 'text'
+    
+    const html = hl.codeToHtml(code, {
+      lang: lang,
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark'
+      },
+      defaultColor: false,
+      transformers: [
+        {
+          pre(node) {
+            this.addClassToHast(node, 'shiki-code-block')
+            node.properties['data-language'] = lang
+          }
+        }
+      ]
+    })
+    
+    return html
+  } catch (error) {
+    return `<pre class="shiki-code-block" data-language="${language}"><code class="shiki-code">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`
+  }
+}
+
 function processList(listLines: string[]): string {
   if (listLines.length === 0) return ''
-
   let html = ''
   const stack: Array<{ type: 'ul' | 'ol'; indent: number }> = []
   let currentIndent = -1
-
   const getIndent = (line: string) => line.match(/^\s*/)?.[0].length || 0
 
   for (const line of listLines) {
@@ -44,9 +84,7 @@ function processList(listLines: string[]): string {
     const trimmedLine = line.trim()
     const isOrdered = /^\d+\./.test(trimmedLine)
     const listType = isOrdered ? 'ol' : 'ul'
-    const content = processInlineMarkdown(
-      trimmedLine.replace(/^(\*|-|\d+\.)\s*/, '')
-    )
+    const content = processInlineMarkdown(trimmedLine.replace(/^(\*|-|\d+\.)\s*/, ''))
 
     if (indent > currentIndent) {
       stack.push({ type: listType, indent: indent })
@@ -60,7 +98,6 @@ function processList(listLines: string[]): string {
     } else {
       html += '</li>'
     }
-    
     html += `<li>${content}`
     currentIndent = indent
   }
@@ -69,30 +106,109 @@ function processList(listLines: string[]): string {
     const last = stack.pop()
     html += `</li></${last!.type}>`
   }
-
   return html
 }
 
-function markdownToHtml(markdown: string): { html: string; mermaidCharts: string[] } {
+function processBlockquote(quoteLines: string[]): string {
+  if (quoteLines.length === 0) return ''
+  let html = '<blockquote>'
+  let currentParagraph: string[] = []
+
+  for (const line of quoteLines) {
+    const content = line.trim().replace(/^>\s?/, '')
+    if (line.trim() === '>') {
+      if (currentParagraph.length > 0) {
+        html += `<p>${processInlineMarkdown(currentParagraph.join(' '))}</p>`
+        currentParagraph = []
+      }
+    } else {
+      currentParagraph.push(content)
+    }
+  }
+
+  if (currentParagraph.length > 0) {
+    html += `<p>${processInlineMarkdown(currentParagraph.join(' '))}</p>`
+  }
+
+  html += '</blockquote>'
+  return html
+}
+
+function processTable(tableLines: string[]): string {
+  if (tableLines.length < 2) return tableLines.join('\n')
+
+  const [headerLine, ...bodyLines] = tableLines
+  const headers = headerLine.split('|').map(h => h.trim()).filter(Boolean)
+  const rows = bodyLines.map(rowLine => rowLine.split('|').map(c => c.trim()).filter(Boolean))
+
+  let html = '<table><thead><tr>'
+  headers.forEach(header => {
+    html += `<th>${processInlineMarkdown(header)}</th>`
+  })
+  html += '</tr></thead><tbody>'
+
+  rows.forEach(row => {
+    if (row.length === headers.length) {
+      html += '<tr>'
+      row.forEach(cell => {
+        html += `<td>${processInlineMarkdown(cell)}</td>`
+      })
+      html += '</tr>'
+    }
+  })
+
+  html += '</tbody></table>'
+  return html
+}
+
+async function markdownToHtml(markdown: string): Promise<{ html: string; mermaidCharts: string[] }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
 
   const mermaidCharts: string[] = []
   let chartIndex = 0
 
-  let processedContent = cleanContent.replace(/```mermaid\s*\n([\s\S]*?)\n```/g, (match, chart) => {
-    mermaidCharts.push(chart.trim())
-    return `<div class="mermaid-placeholder" data-chart-index="${chartIndex++}"></div>`
+  const codeBlockRegex = /```(\w+)?\s*\n([\s\S]*?)\n```/g
+  const placeholders = new Map<string, string>()
+  let placeholderId = 0
+
+  let processedContent = cleanContent.replace(codeBlockRegex, (match, lang, code) => {
+    const key = `__CODE_BLOCK_${placeholderId++}__`
+    placeholders.set(key, JSON.stringify({ lang: lang || 'text', code: code.trim() }))
+    return key
   })
+
+  for (const [key, value] of placeholders.entries()) {
+    const { lang, code } = JSON.parse(value)
+    let replacement = ''
+    if (lang === 'mermaid') {
+      mermaidCharts.push(code)
+      // ИСПРАВЛЕНИЕ: Убираем лишнюю обертку. Оставляем только плейсхолдер.
+      replacement = `<div class="mermaid-placeholder" data-chart-index="${chartIndex++}"></div>`
+    } else {
+      replacement = await highlightCode(code, lang)
+    }
+    processedContent = processedContent.replace(key, replacement)
+  }
 
   const lines = processedContent.split('\n')
   const htmlLines: string[] = []
   let i = 0
 
+  const isTableLine = (line: string) => line.trim().includes('|')
+  const isTableSeparator = (line: string) => /^\s*\|?(\s*:?-+:?\s*\|)+/.test(line)
+
   while (i < lines.length) {
     const line = lines[i]
     const trimmedLine = line.trim()
     
+    // Эта проверка нужна, чтобы не оборачивать уже готовый HTML от Shiki или Mermaid в тег <p>
+    if (trimmedLine.startsWith('<div') || trimmedLine.startsWith('<pre')) {
+      htmlLines.push(line)
+      i++
+      continue
+    }
+
     if (!trimmedLine) {
       i++
       continue
@@ -109,6 +225,17 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
       }
     }
     
+    if (isTableLine(line) && i + 1 < lines.length && isTableSeparator(lines[i + 1])) {
+      const tableBlock: string[] = [line]
+      i += 2 // Пропускаем заголовок и разделитель
+      while (i < lines.length && isTableLine(lines[i])) {
+        tableBlock.push(lines[i])
+        i++
+      }
+      htmlLines.push(processTable(tableBlock))
+      continue
+    }
+
     if (/^\s*-\s*\[[x\s]\]\s/.test(trimmedLine)) {
       const content = trimmedLine.replace(/^\s*-\s*\[[x\s]\]\s/, '')
       const isCompleted = trimmedLine.includes('[x]')
@@ -129,6 +256,16 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
       htmlLines.push(processList(listBlock))
       continue
     }
+
+    if (trimmedLine.startsWith('>')) {
+      const quoteBlock: string[] = []
+      while (i < lines.length && lines[i].trim().startsWith('>')) {
+        quoteBlock.push(lines[i])
+        i++
+      }
+      htmlLines.push(processBlockquote(quoteBlock))
+      continue
+    }
     
     htmlLines.push(`<p>${processInlineMarkdown(trimmedLine)}</p>`)
     i++
@@ -136,7 +273,6 @@ function markdownToHtml(markdown: string): { html: string; mermaidCharts: string
 
   return { html: htmlLines.join('\n'), mermaidCharts }
 }
-
 
 function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
@@ -172,9 +308,6 @@ function extractH1Title(markdown: string): string | null {
 export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Change, onLoadingChange }: MDXContentProps) {
   const [content, setContent] = useState<string>('')
   const [mermaidCharts, setMermaidCharts] = useState<string[]>([])
-  const [frontmatter, setFrontmatter] = useState<MDXFrontmatter | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const onFrontmatterChangeRef = useRef(onFrontmatterChange)
   const onTocChangeRef = useRef(onTocChange)
   const onH1ChangeRef = useRef(onH1Change)
@@ -190,9 +323,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   useEffect(() => {
     const loadMDX = async () => {
       try {
-        setLoading(true)
         onLoadingChangeRef.current?.(true)
-        setError(null)
         
         const response = await fetch(`/api/mdx/${sectionId}`)
         if (!response.ok) throw new Error(`Failed to load MDX: ${response.status}`)
@@ -200,12 +331,11 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         const data = await response.json()
         if (data.error) throw new Error(data.error)
         
-        const { html: htmlContent, mermaidCharts: charts } = markdownToHtml(data.content)
+        const { html: htmlContent, mermaidCharts: charts } = await markdownToHtml(data.content)
         setContent(htmlContent)
         setMermaidCharts(charts)
         
         if (data.frontmatter) {
-          setFrontmatter(data.frontmatter)
           onFrontmatterChangeRef.current?.(data.frontmatter)
         }
         
@@ -219,36 +349,14 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         
       } catch (error) {
         console.error('Error loading MDX:', error)
-        setError(error instanceof Error ? error.message : 'Failed to load content')
         setContent(`<h1>Ошибка загрузки контента для раздела ${sectionId}</h1>`)
       } finally {
-        setLoading(false)
         onLoadingChangeRef.current?.(false)
       }
     }
 
     loadMDX()
   }, [sectionId])
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="text-muted-foreground">Загрузка контента...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-6">
-        <h2 className="text-destructive font-semibold mb-2">Ошибка загрузки</h2>
-        <p className="text-destructive/80">{error}</p>
-      </div>
-    )
-  }
 
   return (
     <MDXLayout>

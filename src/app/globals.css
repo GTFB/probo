@@ -1,4 +1,3 @@
-/* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -37,19 +36,8 @@
     --input: 0 0% 91%;
     --ring: 0 0% 53%;
     --radius: 0.5rem;
-    --chart-1: 0 0% 61%;
-    --chart-2: 0 0% 39%;
-    --chart-3: 0 0% 24%;
-    --chart-4: 0 0% 66%;
-    --chart-5: 0 0% 67%;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 26%;
-    --sidebar-primary: 0 0% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 0 0% 91%;
-    --sidebar-ring: 0 0% 60%;
   }
 
   .dark {
@@ -72,19 +60,8 @@
     --border: 0 0% 18%;
     --input: 0 0% 18%;
     --ring: 0 0% 94%;
-    --chart-1: 0 0% 50%;
-    --chart-2: 0 0% 45%;
-    --chart-3: 0 0% 55%;
-    --chart-4: 0 0% 60%;
-    --chart-5: 0 0% 55%;
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 0 0% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 16%;
-    --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 0 0% 16%;
-    --sidebar-ring: 0 0% 60%;
   }
 }
 
@@ -103,429 +80,111 @@
     font-family: 'Inter Tight', sans-serif;
   }
   
-  .main-content {
-    @apply transition-all duration-300;
-  }
-  
-  @media (min-width: 1024px) {
-    .main-content {
-      @apply mx-auto;
-    }
-  }
-  
-  .nav-link {
-    @apply transition-all duration-200;
-  }
-  
-  /* Custom spacing for header */
-  .pt-25 {
-    padding-top: 6.25rem; /* 100px */
-  }
-  
-  /* Custom height for sidebar header */
-  .h-25 {
-    height: 6.25rem; /* 100px */
-  }
-  
-  /* Force nowrap for sidebar header */
-  .sidebar-header-nowrap {
-    flex-flow: nowrap !important;
-  }
-  
-  /* Search highlighting */
   mark {
-    background-color: rgb(254 240 138); /* yellow-200 */
-    padding: 0.125rem 0.25rem;
-    border-radius: 0.25rem;
-    font-weight: 500;
+    @apply bg-yellow-200 dark:bg-yellow-800 dark:text-yellow-200 px-1 py-0.5 rounded-sm font-medium;
   }
   
-  .dark mark {
-    background-color: rgb(133 77 14); /* yellow-800 */
-    color: rgb(254 240 138); /* yellow-200 */
-  }
-  
-  /* Hide scrollbar but keep scroll functionality */
-  .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
-  }
-  .mdx-content h1 {
-    @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden;
-  }
-  
-  .mdx-content h2 {
-    @apply text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20;
-  }
-  
-  .mdx-content h3 {
-    @apply text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20;
-  }
-  
-  .mdx-content h4 {
-    @apply text-lg font-bold mb-2 text-foreground;
-  }
-  
-  .mdx-content h5 {
-    @apply text-base font-semibold mb-2 text-foreground;
-  }
-  
-  .mdx-content h6 {
-    @apply text-sm font-medium mb-2 text-muted-foreground;
-  }
-  
-  .mdx-content p {
-    @apply text-foreground mb-4 leading-relaxed text-sm sm:text-base;
-  }
-  
-  .mdx-content ul {
-    @apply mb-4 space-y-1 pl-6 list-disc;
-  }
-  
-  .mdx-content ol {
-    @apply mb-4 space-y-1 pl-6 list-decimal;
-  }
-  
-  .mdx-content li {
-    @apply text-foreground text-sm sm:text-base leading-relaxed;
-  }
-  
-  .mdx-content ul ul {
-    @apply mt-2 mb-0 pl-6 list-disc;
-  }
-  
-  .mdx-content ol ol {
-    @apply mt-2 mb-0 pl-6 list-decimal;
-  }
-  
-  .mdx-content ul ol {
-    @apply mt-2 mb-0 pl-6 list-decimal;
-  }
-  
-  .mdx-content ol ul {
-    @apply mt-2 mb-0 pl-6 list-disc;
-  }
-  
-  .mdx-content ul ul ul {
-    @apply mt-1 mb-0 pl-6 list-disc;
-  }
-  
-  .mdx-content ol ol ol {
-    @apply mt-1 mb-0 pl-6 list-decimal;
-  }
-  
-  .mdx-content li.nested-list {
-    @apply ml-4;
-  }
-  
-  /* Агрессивные стили для убирания всех маркеров у задач */
-  .mdx-content .task-item,
-  .mdx-content .task-item *,
-  .mdx-content div.task-item,
-  .mdx-content div.task-item * {
-    list-style: none !important;
-    list-style-type: none !important;
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-  }
-  
-  .mdx-content .task-item::marker,
-  .mdx-content .task-item *::marker,
-  .mdx-content div.task-item::marker,
-  .mdx-content div.task-item *::marker {
-    display: none !important;
-    content: none !important;
-  }
-  
-  .mdx-content .task-item::before,
-  .mdx-content .task-item *::before,
-  .mdx-content div.task-item::before,
-  .mdx-content div.task-item *::before {
-    display: none !important;
-    content: none !important;
-  }
-  
-  .mdx-content .task-item {
-    @apply flex items-center text-sm sm:text-base leading-relaxed mb-2;
-    list-style: none !important;
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-  }
-  
-  .mdx-content .task-item::marker {
-    display: none !important;
-  }
-  
-  .mdx-content .task-item::before {
-    display: none !important;
-  }
-  
-  .mdx-content .task-icon {
-    @apply mr-2 flex-shrink-0;
-  }
-  
-  .mdx-content .completed-icon {
-    @apply text-green-600 dark:text-green-400;
-  }
-  
-  .mdx-content .pending-icon {
-    @apply text-gray-500 dark:text-gray-400;
-  }
-  
-  .mdx-content .task-text {
-    @apply text-foreground;
-  }
-  
-  .mdx-content strong {
-    @apply text-foreground font-semibold;
-  }
-  
-  .mdx-content del {
-    @apply text-muted-foreground line-through;
-  }
-  
-  .mdx-content a {
-    @apply text-primary hover:text-primary/80 underline;
-  }
-  
-  .mdx-content div {
-    @apply mb-4;
-  }
-  
-  .mdx-content span {
-    @apply text-foreground;
-  }
-  
+  .mdx-content h1 { @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden; }
+  .mdx-content h2 { @apply text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20; }
+  .mdx-content h3 { @apply text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20; }
+  .mdx-content h4 { @apply text-lg font-bold mb-2 text-foreground; }
+  .mdx-content h5 { @apply text-base font-semibold mb-2 text-foreground; }
+  .mdx-content h6 { @apply text-sm font-medium mb-2 text-muted-foreground; }
+  .mdx-content p { @apply text-foreground mb-4 leading-relaxed text-sm sm:text-base; }
+  .mdx-content ul { @apply mb-4 space-y-1 pl-6 list-disc; }
+  .mdx-content ol { @apply mb-4 space-y-1 pl-6 list-decimal; }
+  .mdx-content li { @apply text-foreground text-sm sm:text-base leading-relaxed; }
+  .mdx-content ul ul,
+  .mdx-content ol ol,
+  .mdx-content ul ol,
+  .mdx-content ol ul { @apply mt-2 mb-0 pl-6; }
+  .mdx-content .task-item { @apply flex items-center text-sm sm:text-base leading-relaxed mb-2 list-none p-0; }
+  .mdx-content .task-icon { @apply mr-2 flex-shrink-0; }
+  .mdx-content .completed-icon { @apply text-green-600 dark:text-green-400; }
+  .mdx-content .pending-icon { @apply text-gray-500 dark:text-gray-400; }
+  .mdx-content strong { @apply text-foreground font-semibold; }
+  .mdx-content del { @apply text-muted-foreground line-through; }
+  .mdx-content a { @apply text-primary hover:text-primary/80 underline; }
+  .mdx-content code:not(pre code) { @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground; }
+
   .mdx-content blockquote {
-    @apply border-l-4 border-primary/20 pl-4 italic text-muted-foreground;
+    @apply my-6 border-l-4 border-primary/30 pl-6 py-1 italic text-muted-foreground bg-secondary/50 rounded-r-lg;
   }
-  
-  .mdx-content code {
-    @apply bg-muted px-2 py-1 rounded text-sm font-mono;
+  .mdx-content blockquote p {
+    @apply mb-2 last:mb-0;
   }
-  
-  .mdx-content pre {
-    @apply bg-muted p-4 rounded-lg overflow-x-auto;
-  }
-}
 
-/* Mobile styles */
-@media (max-width: 640px) {
-  .mdx-content h1 {
-    @apply text-2xl;
+  .mdx-content table {
+    @apply my-6 w-full text-sm sm:text-base border-collapse;
   }
-  .mdx-content h2 {
-    @apply text-xl;
+  .mdx-content th, .mdx-content td {
+    @apply border p-3 text-left;
   }
-  .mdx-content h3 {
-    @apply text-lg;
+  .mdx-content th {
+    @apply bg-muted font-semibold;
   }
-  .mdx-content h4 {
-    @apply text-base;
+  .mdx-content tbody tr:nth-child(even) {
+    @apply bg-secondary/50;
   }
-  .mdx-content h5 {
+
+  .shiki-code-block {
+    @apply relative my-6 rounded-lg overflow-hidden border;
+  }
+  .shiki-code-block pre {
+    @apply m-0 py-4 pl-4 pr-6 text-sm overflow-x-auto;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+    line-height: 1.7;
+    background-color: var(--shiki-light-bg, #ffffff) !important;
+  }
+  .dark .shiki-code-block pre {
+    background-color: var(--shiki-dark-bg, #121212) !important;
+  }
+  .shiki-code-block::before {
+    content: attr(data-language);
+    @apply absolute top-3 right-4 z-10;
+    @apply text-xs text-muted-foreground bg-muted;
+    @apply px-2 py-1 rounded;
+    @apply font-mono uppercase font-semibold;
+  }
+
+  .mermaid-diagram-container {
+    @apply my-6 p-4 bg-muted/50 rounded-lg border;
+  }
+  .mermaid-placeholder {
+    @apply flex items-center justify-center text-muted-foreground;
+    @apply min-h-[200px];
+  }
+  .mermaid-placeholder::before {
+    content: "🔄 Загрузка диаграммы...";
     @apply text-sm;
   }
-  .mdx-content h6 {
-    @apply text-xs;
-  }
-  .mdx-content p {
-    @apply text-sm;
-  }
-  .mdx-content li {
-    @apply text-sm;
-  }
+
+  .mermaid-diagram-container svg { @apply max-w-full h-auto mx-auto; }
+  .dark .mermaid-diagram-container { @apply bg-background; }
   
-  /* Ensure full width on mobile */
-  .main-content-animation {
-    @apply px-0 mx-0;
+  .dark .mermaid-diagram-container text,
+  .dark .mermaid-diagram-container .nodeLabel,
+  .dark .mermaid-diagram-container .edgeLabel {
+    fill: #e0e0e0 !important;
+    color: #e0e0e0 !important;
   }
-  
-  /* Fix any potential layout issues */
-  .flex.min-h-screen {
-    @apply flex-col;
+  .dark .mermaid-diagram-container .node rect,
+  .dark .mermaid-diagram-container .node circle,
+  .dark .mermaid-diagram-container .node ellipse,
+  .dark .mermaid-diagram-container .node polygon {
+    fill: hsl(var(--secondary)) !important;
+    stroke: hsl(var(--muted-foreground)) !important;
   }
-  
-  /* Ensure MDX content uses full width */
-  .mdx-content {
-    @apply w-full max-w-none;
+  .dark .mermaid-diagram-container .edgePath .path {
+    stroke: hsl(var(--muted-foreground)) !important;
   }
-  
-  /* Remove any potential margins from content */
-  section {
-    @apply mx-0 px-0;
-  }
-}
 
-/* Mermaid diagrams */
-.mermaid-container {
-  @apply flex justify-center items-center;
-}
-
-.mermaid-container svg {
-  @apply max-w-full h-auto;
-}
-
-.mermaid-diagram-container {
-  @apply my-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border;
-}
-
-/* Mindmap container - clean style */
-.mermaid-chart {
-  @apply flex justify-center items-center p-4;
-  background: #ffffff;
-}
-
-.mermaid-chart svg {
-  @apply max-w-full h-auto;
-}
-
-/* Mindmap section styling with light backgrounds */
-.mermaid-chart svg .node rect,
-.mermaid-chart svg .node circle,
-.mermaid-chart svg .node ellipse,
-.mermaid-chart svg .node polygon {
-  fill: #ffffff !important;
-  stroke: #333333 !important;
-}
-
-/* Section-specific styling for mindmap - simplified */
-.mermaid-chart svg .frontend-section {
-  fill: #eff6ff !important; /* Light blue */
-  stroke: #2563eb !important;
-}
-
-.mermaid-chart svg .backend-section {
-  fill: #fef2f2 !important; /* Light red */
-  stroke: #dc2626 !important;
-}
-
-.mermaid-chart svg .integrations-section {
-  fill: #f0fdf4 !important; /* Light green */
-  stroke: #16a34a !important;
-}
-
-.mermaid-chart svg .devops-section {
-  fill: #fffbeb !important; /* Light yellow */
-  stroke: #ca8a04 !important;
-}
-
-.mermaid-chart svg .nodeLabel {
-  color: #000000 !important;
-}
-
-.mermaid-chart svg .edgePath .path {
-  stroke: #333333 !important;
-}
-
-.mermaid-chart svg .edgeLabel {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-}
-
-/* Mindmap specific styles */
-.mermaid-chart svg .mindmap-node {
-  fill: #ffffff !important;
-  stroke: #333333 !important;
-}
-
-.mermaid-chart svg .mindmap-node text {
-  fill: #000000 !important;
-}
-
-/* All text elements in Mermaid diagrams */
-.mermaid-chart svg text {
-  fill: #000000 !important;
-  color: #000000 !important;
-}
-
-/* Font Awesome icon support for Mermaid */
-.mermaid-chart svg .fa,
-.mermaid-chart svg .fas,
-.mermaid-chart svg .far,
-.mermaid-chart svg .fab {
-  font-family: "Font Awesome 6 Free" !important;
-  font-weight: 900 !important;
-  font-size: 16px !important;
-  color: #333333 !important;
-}
-
-/* Specific icon styles for mindmap */
-.mermaid-chart svg .fa-desktop::before {
-  content: "\f108" !important;
-  color: #2563eb !important;
-}
-
-.mermaid-chart svg .fa-server::before {
-  content: "\f233" !important;
-  color: #dc2626 !important;
-}
-
-.mermaid-chart svg .fa-plug::before {
-  content: "\f1e6" !important;
-  color: #16a34a !important;
-}
-
-.mermaid-chart svg .fa-tools::before {
-  content: "\f7d9" !important;
-  color: #ca8a04 !important;
-}
-
-/* Mindmap section backgrounds */
-.mermaid-chart svg .mindmap-node[data-section="frontend"] {
-  fill: #eff6ff !important; /* Light blue */
-  stroke: #2563eb !important;
-}
-
-.mermaid-chart svg .mindmap-node[data-section="backend"] {
-  fill: #fef2f2 !important; /* Light red */
-  stroke: #dc2626 !important;
-}
-
-.mermaid-chart svg .mindmap-node[data-section="integrations"] {
-  fill: #f0fdf4 !important; /* Light green */
-  stroke: #16a34a !important;
-}
-
-.mermaid-chart svg .mindmap-node[data-section="devops"] {
-  fill: #fffbeb !important; /* Light yellow */
-  stroke: #ca8a04 !important;
-}
-
-/* Alternative approach - target by text content */
-.mermaid-chart svg text:contains("Frontend") {
-  fill: #2563eb !important;
-}
-
-.mermaid-chart svg text:contains("Backend") {
-  fill: #dc2626 !important;
-}
-
-.mermaid-chart svg text:contains("Интеграции") {
-  fill: #16a34a !important;
-}
-
-.mermaid-chart svg text:contains("DevOps") {
-  fill: #ca8a04 !important;
-}
-
-/* Dark theme styles for Mermaid */
-.dark .mermaid-container {
-  @apply bg-gray-900;
-}
-
-/* Placeholders for Mermaid */
-.mermaid-placeholder {
-  @apply my-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-dashed border-gray-300 dark:border-gray-600;
-  @apply flex items-center justify-center text-gray-500 dark:text-gray-400;
-  @apply min-h-[200px];
-}
-
-.mermaid-placeholder::before {
-  content: "🔄 Загрузка диаграммы...";
-  @apply text-sm;
+  .mermaid-diagram-container .frontend-section { fill: #eff6ff !important; stroke: #2563eb !important; }
+  .dark .mermaid-diagram-container .frontend-section { fill: #1e3a8a !important; stroke: #60a5fa !important; }
+  .mermaid-diagram-container .backend-section { fill: #fef2f2 !important; stroke: #dc2626 !important; }
+  .dark .mermaid-diagram-container .backend-section { fill: #7f1d1d !important; stroke: #f87171 !important; }
+  .mermaid-diagram-container .integrations-section { fill: #f0fdf4 !important; stroke: #16a34a !important; }
+  .dark .mermaid-diagram-container .integrations-section { fill: #14532d !important; stroke: #4ade80 !important; }
+  .mermaid-diagram-container .devops-section { fill: #fffbeb !important; stroke: #ca8a04 !important; }
+  .dark .mermaid-diagram-container .devops-section { fill: #713f12 !important; stroke: #facc15 !important; }
 }
