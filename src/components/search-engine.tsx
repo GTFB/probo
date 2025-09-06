@@ -5,6 +5,7 @@ import { Search, X, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
+import { MDX_FILES } from '@/lib/settings'
 
 interface SearchIndex {
   id: string
@@ -41,21 +42,13 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
   const [searchIndex, setSearchIndex] = useState<SearchIndex[]>([])
   const [isIndexed, setIsIndexed] = useState(false)
 
-  // Алгоритм индексации контента
+  // Content indexing algorithm
   const indexContent = useCallback(async () => {
     try {
       setIsSearching(true)
       
-      // Получаем все MDX файлы с их названиями разделов
-      const mdxFiles = [
-        { id: '1-intro', name: 'Введение и цели проекта' },
-        { id: '2-functions', name: 'Функциональные требования' },
-        { id: '3-use-cases', name: 'Пользовательские сценарии' },
-        { id: '4-tech-spec', name: 'Технические требования' },
-        { id: '5-api', name: 'Программные интерфейсы (API)' },
-        { id: '6-tests', name: 'Процедура приемки' },
-        { id: '7-finish', name: 'Заключение и План Реализации' }
-      ]
+      // Get all MDX files with their section names
+      const mdxFiles = MDX_FILES
       
       const index: SearchIndex[] = []
       
@@ -67,7 +60,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
           const data = await response.json()
           const content = data.content || ''
           
-          // Парсим заголовки и контент
+          // Parse headers and content
           const lines = content.split('\n')
           let currentSection = file.name
           let position = 0
@@ -75,7 +68,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
           for (const line of lines) {
             const trimmedLine = line.trim()
             
-            // Заголовки
+            // Headers
             if (trimmedLine.startsWith('# ')) {
               const title = trimmedLine.substring(2)
               const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
@@ -117,9 +110,9 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
                 position: position++
               })
             } else if (trimmedLine && !trimmedLine.startsWith('---')) {
-              // Обычный контент
+              // Regular content
               const words = trimmedLine.split(' ')
-              if (words.length >= 3) { // Индексируем только предложения с 3+ словами
+              if (words.length >= 3) { // Index only sentences with 3+ words
                 index.push({
                   id: `content-${position}`,
                   title: words.slice(0, 5).join(' ') + (words.length > 5 ? '...' : ''),
@@ -146,7 +139,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
     }
   }, [])
 
-  // Алгоритм поиска с релевантностью
+  // Search algorithm with relevance
   const searchContent = useCallback((searchQuery: string): SearchResult[] => {
     if (!searchQuery.trim() || !isIndexed) return []
     
@@ -159,7 +152,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
       let relevance = 0
       let highlightedContent = item.content
       
-      // Точное совпадение в заголовке
+      // Exact match in header
       if (item.title.toLowerCase().includes(query)) {
         relevance += 100
         highlightedContent = item.title.replace(
@@ -168,7 +161,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         )
       }
       
-      // Совпадение в контенте
+      // Match in content
       if (item.content.toLowerCase().includes(query)) {
         relevance += 50
         highlightedContent = item.content.replace(
@@ -177,7 +170,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         )
       }
       
-      // Поиск по словам
+      // Word search
       for (const word of queryWords) {
         if (item.title.toLowerCase().includes(word)) {
           relevance += 20
@@ -187,7 +180,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         }
       }
       
-      // Бонус за уровень заголовка (H1 > H2 > H3 > контент)
+      // Bonus for header level (H1 > H2 > H3 > content)
       if (item.level === 1) relevance += 30
       else if (item.level === 2) relevance += 20
       else if (item.level === 3) relevance += 10
@@ -201,11 +194,11 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
       }
     }
     
-    // Сортируем по релевантности
+    // Sort by relevance
     return scoredResults.sort((a, b) => b.relevance - a.relevance).slice(0, 10)
   }, [searchIndex, isIndexed])
 
-  // Обработка поиска
+  // Search handling
   const handleSearch = useCallback((searchQuery: string) => {
     setQuery(searchQuery)
     if (searchQuery.trim()) {
@@ -216,7 +209,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
     }
   }, [searchContent])
 
-  // Индексация при монтировании
+  // Index on mount
   useEffect(() => {
     if (!isIndexed) {
       indexContent()
@@ -226,7 +219,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
   return (
     <div className={className}>
       <div className="space-y-4">
-        {/* Поисковая строка */}
+        {/* Search input */}
         <div className="relative">
           <Input
             placeholder="Поиск по контенту..."
@@ -249,35 +242,24 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
           )}
         </div>
 
-        {/* Статус индексации */}
+        {/* Indexing status */}
         {!isIndexed && (
           <div className="text-xs text-muted-foreground text-center">
             {isSearching ? 'Индексация контента...' : 'Подготовка поиска...'}
           </div>
         )}
 
-        {/* Результаты поиска */}
+        {/* Search results */}
         {query && results.length > 0 && (
-          <div className="space-y-2 h-full overflow-y-auto" style={{
-            scrollbarWidth: 'none', /* Firefox */
-            msOverflowStyle: 'none', /* IE and Edge */
-          }}>
-            <style jsx>{`
-              div::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            <div className="text-xs text-muted-foreground">
+          <div className="flex flex-col h-full">
+            <div className="text-xs text-muted-foreground mb-2">
               Найдено: {results.length} результатов
             </div>
-            <div className="flex flex-col h-full gap-2" style={{
-              scrollbarWidth: 'none', /* Firefox */
-              msOverflowStyle: 'none', /* IE and Edge */
-            }}>
+            <div className="flex flex-col flex-1 gap-2 overflow-y-auto scrollbar-hide">
               {results.map((result) => (
                 <Card 
                   key={result.id} 
-                  className="cursor-pointer hover:bg-muted/50 transition-colors flex-1"
+                  className="cursor-pointer hover:bg-muted/50 transition-colors"
                   onClick={() => onResultClick(result)}
                 >
                   <CardContent className="p-3 h-full flex flex-col justify-center">
@@ -326,7 +308,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
           </div>
         )}
 
-        {/* Нет результатов */}
+        {/* No results */}
         {query && results.length === 0 && isIndexed && (
           <div className="text-center text-muted-foreground py-4">
             <Search className="w-8 h-8 mx-auto mb-2 opacity-50" />

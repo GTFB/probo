@@ -28,12 +28,12 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
   })
 
   const handleSearchResultClick = (result: any) => {
-    // Прокручиваем к найденному элементу
+    // Scroll to found element
     const element = document.getElementById(result.id)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
     } else {
-      // Fallback: ищем по тексту
+      // Fallback: search by text
       const headings = document.querySelectorAll('h1, h2, h3')
       headings.forEach(heading => {
         if (heading.textContent?.trim() === result.title) {
@@ -43,7 +43,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
     }
   }
 
-  // Синхронизация с системной темой
+  // Sync with system theme
   React.useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const updateTheme = () => {
@@ -69,7 +69,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
     const newTheme = !isDarkMode
     setIsDarkMode(newTheme)
     
-    // Плавное переключение темы для всех элементов
+    // Smooth theme transition for all elements
     const elements = document.querySelectorAll('.theme-transition')
     elements.forEach(el => {
       (el as HTMLElement).style.transition = 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease'
@@ -81,7 +81,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
       document.documentElement.classList.remove('dark')
     }
     
-    // Убираем transition после завершения
+    // Remove transition after completion
     setTimeout(() => {
       elements.forEach(el => {
         (el as HTMLElement).style.transition = ''
@@ -90,15 +90,15 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
   }
 
   return (
-    <div className="hidden xl:block w-80 border-l bg-muted/10 h-screen overflow-y-auto theme-transition">
-      <div className="p-6">
+    <div className="hidden lg:block w-72 bg-muted/10 h-screen theme-transition sticky top-0 scrollbar-hide border-l">
+      <div className="p-4 h-full overflow-y-auto scrollbar-hide">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setActiveTab('toc')}
-              className={`h-8 px-3 ${activeTab === 'toc' ? 'bg-muted text-muted-foreground' : ''}`}
+              className={`h-7 px-2 text-sm ${activeTab === 'toc' ? 'bg-muted text-muted-foreground' : ''}`}
             >
               Оглавление
             </Button>
@@ -106,7 +106,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               variant="ghost"
               size="sm"
               onClick={() => setActiveTab('search')}
-              className={`h-8 px-3 ${activeTab === 'search' ? 'bg-muted text-muted-foreground' : ''}`}
+              className={`h-7 px-2 text-sm ${activeTab === 'search' ? 'bg-muted text-muted-foreground' : ''}`}
             >
               Поиск
             </Button>
@@ -125,7 +125,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
           </div>
         </div>
         
-        {/* Контент вкладок */}
+        {/* Tab content */}
         {activeTab === 'toc' && (
           <div className="space-y-1">
             {items.length === 0 ? (
@@ -136,10 +136,10 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                   key={item.id}
                   variant="ghost"
                   size="sm"
-                  className="w-full justify-start text-left h-auto py-2 px-3"
-                  style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
+                  className="w-full justify-start text-left h-auto py-1 px-2 text-sm"
+                  style={{ paddingLeft: `${(item.level - 1) * 12 + 8}px` }}
                   onClick={() => {
-                    // Прокручиваем к элементу на странице по ID
+                    // Scroll to element on page by ID
                     console.log('Trying to scroll to ID:', item.id)
                     const element = document.getElementById(item.id)
                     console.log('Found element:', element)
@@ -147,7 +147,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
                     } else {
                       console.log('Element not found, trying alternative method')
-                      // Попробуем найти по тексту заголовка
+                      // Try to find by header text
                       const headings = document.querySelectorAll('h1, h2, h3')
                       headings.forEach(heading => {
                         if (heading.textContent?.trim() === item.title) {

@@ -36,6 +36,7 @@ probo/
 │   ├── roadmap.mdx
 │   ├── team.mdx
 │   └── tech.mdx
+├── settings.ts
 ├── src/
 │   ├── app/
 │   │   ├── api/

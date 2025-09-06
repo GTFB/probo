@@ -12,7 +12,7 @@ export async function GET(
     
     const source = readFileSync(mdxPath, 'utf8')
     
-    // Простая функция для извлечения frontmatter
+    // Simple function to extract frontmatter
     function extractFrontmatter(content: string) {
       const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
       if (frontmatterMatch) {
@@ -32,7 +32,7 @@ export async function GET(
       return null
     }
     
-    // Извлекаем frontmatter и контент
+    // Extract frontmatter and content
     const frontmatter = extractFrontmatter(source)
     const content = source.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
     

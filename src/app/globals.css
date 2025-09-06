@@ -6,6 +6,16 @@
 @import url('https://fonts.bunny.net/css?family=inter:400,500,600,700,800|inter-tight:400,500,600,700,800');
 
 @layer base {
+  .mobile-header-offset {
+    padding-top: 72px;
+  }
+  
+  @media (min-width: 1024px) {
+    .mobile-header-offset {
+      padding-top: 0px;
+    }
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 5%;
@@ -94,7 +104,13 @@
   }
   
   .main-content {
-    @apply max-w-6xl mx-auto transition-opacity duration-300;
+    @apply transition-all duration-300;
+  }
+  
+  @media (min-width: 1024px) {
+    .main-content {
+      @apply mx-auto;
+    }
   }
   
   .nav-link {
@@ -127,6 +143,16 @@
   .dark mark {
     background-color: rgb(133 77 14); /* yellow-800 */
     color: rgb(254 240 138); /* yellow-200 */
+  }
+  
+  /* Hide scrollbar but keep scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
   }
   .mdx-content h1 {
     @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden;
@@ -185,7 +211,7 @@
   }
 }
 
-/* Мобильные стили */
+/* Mobile styles */
 @media (max-width: 640px) {
   .mdx-content h1 {
     @apply text-2xl;
@@ -202,9 +228,29 @@
   .mdx-content li {
     @apply text-sm;
   }
+  
+  /* Ensure full width on mobile */
+  .main-content-animation {
+    @apply px-0 mx-0;
+  }
+  
+  /* Fix any potential layout issues */
+  .flex.min-h-screen {
+    @apply flex-col;
+  }
+  
+  /* Ensure MDX content uses full width */
+  .mdx-content {
+    @apply w-full max-w-none;
+  }
+  
+  /* Remove any potential margins from content */
+  section {
+    @apply mx-0 px-0;
+  }
 }
 
-/* Mermaid диаграммы */
+/* Mermaid diagrams */
 .mermaid-container {
   @apply flex justify-center items-center;
 }
@@ -217,20 +263,151 @@
   @apply my-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border;
 }
 
+/* Mindmap container - clean style */
 .mermaid-chart {
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center p-4;
+  background: #ffffff;
 }
 
 .mermaid-chart svg {
   @apply max-w-full h-auto;
 }
 
-/* Стили для темной темы Mermaid */
+/* Mindmap section styling with light backgrounds */
+.mermaid-chart svg .node rect,
+.mermaid-chart svg .node circle,
+.mermaid-chart svg .node ellipse,
+.mermaid-chart svg .node polygon {
+  fill: #ffffff !important;
+  stroke: #333333 !important;
+}
+
+/* Section-specific styling for mindmap - simplified */
+.mermaid-chart svg .frontend-section {
+  fill: #eff6ff !important; /* Light blue */
+  stroke: #2563eb !important;
+}
+
+.mermaid-chart svg .backend-section {
+  fill: #fef2f2 !important; /* Light red */
+  stroke: #dc2626 !important;
+}
+
+.mermaid-chart svg .integrations-section {
+  fill: #f0fdf4 !important; /* Light green */
+  stroke: #16a34a !important;
+}
+
+.mermaid-chart svg .devops-section {
+  fill: #fffbeb !important; /* Light yellow */
+  stroke: #ca8a04 !important;
+}
+
+.mermaid-chart svg .nodeLabel {
+  color: #000000 !important;
+}
+
+.mermaid-chart svg .edgePath .path {
+  stroke: #333333 !important;
+}
+
+.mermaid-chart svg .edgeLabel {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Mindmap specific styles */
+.mermaid-chart svg .mindmap-node {
+  fill: #ffffff !important;
+  stroke: #333333 !important;
+}
+
+.mermaid-chart svg .mindmap-node text {
+  fill: #000000 !important;
+}
+
+/* All text elements in Mermaid diagrams */
+.mermaid-chart svg text {
+  fill: #000000 !important;
+  color: #000000 !important;
+}
+
+/* Font Awesome icon support for Mermaid */
+.mermaid-chart svg .fa,
+.mermaid-chart svg .fas,
+.mermaid-chart svg .far,
+.mermaid-chart svg .fab {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  color: #333333 !important;
+}
+
+/* Specific icon styles for mindmap */
+.mermaid-chart svg .fa-desktop::before {
+  content: "\f108" !important;
+  color: #2563eb !important;
+}
+
+.mermaid-chart svg .fa-server::before {
+  content: "\f233" !important;
+  color: #dc2626 !important;
+}
+
+.mermaid-chart svg .fa-plug::before {
+  content: "\f1e6" !important;
+  color: #16a34a !important;
+}
+
+.mermaid-chart svg .fa-tools::before {
+  content: "\f7d9" !important;
+  color: #ca8a04 !important;
+}
+
+/* Mindmap section backgrounds */
+.mermaid-chart svg .mindmap-node[data-section="frontend"] {
+  fill: #eff6ff !important; /* Light blue */
+  stroke: #2563eb !important;
+}
+
+.mermaid-chart svg .mindmap-node[data-section="backend"] {
+  fill: #fef2f2 !important; /* Light red */
+  stroke: #dc2626 !important;
+}
+
+.mermaid-chart svg .mindmap-node[data-section="integrations"] {
+  fill: #f0fdf4 !important; /* Light green */
+  stroke: #16a34a !important;
+}
+
+.mermaid-chart svg .mindmap-node[data-section="devops"] {
+  fill: #fffbeb !important; /* Light yellow */
+  stroke: #ca8a04 !important;
+}
+
+/* Alternative approach - target by text content */
+.mermaid-chart svg text:contains("Frontend") {
+  fill: #2563eb !important;
+}
+
+.mermaid-chart svg text:contains("Backend") {
+  fill: #dc2626 !important;
+}
+
+.mermaid-chart svg text:contains("Интеграции") {
+  fill: #16a34a !important;
+}
+
+.mermaid-chart svg text:contains("DevOps") {
+  fill: #ca8a04 !important;
+}
+
+/* Dark theme styles for Mermaid */
 .dark .mermaid-container {
   @apply bg-gray-900;
 }
 
-/* Плейсхолдеры для Mermaid */
+/* Placeholders for Mermaid */
 .mermaid-placeholder {
   @apply my-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-dashed border-gray-300 dark:border-gray-600;
   @apply flex items-center justify-center text-gray-500 dark:text-gray-400;

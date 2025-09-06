@@ -12,18 +12,21 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
 
   useEffect(() => {
     if (ref.current && chart) {
-      // Очищаем предыдущий контент
+      // Clear previous content
       ref.current.innerHTML = ''
       
-      // Инициализируем Mermaid с улучшенными настройками
+      // Initialize Mermaid with classic settings
       mermaid.initialize({
         startOnLoad: false,
         theme: 'default',
         securityLevel: 'loose',
-        fontFamily: 'Inter, sans-serif',
+        fontFamily: 'Inter, "Font Awesome 6 Free", sans-serif',
         flowchart: {
           htmlLabels: true,
           curve: 'basis'
+        },
+        mindmap: {
+          htmlLabels: true
         },
         sequence: {
           diagramMarginX: 50,
@@ -55,33 +58,86 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
         }
       })
 
-      // Очищаем и исправляем диаграмму
+      // Clean and fix diagram - minimal processing
       const cleanChart = chart
-        .replace(/[^\x00-\x7F]/g, (char) => {
-          // Заменяем проблемные символы на безопасные
-          const replacements: { [key: string]: string } = {
-            '\u2014': '-',  // em dash
-            '\u201C': '"',  // left double quotation mark
-            '\u201D': '"',  // right double quotation mark
-            '\u2018': "'",  // left single quotation mark
-            '\u2019': "'",  // right single quotation mark
-            '\u2026': '...', // horizontal ellipsis
-            '\u2013': '-'   // en dash
+        .replace(/<br\s*\/?>/gi, ' ') // Replace <br> with space
+        .replace(/-->/g, '-->')
+        .replace(/<--/g, '<--')
+        // Only process Russian text that's not already quoted
+        .replace(/\[([^\]]*[а-яё][^\]]*)\]/gi, (match, content) => {
+          // Skip if already has quotes
+          if (content.includes('"') || content.includes("'")) {
+            return match
           }
-          return replacements[char] || char
-        })
-        .replace(/<br\s*\/?>/gi, ' ') // Заменяем <br> на пробел
-        .replace(/\[([^\]]*[^\x00-\x7F][^\]]*)\]/g, (match, content) => {
-          // Оборачиваем русский текст в одинарные кавычки для узлов
-          return `['${content.trim()}']`
+          // Only quote if contains spaces or special characters
+          if (content.includes(' ') || content.includes('-') || content.includes('(') || content.includes(')')) {
+            return `["${content.trim()}"]`
+          }
+          return match
         })
 
-      // Рендерим диаграмму
+      // Render diagram
       const renderId = `mermaid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
       
       mermaid.render(renderId, cleanChart).then(({ svg }) => {
         if (ref.current) {
           ref.current.innerHTML = svg
+          
+          // Apply section-specific styling after rendering
+          setTimeout(() => {
+            const svgElement = ref.current?.querySelector('svg')
+            if (svgElement) {
+              console.log('Applying mindmap styling...')
+              
+              // Find all text elements and their parent groups
+              const textElements = svgElement.querySelectorAll('text')
+              textElements.forEach(textElement => {
+                const text = textElement.textContent || ''
+                console.log('Found text:', text)
+                
+                // Find the parent group that contains this text
+                let parentGroup = textElement.closest('g')
+                if (!parentGroup) {
+                  parentGroup = textElement.parentElement
+                }
+                
+                if (parentGroup) {
+                  // Find shapes in the same group
+                  const shapes = parentGroup.querySelectorAll('rect, circle, ellipse, polygon, path')
+                  
+                  if (text.includes('Frontend')) {
+                    console.log('Applying Frontend styling')
+                    shapes.forEach(shape => {
+                      shape.setAttribute('fill', '#eff6ff')
+                      shape.setAttribute('stroke', '#2563eb')
+                      shape.setAttribute('stroke-width', '2')
+                    })
+                  } else if (text.includes('Backend')) {
+                    console.log('Applying Backend styling')
+                    shapes.forEach(shape => {
+                      shape.setAttribute('fill', '#fef2f2')
+                      shape.setAttribute('stroke', '#dc2626')
+                      shape.setAttribute('stroke-width', '2')
+                    })
+                  } else if (text.includes('Интеграции')) {
+                    console.log('Applying Интеграции styling')
+                    shapes.forEach(shape => {
+                      shape.setAttribute('fill', '#f0fdf4')
+                      shape.setAttribute('stroke', '#16a34a')
+                      shape.setAttribute('stroke-width', '2')
+                    })
+                  } else if (text.includes('DevOps')) {
+                    console.log('Applying DevOps styling')
+                    shapes.forEach(shape => {
+                      shape.setAttribute('fill', '#fffbeb')
+                      shape.setAttribute('stroke', '#ca8a04')
+                      shape.setAttribute('stroke-width', '2')
+                    })
+                  }
+                }
+              })
+            }
+          }, 200)
         }
       }).catch((error) => {
         console.error('Mermaid rendering error:', error)
