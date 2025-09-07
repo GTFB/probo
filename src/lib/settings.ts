@@ -16,6 +16,8 @@ export const PROJECT_SETTINGS = {
 
 const SECTIONS = [
   { id: '1', title: 'Demo', icon: CheckCircle },
+  { id: '2', title: 'Group 1 - Section A', icon: CheckCircle },
+  { id: '4', title: 'Group 2 - Section D', icon: CheckCircle },
 ] as const;
 
 

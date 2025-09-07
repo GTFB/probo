@@ -17,6 +17,7 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [groupInfo, setGroupInfo] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,6 +36,7 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
       const data = await response.json()
 
       if (response.ok && data.success) {
+        setGroupInfo(`Access granted to group: ${data.group}`)
         onSuccess()
       } else {
         setError(data.error || 'Authentication failed')
@@ -56,6 +58,11 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
           <CardTitle>Protected Content</CardTitle>
           <CardDescription>
             This content is password protected. Please enter the password to continue.
+            {groupInfo && (
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                {groupInfo}
+              </div>
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent>

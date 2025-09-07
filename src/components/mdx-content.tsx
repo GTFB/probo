@@ -303,7 +303,14 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
       try {
         const response = await fetch('/api/auth')
         const data = await response.json()
-        setIsAuthenticated(data.authenticated)
+        
+        if (data.authenticated) {
+          // Check if user has access to this specific section
+          const hasAccess = data.sections.includes(sectionId) || data.sections.includes('*')
+          setIsAuthenticated(hasAccess)
+        } else {
+          setIsAuthenticated(false)
+        }
       } catch (error) {
         console.error('Auth check failed:', error)
         setIsAuthenticated(false)
@@ -313,7 +320,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
     }
     
     checkAuth()
-  }, [])
+  }, [sectionId])
 
   useEffect(() => {
     const loadMDX = async () => {
