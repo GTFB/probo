@@ -1,4 +1,4 @@
-# Инструкции по настройке репозитория influbalance
+# Repository Setup Instructions for Probo
 
 ## Первоначальная настройка
 
@@ -6,8 +6,8 @@
 
 ```bash
 # Клонировать клиентский репозиторий
-git clone https://github.com/GTFB/influbalance.git
-cd influbalance
+git clone https://github.com/GTFB/probo.git
+cd probo
 ```
 
 ### 2. Настройка upstream
@@ -43,12 +43,12 @@ git checkout main
 
 ## Альтернативный способ (если репозиторий уже существует)
 
-Если репозиторий influbalance уже существует и нужно получить содержимое из шаблона:
+If the probo repository already exists and you need to get content from the template:
 
 ```bash
 # 1. Клонировать существующий репозиторий
-git clone https://github.com/GTFB/influbalance.git
-cd influbalance
+git clone https://github.com/GTFB/probo.git
+cd probo
 
 # 2. Добавить upstream
 git remote add upstream https://github.com/GTFB/probo.git
@@ -106,7 +106,7 @@ git diff main..develop
 После настройки у вас будет:
 
 ```
-influbalance/
+probo/
 ├── .github/workflows/     # GitHub Actions
 ├── docs/                  # Документация
 ├── scripts/               # Скрипты автоматизации

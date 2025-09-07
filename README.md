@@ -1,9 +1,9 @@
-# Influbalance
+# Probo
 
-Клиентский репозиторий для проекта Influbalance, созданный на основе шаблона Probo.
+Client repository for the Probo project, created based on the Probo template.
 
-## Описание
-Система для генерации коммерческих предложений на основе MDX файлов с динамическим управлением контентом и профессиональным форматированием.
+## Description
+System for generating commercial proposals based on MDX files with dynamic content management and professional formatting.
 
 ## Tech Stack
 - **Runtime:** Bun
@@ -14,20 +14,20 @@
 - **Theme Management:** next-themes
 - **UI Components:** Shadcn/ui
 
-## Структура проекта
+## Project Structure
 ```
-influbalance/
-├── .github/workflows/      # GitHub Actions для автоматизации
-├── docs/                   # Документация проекта
-├── scripts/                # Скрипты для автоматизации
-├── src/                    # Исходный код приложения
+probo/
+├── .github/workflows/      # GitHub Actions for automation
+├── docs/                   # Project documentation
+├── scripts/                # Automation scripts
+├── src/                    # Application source code
 │   ├── app/                # Next.js app directory
-│   ├── components/         # React компоненты
-│   ├── lib/               # Утилиты
-│   └── types/             # TypeScript типы
-├── content/                # MDX контент
-├── public/                # Статические файлы
-└── external-storage/       # Внешнее хранилище (.env, database.db)
+│   ├── components/         # React components
+│   ├── lib/               # Utilities
+│   └── types/             # TypeScript types
+├── content/                # MDX content
+├── public/                # Static files
+└── external-storage/       # External storage (.env, database.db)
 ```
 
 ## Features
@@ -38,42 +38,42 @@ influbalance/
 - Responsive design
 - Type-safe development
 
-## Работа с шаблоном
+## Working with Template
 
-Этот проект создан на основе шаблона [Probo](https://github.com/GTFB/probo) и настроен для получения обновлений.
+This project is created based on the [Probo](https://github.com/GTFB/probo) template and configured to receive updates.
 
-### Получение обновлений из шаблона
+### Getting Updates from Template
 
 ```bash
-# Автоматический способ
+# Automatic way
 ./scripts/update-from-template.sh
 
-# Ручной способ
+# Manual way
 git checkout update-from-template
 git fetch upstream
 git merge upstream/main
 git push origin update-from-template
 ```
 
-### Создание новых функций
+### Creating New Features
 
 ```bash
-# Создать feature ветку
+# Create feature branch
 ./scripts/create-feature.sh my-feature-name
 
-# Разработать функцию и создать PR в develop
+# Develop feature and create PR to develop
 ```
 
-### Структура веток
+### Branch Structure
 
-- `main` - основная ветка (синхронизирована с шаблоном)
-- `develop` - ветка разработки
-- `feature/*` - ветки для новых функций
-- `update-from-template` - ветка для обновлений из шаблона
+- `main` - main branch (synchronized with template)
+- `develop` - development branch
+- `feature/*` - branches for new features
+- `update-from-template` - branch for template updates
 
-Подробная документация: [docs/template-workflow.md](docs/template-workflow.md)
+Detailed documentation: [docs/template-workflow.md](docs/template-workflow.md)
 
-## Разработка
+## Development
 ```bash
 # Install dependencies
 bun install
