@@ -70,19 +70,19 @@ export default function HomePage() {
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [isHydrated, setIsHydrated] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // При серверном рендеринге всегда возвращаем false
+    // During server-side rendering, always return false
     if (typeof window === 'undefined') return false
     
-    // При клиентском рендеринге проверяем localStorage
+    // During client-side rendering, check localStorage
     try {
       const savedTheme = localStorage.getItem('theme')
       if (savedTheme === 'dark' || savedTheme === 'light') {
         return savedTheme === 'dark'
       }
-      // Если нет сохраненной темы, используем системную
+      // If no saved theme, use system theme
       return window.matchMedia('(prefers-color-scheme: dark)').matches
     } catch {
-      // Fallback: используем системную тему
+      // Fallback: use system theme
       try {
         return window.matchMedia('(prefers-color-scheme: dark)').matches
       } catch {
@@ -91,11 +91,11 @@ export default function HomePage() {
     }
   })
 
-  // Устанавливаем состояние гидратации и применяем тему
+  // Set hydration state and apply theme
   useEffect(() => {
     setIsHydrated(true)
     
-    // Дополнительная проверка и применение темы после гидратации
+    // Additional check and theme application after hydration
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme')
       if (savedTheme) {
@@ -107,7 +107,7 @@ export default function HomePage() {
           document.documentElement.classList.remove('dark')
         }
       } else {
-        // Если нет сохраненной темы, используем системную
+        // If no saved theme, use system theme
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
         setIsDarkMode(prefersDark)
         if (prefersDark) {
@@ -128,7 +128,7 @@ export default function HomePage() {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const nextIndex = (currentIndex + 1) % navigationItems.length
     setActiveSection(navigationItems[nextIndex].id)
-    // Прокручиваем наверх страницы
+    // Scroll to top of page
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection])
 
@@ -136,7 +136,7 @@ export default function HomePage() {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const prevIndex = currentIndex > 0 ? currentIndex - 1 : navigationItems.length - 1
     setActiveSection(navigationItems[prevIndex].id)
-    // Прокручиваем наверх страницы
+    // Scroll to top of page
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection])
 
@@ -160,14 +160,14 @@ export default function HomePage() {
     const newTheme = !isDarkMode
     setIsDarkMode(newTheme)
     
-    // Сохраняем тему в localStorage с дополнительной проверкой
+    // Save theme to localStorage with additional check
     try {
       localStorage.setItem('theme', newTheme ? 'dark' : 'light')
     } catch (error) {
-      console.warn('Не удалось сохранить тему в localStorage:', error)
+      console.warn('Failed to save theme to localStorage:', error)
     }
     
-    // Сразу применяем изменения к DOM
+    // Immediately apply changes to DOM
     if (newTheme) {
       document.documentElement.classList.add('dark')
     } else {
@@ -190,8 +190,8 @@ export default function HomePage() {
 
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
 
-  // Определяем классы для сетки на основе состояния
-  let lgGridColsClass = 'lg:grid-cols-1'; // По умолчанию, если оба закрыты
+  // Determine grid classes based on state
+  let lgGridColsClass = 'lg:grid-cols-1'; // Default if both are closed
   if (isLeftSidebarOpen && isRightSidebarOpen) {
     lgGridColsClass = 'lg:grid-cols-[auto_1fr_auto]';
   } else if (isLeftSidebarOpen) {
@@ -219,7 +219,7 @@ export default function HomePage() {
         {/* Central section: Header, Content, Footer */}
         <div className="flex flex-col min-h-screen">
           {/* Sticky Header for desktop */}
-          <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-l border-b">
+          <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
             <div className={`px-4 sm:px-6 md:px-10 flex items-center transition-all duration-300 ease-in-out`} style={{ height: '72px' }}>
               <div className="flex items-center justify-between w-full">
                 <div className={`flex items-center gap-4 transition-all duration-300 ease-in-out ${isLeftSidebarOpen ? '' : 'lg:ml-0'}`}>
@@ -230,8 +230,8 @@ export default function HomePage() {
                     })()}
                   </div>
                   <div>
-                    <h1 className="text-lg font-semibold">{currentFrontmatter?.title || 'Загрузка...'}</h1>
-                    <p className="text-xs text-muted-foreground">Раздел {sectionNumber} из {navigationItems.length}</p>
+                    <h1 className="text-lg font-semibold">{currentFrontmatter?.title || 'Loading...'}</h1>
+                    <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
                   </div>
                 </div>
                 
@@ -243,7 +243,7 @@ export default function HomePage() {
                       onClick={() => setIsLeftSidebarOpen(true)}
                     >
                       <Menu className="w-4 h-4 mr-2" />
-                      Навигация
+                      Navigation
                     </Button>
                   )}
                   {!isRightSidebarOpen && (
@@ -253,7 +253,7 @@ export default function HomePage() {
                       onClick={() => setIsRightSidebarOpen(true)}
                     >
                       <List className="w-4 h-4 mr-2" />
-                      Оглавление
+                      Table of Contents
                     </Button>
                   )}
                 </div>
@@ -314,8 +314,8 @@ export default function HomePage() {
                         })()}
                       </div>
                       <div className="text-left">
-                        <h2 className="text-sm font-medium">{currentFrontmatter?.title || 'Загрузка...'}</h2>
-                        <p className="text-xs text-muted-foreground">Раздел {sectionNumber} из {navigationItems.length}</p>
+                        <h2 className="text-sm font-medium">{currentFrontmatter?.title || 'Loading...'}</h2>
+                        <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
                       </div>
                     </div>
                   </div>
@@ -331,8 +331,8 @@ export default function HomePage() {
                         <div className="px-4 py-3 flex items-center justify-between" style={{ height: '72px' }}>
                           <div className="flex items-center gap-2">
                             <div>
-                              <h2 className="text-base font-semibold">Оглавление</h2>
-                              <p className="text-xs text-muted-foreground">Навигация по разделу</p>
+                              <h2 className="text-base font-semibold">Table of Contents</h2>
+                              <p className="text-xs text-muted-foreground">Section navigation</p>
                             </div>
                           </div>
                           <Button 
@@ -351,7 +351,7 @@ export default function HomePage() {
                         <div className="px-2 py-2 overflow-y-auto scrollbar-hide h-[calc(100vh-72px)]">
                           <div className="space-y-1 mb-6">
                             {currentToc.length === 0 ? (
-                              <p className="text-sm text-muted-foreground">Нет заголовков</p>
+                              <p className="text-sm text-muted-foreground">No headings</p>
                             ) : (
                               currentToc.map((item) => (
                                 <Button
@@ -381,7 +381,7 @@ export default function HomePage() {
                           </div>
                           
                           <div className="border-t pt-4 px-2">
-                            <h4 className="text-sm font-semibold mb-2">Поиск</h4>
+                            <h4 className="text-sm font-semibold mb-2">Search</h4>
                             <SearchEngine 
                               onResultClick={(result) => {
                                 const element = document.getElementById(result.id)
@@ -464,13 +464,13 @@ export default function HomePage() {
                 {currentFrontmatter?.prevButtonText && (
                   <Button variant="outline" size="sm" onClick={handlePrevSection}>
                     <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
-                    Назад
+                    Back
                   </Button>
                 )}
                 
                 {!isContentLoading && currentFrontmatter?.nextButtonText && (
                   <Button variant="outline" size="sm" onClick={handleNextSection}>
-                    <span>Вперед</span>
+                    <span>Forward</span>
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 )}

@@ -8,10 +8,10 @@ import { TrendingUp, Package, Cpu, ShieldCheck } from "lucide-react"
 
 // Navigation elements for dashboard
 const navigationItems = [
-  { id: 'overview', title: 'Обзор', icon: TrendingUp, href: '#overview' },
-  { id: 'projects', title: 'Проекты', icon: Package, href: '#projects' },
-  { id: 'analytics', title: 'Аналитика', icon: Cpu, href: '#analytics' },
-  { id: 'settings', title: 'Настройки', icon: ShieldCheck, href: '#settings' },
+  { id: 'overview', title: 'Overview', icon: TrendingUp, href: '#overview' },
+  { id: 'projects', title: 'Projects', icon: Package, href: '#projects' },
+  { id: 'analytics', title: 'Analytics', icon: Cpu, href: '#analytics' },
+  { id: 'settings', title: 'Settings', icon: ShieldCheck, href: '#settings' },
 ]
 
 export default function Page() {

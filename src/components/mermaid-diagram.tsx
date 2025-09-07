@@ -26,7 +26,7 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
           curve: 'basis'
         },
         mindmap: {
-          // mindmap не поддерживает htmlLabels
+          // mindmap doesn't support htmlLabels
         },
         sequence: {
           diagramMarginX: 50,
@@ -64,7 +64,7 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
         .replace(/-->/g, '-->')
         .replace(/<--/g, '<--')
         // Only process Russian text that's not already quoted
-        .replace(/\[([^\]]*[а-яё][^\]]*)\]/gi, (match, content) => {
+        .replace(/\[([^\]]*[a-z][^\]]*)\]/gi, (match, content) => {
           // Skip if already has quotes
           if (content.includes('"') || content.includes("'")) {
             return match
@@ -119,8 +119,8 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
                       shape.setAttribute('stroke', '#dc2626')
                       shape.setAttribute('stroke-width', '2')
                     })
-                  } else if (text.includes('Интеграции')) {
-                    console.log('Applying Интеграции styling')
+                  } else if (text.includes('Integrations')) {
+                    console.log('Applying Integrations styling')
                     shapes.forEach(shape => {
                       shape.setAttribute('fill', '#f0fdf4')
                       shape.setAttribute('stroke', '#16a34a')
@@ -147,10 +147,10 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
         if (ref.current) {
           ref.current.innerHTML = `
             <div class="text-red-500 p-4 border border-red-200 rounded bg-red-50 dark:bg-red-900/20">
-              <div class="font-semibold mb-2">Ошибка отображения диаграммы</div>
+              <div class="font-semibold mb-2">Diagram Display Error</div>
               <div class="text-sm mb-2">${error.message}</div>
               <details class="text-xs">
-                <summary class="cursor-pointer text-blue-600 hover:text-blue-800">Показать исходный код</summary>
+                <summary class="cursor-pointer text-blue-600 hover:text-blue-800">Show Source Code</summary>
                 <pre class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-x-auto">${chart}</pre>
               </details>
             </div>

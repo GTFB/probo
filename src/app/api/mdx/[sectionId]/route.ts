@@ -9,7 +9,7 @@ export async function GET(
   try {
     const { sectionId } = params
     
-    // Валидация sectionId
+    // Validate sectionId
     if (!sectionId || typeof sectionId !== 'string') {
       console.error('Invalid sectionId:', sectionId)
       return NextResponse.json(
@@ -21,7 +21,7 @@ export async function GET(
     const mdxPath = join(process.cwd(), 'content', `${sectionId}.mdx`)
     console.log('Looking for MDX file at:', mdxPath)
     
-    // Проверяем существование файла
+    // Check file existence
     if (!existsSync(mdxPath)) {
       console.error('MDX file not found:', mdxPath)
       return NextResponse.json(

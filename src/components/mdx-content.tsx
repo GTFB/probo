@@ -26,13 +26,14 @@ function processInlineMarkdown(text: string): string {
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/~~(.*?)~~/g, '<del>$1</del>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-primary/80 underline">$1</a>')
+    .replace(/`([^`]+)`/g, '<code class="bg-muted px-2 py-1 rounded text-sm font-mono text-foreground border">$1</code>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="my-6 rounded-lg shadow-md max-w-full h-auto" />')
 }
 
 
 async function highlightCode(code: string, language: string = 'text'): Promise<string> {
-  // Простая подсветка синтаксиса без внешних зависимостей
+  // Simple syntax highlighting without external dependencies
   const escapedCode = code.replace(/</g, "&lt;").replace(/>/g, "&gt;")
   return `<pre class="code-block" data-language="${language}"><code class="code">${escapedCode}</code></pre>`
 }
@@ -106,7 +107,7 @@ function processTable(tableLines: string[]): string {
   const headers = headerLine.split('|').map(h => h.trim()).filter(Boolean)
   const rows = bodyLines.map(rowLine => rowLine.split('|').map(c => c.trim()).filter(Boolean))
   
-  // Определяем выравнивание для каждого столбца
+  // Determine alignment for each column
   const alignments: string[] = []
   if (separatorLine) {
     const separatorCells = separatorLine.split('|').map(c => c.trim()).filter(Boolean)
@@ -118,11 +119,11 @@ function processTable(tableLines: string[]): string {
       } else if (cell.startsWith(':')) {
         alignments.push('left')
       } else {
-        alignments.push('left') // по умолчанию
+        alignments.push('left') // default
       }
     })
   } else {
-    // Если нет разделительной строки, все столбцы выравниваем по левому краю
+    // If there's no separator line, align all columns to the left
     headers.forEach(() => alignments.push('left'))
   }
 
@@ -148,7 +149,7 @@ function processTable(tableLines: string[]): string {
   return html
 }
 
-// Интерфейс для настроек диаграммы
+// Interface for diagram settings
 interface MermaidSettings {
   enableZoom?: boolean
   height?: string
@@ -159,20 +160,20 @@ interface MermaidSettings {
   disableTooltip?: boolean
 }
 
-// Функция для извлечения настроек из комментариев в коде диаграммы
+// Function to extract settings from comments in diagram code
 function extractMermaidSettings(code: string): MermaidSettings {
   const settings: MermaidSettings = {}
   
-  // Ищем комментарии с настройками
+  // Look for comments with settings
   const lines = code.split('\n')
   
   for (const line of lines) {
     const trimmedLine = line.trim()
     
-    // Пропускаем пустые строки и комментарии без настроек
+    // Skip empty lines and comments without settings
     if (!trimmedLine || !trimmedLine.startsWith('%%')) continue
     
-    // Извлекаем настройки из комментариев вида %% zoom: true
+    // Extract settings from comments like %% zoom: true
     if (trimmedLine.includes('zoom:')) {
       const zoomMatch = trimmedLine.match(/zoom:\s*(true|false)/i)
       if (zoomMatch) {
@@ -226,128 +227,21 @@ function extractMermaidSettings(code: string): MermaidSettings {
   return settings
 }
 
-async function markdownToHtml(markdown: string): Promise<{ html: string; mermaidCharts: string[] }> {
+async function processMarkdownContent(markdown: string): Promise<{ content: string; mermaidCharts: string[] }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
 
   const mermaidCharts: string[] = []
-  let chartIndex = 0
-
-  const codeBlockRegex = /```(\w+)?\s*\n([\s\S]*?)\n```/g
-  const placeholders = new Map<string, string>()
-  let placeholderId = 0
-
-  let processedContent = cleanContent.replace(codeBlockRegex, (match, lang, code) => {
-    const key = `__CODE_BLOCK_${placeholderId++}__`
-    
-    // Извлекаем настройки из комментариев перед диаграммой
-    const settings = extractMermaidSettings(code)
-    
-    placeholders.set(key, JSON.stringify({ 
-      lang: lang || 'text', 
-      code: code.trim(),
-      settings: settings
-    }))
-    return key
+  
+  // Extract Mermaid diagrams
+  const mermaidRegex = /```mermaid\n([\s\S]*?)\n```/g
+  cleanContent.replace(mermaidRegex, (match, code) => {
+    const cleanCode = code.replace(/^%% .*$/gm, '').trim()
+    mermaidCharts.push(cleanCode)
+    return match // Return original match to not change content
   })
 
-  for (const [key, value] of placeholders.entries()) {
-    const { lang, code, settings } = JSON.parse(value)
-    let replacement = ''
-    if (lang === 'mermaid') {
-      // Удаляем комментарии Mermaid перед сохранением
-      const cleanCode = code.replace(/^%% .*$/gm, '').trim()
-      mermaidCharts.push(cleanCode)
-      // ИСПРАВЛЕНИЕ: Убираем лишнюю обертку. Оставляем только плейсхолдер.
-      replacement = `<div class="mermaid-placeholder" data-chart-index="${chartIndex}" data-settings='${JSON.stringify(settings || {})}'></div>`
-      chartIndex++
-    } else {
-      replacement = await highlightCode(code, lang)
-    }
-    processedContent = processedContent.replace(key, replacement)
-  }
-
-  const lines = processedContent.split('\n')
-  const htmlLines: string[] = []
-  let i = 0
-
-  const isTableLine = (line: string) => line.trim().includes('|')
-  const isTableSeparator = (line: string) => /^\s*\|?(\s*:?-+:?\s*\|)+/.test(line)
-
-  while (i < lines.length) {
-    const line = lines[i]
-    const trimmedLine = line.trim()
-    
-    // Эта проверка нужна, чтобы не оборачивать уже готовый HTML от Shiki или Mermaid в тег <p>
-    if (trimmedLine.startsWith('<div') || trimmedLine.startsWith('<pre')) {
-      htmlLines.push(line)
-      i++
-      continue
-    }
-
-    if (!trimmedLine) {
-      i++
-      continue
-    }
-
-    if (trimmedLine.startsWith('#')) {
-      const level = trimmedLine.match(/^#+/)?.[0].length || 0
-      if (level > 0 && level <= 6) {
-        const title = trimmedLine.substring(level).trim().replace(/\*\*/g, '')
-        const id = `h${level}-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
-        htmlLines.push(`<h${level} id="${id}">${title}</h${level}>`)
-        i++
-        continue
-      }
-    }
-    
-    if (isTableLine(line) && i + 1 < lines.length && isTableSeparator(lines[i + 1])) {
-      const tableBlock: string[] = [line]
-      i += 2 // Пропускаем заголовок и разделитель
-      while (i < lines.length && isTableLine(lines[i])) {
-        tableBlock.push(lines[i])
-        i++
-      }
-      htmlLines.push(processTable(tableBlock))
-      continue
-    }
-
-    if (/^\s*-\s*\[[x\s]\]\s/.test(trimmedLine)) {
-      const content = trimmedLine.replace(/^\s*-\s*\[[x\s]\]\s/, '')
-      const isCompleted = trimmedLine.includes('[x]')
-      const iconSvg = isCompleted
-        ? '<svg class="task-icon completed-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/></svg>'
-        : '<svg class="task-icon pending-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>'
-      htmlLines.push(`<div class="task-item ${isCompleted ? 'completed' : 'pending'}">${iconSvg}<span class="task-text">${processInlineMarkdown(content)}</span></div>`)
-      i++
-      continue
-    }
-
-    if (/^\s*(\*|-|\d+\.)\s/.test(trimmedLine)) {
-      const listBlock: string[] = []
-      while (i < lines.length && (/^\s*(\*|-|\d+\.)\s/.test(lines[i].trim()) || (lines[i].trim() !== '' && /^\s+/.test(lines[i])))) {
-        listBlock.push(lines[i])
-        i++
-      }
-      htmlLines.push(processList(listBlock))
-      continue
-    }
-
-    if (trimmedLine.startsWith('>')) {
-      const quoteBlock: string[] = []
-      while (i < lines.length && lines[i].trim().startsWith('>')) {
-        quoteBlock.push(lines[i])
-        i++
-      }
-      htmlLines.push(processBlockquote(quoteBlock))
-      continue
-    }
-    
-    htmlLines.push(`<p>${processInlineMarkdown(trimmedLine)}</p>`)
-    i++
-  }
-
-  return { html: htmlLines.join('\n'), mermaidCharts }
+  return { content: cleanContent, mermaidCharts }
 }
 
 function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
@@ -361,7 +255,7 @@ function extractToc(markdown: string): Array<{ id: string; title: string; level:
       const level = trimmedLine.match(/^#+/)?.[0].length || 0
       if (level > 0 && level <= 6) {
         const title = trimmedLine.substring(level).trim().replace(/\*\*/g, '')
-        const id = `h${level}-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
+        const id = `h${level}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
         toc.push({ id, title, level })
       }
     }
@@ -400,7 +294,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   useEffect(() => {
     const loadMDX = async () => {
       try {
-        // Проверяем кэш
+        // Check cache
         if (contentCache[sectionId]) {
           const cached = contentCache[sectionId]
           setContent(cached.content)
@@ -433,14 +327,14 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           throw new Error(data.error)
         }
         
-        const { html: htmlContent, mermaidCharts: charts } = await markdownToHtml(data.content)
+        const { content: markdownContent, mermaidCharts: charts } = await processMarkdownContent(data.content)
         
         const toc = extractToc(data.content)
         const h1Title = extractH1Title(data.content)
         
-        // Сохраняем в кэш
+        // Save to cache
         const cacheData = {
-          content: htmlContent,
+          content: markdownContent,
           mermaidCharts: charts,
           frontmatter: data.frontmatter,
           toc,
@@ -448,7 +342,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         }
         
         setContentCache(prev => ({ ...prev, [sectionId]: cacheData }))
-        setContent(htmlContent)
+        setContent(markdownContent)
         setMermaidCharts(charts)
         
         if (data.frontmatter) {
@@ -465,7 +359,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         
       } catch (error) {
         console.error('Error loading MDX:', error)
-        setContent(`<h1>Ошибка загрузки контента для раздела ${sectionId}</h1>`)
+        setContent(`<h1>Error loading content for section ${sectionId}</h1>`)
       } finally {
         onLoadingChangeRef.current?.(false)
       }
@@ -477,7 +371,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   return (
     <MDXLayout>
       <div className="mt-8">
-        <MDXRenderer htmlContent={content} mermaidCharts={mermaidCharts} />
+        <MDXRenderer markdownContent={content} mermaidCharts={mermaidCharts} />
       </div>
     </MDXLayout>
   )

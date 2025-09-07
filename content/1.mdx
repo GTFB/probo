@@ -1,97 +1,97 @@
 ---
-title: "Примеры стилей MDX"
-description: "Полные примеры всех стилей и форматирования MDX контента"
+title: "MDX Styling Examples"
+description: "Complete examples of all MDX content styles and formatting"
 icon: "FileText"
-prevButtonText: "Назад"
-nextButtonText: "Вперед"
+prevButtonText: "Back"
+nextButtonText: "Forward"
 ---
 
-# Примеры стилей MDX контента
+# MDX Content Styling Examples
 
-Эта страница демонстрирует все доступные стили и форматирование MDX контента, включая код с подсветкой синтаксиса.
+This page demonstrates all available styles and formatting for MDX content, including syntax-highlighted code.
 
-## Заголовки всех уровней
+## Headings of All Levels
 
-### Заголовок третьего уровня
+### Third Level Heading
 
-#### Заголовок четвертого уровня
+#### Fourth Level Heading
 
-##### Заголовок пятого уровня
+##### Fifth Level Heading
 
-###### Заголовок шестого уровня
+###### Sixth Level Heading
 
-## Форматирование текста
+## Text Formatting
 
-Это **жирный текст**, а это *курсив*. Также можно использовать ***жирный курсив***.
+This is **bold text**, this is <u>underlined text</u>, and this is *italic*. You can also use ***bold italic***, **<u>bold underlined</u>** and ***<u>bold underlined italic</u>***.
 
-~~Зачеркнутый текст~~ и <mark>выделенный текст</mark>.
+~~Strikethrough text~~ and <mark>highlighted text</mark>.
 
-`Встроенный код` в тексте.
+`Inline code` in text.
 
-## Списки
+## Lists
 
-### Маркированный список
+### Bulleted List
 
-- Первый элемент списка
-- Второй элемент списка
-  - Вложенный элемент
-  - Еще один вложенный элемент
-- Третий элемент списка
+- First list item
+- Second list item
+  - Nested item
+  - Another nested item
+- Third list item
 
-### Нумерованный список
+### Numbered List
 
-1. Первый пункт
-2. Второй пункт
-   1. Вложенный пункт
-   2. Еще один вложенный пункт
-3. Третий пункт
+1. First item
+2. Second item
+   1. Nested item
+   2. Another nested item
+3. Third item
 
-### Маркированный и нумерованный список
+### Mixed Bulleted and Numbered List
 
-*   **Выделение:** Описание:
-    1.  Пункт 1.
-    2.  Пункт 2.
-    3.  Пункт 3.
-*   **Выделение:** Конец.
+*   **Highlight:** Description:
+    1.  Item 1.
+    2.  Item 2.
+    3.  Item 3.
+*   **Highlight:** End.
 
-### Список задач
+### Task List
 
-- [x] Выполненная задача
-- [ ] Невыполненная задача
-- [x] Еще одна выполненная задача
+- [x] Completed task
+- [ ] Uncompleted task
+- [x] Another completed task
 
-## Цитаты
+## Blockquotes
 
-> Это обычная цитата. Она может содержать несколько строк текста.
+> This is a regular blockquote. It can contain multiple lines of text.
 > 
-> И даже несколько абзацев.
+> And even multiple paragraphs.
 
-> ### Цитата с заголовком
+> ### Blockquote with Heading
 > 
-> Цитата может содержать заголовки и другое форматирование.
+> A blockquote can contain headings and other formatting.
 
-## Код с подсветкой синтаксиса
+## Syntax-Highlighted Code
 
 ### JavaScript/TypeScript
 
 ```javascript
-// Пример функции на JavaScript
+// Example JavaScript function
 function greetUser(name, age = 18) {
-  const message = `Привет, ${name}! Тебе ${age} лет.`;
+  const message = `Hello, ${name}! You are ${age} years old.`;
   console.log(message);
   return message;
 }
 
-// Использование функции
+// Using the function
 const user = {
-  name: "Алексей",
+  name: "Alex",
   age: 25
 };
 
 greetUser(user.name, user.age);
 ```
 
-### React компонент
+### React Component
 
 ```tsx
 import React, { useState, useEffect } from 'react';
@@ -105,15 +105,15 @@ const UserCard: React.FC<UserProps> = ({ name, age }) => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    console.log(`Пользователь ${name} загружен`);
+    console.log(`User ${name} loaded`);
   }, [name]);
 
   return (
     <div className={`user-card ${isActive ? 'active' : ''}`}>
       <h3>{name}</h3>
-      <p>Возраст: {age}</p>
+      <p>Age: {age}</p>
       <button onClick={() => setIsActive(!isActive)}>
-        {isActive ? 'Деактивировать' : 'Активировать'}
+        {isActive ? 'Deactivate' : 'Activate'}
       </button>
     </div>
   );
@@ -122,10 +122,10 @@ const UserCard: React.FC<UserProps> = ({ name, age }) => {
 export default UserCard;
 ```
 
-### CSS стили
+### CSS Styles
 
 ```css
-/* Пример CSS стилей */
+/* Example CSS styles */
 .user-card {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 12px;
@@ -151,53 +151,50 @@ export default UserCard;
 }
 ```
 
-## Таблицы
+## Tables
 
-| Название | Описание | Статус | Дата |
-|----------|----------|--------|------|
-| Проект A | Веб-приложение | ✅ Активен | 2024-01-15 |
-| Проект B | Мобильное приложение | 🚧 В разработке | 2024-02-01 |
-| Проект C | API сервис | ❌ Завершен | 2024-01-30 |
+| Name | Description | Status | Date |
+|------|-------------|--------|------|
+| Project A | Web Application | ✅ Active | 2024-01-15 |
+| Project B | Mobile Application | 🚧 In Development | 2024-02-01 |
+| Project C | API Service | ❌ Completed | 2024-01-30 |
 
-### Таблица с выравниванием
+### Table with Alignment
 
-| Левый | Центр | Правый |
+| Left | Center | Right |
 |:------|:-----:|-------:|
-| Текст слева | Текст по центру | Текст справа |
-| Еще текст | Еще текст | Еще текст |
+| Left text | Center text | Right text |
+| More text | More text | More text |
 
-## Ссылки и изображения
+### Links
 
-### Ссылки
-
-- [Официальный сайт Next.js](https://nextjs.org/)
-- [Документация MDX](https://mdxjs.com/)
+- [Next.js Official Website](https://nextjs.org/)
+- [MDX Documentation](https://mdxjs.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
-### Изображения
+### Images
 
-![Логотип Next.js](https://nextjs.org/static/blog/next-13/twitter-card.png)
+![Logo](/logo.svg)
 
-## Горизонтальная линия
+## Horizontal Line
 
 ---
 
-
-## Эмодзи и символы
+## Emojis and Symbols
 
 🎉 🚀 💻 ⚡ 🔥 📱 🎨 🌟 ✨ 🎯
 
-## Специальные символы
+## Special Characters
 
-- `<` для меньше
-- `>` для больше
-- `&` для амперсанда
-- `"` для кавычек
-- `'` для апострофа
+- `<` for less than
+- `>` for greater than
+- `&` for ampersand
+- `"` for quotes
+- `'` for apostrophe
 
-## Mermaid диаграммы
+## Mermaid Diagrams
 
-### Блок-схема процесса
+### Process Flowchart
 
 ```mermaid
 %% zoom: true
@@ -205,19 +202,19 @@ export default UserCard;
 %% zoom-min: 0.5
 %% zoom-max: 3
 %% zoom-initial: 0.8
-%% tooltip: Эта диаграмма показывает архитектуру системы Probo
+%% tooltip: This diagram shows the Probo system architecture
 flowchart TD
-    A[Начало] --> B{Проверка условий}
-    B -->|Да| C[Выполнить действие]
-    B -->|Нет| D[Пропустить]
-    C --> E[Обновить данные]
+    A[Start] --> B{Condition Check}
+    B -->|Yes| C[Execute Action]
+    B -->|No| D[Skip]
+    C --> E[Update Data]
     D --> E
-    E --> F{Есть еще задачи?}
-    F -->|Да| B
-    F -->|Нет| G[Завершение]
+    E --> F{More Tasks?}
+    F -->|Yes| B
+    F -->|No| G[End]
 ```
 
-### Диаграмма последовательности
+### Sequence Diagram
 
 ```mermaid
 %% zoom: true
@@ -227,20 +224,20 @@ flowchart TD
 %% zoom-initial: 0.8
 %% disable-tooltip: true
 sequenceDiagram
-    participant U as Пользователь
+    participant U as User
     participant F as Frontend
     participant B as Backend
-    participant D as База данных
+    participant D as Database
 
-    U->>F: Запрос данных
-    F->>B: API вызов
-    B->>D: SQL запрос
-    D-->>B: Результат
-    B-->>F: JSON ответ
-    F-->>U: Отображение данных
+    U->>F: Data Request
+    F->>B: API Call
+    B->>D: SQL Query
+    D-->>B: Result
+    B-->>F: JSON Response
+    F-->>U: Display Data
 ```
 
-### Диаграмма классов
+### Class Diagram
 
 ```mermaid
 %% zoom: true
@@ -275,7 +272,7 @@ classDiagram
     }
 ```
 
-### Диаграмма состояния
+### State Diagram
 
 ```mermaid
 %% zoom: true
@@ -294,7 +291,7 @@ stateDiagram-v2
     Published --> [*]
 ```
 
-### Диаграмма развертывания
+### Deployment Diagram
 
 ```mermaid
 %% zoom: true
@@ -329,13 +326,13 @@ graph TB
     E --> G
 ```
 
-## HTML элементы
+## HTML Elements
 
-<div style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); padding: 20px; border-radius: 10px; color: white; text-align: center;">
-  <h3>Кастомный HTML блок</h3>
-  <p>Это пример использования HTML в MDX</p>
+<div style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); padding: 20px; border-radius: 10px; color: white; text-align: center; margin-bottom: 20px;">
+  <h3>Custom HTML Block</h3>
+  <p>This is an example of using HTML in MDX</p>
 </div>
 
-## Заключение
+## Conclusion
 
-Этот файл демонстрирует все основные возможности форматирования MDX контента. Все стили должны корректно отображаться с подсветкой синтаксиса для кода.
+This file demonstrates all the main MDX content formatting capabilities. All styles should display correctly with syntax highlighting for code.

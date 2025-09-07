@@ -30,7 +30,7 @@ export function TariffCard({
       {isPopular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
           <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-            Популярный
+            Popular
           </span>
         </div>
       )}

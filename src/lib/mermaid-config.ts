@@ -1,54 +1,54 @@
-// Конфигурация для Mermaid диаграмм
+// Configuration for Mermaid diagrams
 export interface MermaidConfig {
-  // Настройки зума
+  // Zoom settings
   zoom: {
-    // Включить зум по умолчанию
+    // Enable zoom by default
     enabled: boolean
-    // Минимальный масштаб
+    // Minimum scale
     minScale: number
-    // Максимальный масштаб
+    // Maximum scale
     maxScale: number
-    // Начальный масштаб
+    // Initial scale
     initialScale: number
   }
   
-  // Настройки размеров
+  // Size settings
   sizing: {
-    // Фиксированная высота контейнера
+    // Fixed container height
     containerHeight: string
-    // Максимальная ширина SVG
+    // Maximum SVG width
     maxSvgWidth: string
-    // Максимальная высота SVG
+    // Maximum SVG height
     maxSvgHeight: string
   }
   
-  // Настройки tooltip
+  // Tooltip settings
   tooltip: {
-    // Отключить tooltip по умолчанию
+    // Disable tooltip by default
     disabled: boolean
-    // Текст по умолчанию для интерактивных диаграмм
+    // Default text for interactive diagrams
     defaultInteractiveText: string
-    // Текст по умолчанию для статичных диаграмм
+    // Default text for static diagrams
     defaultStaticText: string
   }
   
-  // Правила для отключения зума
+  // Rules for disabling zoom
   disableZoomRules: {
-    // Отключить зум для ER-диаграмм
+    // Disable zoom for ER diagrams
     disableForErDiagrams: boolean
-    // Отключить зум для диаграмм с количеством узлов меньше указанного
+    // Disable zoom for diagrams with fewer nodes than specified
     disableForSimpleDiagrams: boolean
     minNodesForZoom: number
-    // Отключить зум для первых N диаграмм
+    // Disable zoom for first N diagrams
     disableForFirstNDiagrams: boolean
     firstNDiagramsCount: number
-    // Отключить зум для диаграмм с определенными ключевыми словами
+    // Disable zoom for diagrams with certain keywords
     disableForKeywords: boolean
     keywords: string[]
   }
 }
 
-// Конфигурация по умолчанию
+// Default configuration
 export const defaultMermaidConfig: MermaidConfig = {
   zoom: {
     enabled: true,
@@ -65,8 +65,8 @@ export const defaultMermaidConfig: MermaidConfig = {
   
   tooltip: {
     disabled: false,
-    defaultInteractiveText: 'Используйте колесико мыши для масштабирования и перетаскивания для перемещения',
-    defaultStaticText: 'Диаграмма без интерактивности'
+    defaultInteractiveText: 'Use mouse wheel to zoom and drag to pan',
+    defaultStaticText: 'Diagram without interactivity'
   },
   
   disableZoomRules: {
@@ -80,7 +80,7 @@ export const defaultMermaidConfig: MermaidConfig = {
   }
 }
 
-// Функция для определения, нужен ли зум для диаграммы
+// Function to determine if zoom is needed for a diagram
 export function shouldEnableZoom(chart: string, chartIndex: number, config: MermaidConfig = defaultMermaidConfig): boolean {
   if (!config.zoom.enabled) {
     return false
@@ -88,12 +88,12 @@ export function shouldEnableZoom(chart: string, chartIndex: number, config: Merm
   
   const rules = config.disableZoomRules
   
-  // 1. Отключить зум для ER-диаграмм
+  // 1. Disable zoom for ER diagrams
   if (rules.disableForErDiagrams && chart.includes('erDiagram')) {
     return false
   }
   
-  // 2. Отключить зум для простых диаграмм
+  // 2. Disable zoom for simple diagrams
   if (rules.disableForSimpleDiagrams) {
     const nodeCount = (chart.match(/\[.*?\]/g) || []).length
     if (nodeCount < rules.minNodesForZoom) {
@@ -101,12 +101,12 @@ export function shouldEnableZoom(chart: string, chartIndex: number, config: Merm
     }
   }
   
-  // 3. Отключить зум для первых N диаграмм
+  // 3. Disable zoom for first N diagrams
   if (rules.disableForFirstNDiagrams && chartIndex < rules.firstNDiagramsCount) {
     return false
   }
   
-  // 4. Отключить зум для диаграмм с определенными ключевыми словами
+  // 4. Disable zoom for diagrams with certain keywords
   if (rules.disableForKeywords) {
     const chartLower = chart.toLowerCase()
     if (rules.keywords.some(keyword => chartLower.includes(keyword.toLowerCase()))) {
@@ -114,11 +114,11 @@ export function shouldEnableZoom(chart: string, chartIndex: number, config: Merm
     }
   }
   
-  // По умолчанию включаем зум
+  // By default, enable zoom
   return true
 }
 
-// Функция для получения настроек зума
+// Function to get zoom settings
 export function getZoomSettings(config: MermaidConfig = defaultMermaidConfig) {
   return {
     minScale: config.zoom.minScale,
