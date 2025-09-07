@@ -47,8 +47,8 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/60 backdrop-blur-sm p-4">
+      <Card className="w-full max-w-md animate-in fade-in-0 zoom-in-95 duration-300">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
             <Lock className="h-6 w-6 text-primary" />
