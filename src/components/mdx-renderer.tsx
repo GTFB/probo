@@ -1,7 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { MermaidDiagram } from './mermaid-diagram'
+import parse, { HTMLReactParserOptions } from 'html-react-parser'
+import { InteractiveMermaid } from './interactive-mermaid'
+import { shouldEnableZoom } from '../lib/mermaid-config'
+import { useTheme } from '../hooks/use-theme'
 
 interface MDXRendererProps {
   htmlContent: string
@@ -9,37 +11,45 @@ interface MDXRendererProps {
 }
 
 export function MDXRenderer({ htmlContent, mermaidCharts }: MDXRendererProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [processedContent, setProcessedContent] = useState<string>('')
+  const theme = useTheme()
 
-  useEffect(() => {
-    if (!htmlContent) return
-
-    // Create temporary container for HTML processing
-    const tempDiv = document.createElement('div')
-    tempDiv.innerHTML = htmlContent
-
-    // Find all placeholders for Mermaid diagrams
-    const mermaidPlaceholders = tempDiv.querySelectorAll('[data-mermaid-chart]')
-    
-    // Replace placeholders with special markers
-    mermaidPlaceholders.forEach((placeholder, index) => {
-      const marker = document.createElement('div')
-      marker.className = 'mermaid-placeholder'
-      marker.setAttribute('data-chart-index', index.toString())
-      marker.innerHTML = `🔄 Загрузка диаграммы ${index + 1}...`
-      placeholder.parentNode?.replaceChild(marker, placeholder)
-    })
-
-    setProcessedContent(tempDiv.innerHTML)
-  }, [htmlContent])
+  const options: HTMLReactParserOptions = {
+    replace: (domNode) => {
+      if (domNode.type === 'tag' && domNode.attribs && domNode.attribs['class'] === 'mermaid-placeholder') {
+        const chartIndex = parseInt(domNode.attribs['data-chart-index'] || '0', 10)
+        const chart = mermaidCharts[chartIndex]
+        const settingsData = domNode.attribs['data-settings']
+        const individualSettings = settingsData ? JSON.parse(settingsData) : {}
+        
+        if (chart) {
+          const enableZoom = individualSettings.enableZoom !== undefined 
+            ? individualSettings.enableZoom 
+            : shouldEnableZoom(chart, chartIndex)
+          
+          return (
+            <div 
+              key={`mermaid-${chartIndex}-${chart.slice(0, 20)}`}
+              className="interactive-mermaid-container"
+              style={individualSettings.height ? { height: individualSettings.height } : undefined}
+            >
+              <InteractiveMermaid 
+                chart={chart} 
+                id={`mermaid-${chartIndex}-${chart.slice(0, 20)}`}
+                enableZoom={enableZoom}
+                settings={individualSettings}
+                theme={theme}
+              />
+            </div>
+          )
+        }
+      }
+      return undefined
+    }
+  }
 
   return (
-    <div ref={containerRef} className="mdx-content">
-      <div dangerouslySetInnerHTML={{ __html: processedContent }} />
-      {mermaidCharts.map((chart, index) => (
-        <MermaidDiagram key={`chart-${index}`} chart={chart} />
-      ))}
+    <div className="mdx-content" key={theme}>
+      {parse(htmlContent, options)}
     </div>
   )
 }

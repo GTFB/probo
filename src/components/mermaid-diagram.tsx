@@ -26,7 +26,7 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
           curve: 'basis'
         },
         mindmap: {
-          htmlLabels: true
+          // mindmap не поддерживает htmlLabels
         },
         sequence: {
           diagramMarginX: 50,
@@ -96,9 +96,9 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
                 console.log('Found text:', text)
                 
                 // Find the parent group that contains this text
-                let parentGroup = textElement.closest('g')
+                let parentGroup = textElement.closest('g') as SVGGElement | null
                 if (!parentGroup) {
-                  parentGroup = textElement.parentElement
+                  parentGroup = textElement.parentElement as SVGGElement | null
                 }
                 
                 if (parentGroup) {

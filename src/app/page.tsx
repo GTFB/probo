@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { AppSidebar } from '@/components/app-sidebar'
 import { TableOfContents } from '@/components/table-of-contents'
 import { PROJECT_SETTINGS, NAVIGATION_ITEMS } from '@/lib/settings'
@@ -8,7 +8,7 @@ import { SearchEngine } from '@/components/search-engine'
 import { Button } from '@/components/ui/button'
 import { MDXContent } from '@/components/mdx-content'
 import { ArrowRight, Menu, X, List, Sun, Moon } from 'lucide-react'
-import { NavigationItem } from '@/lib/settings'
+import { NavigationItem } from '@/types/proposal'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { SidebarProvider } from '@/components/ui/sidebar'
 
@@ -38,6 +38,7 @@ import {
   Share2,
   TestTube,
   CheckCircle,
+  Code,
 } from 'lucide-react'
 
 // Function to get icon by name from frontmatter
@@ -50,6 +51,7 @@ const getIconByName = (iconName: string) => {
     Share2,
     TestTube,
     CheckCircle,
+    Code,
   }
   return iconMap[iconName] || Component // Fallback to Component if icon not found
 }
@@ -66,12 +68,56 @@ export default function HomePage() {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
   const [isRightOffcanvasOpen, setIsRightOffcanvasOpen] = useState(false)
   const [isContentLoading, setIsContentLoading] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return document.documentElement.classList.contains('dark')
+    // При серверном рендеринге всегда возвращаем false
+    if (typeof window === 'undefined') return false
+    
+    // При клиентском рендеринге проверяем localStorage
+    try {
+      const savedTheme = localStorage.getItem('theme')
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        return savedTheme === 'dark'
+      }
+      // Если нет сохраненной темы, используем системную
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+    } catch {
+      // Fallback: используем системную тему
+      try {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+      } catch {
+        return false
+      }
     }
-    return false
   })
+
+  // Устанавливаем состояние гидратации и применяем тему
+  useEffect(() => {
+    setIsHydrated(true)
+    
+    // Дополнительная проверка и применение темы после гидратации
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme')
+      if (savedTheme) {
+        const isDark = savedTheme === 'dark'
+        setIsDarkMode(isDark)
+        if (isDark) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+      } else {
+        // Если нет сохраненной темы, используем системную
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        setIsDarkMode(prefersDark)
+        if (prefersDark) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+      }
+    }
+  }, [])
 
   const handleSectionChange = useCallback((sectionId: string) => {
     setActiveSection(sectionId)
@@ -82,12 +128,16 @@ export default function HomePage() {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const nextIndex = (currentIndex + 1) % navigationItems.length
     setActiveSection(navigationItems[nextIndex].id)
+    // Прокручиваем наверх страницы
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection])
 
   const handlePrevSection = useCallback(() => {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const prevIndex = currentIndex > 0 ? currentIndex - 1 : navigationItems.length - 1
     setActiveSection(navigationItems[prevIndex].id)
+    // Прокручиваем наверх страницы
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection])
 
   const handleFrontmatterChange = useCallback((frontmatter: MDXFrontmatter) => {
@@ -110,17 +160,25 @@ export default function HomePage() {
     const newTheme = !isDarkMode
     setIsDarkMode(newTheme)
     
-    // Smooth theme transition for all elements
-    const elements = document.querySelectorAll('.theme-transition')
-    elements.forEach(el => {
-      (el as HTMLElement).style.transition = 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease'
-    })
+    // Сохраняем тему в localStorage с дополнительной проверкой
+    try {
+      localStorage.setItem('theme', newTheme ? 'dark' : 'light')
+    } catch (error) {
+      console.warn('Не удалось сохранить тему в localStorage:', error)
+    }
     
+    // Сразу применяем изменения к DOM
     if (newTheme) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
+    
+    // Smooth theme transition for all elements
+    const elements = document.querySelectorAll('.theme-transition')
+    elements.forEach(el => {
+      (el as HTMLElement).style.transition = 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease'
+    })
     
     // Remove transition after completion
     setTimeout(() => {
@@ -132,30 +190,34 @@ export default function HomePage() {
 
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
 
+  // Определяем классы для сетки на основе состояния
+  let lgGridColsClass = 'lg:grid-cols-1'; // По умолчанию, если оба закрыты
+  if (isLeftSidebarOpen && isRightSidebarOpen) {
+    lgGridColsClass = 'lg:grid-cols-[auto_1fr_auto]';
+  } else if (isLeftSidebarOpen) {
+    lgGridColsClass = 'lg:grid-cols-[auto_1fr]';
+  } else if (isRightSidebarOpen) {
+    lgGridColsClass = 'lg:grid-cols-[1fr_auto]';
+  }
+
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-[auto_1fr_auto]">
+    <div className={`min-h-screen grid grid-cols-1 ${lgGridColsClass}`}>
         {/* Desktop left sidebar */}
-        <div className={`hidden lg:block ${isLeftSidebarOpen ? 'lg:col-start-1' : 'lg:hidden'}`}>
-          <SidebarProvider defaultOpen={true}>
-            <AppSidebar
-              items={navigationItemsWithIcons}
-              activeSection={activeSection}
-              onSectionChange={handleSectionChange}
-              onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
-            />
-          </SidebarProvider>
-        </div>
+        {isLeftSidebarOpen && (
+          <div className="hidden lg:block">
+            <SidebarProvider defaultOpen={true}>
+              <AppSidebar
+                items={navigationItemsWithIcons}
+                activeSection={activeSection}
+                onSectionChange={handleSectionChange}
+                onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
+              />
+            </SidebarProvider>
+          </div>
+        )}
         
         {/* Central section: Header, Content, Footer */}
-        <div className={`flex flex-col min-h-screen ${
-          isLeftSidebarOpen && isRightSidebarOpen 
-            ? 'lg:col-start-2 lg:col-end-2' 
-            : isLeftSidebarOpen && !isRightSidebarOpen
-            ? 'lg:col-start-2 lg:col-end-3'
-            : !isLeftSidebarOpen && isRightSidebarOpen
-            ? 'lg:col-start-1 lg:col-end-2'
-            : 'lg:col-start-1 lg:col-end-3'
-        }`}>
+        <div className="flex flex-col min-h-screen">
           {/* Sticky Header for desktop */}
           <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-l border-b">
             <div className={`px-4 sm:px-6 md:px-10 flex items-center transition-all duration-300 ease-in-out`} style={{ height: '72px' }}>
@@ -286,7 +348,7 @@ export default function HomePage() {
                             )}
                           </Button>
                         </div>
-                        <div className="px-2 py-2">
+                        <div className="px-2 py-2 overflow-y-auto scrollbar-hide h-[calc(100vh-72px)]">
                           <div className="space-y-1 mb-6">
                             {currentToc.length === 0 ? (
                               <p className="text-sm text-muted-foreground">Нет заголовков</p>
@@ -418,15 +480,17 @@ export default function HomePage() {
         </div>
 
         {/* Desktop right table of contents */}
-        <div className={`hidden lg:block ${isRightSidebarOpen ? 'lg:col-start-3' : 'lg:hidden'}`} style={{zIndex: 100}}>
-          <TableOfContents
-            items={currentToc}
-            activeSection={activeSection}
-            onSectionClick={handleSectionChange}
-            onSectionChange={handleSectionChange}
-            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-          />
-        </div>
+        {isRightSidebarOpen && (
+          <div className="hidden lg:block" style={{zIndex: 100}}>
+            <TableOfContents
+              items={currentToc}
+              activeSection={activeSection}
+              onSectionClick={handleSectionChange}
+              onSectionChange={handleSectionChange}
+              onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
+            />
+          </div>
+        )}
       </div>
   )
 }

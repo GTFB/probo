@@ -25,6 +25,41 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else if (theme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                  } else {
+                    // Если нет сохраненной темы, используем системную
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                      document.documentElement.classList.add('dark');
+                    }
+                  }
+                } catch (e) {
+                  // Fallback: используем системную тему
+                  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                  }
+                }
+                
+                // Подавляем warning о лишних атрибутах от расширений браузера
+                const originalConsoleError = console.error;
+                console.error = function(...args) {
+                  if (args[0] && args[0].includes && args[0].includes('Extra attributes from the server')) {
+                    return;
+                  }
+                  originalConsoleError.apply(console, args);
+                };
+              })();
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

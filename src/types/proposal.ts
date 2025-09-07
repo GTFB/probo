@@ -1,7 +1,11 @@
 import { ComponentType } from 'react'
 
-// Re-export NavigationItem from settings for backward compatibility
-export type { NavigationItem } from '@/lib/settings'
+export interface NavigationItem {
+  id: string
+  title: string
+  icon: ComponentType<{ className?: string }>
+  href: string
+}
 
 export interface SectionData {
   id: string
