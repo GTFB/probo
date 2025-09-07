@@ -53,7 +53,7 @@ export function Navigation({ items, activeSection, onSectionChange, className }:
   }
 
   return (
-    <aside className={cn("hidden md:block w-72 bg-card border-r border-border p-6 flex-shrink-0 flex flex-col h-screen sticky top-0", className)}>
+    <aside className={cn("md:block w-72 bg-card border-r border-border p-6 flex-shrink-0 flex flex-col h-screen sticky top-0", className)}>
       <div className="flex-1">
         <nav className="flex flex-col gap-2">
           {items.map((item) => (
