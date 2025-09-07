@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { MDXLayout } from './mdx-layout'
-import { MDXRenderer } from './mdx-renderer-new'
-import { createHighlighter } from 'shiki'
+import { MDXRenderer } from './mdx-renderer'
 
 interface MDXFrontmatter {
   title: string
@@ -31,49 +30,11 @@ function processInlineMarkdown(text: string): string {
     .replace(/`([^`]+)`/g, '<code>$1</code>')
 }
 
-let highlighter: any = null
-
-async function getHighlighter() {
-  if (!highlighter) {
-    highlighter = await createHighlighter({
-      themes: ['github-light', 'github-dark'],
-      langs: ['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'sql', 'html', 'css', 'json', 'yaml', 'bash', 'shell', 'markdown'],
-    })
-  }
-  return highlighter
-}
 
 async function highlightCode(code: string, language: string = 'text'): Promise<string> {
-  try {
-    const hl = await getHighlighter()
-    const supportedLangs = hl.getLoadedLanguages()
-    const lang = supportedLangs.includes(language) ? language : 'text'
-    
-    const html = hl.codeToHtml(code, {
-      lang: lang,
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark'
-      },
-      defaultColor: false,
-      transformers: [
-        {
-          name: 'add-classes',
-          pre(node: any) {
-            node.properties.class = 'shiki-code-block'
-            node.properties['data-language'] = lang
-          },
-          code(node: any) {
-            node.properties.class = 'shiki-code'
-          }
-        }
-      ]
-    })
-    
-    return html
-  } catch (error) {
-    return `<pre class="shiki-code-block" data-language="${language}"><code class="shiki-code">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`
-  }
+  // Простая подсветка синтаксиса без внешних зависимостей
+  const escapedCode = code.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  return `<pre class="code-block" data-language="${language}"><code class="code">${escapedCode}</code></pre>`
 }
 
 function processList(listLines: string[]): string {
@@ -272,7 +233,9 @@ async function markdownToHtml(markdown: string): Promise<{ html: string; mermaid
     const { lang, code, settings } = JSON.parse(value)
     let replacement = ''
     if (lang === 'mermaid') {
-      mermaidCharts.push(code)
+      // Удаляем комментарии Mermaid перед сохранением
+      const cleanCode = code.replace(/^%% .*$/gm, '').trim()
+      mermaidCharts.push(cleanCode)
       // ИСПРАВЛЕНИЕ: Убираем лишнюю обертку. Оставляем только плейсхолдер.
       replacement = `<div class="mermaid-placeholder" data-chart-index="${chartIndex}" data-settings='${JSON.stringify(settings || {})}'></div>`
       chartIndex++
@@ -399,6 +362,7 @@ function extractH1Title(markdown: string): string | null {
 export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Change, onLoadingChange }: MDXContentProps) {
   const [content, setContent] = useState<string>('')
   const [mermaidCharts, setMermaidCharts] = useState<string[]>([])
+  const [contentCache, setContentCache] = useState<Record<string, { content: string; mermaidCharts: string[]; frontmatter?: any; toc?: any; h1Title?: string }>>({})
   const onFrontmatterChangeRef = useRef(onFrontmatterChange)
   const onTocChangeRef = useRef(onTocChange)
   const onH1ChangeRef = useRef(onH1Change)
@@ -414,6 +378,24 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   useEffect(() => {
     const loadMDX = async () => {
       try {
+        // Проверяем кэш
+        if (contentCache[sectionId]) {
+          const cached = contentCache[sectionId]
+          setContent(cached.content)
+          setMermaidCharts(cached.mermaidCharts)
+          
+          if (cached.frontmatter) {
+            onFrontmatterChangeRef.current?.(cached.frontmatter)
+          }
+          if (cached.toc) {
+            onTocChangeRef.current?.(cached.toc)
+          }
+          if (cached.h1Title) {
+            onH1ChangeRef.current?.(cached.h1Title)
+          }
+          return
+        }
+
         onLoadingChangeRef.current?.(true)
         
         const response = await fetch(`/api/mdx/${sectionId}`)
@@ -423,6 +405,20 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         if (data.error) throw new Error(data.error)
         
         const { html: htmlContent, mermaidCharts: charts } = await markdownToHtml(data.content)
+        
+        const toc = extractToc(data.content)
+        const h1Title = extractH1Title(data.content)
+        
+        // Сохраняем в кэш
+        const cacheData = {
+          content: htmlContent,
+          mermaidCharts: charts,
+          frontmatter: data.frontmatter,
+          toc,
+          h1Title: h1Title || undefined
+        }
+        
+        setContentCache(prev => ({ ...prev, [sectionId]: cacheData }))
         setContent(htmlContent)
         setMermaidCharts(charts)
         
@@ -430,10 +426,10 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           onFrontmatterChangeRef.current?.(data.frontmatter)
         }
         
-        const toc = extractToc(data.content)
-        onTocChangeRef.current?.(toc)
+        if (toc) {
+          onTocChangeRef.current?.(toc)
+        }
         
-        const h1Title = extractH1Title(data.content)
         if (h1Title) {
           onH1ChangeRef.current?.(h1Title)
         }

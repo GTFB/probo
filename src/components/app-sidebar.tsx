@@ -40,7 +40,7 @@ interface AppSidebarProps {
 export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: AppSidebarProps) {
   return (
     <Sidebar className="hidden lg:block transition-transform duration-300 ease-in-out theme-transition">
-      <SidebarHeader className="px-6 h-25 flex items-center justify-between sidebar-header-nowrap" style={{ height: 'calc(6.25rem + 1px)' }}>
+      <SidebarHeader className="px-6 h-25 flex items-center justify-between flex-nowrap" style={{ height: 'calc(6.25rem + 1px)', flexFlow: 'nowrap' }}>
         <div className="flex items-center gap-2">
           <div>
             <h2 className="text-lg font-semibold">{PROJECT_SETTINGS.name}</h2>

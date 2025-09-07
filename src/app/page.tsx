@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { AppSidebar } from '@/components/app-sidebar'
 import { TableOfContents } from '@/components/table-of-contents'
 import { PROJECT_SETTINGS, NAVIGATION_ITEMS } from '@/lib/settings'
@@ -66,12 +66,56 @@ export default function HomePage() {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
   const [isRightOffcanvasOpen, setIsRightOffcanvasOpen] = useState(false)
   const [isContentLoading, setIsContentLoading] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return document.documentElement.classList.contains('dark')
+    // При серверном рендеринге всегда возвращаем false
+    if (typeof window === 'undefined') return false
+    
+    // При клиентском рендеринге проверяем localStorage
+    try {
+      const savedTheme = localStorage.getItem('theme')
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        return savedTheme === 'dark'
+      }
+      // Если нет сохраненной темы, используем системную
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+    } catch {
+      // Fallback: используем системную тему
+      try {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+      } catch {
+        return false
+      }
     }
-    return false
   })
+
+  // Устанавливаем состояние гидратации и применяем тему
+  useEffect(() => {
+    setIsHydrated(true)
+    
+    // Дополнительная проверка и применение темы после гидратации
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme')
+      if (savedTheme) {
+        const isDark = savedTheme === 'dark'
+        setIsDarkMode(isDark)
+        if (isDark) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+      } else {
+        // Если нет сохраненной темы, используем системную
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        setIsDarkMode(prefersDark)
+        if (prefersDark) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+      }
+    }
+  }, [])
 
   const handleSectionChange = useCallback((sectionId: string) => {
     setActiveSection(sectionId)
@@ -82,12 +126,16 @@ export default function HomePage() {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const nextIndex = (currentIndex + 1) % navigationItems.length
     setActiveSection(navigationItems[nextIndex].id)
+    // Прокручиваем наверх страницы
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection])
 
   const handlePrevSection = useCallback(() => {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const prevIndex = currentIndex > 0 ? currentIndex - 1 : navigationItems.length - 1
     setActiveSection(navigationItems[prevIndex].id)
+    // Прокручиваем наверх страницы
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection])
 
   const handleFrontmatterChange = useCallback((frontmatter: MDXFrontmatter) => {
@@ -110,17 +158,25 @@ export default function HomePage() {
     const newTheme = !isDarkMode
     setIsDarkMode(newTheme)
     
-    // Smooth theme transition for all elements
-    const elements = document.querySelectorAll('.theme-transition')
-    elements.forEach(el => {
-      (el as HTMLElement).style.transition = 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease'
-    })
+    // Сохраняем тему в localStorage с дополнительной проверкой
+    try {
+      localStorage.setItem('theme', newTheme ? 'dark' : 'light')
+    } catch (error) {
+      console.warn('Не удалось сохранить тему в localStorage:', error)
+    }
     
+    // Сразу применяем изменения к DOM
     if (newTheme) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
+    
+    // Smooth theme transition for all elements
+    const elements = document.querySelectorAll('.theme-transition')
+    elements.forEach(el => {
+      (el as HTMLElement).style.transition = 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease'
+    })
     
     // Remove transition after completion
     setTimeout(() => {

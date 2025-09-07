@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ['localhost'],
   },
+  experimental: {
+    serverComponentsExternalPackages: [],
+  },
   async headers() {
     return [
       {

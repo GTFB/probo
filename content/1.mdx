@@ -20,7 +20,9 @@ nextButtonText: "К функциональным требованиям"
 %% height: 60vh
 %% zoom-min: 0.5
 %% zoom-max: 3
-%% zoom-initial: 0.8
+%% zoom-initial: 1.5
+%% tooltip: Эта диаграмма показывает архитектуру системы Influbalance
+%% disable-tooltip: true
 graph TD
     Root["Цели и задачи Платформы"]
     
@@ -42,8 +44,7 @@ graph TD
 %% zoom-min: 0.5
 %% zoom-max: 3
 %% zoom-initial: 0.8
-%% tooltip: Эта диаграмма показывает архитектуру системы Influbalance
-%% disable-tooltip: false
+%% disable-tooltip: true
 graph TD
     subgraph "Внешние акторы"
         Client["Клиент"]
@@ -73,6 +74,7 @@ graph TD
 %% zoom-min: 0.5
 %% zoom-max: 3
 %% zoom-initial: 0.8
+%% disable-tooltip: true
 graph TD
     C1["Level 1: Context<br/>Система, пользователи,<br/>внешние системы"] --> C2["Level 2: Component<br/>Основные модули/<br/>микросервисы"]
     C2 --> C3["Level 3: Chunks<br/>Пользовательские сценарии<br/>и потоки данных"]
@@ -86,6 +88,7 @@ graph TD
 %% zoom-min: 0.5
 %% zoom-max: 3
 %% zoom-initial: 0.8
+%% disable-tooltip: true
 graph TD
     A["Бэклог продукта"] --> B{"Планирование спринта"}
     B --> C["Спринт (2 недели) Ежедневные стендапы"]
@@ -103,6 +106,12 @@ graph TD
 *   **Позитивный ответ:** Ответ от инфлюенсера, классифицированный системой как явное выражение заинтересованности в сотрудничестве.
 
 ```mermaid
+%% zoom: true
+%% height: 60vh
+%% zoom-min: 0.5
+%% zoom-max: 3
+%% zoom-initial: 0.8
+%% disable-tooltip: true
 erDiagram
     ПАРТНЕР ||--|{ КЛИЕНТ : "управляет ."
     КЛИЕНТ ||--|{ ПРОЕКТ : "создает ."

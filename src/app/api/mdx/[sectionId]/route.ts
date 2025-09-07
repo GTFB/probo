@@ -9,27 +9,31 @@ export async function GET(
   try {
     const { sectionId } = params
     const mdxPath = join(process.cwd(), 'content', `${sectionId}.mdx`)
-    
     const source = readFileSync(mdxPath, 'utf8')
     
     // Simple function to extract frontmatter
     function extractFrontmatter(content: string) {
-      const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
-      if (frontmatterMatch) {
-        const frontmatterText = frontmatterMatch[1]
-        const frontmatter: any = {}
-        
-        frontmatterText.split('\n').forEach(line => {
-          const [key, ...valueParts] = line.split(':')
-          if (key && valueParts.length > 0) {
-            const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '')
-            frontmatter[key.trim()] = value
-          }
-        })
-        
-        return frontmatter
+      try {
+        const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+        if (frontmatterMatch) {
+          const frontmatterText = frontmatterMatch[1]
+          const frontmatter: any = {}
+          
+          frontmatterText.split('\n').forEach(line => {
+            const [key, ...valueParts] = line.split(':')
+            if (key && valueParts.length > 0) {
+              const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '')
+              frontmatter[key.trim()] = value
+            }
+          })
+          
+          return frontmatter
+        }
+        return null
+      } catch (error) {
+        console.error('Error extracting frontmatter:', error)
+        return null
       }
-      return null
     }
     
     // Extract frontmatter and content

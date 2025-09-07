@@ -21,30 +21,29 @@ nextButtonText: "К программным интерфейсам (API)"
 
 
 ```mermaid
-mindmap
-  root((Технологический стек Influbalance))
-    1. Frontend
-      ::icon(fa fa-desktop)
-      1.1. Framework - Next.js
-      1.2. Language - TypeScript
-      1.3. Styling - Tailwind CSS
-      1.4. Components - Shadcn/ui
-    2. Backend
-      ::icon(fa fa-server)
-      2.1. Core - Payload CMS
-      2.2. Mocroservice - Bun / ElysiaJS
-      2.3. Database - PostgreSQL + pgvector
-    3. Интеграции
-      ::icon(fa fa-plug)
-      3.1. Stripe - Stripe API
-      3.2. OpenAI - OpenAI API
-      3.3. Google/MS - OAuth, SMTP/IMAP
-      3.4. Telegram - Telegram Bot API
-    4. DevOps & Tooling
-      ::icon(fa fa-tools)
-      4.1. Docker - Docker
-      4.2. GitHub Actions
-      4.3. Vercel / Kubernetes
+graph TD
+    A[Технологический стек Influbalance] --> B[Frontend]
+    A --> C[Backend]
+    A --> D[Интеграции]
+    A --> E[DevOps & Tooling]
+    
+    B --> B1[Framework</br>Next.js]
+    B --> B2[Language</br>TypeScript]
+    B --> B3[Styling</br>Tailwind CSS]
+    B --> B4[Components</br>Shadcn/ui]
+    
+    C --> C1[Core</br>Payload CMS]
+    C --> C2[Microservice</br>Bun / ElysiaJS]
+    C --> C3[Database</br>PostgreSQL</br>pgvector]
+    
+    D --> D1[Stripe</br>Stripe API]
+    D --> D2[OpenAI</br>OpenAI API]
+    D --> D3[Google/MS</br>OAuth, SMTP/IMAP]
+    D --> D4[Telegram</br>Telegram Bot API]
+    
+    E --> E1[Docker</br>Docker]
+    E --> E2[GitHub</br>Actions]
+    E --> E3[Coolify</br>Kubernetes]
 ```
 
 #### 4.2. Архитектура

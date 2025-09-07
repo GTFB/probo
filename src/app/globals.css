@@ -148,19 +148,17 @@
   }
 
   .mermaid-diagram-container {
-    @apply my-6 rounded-lg border;
-    @apply bg-muted/30;
-    /* Фиксированная высота - половина экрана */
+    @apply my-6 rounded-lg border bg-background transition-all duration-200;
+    @apply hover:shadow-md hover:border-border/50;
     height: 50vh;
-    /* Важно для работы react-zoom-pan-pinch */
     overflow: hidden;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
-  .interactive-mermaid-wrapper {
+  
+  .interactive-mermaid-wrapper, .static-mermaid-content {
     @apply w-full h-full;
     display: flex;
     align-items: center;
@@ -187,11 +185,14 @@
     display: block;
   }
 
-  /* Стили для кнопок управления зумом */
-  .zoom-controls {
-    @apply absolute top-3 right-3 z-10;
-    @apply flex items-center gap-1;
+   .zoom-controls {
+    @apply absolute top-3 right-3 z-10 flex items-center gap-1;
     @apply bg-background/70 backdrop-blur-sm border rounded-md p-1;
+    @apply transition-all duration-200 ease-in-out opacity-0 scale-95 pointer-events-none;
+  }
+
+  .zoom-controls.show {
+    @apply opacity-100 scale-100 pointer-events-auto;
   }
 
   .zoom-controls button {
@@ -200,107 +201,37 @@
     @apply rounded transition-colors;
   }
 
-  /* Стили для всплывающей подсказки */
   .mermaid-tooltip {
-    @apply absolute top-3 left-3 z-20;
-    @apply flex items-center gap-2;
+    @apply absolute top-3 left-3 z-20 flex items-center gap-2;
     @apply bg-primary text-primary-foreground;
     @apply px-3 py-2 rounded-md shadow-lg;
     @apply text-sm font-medium;
-    @apply animate-in fade-in-0 slide-in-from-top-2 duration-300;
     @apply max-w-xs;
-    /* Дополнительные стили для красивого появления */
     opacity: 0;
     animation: tooltipFadeIn 0.3s ease-out forwards;
   }
 
   @keyframes tooltipFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .mermaid-tooltip svg {
-    @apply flex-shrink-0;
-  }
+  .mermaid-tooltip svg { @apply flex-shrink-0; }
+  .mermaid-tooltip span { @apply leading-tight; }
 
-  .mermaid-tooltip span {
-    @apply leading-tight;
-  }
-
-  /* Стили для диаграмм с зумом */
   .mermaid-diagram-container:not(.no-zoom) .mermaid-svg-container > svg {
-    /* Для диаграмм с зумом убираем ограничения размера */
     max-width: none;
     max-height: none;
-    width: auto;
-    height: auto;
   }
-
-  /* Стили для диаграмм без зума */
-  .mermaid-diagram-container.no-zoom {
-    /* Убираем ограничения для диаграмм без зума */
-    overflow: visible;
-  }
-
-  .mermaid-diagram-container.no-zoom .mermaid-svg-container > svg {
-    /* Для диаграмм без зума делаем SVG адаптивным */
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-  }
-  .mermaid-placeholder {
-    @apply flex items-center justify-center text-muted-foreground;
-    @apply min-h-[200px];
-  }
-  .mermaid-placeholder::before {
-    content: "🔄 Загрузка диаграммы...";
-    @apply text-sm;
-  }
-
-  /* Восстанавливаем ваши стили для Mindmap и тем */
-  .mermaid-diagram-container text {
-    fill: #000000 !important;
-    color: #000000 !important;
-  }
-  .mermaid-diagram-container .node rect,
-  .mermaid-diagram-container .node circle,
-  .mermaid-diagram-container .node ellipse,
-  .mermaid-diagram-container .node polygon {
-    fill: #ffffff !important;
-    stroke: #333333 !important;
-  }
-
-  .dark .mermaid-diagram-container { @apply bg-secondary/30 border-border; }
-  .dark .mermaid-diagram-container text,
-  .dark .mermaid-diagram-container .nodeLabel,
-  .dark .mermaid-diagram-container .edgeLabel {
-    fill: #e0e0e0 !important;
-    color: #e0e0e0 !important;
-  }
-  .dark .mermaid-diagram-container .node rect,
-  .dark .mermaid-diagram-container .node circle,
-  .dark .mermaid-diagram-container .node ellipse,
-  .dark .mermaid-diagram-container .node polygon {
-    fill: hsl(var(--secondary)) !important;
-    stroke: hsl(var(--muted-foreground)) !important;
-  }
-  .dark .mermaid-diagram-container .edgePath .path {
+  
+  .dark .mermaid-diagram-container .edgePath .path,
+  .dark .mermaid-diagram-container .arrowheadPath,
+  .dark .mermaid-diagram-container .relation-line {
     stroke: hsl(var(--muted-foreground)) !important;
   }
 
-  .mermaid-diagram-container .frontend-section { fill: #eff6ff !important; stroke: #2563eb !important; }
-  .dark .mermaid-diagram-container .frontend-section { fill: #1e3a8a !important; stroke: #60a5fa !important; }
-  .mermaid-diagram-container .backend-section { fill: #fef2f2 !important; stroke: #dc2626 !important; }
-  .dark .mermaid-diagram-container .backend-section { fill: #7f1d1d !important; stroke: #f87171 !important; }
-  .mermaid-diagram-container .integrations-section { fill: #f0fdf4 !important; stroke: #16a34a !important; }
-  .dark .mermaid-diagram-container .integrations-section { fill: #14532d !important; stroke: #4ade80 !important; }
-  .mermaid-diagram-container .devops-section { fill: #fffbeb !important; stroke: #ca8a04 !important; }
-  .dark .mermaid-diagram-container .devops-section { fill: #713f12 !important; stroke: #facc15 !important; }
+  .mermaid-diagram-container.is-active {
+    @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
+    border-color: transparent !important;
+  }
 }
