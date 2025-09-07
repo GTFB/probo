@@ -32,13 +32,13 @@ export function PasswordGroupsInfo() {
                   <div className="flex flex-wrap gap-1 mt-1">
                     {config.sections.map((section) => (
                       <Badge key={section} variant="secondary" className="text-xs">
-                        {section === '*' ? 'All other sections' : `Section ${section}`}
+                        {(section as any) === '*' ? 'All other sections' : `Section ${section}`}
                       </Badge>
                     ))}
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  {config.sections.includes('*') 
+                  {config.sections.includes('*' as any) 
                     ? 'This group covers all sections not explicitly assigned to other groups'
                     : 'This group covers only the specified sections'
                   }
