@@ -4,7 +4,7 @@ import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, 
 
 interface ChartData {
   name: string
-  'Дюжина': number
+  'Dozen': number
   'WalletFactory': number
   'OSMI Cards': number
   'CardPR': number
@@ -22,8 +22,8 @@ export function CompetitorChart({ data }: CompetitorChartProps) {
         <PolarAngleAxis dataKey="name" />
         <PolarRadiusAxis angle={30} domain={[0, 5]} />
         <Radar
-          name="Дюжина"
-          dataKey="Дюжина"
+          name="Dozen"
+          dataKey="Dozen"
           stroke="hsl(var(--primary))"
           fill="hsl(var(--primary))"
           fillOpacity={0.2}

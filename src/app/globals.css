@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 @import url('https://fonts.bunny.net/css?family=inter:400,500,600,700,800|inter-tight:400,500,600,700,800');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css');
 
 @layer base {
   .mobile-header-offset {
@@ -13,6 +15,104 @@
     .mobile-header-offset {
       padding-top: 0px;
     }
+  }
+
+  /* Hide scrollbar but keep scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+
+  /* Mermaid diagram styles */
+  .interactive-mermaid-container {
+    width: 100%;
+    min-height: 300px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .interactive-mermaid-container {
+      min-height: 250px;
+    }
+  }
+
+  .dark .interactive-mermaid-container {
+    background: #1f2937;
+  }
+
+  .mermaid-svg-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .mermaid-svg-container svg {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+  }
+
+  .mermaid-loading-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #6b7280;
+    font-size: 14px;
+  }
+
+  .zoom-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .zoom-controls.show {
+    opacity: 1;
+  }
+
+  .zoom-controls button {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zoom-controls button:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .mermaid-tooltip {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
   }
 
   :root {
@@ -84,47 +184,62 @@
     @apply bg-yellow-200 dark:bg-yellow-800 dark:text-yellow-200 px-1 py-0.5 rounded-sm font-medium;
   }
   
-  .mdx-content h1 { @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20 hidden; }
+  /* Bold underlined text */
+  .bold-underline {
+    @apply font-semibold underline decoration-2 decoration-primary/50;
+  }
+  
+  .mdx-content h1 { @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20; }
   .mdx-content h2 { @apply text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20; }
   .mdx-content h3 { @apply text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20; }
   .mdx-content h4 { @apply text-lg font-bold mb-2 text-foreground; }
   .mdx-content h5 { @apply text-base font-semibold mb-2 text-foreground; }
   .mdx-content h6 { @apply text-sm font-medium mb-2 text-muted-foreground; }
   .mdx-content p { @apply text-foreground mb-4 leading-relaxed text-sm sm:text-base; }
-  .mdx-content ul { @apply mb-4 space-y-1 pl-6 list-disc; }
-  .mdx-content ol { @apply mb-4 space-y-1 pl-6 list-decimal; }
-  .mdx-content li { @apply text-foreground text-sm sm:text-base leading-relaxed; }
+  .mdx-content ul { @apply mb-6 space-y-2 pl-6 list-disc; }
+  .mdx-content ol { @apply mb-6 space-y-2 pl-6 list-decimal; }
+  .mdx-content li { @apply text-foreground text-sm sm:text-base leading-relaxed mb-1; }
   .mdx-content ul ul,
   .mdx-content ol ol,
   .mdx-content ul ol,
   .mdx-content ol ul { @apply mt-2 mb-0 pl-6; }
-  .mdx-content .task-item { @apply flex items-center text-sm sm:text-base leading-relaxed mb-2 list-none p-0; }
-  .mdx-content .task-icon { @apply mr-2 flex-shrink-0; }
+  .mdx-content img {
+    @apply my-6 rounded-lg shadow-md max-w-full h-auto;
+  }
+  .mdx-content hr {
+    @apply my-8 border-t border-border;
+  }
   .mdx-content .completed-icon { @apply text-green-600 dark:text-green-400; }
   .mdx-content .pending-icon { @apply text-gray-500 dark:text-gray-400; }
   .mdx-content strong { @apply text-foreground font-semibold; }
   .mdx-content del { @apply text-muted-foreground line-through; }
   .mdx-content a { @apply text-primary hover:text-primary/80 underline; }
-  .mdx-content code:not(pre code) { @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground; }
+  .mdx-content code:not(pre code) { @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground border; }
 
   .mdx-content blockquote {
-    @apply my-6 border-l-4 border-primary/30 pl-6 py-1 italic text-muted-foreground bg-secondary/50 rounded-r-lg;
+    @apply my-6 border-l-4 border-primary/50 pl-6 py-4 italic text-muted-foreground bg-secondary/30 rounded-r-lg;
   }
   .mdx-content blockquote p {
-    @apply mb-2 last:mb-0;
+    @apply mb-2 last:mb-0 text-base;
   }
 
   .mdx-content table {
-    @apply my-6 w-full text-sm sm:text-base border-collapse;
+    @apply my-6 w-full text-sm sm:text-base border-collapse border border-border rounded-lg overflow-hidden;
   }
   .mdx-content th, .mdx-content td {
-    @apply border p-3 text-left;
+    @apply p-4 text-left;
   }
   .mdx-content th {
-    @apply bg-muted font-semibold;
+    @apply bg-muted font-semibold text-foreground;
   }
   .mdx-content tbody tr:nth-child(even) {
+    @apply bg-secondary/30;
+  }
+  .mdx-content tbody tr:hover {
     @apply bg-secondary/50;
+  }
+  .mdx-content tr {
+    @apply border-b border-border;
   }
 
   .shiki-code-block {
@@ -148,9 +263,9 @@
   }
 
   .mermaid-diagram-container {
-    @apply my-6 rounded-lg border bg-background transition-all duration-200;
+    @apply rounded-lg border bg-background transition-all duration-200;
     @apply hover:shadow-md hover:border-border/50;
-    height: 50vh;
+    height: 100%;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -231,13 +346,13 @@
   }
 
   .mermaid-diagram-container.is-active {
-    @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
-    border-color: transparent !important;
+    @apply border border-primary;
+    box-shadow: inset 0 0 0 1px hsl(var(--primary));
   }
 
-  /* Стили для блоков кода с подсветкой синтаксиса */
+  /* Styles for code blocks with syntax highlighting */
   .code-block {
-    @apply relative my-3 rounded-lg overflow-hidden border bg-muted/50;
+    @apply relative my-6 rounded-lg overflow-hidden border bg-muted/50;
     position: relative;
   }
 
@@ -250,13 +365,13 @@
   }
 
   .code-block .code {
-    @apply block py-1 px-4 text-sm overflow-x-auto;
+    @apply block py-4 px-4 text-sm overflow-x-auto;
     font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
-    line-height: 1.0;
+    line-height: 1.6;
     background: transparent;
   }
 
-  /* Стили для подсветки синтаксиса */
+  /* Styles for syntax highlighting */
   .code-block .keyword {
     @apply text-blue-600 dark:text-blue-400 font-semibold;
   }
@@ -281,6 +396,32 @@
     @apply text-cyan-600 dark:text-cyan-400 font-medium;
   }
 
+  /* Styles for highlight.js */
+  .dark .hljs {
+    background: hsl(var(--muted)) !important;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .hljs {
+    background: hsl(var(--muted)) !important;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  /* Remove conflicting styles for code blocks */
+  pre.hljs {
+    background: hsl(var(--muted)) !important;
+    color: hsl(var(--foreground)) !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+    overflow-x: auto !important;
+  }
+
+  code.hljs {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
   .code-block .selector {
     @apply text-pink-600 dark:text-pink-400 font-medium;
   }
@@ -289,8 +430,41 @@
     @apply text-indigo-600 dark:text-indigo-400;
   }
 
-  /* Стили для inline кода */
+  /* Styles for inline code */
   .mdx-content code:not(pre code) {
     @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground;
+  }
+  
+  /* Styles for task lists */
+  .mdx-content .task-item {
+    @apply flex items-start gap-3 mb-3 list-none p-0;
+  }
+  
+  .mdx-content .task-item .task-icon {
+    @apply flex-shrink-0 mt-0.5;
+  }
+  
+  .mdx-content .task-item .task-text {
+    @apply flex-1 text-foreground text-sm sm:text-base leading-relaxed;
+  }
+    
+  /* Styles for standard task lists from remark-gfm */
+  .mdx-content input[type="checkbox"] {
+    @apply hidden;
+  }
+  
+  .mdx-content li:has(input[type="checkbox"]) {
+    @apply flex items-start gap-3 mb-3 list-none -ml-6;
+  }
+  
+  .mdx-content li:has(input[type="checkbox"])::before {
+    content: '';
+    @apply w-4 h-4 flex-shrink-0 mt-1 border border-gray-300 dark:border-gray-600 rounded;
+  }
+  
+  .mdx-content li:has(input[type="checkbox"]:checked)::before {
+    @apply bg-green-600 border-green-600;
+    content: '✓';
+    @apply text-white text-xs flex items-center justify-center;
   }
 }

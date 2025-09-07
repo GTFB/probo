@@ -61,7 +61,7 @@ export const InteractiveMermaid = memo(function InteractiveMermaid({ chart, id, 
             .replace(/<--/g, '<--')
             .replace(/::icon\(fa fa-(\w+)\)/g, (match, iconName) => `::icon(fa fa-${iconName})`)
             .replace(/\s+::icon/g, '\n      ::icon')
-            .replace(/\[([^\]]*[а-яё][^\]]*)\]/gi, (match, content) => {
+            .replace(/\[([^\]]*[a-z][^\]]*)\]/gi, (match, content) => {
               if (content.includes('"') || content.includes("'")) return match
               if (content.includes(' ') || content.includes('-') || content.includes('(') || content.includes(')')) {
                 return `["${content.trim()}"]`
@@ -78,7 +78,7 @@ export const InteractiveMermaid = memo(function InteractiveMermaid({ chart, id, 
           
           const svgElement = mermaidRef.current.querySelector('svg')
           if (svgElement) {
-            // Убираем хардкод стилей - позволяем Mermaid использовать свои темы
+            // Remove hardcoded styles - let Mermaid use its themes
           }
           setRenderState('success')
         }
@@ -107,12 +107,12 @@ export const InteractiveMermaid = memo(function InteractiveMermaid({ chart, id, 
 
       if (svgRect.width === 0 || svgRect.height === 0 || wrapperRect.width === 0 || wrapperRect.height === 0) return
 
-      // Вычисляем масштаб для вписывания в контейнер
+      // Calculate scale to fit container
       const scaleX = wrapperRect.width / svgRect.width
       const scaleY = wrapperRect.height / svgRect.height
       const newScale = Math.min(scaleX, scaleY) * 0.95
       
-      // Применяем масштаб и центрирование только один раз при рендере
+      // Apply scale and centering only once during render
       svgElement.style.transform = `scale(${newScale})`
       svgElement.style.transformOrigin = 'center'
       svgElement.style.display = 'block'
@@ -153,10 +153,10 @@ export const InteractiveMermaid = memo(function InteractiveMermaid({ chart, id, 
         <div className="mermaid-tooltip">
           <Info size={14} />
           <span>
-            { isWheelActive 
-              ? "Масштабирование колесиком активно"
-              : "Кликните для активации масштабирования"
-            }
+            {settings.tooltipText || (isWheelActive 
+              ? "Mouse wheel zoom active"
+              : "Click to activate zoom"
+            )}
           </span>
         </div>
       )}
@@ -176,23 +176,23 @@ export const InteractiveMermaid = memo(function InteractiveMermaid({ chart, id, 
               <>
                 {showControls && (
                   <div className="zoom-controls show">
-                    <button onClick={() => zoomIn()} aria-label="Приблизить"><Plus size={16} /></button>
-                    <button onClick={() => zoomOut()} aria-label="Отдалить"><Minus size={16} /></button>
-                    <button onClick={() => resetTransform()} aria-label="Сбросить масштаб"><Maximize size={14} /></button>
+                    <button onClick={() => zoomIn()} aria-label="Zoom In"><Plus size={16} /></button>
+                    <button onClick={() => zoomOut()} aria-label="Zoom Out"><Minus size={16} /></button>
+                    <button onClick={() => resetTransform()} aria-label="Reset Scale"><Maximize size={14} /></button>
                   </div>
                 )}
                 
                 <TransformComponent wrapperStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} contentStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div ref={mermaidRef} className="mermaid-svg-container" style={{ visibility: renderState === 'success' ? 'visible' : 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
                   {renderState === 'loading' && (
-                    <div className="mermaid-loading-placeholder">🔄 Загрузка диаграммы...</div>
+                    <div className="mermaid-loading-placeholder">🔄 Loading diagram...</div>
                   )}
                   {renderState === 'error' && (
                      <div className="text-red-500 p-4 border border-red-200 rounded bg-red-50 dark:bg-red-900/20">
-                       <div className="font-semibold mb-2">Ошибка отображения диаграммы</div>
+                       <div className="font-semibold mb-2">Diagram Display Error</div>
                        <div className="text-sm mb-2">{errorMessage}</div>
                        <details className="text-xs">
-                         <summary className="cursor-pointer text-blue-600 hover:text-blue-800">Показать исходный код</summary>
+                         <summary className="cursor-pointer text-blue-600 hover:text-blue-800">Show Source Code</summary>
                          <pre className="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-x-auto">{chart}</pre>
                        </details>
                      </div>
@@ -205,14 +205,14 @@ export const InteractiveMermaid = memo(function InteractiveMermaid({ chart, id, 
           <div className="static-mermaid-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
             <div ref={mermaidRef} className="mermaid-svg-container" style={{ visibility: renderState === 'success' ? 'visible' : 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
             {renderState === 'loading' && (
-              <div className="mermaid-loading-placeholder">🔄 Загрузка диаграммы...</div>
+              <div className="mermaid-loading-placeholder">🔄 Loading diagram...</div>
             )}
             {renderState === 'error' && (
                <div className="text-red-500 p-4 border border-red-200 rounded bg-red-50 dark:bg-red-900/20">
-                 <div className="font-semibold mb-2">Ошибка отображения диаграммы</div>
+                 <div className="font-semibold mb-2">Diagram Display Error</div>
                  <div className="text-sm mb-2">{errorMessage}</div>
                  <details className="text-xs">
-                   <summary className="cursor-pointer text-blue-600 hover:text-blue-800">Показать исходный код</summary>
+                   <summary className="cursor-pointer text-blue-600 hover:text-blue-800">Show Source Code</summary>
                    <pre className="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-x-auto">{chart}</pre>
                  </details>
                </div>

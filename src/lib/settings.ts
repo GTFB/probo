@@ -10,12 +10,12 @@ import {
 } from 'lucide-react'
 
 export const PROJECT_SETTINGS = {
-  name: 'PROBO',
+  name: 'Probo',
   description: 'Commercial Proposal Generator',
 } as const;
 
 const SECTIONS = [
-  { id: '1', title: 'Демо', icon: FileText },
+  { id: '1', title: 'Demo', icon: CheckCircle },
 ] as const;
 
 

@@ -100,7 +100,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               onClick={() => setActiveTab('toc')}
               className={`h-7 px-2 text-sm ${activeTab === 'toc' ? 'bg-muted text-muted-foreground' : ''}`}
             >
-              Оглавление
+              Table of Contents
             </Button>
             <Button
               variant="ghost"
@@ -108,7 +108,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               onClick={() => setActiveTab('search')}
               className={`h-7 px-2 text-sm ${activeTab === 'search' ? 'bg-muted text-muted-foreground' : ''}`}
             >
-              Поиск
+              Search
             </Button>
           </div>
           <div className="flex items-center gap-2">
@@ -129,7 +129,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
         {activeTab === 'toc' && (
           <div className="space-y-1">
             {items.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Нет заголовков</p>
+              <p className="text-sm text-muted-foreground">No headings</p>
             ) : (
               items.map((item) => (
                 <Button

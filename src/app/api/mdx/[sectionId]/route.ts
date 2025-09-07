@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readFileSync } from 'fs'
+import { readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
 export async function GET(
@@ -8,8 +8,30 @@ export async function GET(
 ) {
   try {
     const { sectionId } = params
+    
+    // Validate sectionId
+    if (!sectionId || typeof sectionId !== 'string') {
+      console.error('Invalid sectionId:', sectionId)
+      return NextResponse.json(
+        { error: 'Invalid section ID' },
+        { status: 400 }
+      )
+    }
+    
     const mdxPath = join(process.cwd(), 'content', `${sectionId}.mdx`)
+    console.log('Looking for MDX file at:', mdxPath)
+    
+    // Check file existence
+    if (!existsSync(mdxPath)) {
+      console.error('MDX file not found:', mdxPath)
+      return NextResponse.json(
+        { error: `MDX file not found: ${sectionId}.mdx` },
+        { status: 404 }
+      )
+    }
+    
     const source = readFileSync(mdxPath, 'utf8')
+    console.log('Successfully loaded MDX file:', sectionId)
     
     // Simple function to extract frontmatter
     function extractFrontmatter(content: string) {

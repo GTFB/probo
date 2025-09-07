@@ -71,7 +71,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
             // Headers
             if (trimmedLine.startsWith('# ')) {
               const title = trimmedLine.substring(2)
-              const id = `h1-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
+              const id = `h1-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
               currentSection = title
               
               index.push({
@@ -85,7 +85,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
               })
             } else if (trimmedLine.startsWith('## ')) {
               const title = trimmedLine.substring(3)
-              const id = `h2-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
+              const id = `h2-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
               
               index.push({
                 id,
@@ -98,7 +98,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
               })
             } else if (trimmedLine.startsWith('### ')) {
               const title = trimmedLine.substring(4)
-              const id = `h3-${title.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
+              const id = `h3-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
               
               index.push({
                 id,
@@ -222,7 +222,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         {/* Search input */}
         <div className="relative">
           <Input
-            placeholder="Поиск по контенту..."
+            placeholder="Search content..."
             value={query}
             onChange={(e) => handleSearch(e.target.value)}
             className="pr-10"
@@ -245,7 +245,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         {/* Indexing status */}
         {!isIndexed && (
           <div className="text-xs text-muted-foreground text-center">
-            {isSearching ? 'Индексация контента...' : 'Подготовка поиска...'}
+            {isSearching ? 'Indexing content...' : 'Preparing search...'}
           </div>
         )}
 
@@ -253,7 +253,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         {query && results.length > 0 && (
           <div className="flex flex-col h-full">
             <div className="text-xs text-muted-foreground mb-2">
-              Найдено: {results.length} результатов
+              Found: {results.length} results
             </div>
             <div className="flex flex-col flex-1 gap-2 overflow-y-auto scrollbar-hide">
               {results.map((result) => (
@@ -272,7 +272,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
                             result.level === 3 ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300' :
                             'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
                           }`}>
-                            {result.level === 1 ? 'H1' : result.level === 2 ? 'H2' : result.level === 3 ? 'H3' : 'Текст'}
+                            {result.level === 1 ? 'H1' : result.level === 2 ? 'H2' : result.level === 3 ? 'H3' : 'Text'}
                           </span>
                           <span className="text-xs text-muted-foreground truncate">
                             {result.section}
@@ -287,7 +287,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
                                 onSectionChange(result.sectionId)
                               }}
                             >
-                              Перейти
+                              Go to
                             </Button>
                           )}
                         </div>
@@ -296,7 +296,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
                           dangerouslySetInnerHTML={{ __html: result.highlightedContent }}
                         />
                         <div className="text-xs text-muted-foreground">
-                          Релевантность: {result.relevance}%
+                          Relevance: {result.relevance}%
                         </div>
                       </div>
                       <ArrowRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
@@ -312,8 +312,8 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         {query && results.length === 0 && isIndexed && (
           <div className="text-center text-muted-foreground py-4">
             <Search className="w-8 h-8 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">Ничего не найдено</p>
-            <p className="text-xs">Попробуйте другие ключевые слова</p>
+            <p className="text-sm">Nothing found</p>
+            <p className="text-xs">Try different keywords</p>
           </div>
         )}
       </div>

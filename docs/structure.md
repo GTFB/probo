@@ -87,7 +87,6 @@ probo/
 │   │   ├── mdx-layout.tsx
 │   │   ├── mdx-renderer-new.tsx
 │   │   ├── mdx-renderer.tsx
-│   │   ├── mermaid-diagram.tsx
 │   │   ├── nav-documents.tsx
 │   │   ├── nav-main.tsx
 │   │   ├── nav-projects.tsx

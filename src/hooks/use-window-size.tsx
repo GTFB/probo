@@ -1,4 +1,4 @@
-// Хук для отслеживания изменений размера окна
+// Hook for tracking window size changes
 import { useEffect, useState } from 'react'
 
 export function useWindowSize() {

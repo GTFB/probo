@@ -36,19 +36,19 @@ export default function RootLayout({
                   } else if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
                   } else {
-                    // Если нет сохраненной темы, используем системную
+                    // If no saved theme, use system theme
                     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                       document.documentElement.classList.add('dark');
                     }
                   }
                 } catch (e) {
-                  // Fallback: используем системную тему
+                  // Fallback: use system theme
                   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     document.documentElement.classList.add('dark');
                   }
                 }
                 
-                // Подавляем warning о лишних атрибутах от расширений браузера
+                // Suppress warning about extra attributes from browser extensions
                 const originalConsoleError = console.error;
                 console.error = function(...args) {
                   if (args[0] && args[0].includes && args[0].includes('Extra attributes from the server')) {
