@@ -5,6 +5,7 @@ export interface NavigationItem {
   title: string
   icon: ComponentType<{ className?: string }>
   href: string
+  slug?: string
 }
 
 export interface SectionData {

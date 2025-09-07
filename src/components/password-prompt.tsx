@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -19,6 +19,38 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
   const [error, setError] = useState('')
   const [groupInfo, setGroupInfo] = useState<string>('')
 
+  // Handle Escape key and background click
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        handleCancel()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel()
+    } else {
+      // If no cancel handler, go back in browser history
+      if (window.history.length > 1) {
+        window.history.back()
+      } else {
+        // If no history, reload the page to show password prompt again
+        window.location.reload()
+      }
+    }
+  }
+
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleCancel()
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
@@ -36,7 +68,7 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
       const data = await response.json()
 
       if (response.ok && data.success) {
-        setGroupInfo(`Access granted to group: ${data.group}`)
+        setGroupInfo(`Access granted to: ${data.groupName}`)
         onSuccess()
       } else {
         setError(data.error || 'Authentication failed')
@@ -49,7 +81,10 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
   }
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/60 backdrop-blur-sm p-4">
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/60 backdrop-blur-sm p-4"
+      onClick={handleBackgroundClick}
+    >
       <Card className="w-full max-w-md animate-in fade-in-0 zoom-in-95 duration-300">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
@@ -72,20 +107,11 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
                 Password
               </label>
               <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
-                  className="pr-10"
-                  required
-                />
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  className="absolute left-0 top-0 h-full px-3 py-2 hover:bg-transparent z-10"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -94,6 +120,15 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
                     <Eye className="h-4 w-4" />
                   )}
                 </Button>
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  className="pl-10"
+                  required
+                />
               </div>
             </div>
 

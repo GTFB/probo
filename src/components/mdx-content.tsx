@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { MDXLayout } from './mdx-layout'
 import { MDXRenderer } from './mdx-renderer'
 import { PasswordPrompt } from './password-prompt'
+import { NAVIGATION_ITEMS } from '@/lib/settings'
 
 interface MDXFrontmatter {
   title: string
@@ -13,13 +15,13 @@ interface MDXFrontmatter {
   ctaLink?: string
   ctaText?: string
   locked?: boolean
-  password?: string
+  slug?: string
 }
 
 interface MDXContentProps {
   sectionId: string
   onFrontmatterChange?: (frontmatter: MDXFrontmatter) => void
-  onTocChange?: (toc: Array<{ id: string; title: string; level: number }>) => void
+  onTocChange?: (toc: Array<{ id: string; title: string; level: number; slug?: string }>) => void
   onH1Change?: (h1Title: string) => void
   onLoadingChange?: (loading: boolean) => void
 }
@@ -232,7 +234,13 @@ function extractMermaidSettings(code: string): MermaidSettings {
 
 async function processMarkdownContent(markdown: string): Promise<{ content: string; mermaidCharts: string[] }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
-  const cleanContent = contentWithoutFrontmatter.replace(/\r/g, '')
+  
+  // Remove slug lines from content
+  const cleanContent = contentWithoutFrontmatter
+    .replace(/\r/g, '')
+    .split('\n')
+    .filter(line => !line.trim().startsWith('slug:'))
+    .join('\n')
 
   const mermaidCharts: string[] = []
   
@@ -247,19 +255,62 @@ async function processMarkdownContent(markdown: string): Promise<{ content: stri
   return { content: cleanContent, mermaidCharts }
 }
 
-function extractToc(markdown: string): Array<{ id: string; title: string; level: number }> {
+function transliterateToLatin(text: string): string {
+  const translitMap: Record<string, string> = {
+    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
+    'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
+    'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+    'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch',
+    'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+    'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo',
+    'Ж': 'Zh', 'З': 'Z', 'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M',
+    'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U',
+    'Ф': 'F', 'Х': 'H', 'Ц': 'Ts', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sch',
+    'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
+  }
+  
+  return text.split('').map(char => translitMap[char] || char).join('')
+}
+
+function generateSlug(title: string): string {
+  // First transliterate Cyrillic to Latin
+  const transliterated = transliterateToLatin(title)
+  
+  // Then apply standard slug generation
+  return transliterated
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+function extractToc(markdown: string, pageSlug?: string): Array<{ id: string; title: string; level: number; slug?: string }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
   const lines = contentWithoutFrontmatter.replace(/\r/g, '').split('\n')
-  const toc: Array<{ id: string; title: string; level: number }> = []
+  const toc: Array<{ id: string; title: string; level: number; slug?: string }> = []
 
-  lines.forEach((line) => {
+  lines.forEach((line, index) => {
     const trimmedLine = line.trim()
+    console.log(`Processing line ${index}: "${trimmedLine}"`)
     if (trimmedLine.startsWith('#')) {
       const level = trimmedLine.match(/^#+/)?.[0].length || 0
       if (level > 0 && level <= 6) {
         const title = trimmedLine.substring(level).trim().replace(/\*\*/g, '')
-        const id = `h${level}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
-        toc.push({ id, title, level })
+        
+        // Check if next line contains slug definition
+        const nextLine = lines[index + 1]?.trim()
+        let headingSlug: string | undefined
+        
+        if (nextLine && nextLine.startsWith('slug:')) {
+          // Extract slug from next line
+          headingSlug = nextLine.replace('slug:', '').trim().replace(/['"]/g, '')
+        } else {
+          // Fallback to auto-generated slug with transliteration
+          headingSlug = generateSlug(title)
+        }
+        
+        const id = headingSlug // Use only slug as ID for URL compatibility
+        console.log('TOC item created:', { title, level, headingSlug, id })
+        toc.push({ id, title, level, slug: headingSlug })
       }
     }
   })
@@ -279,8 +330,10 @@ function extractH1Title(markdown: string): string | null {
 }
 
 export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Change, onLoadingChange }: MDXContentProps) {
+  const router = useRouter()
   const [content, setContent] = useState<string>('')
   const [mermaidCharts, setMermaidCharts] = useState<string[]>([])
+  const [toc, setToc] = useState<Array<{ id: string; title: string; level: number; slug?: string }>>([])
   const [contentCache, setContentCache] = useState<Record<string, { content: string; mermaidCharts: string[]; frontmatter?: any; toc?: any; h1Title?: string }>>({})
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const [isLocked, setIsLocked] = useState<boolean>(false)
@@ -340,6 +393,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           
           setContent(cached.content)
           setMermaidCharts(cached.mermaidCharts)
+          setToc(cached.toc || [])
           
           if (cached.frontmatter) {
             onFrontmatterChangeRef.current?.(cached.frontmatter)
@@ -376,7 +430,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         
         const { content: markdownContent, mermaidCharts: charts } = await processMarkdownContent(data.content)
         
-        const toc = extractToc(data.content)
+        const toc = extractToc(data.content, data.frontmatter?.slug)
         const h1Title = extractH1Title(data.content)
         
         // Save to cache
@@ -391,6 +445,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         setContentCache(prev => ({ ...prev, [sectionId]: cacheData }))
         setContent(markdownContent)
         setMermaidCharts(charts)
+        setToc(toc)
         
         if (data.frontmatter) {
           onFrontmatterChangeRef.current?.(data.frontmatter)
@@ -420,6 +475,19 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
     setIsLocked(false)
   }
 
+  const handleAuthCancel = () => {
+    // Go back to previous section or stay on current if it's the only one
+    const currentIndex = NAVIGATION_ITEMS.findIndex(item => item.id === sectionId)
+    if (currentIndex > 0) {
+      // Go to previous section
+      const prevSection = NAVIGATION_ITEMS[currentIndex - 1]
+      router.push(`/${prevSection.slug}`)
+    } else {
+      // If it's the first section, reload to show password prompt again
+      window.location.reload()
+    }
+  }
+
   // Show loading while checking access
   if (isCheckingAccess) {
     return (
@@ -433,13 +501,13 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
 
   // Show password prompt if content is locked and user is not authenticated
   if (isLocked && !isAuthenticated) {
-    return <PasswordPrompt sectionId={sectionId} onSuccess={handleAuthSuccess} />
+    return <PasswordPrompt sectionId={sectionId} onSuccess={handleAuthSuccess} onCancel={handleAuthCancel} />
   }
 
   return (
     <MDXLayout>
       <div className="mt-8">
-        <MDXRenderer markdownContent={content} mermaidCharts={mermaidCharts} />
+        <MDXRenderer markdownContent={content} mermaidCharts={mermaidCharts} toc={toc} />
       </div>
     </MDXLayout>
   )

@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { PROJECT_SETTINGS } from '@/lib/settings'
 import {
   Lightbulb,
@@ -73,6 +72,7 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
           })}
         </SidebarMenu>
       </SidebarContent>
+      
       <SidebarFooter className="px-6 py-2 h-16 flex items-start justify-center">
         <img 
           src="/logo.svg" 

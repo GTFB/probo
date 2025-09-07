@@ -42,14 +42,19 @@ probo/
 ├── src/
 │   ├── app/
 │   │   ├── api/
+│   │   │   ├── auth/
+│   │   │   │   └── route.ts
 │   │   │   └── mdx/
 │   │   │       └── [sectionId]/
 │   │   │           └── route.ts
+│   │   ├── [slug]/
+│   │   │   └── page.tsx
 │   │   ├── dashboard/
 │   │   │   ├── data.json
 │   │   │   └── page.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
+│   │   ├── not-found.tsx
 │   │   └── page.tsx
 │   ├── components/
 │   │   ├── ui/

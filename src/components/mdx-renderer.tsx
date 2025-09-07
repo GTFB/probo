@@ -8,7 +8,7 @@ import rehypeRaw from 'rehype-raw'
 import { InteractiveMermaid } from './interactive-mermaid'
 import { shouldEnableZoom } from '../lib/mermaid-config'
 import { useTheme } from '../hooks/use-theme'
-import { Check, Square } from 'lucide-react'
+import { Check, Square, Link } from 'lucide-react'
 
 // Interface for diagram settings
 interface MermaidSettings {
@@ -91,43 +91,225 @@ function extractMermaidSettings(code: string): MermaidSettings {
 interface MDXRendererProps {
   markdownContent: string
   mermaidCharts: string[]
+  toc?: Array<{ id: string; title: string; level: number; slug?: string }>
 }
 
-// Custom components for Markdown elements
-const components = {
-  // Headings
-  h1: ({ children, ...props }: any) => (
-    <h1 className="text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20" {...props}>
-      {children}
-    </h1>
-  ),
-  h2: ({ children, ...props }: any) => (
-    <h2 className="text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20" {...props}>
-      {children}
-    </h2>
-  ),
-  h3: ({ children, ...props }: any) => (
-    <h3 className="text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20" {...props}>
-      {children}
-    </h3>
-  ),
-  h4: ({ children, ...props }: any) => (
-    <h4 className="text-lg font-bold mb-2 text-foreground" {...props}>
-      {children}
-    </h4>
-  ),
-  h5: ({ children, ...props }: any) => (
-    <h5 className="text-base font-semibold mb-2 text-foreground" {...props}>
-      {children}
-    </h5>
-  ),
-  h6: ({ children, ...props }: any) => (
-    <h6 className="text-sm font-medium mb-2 text-muted-foreground" {...props}>
-      {children}
-    </h6>
-  ),
+// Function to create heading components with ID support
+const createHeadingComponents = (toc?: Array<{ id: string; title: string; level: number; slug?: string }>) => {
+  const getHeadingId = (level: number, children: any) => {
+    if (!toc) return undefined
+    
+    const title = typeof children === 'string' ? children : 
+                  Array.isArray(children) ? children.join('') : 
+                  children?.toString() || ''
+    
+    // Clean the title from markdown formatting
+    const cleanTitle = title.replace(/\*\*/g, '').trim()
+    
+    const tocItem = toc.find(item => 
+      item.level === level && 
+      item.title.trim() === cleanTitle
+    )
+    
+    return tocItem?.id
+  }
+
+  return {
+    // Headings
+    h1: ({ children, ...props }: any) => {
+      const id = getHeadingId(1, children)
+      const tocItem = toc?.find(item => item.id === id)
+      
+      const copyLink = () => {
+        if (tocItem?.slug) {
+          const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`
+          navigator.clipboard.writeText(url)
+        }
+      }
+      
+      return (
+        <div className="group relative">
+          <h1 
+            id={id}
+            className="text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20" 
+            {...props}
+          >
+            {children}
+          </h1>
+          {tocItem?.slug && (
+            <button
+              onClick={copyLink}
+              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              title="Copy link to this heading"
+            >
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+            </button>
+          )}
+        </div>
+      )
+    },
+    h2: ({ children, ...props }: any) => {
+      const id = getHeadingId(2, children)
+      const tocItem = toc?.find(item => item.id === id)
+      
+      const copyLink = () => {
+        if (tocItem?.slug) {
+          const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`
+          navigator.clipboard.writeText(url)
+        }
+      }
+      
+      return (
+        <div className="group relative">
+          <h2 
+            id={id}
+            className="text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20" 
+            {...props}
+          >
+            {children}
+          </h2>
+          {tocItem?.slug && (
+            <button
+              onClick={copyLink}
+              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              title="Copy link to this heading"
+            >
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+            </button>
+          )}
+        </div>
+      )
+    },
+    h3: ({ children, ...props }: any) => {
+      const id = getHeadingId(3, children)
+      const tocItem = toc?.find(item => item.id === id)
+      
+      const copyLink = () => {
+        if (tocItem?.slug) {
+          const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`
+          navigator.clipboard.writeText(url)
+        }
+      }
+      
+      return (
+        <div className="group relative">
+          <h3 
+            id={id}
+            className="text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20" 
+            {...props}
+          >
+            {children}
+          </h3>
+          {tocItem?.slug && (
+            <button
+              onClick={copyLink}
+              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              title="Copy link to this heading"
+            >
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+            </button>
+          )}
+        </div>
+      )
+    },
+    h4: ({ children, ...props }: any) => {
+      const id = getHeadingId(4, children)
+      const tocItem = toc?.find(item => item.id === id)
+      
+      const copyLink = () => {
+        if (tocItem?.slug) {
+          const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`
+          navigator.clipboard.writeText(url)
+        }
+      }
+      
+      return (
+        <div className="group relative">
+          <h4 
+            id={id}
+            className="text-lg font-bold mb-2 text-foreground" 
+            {...props}
+          >
+            {children}
+          </h4>
+          {tocItem?.slug && (
+            <button
+              onClick={copyLink}
+              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              title="Copy link to this heading"
+            >
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+            </button>
+          )}
+        </div>
+      )
+    },
+    h5: ({ children, ...props }: any) => {
+      const id = getHeadingId(5, children)
+      const tocItem = toc?.find(item => item.id === id)
+      
+      const copyLink = () => {
+        if (tocItem?.slug) {
+          const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`
+          navigator.clipboard.writeText(url)
+        }
+      }
+      
+      return (
+        <div className="group relative">
+          <h5 
+            id={id}
+            className="text-base font-semibold mb-2 text-foreground" 
+            {...props}
+          >
+            {children}
+          </h5>
+          {tocItem?.slug && (
+            <button
+              onClick={copyLink}
+              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              title="Copy link to this heading"
+            >
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+            </button>
+          )}
+        </div>
+      )
+    },
+    h6: ({ children, ...props }: any) => {
+      const id = getHeadingId(6, children)
+      const tocItem = toc?.find(item => item.id === id)
+      
+      const copyLink = () => {
+        if (tocItem?.slug) {
+          const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`
+          navigator.clipboard.writeText(url)
+        }
+      }
+      
+      return (
+        <div className="group relative">
+          <h6 
+            id={id}
+            className="text-sm font-medium mb-2 text-muted-foreground" 
+            {...props}
+          >
+            {children}
+          </h6>
+          {tocItem?.slug && (
+            <button
+              onClick={copyLink}
+              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              title="Copy link to this heading"
+            >
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+            </button>
+          )}
+        </div>
+      )
+    },
   
-  // Paragraphs
+    // Paragraphs
   p: ({ children, ...props }: any) => (
     <p className="text-foreground mb-4 leading-relaxed text-sm sm:text-base" {...props}>
       {children}
@@ -357,15 +539,19 @@ const components = {
       </u>
     </strong>
   ),
+  }
 }
 
-export function MDXRenderer({ markdownContent, mermaidCharts }: MDXRendererProps) {
+export function MDXRenderer({ markdownContent, mermaidCharts, toc }: MDXRendererProps) {
   const theme = useTheme()
   
   // Check that markdownContent exists
   if (!markdownContent) {
     return <div className="mdx-content">Loading...</div>
   }
+  
+  // Create components with TOC support
+  const components = createHeadingComponents(toc)
   
   // Process Mermaid diagrams
   let processedContent = markdownContent
@@ -403,9 +589,9 @@ export function MDXRenderer({ markdownContent, mermaidCharts }: MDXRendererProps
             const enableZoom = settings.enableZoom !== undefined 
               ? settings.enableZoom 
               : shouldEnableZoom(chart, chartIndex)
-            
-            return (
-              <div 
+
+  return (
+    <div
                 key={`mermaid-${chartIndex}-${chart.slice(0, 20)}`}
                 className="interactive-mermaid-container"
                 style={settings.height ? { height: settings.height } : undefined}

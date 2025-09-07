@@ -11,6 +11,7 @@ interface TableOfContentsProps {
     id: string
     title: string
     level: number
+    slug?: string
   }>
   activeSection: string
   onSectionClick: (sectionId: string) => void
@@ -145,19 +146,33 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                     console.log('Found element:', element)
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      
+                      // Update URL with hash
+                      if (item.slug) {
+                        const newUrl = `${window.location.pathname}#${item.slug}`
+                        window.history.pushState(null, '', newUrl)
+                      }
                     } else {
                       console.log('Element not found, trying alternative method')
-                      // Try to find by header text
-                      const headings = document.querySelectorAll('h1, h2, h3')
+                      // Try to find by header text - search all heading levels
+                      const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
                       headings.forEach(heading => {
                         if (heading.textContent?.trim() === item.title) {
                           heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                          
+                          // Update URL with hash
+                          if (item.slug) {
+                            const newUrl = `${window.location.pathname}#${item.slug}`
+                            window.history.pushState(null, '', newUrl)
+                          }
                         }
                       })
                     }
                   }}
                 >
-                  <span className="text-sm truncate">{item.title}</span>
+                  <div className="flex flex-col items-start w-full">
+                    <span className="text-sm truncate">{item.title}</span>
+                  </div>
                 </Button>
               ))
             )}

@@ -1,22 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import crypto from 'crypto'
-
-// Password groups configuration
-const PASSWORD_GROUPS = {
-  'group1': {
-    password: 'password1', // SHA256: 0a041b9462caa4a31bac3567e0b6e6fd9100787db2ab433d96f6d178cabfce90
-    sections: ['1', '2', '3'] // Sections A, B, C
-  },
-  'group2': {
-    password: 'password2', // SHA256: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
-    sections: ['4', '5', '6'] // Sections D, E, F
-  },
-  'default': {
-    password: 'password', // SHA256: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
-    sections: ['*'] // All other sections
-  }
-} as const
+import { PASSWORD_GROUPS } from '@/lib/settings'
 
 // Helper function to get password hash
 function getPasswordHash(password: string): string {
@@ -25,11 +10,20 @@ function getPasswordHash(password: string): string {
 
 // Helper function to find group by section ID
 function findGroupBySection(sectionId: string): string {
+  // Check each group to see if the section ID is in its sections array
   for (const [groupName, config] of Object.entries(PASSWORD_GROUPS)) {
-    if (config.sections.includes(sectionId) || config.sections.includes('*')) {
+    if (config.sections.includes(sectionId)) {
       return groupName
     }
   }
+  
+  // If no specific group found, check if any group has '*' (wildcard)
+  for (const [groupName, config] of Object.entries(PASSWORD_GROUPS)) {
+    if (config.sections.includes('*')) {
+      return groupName
+    }
+  }
+  
   return 'default'
 }
 
@@ -76,6 +70,8 @@ export async function POST(request: NextRequest) {
         success: true, 
         message: 'Access granted',
         group: groupName,
+        groupName: groupConfig.name,
+        groupDescription: groupConfig.description,
         sections: groupConfig.sections
       })
     } else {
