@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { MDXLayout } from './mdx-layout'
 import { MDXRenderer } from './mdx-renderer'
+import { PasswordPrompt } from './password-prompt'
 
 interface MDXFrontmatter {
   title: string
@@ -11,6 +12,8 @@ interface MDXFrontmatter {
   prevButtonText?: string
   ctaLink?: string
   ctaText?: string
+  locked?: boolean
+  password?: string
 }
 
 interface MDXContentProps {
@@ -279,6 +282,9 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   const [content, setContent] = useState<string>('')
   const [mermaidCharts, setMermaidCharts] = useState<string[]>([])
   const [contentCache, setContentCache] = useState<Record<string, { content: string; mermaidCharts: string[]; frontmatter?: any; toc?: any; h1Title?: string }>>({})
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+  const [isLocked, setIsLocked] = useState<boolean>(false)
+  const [isCheckingAccess, setIsCheckingAccess] = useState<boolean>(true)
   const onFrontmatterChangeRef = useRef(onFrontmatterChange)
   const onTocChangeRef = useRef(onTocChange)
   const onH1ChangeRef = useRef(onH1Change)
@@ -291,12 +297,40 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
     onLoadingChangeRef.current = onLoadingChange
   }, [onFrontmatterChange, onTocChange, onH1Change, onLoadingChange])
 
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth')
+        const data = await response.json()
+        setIsAuthenticated(data.authenticated)
+      } catch (error) {
+        console.error('Auth check failed:', error)
+        setIsAuthenticated(false)
+      } finally {
+        setIsCheckingAccess(false)
+      }
+    }
+    
+    checkAuth()
+  }, [])
+
   useEffect(() => {
     const loadMDX = async () => {
+      // Don't load content if we're still checking access
+      if (isCheckingAccess) return
+      
       try {
         // Check cache
         if (contentCache[sectionId]) {
           const cached = contentCache[sectionId]
+          
+          // Check if content is locked and user is not authenticated
+          if (cached.frontmatter?.locked && !isAuthenticated) {
+            setIsLocked(true)
+            return
+          }
+          
           setContent(cached.content)
           setMermaidCharts(cached.mermaidCharts)
           
@@ -325,6 +359,12 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         if (data.error) {
           console.error('API returned error:', data.error)
           throw new Error(data.error)
+        }
+        
+        // Check if content is locked and user is not authenticated
+        if (data.frontmatter?.locked && !isAuthenticated) {
+          setIsLocked(true)
+          return
         }
         
         const { content: markdownContent, mermaidCharts: charts } = await processMarkdownContent(data.content)
@@ -366,7 +406,28 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
     }
 
     loadMDX()
-  }, [sectionId])
+  }, [sectionId, isAuthenticated, isCheckingAccess])
+
+  const handleAuthSuccess = () => {
+    setIsAuthenticated(true)
+    setIsLocked(false)
+  }
+
+  // Show loading while checking access
+  if (isCheckingAccess) {
+    return (
+      <MDXLayout>
+        <div className="mt-8 flex items-center justify-center">
+          <div className="text-muted-foreground">Checking access...</div>
+        </div>
+      </MDXLayout>
+    )
+  }
+
+  // Show password prompt if content is locked and user is not authenticated
+  if (isLocked && !isAuthenticated) {
+    return <PasswordPrompt sectionId={sectionId} onSuccess={handleAuthSuccess} />
+  }
 
   return (
     <MDXLayout>
