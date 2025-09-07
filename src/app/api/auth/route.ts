@@ -12,14 +12,14 @@ function getPasswordHash(password: string): string {
 function findGroupBySection(sectionId: string): string {
   // Check each group to see if the section ID is in its sections array
   for (const [groupName, config] of Object.entries(PASSWORD_GROUPS)) {
-    if (config.sections.includes(sectionId)) {
+    if (config.sections.includes(sectionId as any)) {
       return groupName
     }
   }
   
   // If no specific group found, check if any group has '*' (wildcard)
   for (const [groupName, config] of Object.entries(PASSWORD_GROUPS)) {
-    if (config.sections.includes('*')) {
+    if (config.sections.includes('*' as any)) {
       return groupName
     }
   }
