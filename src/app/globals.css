@@ -33,8 +33,10 @@
     margin-bottom: 20px;
     border-radius: 8px;
     background: #ffffff;
-    overflow: hidden;
+    overflow: auto;
     transition: all 0.3s ease;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   @media (max-width: 768px) {
@@ -168,6 +170,7 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
   body {
     @apply bg-background text-foreground;
@@ -189,6 +192,12 @@
     @apply font-semibold underline decoration-2 decoration-primary/50;
   }
   
+  .mdx-content {
+    @apply w-full;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
   .mdx-content h1 { @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20; }
   .mdx-content h2 { @apply text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20; }
   .mdx-content h3 { @apply text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20; }
@@ -214,7 +223,11 @@
   .mdx-content strong { @apply text-foreground font-semibold; }
   .mdx-content del { @apply text-muted-foreground line-through; }
   .mdx-content a { @apply text-primary hover:text-primary/80 underline; }
-  .mdx-content code:not(pre code) { @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground border; }
+  .mdx-content code:not(pre code) { 
+    @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground border; 
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
 
   .mdx-content blockquote {
     @apply my-6 border-l-4 border-primary/50 pl-6 py-4 italic text-muted-foreground bg-secondary/30 rounded-r-lg;
@@ -243,13 +256,22 @@
   }
 
   .shiki-code-block {
-    @apply relative my-6 rounded-lg overflow-hidden border;
+    @apply relative my-6 rounded-lg overflow-visible border;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   .shiki-code-block pre {
-    @apply m-0 py-4 pl-4 pr-6 text-sm overflow-x-auto;
+    @apply m-0 py-4 pl-4 pr-6 text-sm;
     font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
     line-height: 1.7;
     background-color: var(--shiki-light-bg, #ffffff) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
   }
   .dark .shiki-code-block pre {
     background-color: var(--shiki-dark-bg, #121212) !important;
@@ -335,8 +357,25 @@
   .mermaid-tooltip span { @apply leading-tight; }
 
   .mermaid-diagram-container:not(.no-zoom) .mermaid-svg-container > svg {
-    max-width: none;
-    max-height: none;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+  }
+
+  /* Стили для текста в Mermaid диаграммах */
+  .mermaid-diagram-container text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  /* Стили для узлов в диаграммах */
+  .mermaid-diagram-container .node rect,
+  .mermaid-diagram-container .node circle,
+  .mermaid-diagram-container .node ellipse {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .dark .mermaid-diagram-container .edgePath .path,
@@ -352,8 +391,11 @@
 
   /* Styles for code blocks with syntax highlighting */
   .code-block {
-    @apply relative my-6 rounded-lg overflow-hidden border bg-muted/50;
+    @apply relative my-6 rounded-lg overflow-visible border bg-muted/50;
     position: relative;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .code-block::before {
@@ -365,10 +407,16 @@
   }
 
   .code-block .code {
-    @apply block py-4 px-4 text-sm overflow-x-auto;
+    @apply block py-4 px-4 text-sm;
     font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
     line-height: 1.6;
     background: transparent;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
   }
 
   /* Styles for syntax highlighting */
@@ -413,7 +461,15 @@
     color: hsl(var(--foreground)) !important;
     padding: 1rem !important;
     border-radius: 0.5rem !important;
-    overflow-x: auto !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
   }
 
   code.hljs {
