@@ -64,9 +64,24 @@ git fetch upstream
 # Merge upstream changes into your main branch
 git checkout main
 git merge upstream/main
+
+# If conflicts occur in protected files, keep your local version
+git checkout --ours content/*.mdx src/lib/settings.ts
+git add content/*.mdx src/lib/settings.ts
+git commit -m "Keep local content and settings after upstream merge"
 ```
 
 **Note:** If you're working with a fork of the Probo template, replace the upstream URL with the original template repository URL.
+
+### Protecting Local Files from Upstream Changes
+
+This project includes `.gitattributes` configuration to protect your local content and settings from being overwritten when pulling from upstream:
+
+- `content/*.mdx` - Your local MDX content files
+- `src/lib/settings.ts` - Your project-specific settings
+- `.env` and `database.db` - Local configuration files
+
+When conflicts occur during upstream merges, your local versions will be preserved automatically.
 
 ### Getting Updates from Template
 

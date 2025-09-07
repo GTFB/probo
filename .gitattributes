@@ -1,0 +1,7 @@
+# Protect local content files from upstream changes
+content/*.mdx merge=ours
+src/lib/settings.ts merge=ours
+
+# Protect local configuration files
+.env merge=ours
+database.db merge=ours
