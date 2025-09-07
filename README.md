@@ -130,6 +130,5 @@ bun test
 ```
 
 ## Environment Setup
-- `.env` and `database.db` files are stored in external storage directory
 - All terminal operations use Makefile commands
 - File structure changes are automatically reflected in structure.md
