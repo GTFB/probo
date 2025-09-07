@@ -19,6 +19,12 @@ nextButtonText: "К техническим требованиям"
     5.  Администратор получает уведомление и видит новый проект в своей панели, после чего активирует его для запуска.
 
 ```mermaid
+%% zoom: true
+%% height: 60vh
+%% zoom-min: 0.5
+%% zoom-max: 3
+%% zoom-initial: 0.8
+%% disable-tooltip: true
 flowchart TD
     subgraph "Путь Клиента"
         A[Клиент на сайте] --> B[Выбирает тариф]
@@ -49,6 +55,12 @@ flowchart TD
     8.  Notification Service мгновенно отправляет уведомление клиенту в Telegram с текстом ответа.
 
 ```mermaid
+%% zoom: true
+%% height: 60vh
+%% zoom-min: 0.5
+%% zoom-max: 3
+%% zoom-initial: 0.8
+%% disable-tooltip: true
 sequenceDiagram
     participant Core as Ядро API
     participant AI as AI Service
@@ -79,6 +91,12 @@ sequenceDiagram
     5.  Notification Service отправляет клиенту финальный отчет и уведомление о завершении кампании.
 
 ```mermaid
+%% zoom: true
+%% height: 60vh
+%% zoom-min: 0.5
+%% zoom-max: 3
+%% zoom-initial: 0.8
+%% disable-tooltip: true
 flowchart TD
     A{Счетчик ответов<br>достиг цели?}
     A -- Нет --> E[Продолжение работы кампании];

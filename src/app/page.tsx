@@ -38,6 +38,7 @@ import {
   Share2,
   TestTube,
   CheckCircle,
+  Code,
 } from 'lucide-react'
 
 // Function to get icon by name from frontmatter
@@ -50,6 +51,7 @@ const getIconByName = (iconName: string) => {
     Share2,
     TestTube,
     CheckCircle,
+    Code,
   }
   return iconMap[iconName] || Component // Fallback to Component if icon not found
 }

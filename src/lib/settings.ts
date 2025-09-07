@@ -6,6 +6,7 @@ import {
   Share2,
   TestTube,
   CheckCircle,
+  Code,
 } from 'lucide-react'
 
 export const PROJECT_SETTINGS = {
