@@ -354,14 +354,24 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        console.log('Checking auth for section:', sectionId)
+        // Reset authentication state for each section
+        setIsAuthenticated(null)
+        setIsLocked(false)
+        setIsCheckingAccess(true)
+        
         const response = await fetch('/api/auth')
         const data = await response.json()
         
+        console.log('Auth response:', data)
+        
         if (data.authenticated) {
           // Check if user has access to this specific section
-          const hasAccess = data.sections.includes(sectionId) || data.sections.includes('*')
+          const hasAccess = data.sections.includes(sectionId as any) || data.sections.includes('*' as any)
+          console.log('User authenticated, has access:', hasAccess, 'sections:', data.sections)
           setIsAuthenticated(hasAccess)
         } else {
+          console.log('User not authenticated')
           setIsAuthenticated(false)
         }
       } catch (error) {
@@ -380,13 +390,18 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
       // Don't load content if we're still checking access
       if (isCheckingAccess) return
       
+      console.log('Loading MDX for section:', sectionId, 'isAuthenticated:', isAuthenticated)
+      
       try {
         // Check cache
         if (contentCache[sectionId]) {
           const cached = contentCache[sectionId]
           
+          console.log('Found cached content, frontmatter:', cached.frontmatter)
+          
           // Check if content is locked and user is not authenticated
-          if (cached.frontmatter?.locked && !isAuthenticated) {
+          if (cached.frontmatter?.locked === true && !isAuthenticated) {
+            console.log('Setting isLocked to true for cached section:', sectionId, 'isAuthenticated:', isAuthenticated)
             setIsLocked(true)
             return
           }
@@ -422,8 +437,13 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           throw new Error(data.error)
         }
         
+        console.log('Loaded content from server, frontmatter:', data.frontmatter)
+        console.log('Frontmatter locked property:', data.frontmatter?.locked)
+        console.log('Is locked true?', data.frontmatter?.locked === true)
+        
         // Check if content is locked and user is not authenticated
-        if (data.frontmatter?.locked && !isAuthenticated) {
+        if (data.frontmatter?.locked === true && !isAuthenticated) {
+          console.log('Setting isLocked to true for section:', sectionId, 'isAuthenticated:', isAuthenticated)
           setIsLocked(true)
           return
         }
@@ -501,6 +521,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
 
   // Show password prompt if content is locked and user is not authenticated
   if (isLocked && !isAuthenticated) {
+    console.log('Showing password prompt - isLocked:', isLocked, 'isAuthenticated:', isAuthenticated)
     return <PasswordPrompt sectionId={sectionId} onSuccess={handleAuthSuccess} onCancel={handleAuthCancel} />
   }
 
