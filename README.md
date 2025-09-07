@@ -42,6 +42,32 @@ probo/
 
 This project is created based on the [Probo](https://github.com/GTFB/probo) template and configured to receive updates.
 
+### Setting up Upstream for Git Pull
+
+To receive updates from the original Probo template, you need to configure the upstream remote:
+
+```bash
+# Add upstream remote pointing to the original template
+git remote add upstream https://github.com/GTFB/probo.git
+
+# Verify remotes are configured correctly
+git remote -v
+# Should show:
+# origin    https://github.com/GTFB/probo.git (fetch)
+# origin    https://github.com/GTFB/probo.git (push)
+# upstream  https://github.com/GTFB/probo.git (fetch)
+# upstream  https://github.com/GTFB/probo.git (push)
+
+# Fetch latest changes from upstream
+git fetch upstream
+
+# Merge upstream changes into your main branch
+git checkout main
+git merge upstream/main
+```
+
+**Note:** If you're working with a fork of the Probo template, replace the upstream URL with the original template repository URL.
+
 ### Getting Updates from Template
 
 ```bash
