@@ -8,7 +8,7 @@ import { SearchEngine } from '@/components/search-engine'
 import { Button } from '@/components/ui/button'
 import { MDXContent } from '@/components/mdx-content'
 import { ArrowRight, Menu, X, List, Sun, Moon } from 'lucide-react'
-import { NavigationItem } from '@/types/proposal'
+import { NavigationItem } from '@/lib/settings'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { SidebarProvider } from '@/components/ui/sidebar'
 
