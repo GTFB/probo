@@ -1,7 +1,9 @@
+import { ComponentType } from 'react'
+
 export interface NavigationItem {
   id: string
   title: string
-  icon: string
+  icon: ComponentType<{ className?: string }>
   href: string
 }
 

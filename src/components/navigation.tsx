@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavigationItem } from '@/types/proposal'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -26,9 +26,8 @@ export function Navigation({ items, activeSection, onSectionChange, className }:
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  const getIcon = (iconName: string) => {
-    const IconComponent = Icons[iconName as keyof typeof Icons] as any
-    return IconComponent ? <IconComponent className="w-4 h-4" /> : null
+  const getIcon = (IconComponent: React.ComponentType<{ className?: string }>) => {
+    return <IconComponent className="w-4 h-4" />
   }
 
   if (isMobile) {

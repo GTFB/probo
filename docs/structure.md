@@ -18,12 +18,14 @@
 - **Typography:** @tailwindcss/typography
 - **Code Highlighting:** Shiki/Rehype Pretty Code
 - **Charts:** Recharts
+- **Interactive Diagrams:** react-zoom-pan-pinch
 
 ## Структура проекта
 
 ```
 probo/
 ├── docs/
+│   ├── mermaid-configuration.md
 │   ├── TECH_STACK.md
 │   └── structure.md
 ├── content/
@@ -36,6 +38,7 @@ probo/
 │   ├── roadmap.mdx
 │   ├── team.mdx
 │   └── tech.mdx
+├── settings.ts
 ├── src/
 │   ├── app/
 │   │   ├── api/
@@ -77,8 +80,13 @@ probo/
 │   │   ├── chart-area-interactive.tsx
 │   │   ├── competitor-chart.tsx
 │   │   ├── data-table.tsx
+│   │   ├── interactive-mermaid.tsx
 │   │   ├── mdx-content.tsx
+│   │   ├── mdx-content-new.tsx
+│   │   ├── mdx-content-old.tsx
 │   │   ├── mdx-layout.tsx
+│   │   ├── mdx-renderer-new.tsx
+│   │   ├── mdx-renderer.tsx
 │   │   ├── nav-documents.tsx
 │   │   ├── nav-main.tsx
 │   │   ├── nav-projects.tsx
@@ -94,6 +102,8 @@ probo/
 │   ├── hooks/
 │   │   └── use-mobile.tsx
 │   ├── lib/
+│   │   ├── mermaid-config.ts
+│   │   ├── settings.ts
 │   │   └── utils.ts
 │   └── types/
 │       └── proposal.ts
@@ -119,6 +129,7 @@ probo/
 - ✅ Генерация коммерческих предложений на основе MDX
 - ✅ Адаптивный дизайн с мобильной навигацией
 - ✅ Интерактивные графики и диаграммы
+- ✅ Интерактивные Mermaid диаграммы с зумом и панорамированием
 - ✅ Тарифные карточки с CTA
 - ✅ Современный UI с Shadcn/ui компонентами
 - ✅ Типизация TypeScript
