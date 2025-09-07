@@ -44,7 +44,15 @@ export async function GET(
           frontmatterText.split('\n').forEach(line => {
             const [key, ...valueParts] = line.split(':')
             if (key && valueParts.length > 0) {
-              const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '')
+              let value: any = valueParts.join(':').trim().replace(/^["']|["']$/g, '')
+              
+              // Convert boolean values
+              if (value === 'true') {
+                value = true
+              } else if (value === 'false') {
+                value = false
+              }
+              
               frontmatter[key.trim()] = value
             }
           })
