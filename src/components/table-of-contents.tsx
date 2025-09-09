@@ -92,8 +92,8 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
 
   return (
     <div className="hidden lg:block w-72 bg-muted/10 h-screen theme-transition sticky top-0 scrollbar-hide border-l">
-      <div className="p-4 h-full overflow-y-auto scrollbar-hide">
-        <div className="flex items-center justify-between mb-4">
+      <div className="h-full overflow-y-auto scrollbar-hide">
+        <div className="sticky top-0 bg-muted/10 backdrop-blur-sm z-10 flex items-center justify-between p-4 border-b mb-4">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
@@ -127,6 +127,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
         </div>
         
         {/* Tab content */}
+        <div className="p-4">
         {activeTab === 'toc' && (
           <div className="space-y-1">
             {items.length === 0 ? (
@@ -185,6 +186,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
             onSectionChange={onSectionChange}
           />
         )}
+        </div>
       </div>
     </div>
   )
