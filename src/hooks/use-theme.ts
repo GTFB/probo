@@ -1,34 +1,22 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useTheme as useNextTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark'
 
-function getInitialTheme(): Theme {
-  if (typeof window === 'undefined') {
-    return 'light'
-  }
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-}
-
-export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+export function useTheme(): Theme {
+  const { theme, resolvedTheme } = useNextTheme()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.attributeName === 'class') {
-          const newTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-          setTheme(newTheme)
-        }
-      }
-    })
-
-    observer.observe(document.documentElement, { attributes: true })
-
-    return () => observer.disconnect()
+    setMounted(true)
   }, [])
 
-  return theme
+  if (!mounted) {
+    return 'light' // Default during SSR
+  }
+
+  return (resolvedTheme as Theme) || 'light'
 }
 
