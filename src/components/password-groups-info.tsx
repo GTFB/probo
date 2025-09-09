@@ -30,15 +30,15 @@ export function PasswordGroupsInfo() {
                 <div>
                   <span className="text-sm font-medium">Sections: </span>
                   <div className="flex flex-wrap gap-1 mt-1">
-                    {config.sections.map((section) => (
+                    {(config.sections as readonly (string | '*')[]).map((section) => (
                       <Badge key={section} variant="secondary" className="text-xs">
-                        {(section as any) === '*' ? 'All other sections' : `Section ${section}`}
+                        {section === '*' ? 'All other sections' : `Section ${section}`}
                       </Badge>
                     ))}
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  {config.sections.includes('*' as any) 
+                  {(config.sections as readonly (string | '*')[]).some((s) => s === '*') 
                     ? 'This group covers all sections not explicitly assigned to other groups'
                     : 'This group covers only the specified sections'
                   }
