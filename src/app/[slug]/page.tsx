@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { AppSidebar } from '@/components/app-sidebar'
+import { useWindowSize } from '@/hooks/use-window-size'
 import { TableOfContents } from '@/components/table-of-contents'
 import { PROJECT_SETTINGS, NAVIGATION_ITEMS } from '@/lib/settings'
 import { SearchEngine } from '@/components/search-engine'
@@ -76,6 +77,7 @@ export default function SectionPage() {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true)
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
   const [isRightOffcanvasOpen, setIsRightOffcanvasOpen] = useState(false)
+  const { width } = useWindowSize()
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [isHydrated, setIsHydrated] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -239,15 +241,6 @@ export default function SectionPage() {
 
   const sectionNumber = navigationItems.findIndex(item => item.id === activeSection) + 1
 
-  // Determine grid classes based on state
-  let lgGridColsClass = 'lg:grid-cols-1'; // Default if both are closed
-  if (isLeftSidebarOpen && isRightSidebarOpen) {
-    lgGridColsClass = 'lg:grid-cols-[auto_1fr_auto]';
-  } else if (isLeftSidebarOpen) {
-    lgGridColsClass = 'lg:grid-cols-[auto_1fr]';
-  } else if (isRightSidebarOpen) {
-    lgGridColsClass = 'lg:grid-cols-[1fr_auto]';
-  }
 
   // Redirect to first section if slug not found
   useEffect(() => {
@@ -257,23 +250,33 @@ export default function SectionPage() {
   }, [currentSection, slug, router])
 
   return (
-    <div className={`min-h-screen grid grid-cols-1 ${lgGridColsClass}`}>
+    <div className="min-h-screen relative">
         {/* Desktop left sidebar */}
-        {isLeftSidebarOpen && (
-          <div className="hidden lg:block">
-            <SidebarProvider defaultOpen={true}>
-              <AppSidebar
-                items={navigationItemsWithIcons}
-                activeSection={activeSection}
-                onSectionChange={handleSectionChange}
-                onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
-              />
-            </SidebarProvider>
-          </div>
-        )}
+        <div 
+          className={`hidden lg:block fixed top-0 left-0 h-full transition-transform duration-300 ease-in-out z-40 ${
+            isLeftSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <SidebarProvider defaultOpen={true}>
+            <AppSidebar
+              items={navigationItemsWithIcons}
+              activeSection={activeSection}
+              onSectionChange={handleSectionChange}
+              onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
+            />
+          </SidebarProvider>
+        </div>
         
         {/* Central section: Header, Content, Footer */}
-        <div className="flex flex-col min-h-screen">
+        <div 
+          className="flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out"
+          style={{
+            width: width < 1024 
+              ? '100%' 
+              : `calc(100% - ${isLeftSidebarOpen ? '256px' : '0px'} - ${isRightSidebarOpen ? '320px' : '0px'})`,
+            marginLeft: width < 1024 ? '0px' : (isLeftSidebarOpen ? '256px' : '0px'),
+          }}
+        >
           {/* Sticky Header for desktop */}
           <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
             <div className={`px-4 sm:px-6 md:px-10 flex items-center transition-all duration-300 ease-in-out`} style={{ height: '72px' }}>
@@ -550,17 +553,19 @@ export default function SectionPage() {
         </div>
 
         {/* Desktop right table of contents */}
-        {isRightSidebarOpen && (
-          <div className="hidden lg:block" style={{zIndex: 100}}>
-            <TableOfContents
-              items={currentToc}
-              activeSection={activeSection}
-              onSectionClick={handleSectionChange}
-              onSectionChange={handleSectionChange}
-              onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-            />
-          </div>
-        )}
+        <div 
+          className={`hidden lg:block fixed top-0 right-0 h-full w-80 bg-background border-l shadow-lg transition-transform duration-300 ease-in-out z-40 ${
+            isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <TableOfContents
+            items={currentToc}
+            activeSection={activeSection}
+            onSectionClick={handleSectionChange}
+            onSectionChange={handleSectionChange}
+            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
+          />
+        </div>
       </div>
   )
 }
