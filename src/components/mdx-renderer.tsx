@@ -8,7 +8,9 @@ import rehypeRaw from 'rehype-raw'
 import { InteractiveMermaid } from './interactive-mermaid'
 import { shouldEnableZoom } from '../lib/mermaid-config'
 import { useTheme } from '../hooks/use-theme'
-import { Check, Square, Link } from 'lucide-react'
+import { Button } from './ui/button'
+import Link from 'next/link'
+import { Check, Square,  } from 'lucide-react'
 
 // Interface for diagram settings
 interface MermaidSettings {
@@ -142,7 +144,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
               className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
             </button>
           )}
         </div>
@@ -174,7 +176,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
               className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
             </button>
           )}
         </div>
@@ -201,13 +203,13 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
             {children}
           </h3>
           {tocItem?.slug && (
-            <button
+            <Button
               onClick={copyLink}
               className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
-            </button>
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
+            </Button>
           )}
         </div>
       )
@@ -238,7 +240,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
               className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
             </button>
           )}
         </div>
@@ -270,7 +272,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
               className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
             </button>
           )}
         </div>
@@ -302,7 +304,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
               className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
             </button>
           )}
         </div>
@@ -385,15 +387,15 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
   
   // Links
   a: ({ children, href, ...props }: any) => (
-    <a 
-      href={href} 
-      className="text-primary hover:text-primary/80 underline" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      {...props}
+    <Button 
+      asChild
+      variant="link"
+      className="h-auto p-0 text-primary hover:text-primary/80 underline"
     >
-      {children}
-    </a>
+      <Link href={href || '#'} {...props}>
+        {children}
+      </Link>
+    </Button>
   ),
   
   // Code

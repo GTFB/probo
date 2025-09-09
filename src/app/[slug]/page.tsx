@@ -246,8 +246,6 @@ export default function SectionPage() {
     }
   }, [currentSection, slug, router])
 
-  console.log('currentFrontmatter', currentFrontmatter)
-
   return (
     <div className="min-h-screen relative">
         {/* Desktop left sidebar */}

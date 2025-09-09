@@ -2,8 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Check } from 'lucide-react'
-
+import { Check,  } from 'lucide-react'
+import Link from 'next/link'
 interface TariffCardProps {
   title: string
   description: string
@@ -57,9 +57,9 @@ export function TariffCard({
           variant={isRecommended ? "default" : "outline"}
           asChild
         >
-          <a href={ctaLink} target="_blank" rel="noopener noreferrer">
+          <Link href={ctaLink} target="_blank" rel="noopener noreferrer">
             {ctaText}
-          </a>
+          </Link>
         </Button>
       </CardContent>
     </Card>
