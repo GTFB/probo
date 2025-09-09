@@ -464,21 +464,19 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
   img: ({ src, alt, ...props }: any) => {
     console.log('Rendering image:', { src, alt })
     return (
-      <div className="my-6">
-        <img 
-          src={src} 
-          alt={alt} 
-          className="rounded-lg shadow-md max-w-full h-auto" 
-          onError={(e) => {
-            console.error('Image failed to load:', src)
-            e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzZjNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBmb3VuZDwvdGV4dD48L3N2Zz4='
-          }}
-          onLoad={() => {
-            console.log('Image loaded successfully:', src)
-          }}
-          {...props}
-        />
-      </div>
+      <img 
+        src={src} 
+        alt={alt} 
+        className="my-6 rounded-lg shadow-md max-w-full h-auto block" 
+        onError={(e) => {
+          console.error('Image failed to load:', src)
+          e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzZjNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBmb3VuZDwvdGV4dD48L3N2Zz4='
+        }}
+        onLoad={() => {
+          console.log('Image loaded successfully:', src)
+        }}
+        {...props}
+      />
     )
   },
   
