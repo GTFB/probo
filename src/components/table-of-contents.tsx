@@ -171,7 +171,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                   }}
                 >
                   <div className="flex flex-col items-start w-full">
-                    <span className="text-sm truncate">{item.title}</span>
+                    <span className="text-sm truncate w-full">{item.title}</span>
                   </div>
                 </Button>
               ))
