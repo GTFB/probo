@@ -72,6 +72,7 @@ export default function SectionPage() {
   const activeSection = currentSection?.id || '1'
   
   const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
+  const [prevFrontmatter, setPrevFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number; slug?: string }>>([])
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true)
@@ -79,7 +80,6 @@ export default function SectionPage() {
   const [isRightOffcanvasOpen, setIsRightOffcanvasOpen] = useState(false)
   const { width } = useWindowSize()
   const [isContentLoading, setIsContentLoading] = useState(false)
-  const [isHydrated, setIsHydrated] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // During server-side rendering, always return false
     if (typeof window === 'undefined') return false
@@ -102,11 +102,8 @@ export default function SectionPage() {
     }
   })
 
-  // Set hydration state and apply theme
+  // Set theme after hydration
   useEffect(() => {
-    setIsHydrated(true)
-    
-    // Additional check and theme application after hydration
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme')
       if (savedTheme) {
@@ -134,7 +131,6 @@ export default function SectionPage() {
   useEffect(() => {
     const handleHashNavigation = () => {
       const hash = window.location.hash.substring(1) // Remove # from hash
-      console.log('Hash navigation:', hash)
       if (hash) {
         // Wait a bit for content to load
         setTimeout(() => {
@@ -192,8 +188,9 @@ export default function SectionPage() {
   }, [activeSection, router])
 
   const handleFrontmatterChange = useCallback((frontmatter: MDXFrontmatter) => {
+    setPrevFrontmatter(currentFrontmatter)
     setCurrentFrontmatter(frontmatter)
-  }, [])
+  }, [currentFrontmatter])
 
   const handleTocChange = useCallback((toc: Array<{ id: string; title: string; level: number; slug?: string }>) => {
     setCurrentToc(toc)
@@ -249,6 +246,8 @@ export default function SectionPage() {
     }
   }, [currentSection, slug, router])
 
+  console.log('currentFrontmatter', currentFrontmatter)
+
   return (
     <div className="min-h-screen relative">
         {/* Desktop left sidebar */}
@@ -269,12 +268,11 @@ export default function SectionPage() {
         
         {/* Central section: Header, Content, Footer */}
         <div 
-          className="flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out"
+          className="flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out w-full lg:w-auto"
           style={{
-            width: width < 1024 
-              ? '100%' 
-              : `calc(100% - ${isLeftSidebarOpen ? '256px' : '0px'} - ${isRightSidebarOpen ? '320px' : '0px'})`,
+            width: width < 1024 ? '100%' : `calc(100% - ${isLeftSidebarOpen ? '256px' : '0px'} - ${isRightSidebarOpen ? '320px' : '0px'})`,
             marginLeft: width < 1024 ? '0px' : (isLeftSidebarOpen ? '256px' : '0px'),
+            marginRight: width < 1024 ? '0px' : (isRightSidebarOpen ? '320px' : '0px'),
           }}
         >
           {/* Sticky Header for desktop */}
@@ -502,24 +500,24 @@ export default function SectionPage() {
           <div className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t py-2 h-16 z-30">
             <div className="flex flex-col gap-2 p-4 items-center justify-center h-full">
               {/* Desktop navigation */}
-              <div className={`hidden lg:flex w-full gap-4 ${
-                currentFrontmatter?.prevButtonText && currentFrontmatter?.nextButtonText 
+              <div className={`hidden lg:flex w-full gap-4 transition-opacity duration-300 ${
+                (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) 
                   ? 'justify-between' 
-                  : currentFrontmatter?.prevButtonText 
+                  : (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) 
                     ? 'justify-start' 
                     : 'justify-end'
               }`}>
-                {currentFrontmatter?.prevButtonText && (
+                {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
                   <Button variant="outline" size="sm" onClick={handlePrevSection}>
                     <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
-                    {currentFrontmatter.prevButtonText}
+                    {currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText}
                   </Button>
                 )}
                 
-                {!isContentLoading && currentFrontmatter?.nextButtonText && (
+                {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
                   <Button variant="outline" size="sm" onClick={handleNextSection}>
                     <span>
-                      {currentFrontmatter.nextButtonText}
+                      {currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText}
                     </span>
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -527,21 +525,21 @@ export default function SectionPage() {
               </div>
 
               {/* Mobile navigation */}
-              <div className={`lg:hidden flex w-full px-4 gap-4 ${
-                currentFrontmatter?.prevButtonText && currentFrontmatter?.nextButtonText 
+              <div className={`lg:hidden flex w-full px-4 gap-4 transition-opacity duration-300 ${
+                (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) 
                   ? 'justify-between' 
-                  : currentFrontmatter?.prevButtonText 
+                  : (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) 
                     ? 'justify-start' 
                     : 'justify-end'
               }`}>
-                {currentFrontmatter?.prevButtonText && (
+                {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
                   <Button variant="outline" size="sm" onClick={handlePrevSection}>
                     <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
                     Back
                   </Button>
                 )}
                 
-                {!isContentLoading && currentFrontmatter?.nextButtonText && (
+                {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
                   <Button variant="outline" size="sm" onClick={handleNextSection}>
                     <span>Forward</span>
                     <ArrowRight className="w-4 h-4 ml-2" />
