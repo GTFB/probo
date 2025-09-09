@@ -22,7 +22,7 @@ interface TableOfContentsProps {
 }
 
 export function TableOfContents({ items, activeSection, onSectionClick, onSectionChange, onToggle, defaultTheme = 'light', ...props }: TableOfContentsProps) {
-  console.log('TableOfContents defaultTheme:', props) 
+
   const [activeTab, setActiveTab] = React.useState<'toc' | 'search'>('toc')
   const { state, updateState } = useAppState()
   

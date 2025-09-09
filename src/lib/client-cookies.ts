@@ -1,6 +1,6 @@
 // Client utilities for working with cookies
 export interface AppState {
-  theme?: 'light' | 'dark'
+  theme?: 'light' | 'dark' | 'system'
   sidebarOpen?: boolean
   sidebarCollapsed?: boolean
   lastVisitedPage?: string
@@ -32,9 +32,25 @@ export class ClientCookieManager {
       const cookieValue = this.getCookie(COOKIE_CONFIG.name)
       if (!cookieValue) return {}
       
-      return JSON.parse(cookieValue) as AppState
+      // Additional validation for JSON string
+      if (typeof cookieValue !== 'string' || cookieValue.trim() === '') {
+        return {}
+      }
+      
+      const parsed = JSON.parse(cookieValue)
+      
+      // Validate that parsed value is an object
+      if (typeof parsed !== 'object' || parsed === null) {
+        console.warn('Invalid app state format in cookie, clearing...')
+        this.clearState()
+        return {}
+      }
+      
+      return parsed as AppState
     } catch (error) {
       console.error('Error parsing app state from cookies:', error)
+      // Clear invalid cookie
+      this.clearState()
       return {}
     }
   }
@@ -81,7 +97,17 @@ export class ClientCookieManager {
     const value = `; ${document.cookie}`
     const parts = value.split(`; ${name}=`)
     if (parts.length === 2) {
-      return parts.pop()?.split(';').shift() || null
+      const cookieValue = parts.pop()?.split(';').shift() || null
+      if (cookieValue) {
+        try {
+          // Decode URL-encoded values
+          return decodeURIComponent(cookieValue)
+        } catch (error) {
+          console.error('Error decoding cookie value:', error)
+          return cookieValue
+        }
+      }
+      return null
     }
     return null
   }
@@ -91,7 +117,13 @@ export class ClientCookieManager {
       ? 'expires=Thu, 01 Jan 1970 00:00:00 GMT'
       : `expires=${new Date(Date.now() + maxAge * 1000).toUTCString()}`
     
-    document.cookie = `${name}=${value}; ${expires}; path=${COOKIE_CONFIG.path}; ${COOKIE_CONFIG.secure ? 'secure; ' : ''}samesite=${COOKIE_CONFIG.sameSite}`
+    try {
+      // Encode the value to prevent issues with special characters
+      const encodedValue = encodeURIComponent(value)
+      document.cookie = `${name}=${encodedValue}; ${expires}; path=${COOKIE_CONFIG.path}; ${COOKIE_CONFIG.secure ? 'secure; ' : ''}samesite=${COOKIE_CONFIG.sameSite}`
+    } catch (error) {
+      console.error('Error setting cookie:', error)
+    }
   }
 }
 

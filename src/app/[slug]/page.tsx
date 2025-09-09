@@ -287,6 +287,7 @@ export default function SectionPage() {
                   <div>
                     <h1 className="text-lg font-semibold">{currentFrontmatter?.title || 'Loading...'}</h1>
                     <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
+                    
                   </div>
                 </div>
                 

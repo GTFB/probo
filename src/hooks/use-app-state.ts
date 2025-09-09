@@ -22,17 +22,26 @@ export function useAppState() {
           setState(cookieState)
         } else {
           // If no data in cookies, load from server
-          const response = await fetch('/api/state')
-          if (response.ok) {
-            const data = await response.json()
-            setState(data.state)
-            // Save to cookies for quick access
-            cookieManager.setState(data.state)
+          try {
+            const response = await fetch('/api/state')
+            if (response.ok) {
+              const data = await response.json()
+              setState(data.state)
+              // Save to cookies for quick access
+              cookieManager.setState(data.state)
+            }
+          } catch (serverError) {
+            console.warn('Failed to load from server, using default state:', serverError)
+            // Use default state if server is unavailable
+            setState({})
           }
         }
       } catch (err) {
         console.error('Error loading app state:', err)
         setError('Failed to load app state')
+        // Clear potentially corrupted cookies
+        cookieManager.clearState()
+        setState({})
       } finally {
         setIsLoading(false)
       }
