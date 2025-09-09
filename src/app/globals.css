@@ -363,14 +363,14 @@
     height: auto;
   }
 
-  /* Стили для текста в Mermaid диаграммах */
+  /* Styles for text in Mermaid diagrams */
   .mermaid-diagram-container text {
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
   }
 
-  /* Стили для узлов в диаграммах */
+  /* Styles for nodes in diagrams */
   .mermaid-diagram-container .node rect,
   .mermaid-diagram-container .node circle,
   .mermaid-diagram-container .node ellipse {

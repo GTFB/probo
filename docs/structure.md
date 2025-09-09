@@ -1,10 +1,10 @@
 # Probo - Commercial Proposal Generator
 
-## Описание проекта
+## Project Description
 
-Система для генерации коммерческих предложений на основе MDX файлов с использованием современного веб-стека.
+A system for generating commercial proposals based on MDX files using a modern web stack.
 
-## Технологический стек
+## Technology Stack
 
 - **Runtime:** Bun
 - **Framework:** Next.js 14
@@ -20,7 +20,7 @@
 - **Charts:** Recharts
 - **Interactive Diagrams:** react-zoom-pan-pinch
 
-## Структура проекта
+## Project Structure
 
 ```
 probo/
@@ -129,49 +129,49 @@ probo/
 └── tsconfig.json
 ```
 
-## Основные функции
+## Main Features
 
-- ✅ Генерация коммерческих предложений на основе MDX
-- ✅ Адаптивный дизайн с мобильной навигацией
-- ✅ Интерактивные графики и диаграммы
-- ✅ Интерактивные Mermaid диаграммы с зумом и панорамированием
-- ✅ Тарифные карточки с CTA
-- ✅ Современный UI с Shadcn/ui компонентами
-- ✅ Типизация TypeScript
-- ✅ Оптимизация производительности
+- ✅ MDX-based commercial proposal generation
+- ✅ Responsive design with mobile navigation
+- ✅ Interactive charts and diagrams
+- ✅ Interactive Mermaid diagrams with zoom and pan
+- ✅ Tariff cards with CTA
+- ✅ Modern UI with Shadcn/ui components
+- ✅ TypeScript typing
+- ✅ Performance optimization
 
-## Разработка
+## Development
 
-### Установка зависимостей
+### Install Dependencies
 ```bash
 make install
 ```
 
-### Запуск в режиме разработки
+### Run in Development Mode
 ```bash
 make dev
 ```
 
-### Сборка проекта
+### Build Project
 ```bash
 make build
 ```
 
-### Запуск продакшн версии
+### Run Production Version
 ```bash
 make start
 ```
 
-### Линтинг и форматирование
+### Linting and Formatting
 ```bash
 make lint
 make format
 ```
 
-## Окружение
+## Environment
 
-Файлы `.env` и `database.db` находятся в директории `external-storage/`.
+`.env` and `database.db` files are located in the `external-storage/` directory.
 
-## Лицензия
+## License
 
 MIT License

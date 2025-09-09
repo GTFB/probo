@@ -1,61 +1,61 @@
 #!/bin/bash
 
-# Скрипт для обновления проекта из шаблона probo
-# Используется для получения последних изменений из upstream
+# Script for updating project from probo template
+# Used for getting latest changes from upstream
 
 set -e
 
-echo "🔄 Обновление проекта из шаблона probo..."
+echo "🔄 Updating project from probo template..."
 
-# Проверяем, что мы в Git репозитории
+# Check if we are in a Git repository
 if [ ! -d ".git" ]; then
-    echo "❌ Ошибка: Это не Git репозиторий"
+    echo "❌ Error: This is not a Git repository"
     exit 1
 fi
 
-# Проверяем наличие upstream
+# Check if upstream exists
 if ! git remote get-url upstream &> /dev/null; then
-    echo "❌ Ошибка: Upstream не настроен"
-    echo "💡 Выполните: git remote add upstream https://github.com/GTFB/probo.git"
+    echo "❌ Error: Upstream is not configured"
+    echo "💡 Run: git remote add upstream https://github.com/GTFB/probo.git"
     exit 1
 fi
 
-# Сохраняем текущую ветку
+# Save current branch
 CURRENT_BRANCH=$(git branch --show-current)
-echo "📍 Текущая ветка: $CURRENT_BRANCH"
+echo "📍 Current branch: $CURRENT_BRANCH"
 
-# Переключаемся на ветку update-from-template или создаем её
+# Switch to update-from-template branch or create it
 if git show-ref --verify --quiet refs/heads/update-from-template; then
-    echo "🌿 Переключение на ветку update-from-template..."
+    echo "🌿 Switching to update-from-template branch..."
     git checkout update-from-template
 else
-    echo "🌿 Создание ветки update-from-template..."
+    echo "🌿 Creating update-from-template branch..."
     git checkout -b update-from-template
 fi
 
-# Получаем последние изменения из шаблона
-echo "📥 Получение изменений из upstream..."
+# Get latest changes from template
+echo "📥 Fetching changes from upstream..."
 git fetch upstream
 
-# Мержим изменения из upstream/main
-echo "🔀 Слияние изменений из upstream/main..."
+# Merge changes from upstream/main
+echo "🔀 Merging changes from upstream/main..."
 git merge upstream/main
 
-# Отправляем обновления в origin
-echo "📤 Отправка обновлений в origin..."
+# Push updates to origin
+echo "📤 Pushing updates to origin..."
 git push origin update-from-template
 
-# Возвращаемся на исходную ветку
-echo "↩️  Возвращение на ветку $CURRENT_BRANCH..."
+# Return to original branch
+echo "↩️  Returning to branch $CURRENT_BRANCH..."
 git checkout $CURRENT_BRANCH
 
 echo ""
-echo "✅ Обновление завершено!"
+echo "✅ Update completed!"
 echo ""
-echo "📋 Следующие шаги:"
-echo "   1. Проверьте изменения: git diff main update-from-template"
-echo "   2. Создайте PR из update-from-template в main"
-echo "   3. После одобрения мержите PR"
+echo "📋 Next steps:"
+echo "   1. Check changes: git diff main update-from-template"
+echo "   2. Create PR from update-from-template to main"
+echo "   3. After approval, merge the PR"
 echo ""
-echo "🔍 Для просмотра изменений:"
+echo "🔍 To view changes:"
 echo "   git log main..update-from-template --oneline"

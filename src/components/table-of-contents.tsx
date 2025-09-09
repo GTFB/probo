@@ -5,6 +5,7 @@ import { PanelRightClose, Search, Sun, Moon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { SearchEngine } from "@/components/search-engine"
+import { useAppState } from "@/hooks/use-app-state"
 
 interface TableOfContentsProps {
   items: Array<{
@@ -17,16 +18,18 @@ interface TableOfContentsProps {
   onSectionClick: (sectionId: string) => void
   onSectionChange?: (sectionId: string) => void
   onToggle?: () => void
+  defaultTheme?: 'light' | 'dark'
 }
 
-export function TableOfContents({ items, activeSection, onSectionClick, onSectionChange, onToggle }: TableOfContentsProps) {
+export function TableOfContents({ items, activeSection, onSectionClick, onSectionChange, onToggle, defaultTheme = 'light', ...props }: TableOfContentsProps) {
+  console.log('TableOfContents defaultTheme:', props) 
   const [activeTab, setActiveTab] = React.useState<'toc' | 'search'>('toc')
-  const [isDarkMode, setIsDarkMode] = React.useState(() => {
-    if (typeof window !== 'undefined') {
-      return document.documentElement.classList.contains('dark')
-    }
-    return false
-  })
+  const { state, updateState } = useAppState()
+  
+  // Get theme from state or use passed default value
+  const theme = state.theme || defaultTheme
+  const isDarkMode = theme === 'dark'
+  
 
   const handleSearchResultClick = (result: any) => {
     // Scroll to found element
@@ -44,43 +47,39 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
     }
   }
 
-  // Sync with system theme
+  // Sync with theme state
   React.useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const updateTheme = () => {
-      const systemPrefersDark = mediaQuery.matches
-      const hasDarkClass = document.documentElement.classList.contains('dark')
-      
-      if (!hasDarkClass && systemPrefersDark) {
+      if (theme === 'dark') {
         document.documentElement.classList.add('dark')
-        setIsDarkMode(true)
-      } else if (hasDarkClass && !systemPrefersDark) {
+      } else {
         document.documentElement.classList.remove('dark')
-        setIsDarkMode(false)
       }
     }
 
+    // Apply theme on load
     updateTheme()
-    mediaQuery.addEventListener('change', updateTheme)
-    
-    return () => mediaQuery.removeEventListener('change', updateTheme)
-  }, [])
+  }, [theme])
 
-  const toggleTheme = () => {
-    const newTheme = !isDarkMode
-    setIsDarkMode(newTheme)
+  const toggleTheme = async () => {
+    // Determine new theme based on current
+    const newTheme: 'light' | 'dark' = theme === 'dark' ? 'light' : 'dark'
+    
+    // Update state in cookies
+    await updateState({ theme: newTheme })
+    
+    // Apply theme to DOM
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
     
     // Smooth theme transition for all elements
     const elements = document.querySelectorAll('.theme-transition')
     elements.forEach(el => {
       (el as HTMLElement).style.transition = 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease'
     })
-    
-    if (newTheme) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
     
     // Remove transition after completion
     setTimeout(() => {
@@ -91,7 +90,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
   }
 
   return (
-    <div className="hidden lg:block w-72 bg-muted/10 h-screen theme-transition sticky top-0 scrollbar-hide border-l">
+    <div className="hidden lg:block w-80 bg-muted/10 h-screen theme-transition sticky top-0 scrollbar-hide border-l">
       <div className="h-full overflow-y-auto scrollbar-hide">
         <div className="sticky top-0 bg-muted/10 backdrop-blur-sm z-10 flex items-center justify-between p-4 border-b mb-4">
           <div className="flex items-center gap-2">
@@ -113,12 +112,17 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
             </Button>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-muted transition-colors duration-200" onClick={toggleTheme}>
-              {isDarkMode ? (
-                <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
-              ) : (
-                <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
-              )}
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-6 w-6 p-0 hover:bg-muted transition-colors duration-200" 
+              onClick={toggleTheme}
+              suppressHydrationWarning
+            >
+              {/* Light theme icon - hidden in dark theme */}
+              <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200 dark:hidden" />
+              {/* Dark theme icon - hidden in light theme */}
+              <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200 hidden dark:block" />
             </Button>
             <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-muted transition-colors duration-200" onClick={onToggle}>
               <PanelRightClose className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />

@@ -1,192 +1,192 @@
-# Процесс работы с шаблоном
+# Template Workflow Process
 
-Этот документ описывает процесс работы с клиентским репозиторием, созданным на основе шаблона probo.
+This document describes the process of working with a client repository created from the probo template.
 
-## Структура веток
+## Branch Structure
 
-### Основные ветки
+### Main Branches
 
-- **`main`** - основная ветка клиента, синхронизирована с шаблоном
-- **`develop`** - ветка разработки клиента
-- **`update-from-template`** - ветка для получения обновлений из шаблона
+- **`main`** - main client branch, synchronized with template
+- **`develop`** - client development branch
+- **`update-from-template`** - branch for getting updates from template
 
-### Feature ветки
+### Feature Branches
 
-- **`feature/*`** - ветки для разработки новых функций
-- Создаются от ветки `main`
-- Мержатся в `develop` через Pull Request
+- **`feature/*`** - branches for developing new features
+- Created from `main` branch
+- Merged into `develop` via Pull Request
 
-## Процесс получения обновлений
+## Update Process
 
-### Автоматический способ
+### Automatic Method
 
 ```bash
-# Использовать готовый скрипт
+# Use the ready-made script
 ./scripts/update-from-template.sh
 ```
 
-### Ручной способ
+### Manual Method
 
 ```bash
-# 1. Переключиться на ветку обновлений
+# 1. Switch to update branch
 git checkout update-from-template
 
-# 2. Получить последние изменения из шаблона
+# 2. Get latest changes from template
 git fetch upstream
 git merge upstream/main
 
-# 3. Отправить обновления в origin
+# 3. Push updates to origin
 git push origin update-from-template
 
-# 4. Создать Pull Request из update-from-template в main
+# 4. Create Pull Request from update-from-template to main
 ```
 
-## Процесс разработки
+## Development Process
 
-### Создание новой функции
+### Creating a New Feature
 
 ```bash
-# 1. Создать feature ветку
+# 1. Create feature branch
 ./scripts/create-feature.sh user-authentication
 
-# 2. Разработать функцию
+# 2. Develop the feature
 # ... код ...
 
-# 3. Закоммитить изменения
+# 3. Commit changes
 git add .
-git commit -m "feat: добавить аутентификацию пользователей"
+git commit -m "feat: add user authentication"
 
-# 4. Отправить в origin
+# 4. Push to origin
 git push origin feature/user-authentication
 
-# 5. Создать Pull Request в develop
+# 5. Create Pull Request to develop
 ```
 
-### Работа с существующей feature веткой
+### Working with Existing Feature Branch
 
 ```bash
-# Переключиться на ветку
+# Switch to branch
 git checkout feature/user-authentication
 
-# Обновить из main (если нужно)
+# Update from main (if needed)
 git checkout main
 git pull origin main
 git checkout feature/user-authentication
 git merge main
 
-# Продолжить разработку...
+# Continue development...
 ```
 
-## Процесс деплоя
+## Deployment Process
 
-### Подготовка к релизу
+### Release Preparation
 
 ```bash
-# 1. Убедиться, что все feature ветки мержены в develop
+# 1. Ensure all feature branches are merged into develop
 git checkout develop
 git pull origin develop
 
-# 2. Создать release ветку
+# 2. Create release branch
 git checkout -b release/v1.0.0
 
-# 3. Протестировать и исправить баги
+# 3. Test and fix bugs
 # ... тестирование ...
 
-# 4. Создать Pull Request из release в main
+# 4. Create Pull Request from release to main
 ```
 
-### Деплой в production
+### Deploy to Production
 
 ```bash
-# 1. После одобрения PR мержить в main
+# 1. After PR approval, merge to main
 git checkout main
 git pull origin main
 
-# 2. Создать тег релиза
+# 2. Create release tag
 git tag -a v1.0.0 -m "Release version 1.0.0"
 git push origin v1.0.0
 
-# 3. Деплой в production
+# 3. Deploy to production
 # ... процесс деплоя ...
 ```
 
-## Решение конфликтов
+## Conflict Resolution
 
-### При обновлении из шаблона
+### When Updating from Template
 
-Если при слиянии с `upstream/main` возникают конфликты:
+If conflicts arise when merging with `upstream/main`:
 
 ```bash
-# 1. Разрешить конфликты вручную
-git status  # посмотреть конфликтующие файлы
+# 1. Resolve conflicts manually
+git status  # view conflicting files
 # ... редактировать файлы ...
 
-# 2. Добавить разрешенные файлы
+# 2. Add resolved files
 git add <resolved-files>
 
-# 3. Завершить слияние
+# 3. Complete merge
 git commit
 
-# 4. Отправить изменения
+# 4. Push changes
 git push origin update-from-template
 ```
 
-### При слиянии feature веток
+### When Merging Feature Branches
 
 ```bash
-# 1. Обновить develop
+# 1. Update develop
 git checkout develop
 git pull origin develop
 
-# 2. Переключиться на feature ветку
+# 2. Switch to feature branch
 git checkout feature/my-feature
 
-# 3. Слить develop
+# 3. Merge develop
 git merge develop
 
-# 4. Разрешить конфликты
+# 4. Resolve conflicts
 # ... редактировать файлы ...
 
-# 5. Завершить слияние
+# 5. Complete merge
 git add .
 git commit
 
-# 6. Отправить изменения
+# 6. Push changes
 git push origin feature/my-feature
 ```
 
-## Полезные команды
+## Useful Commands
 
-### Просмотр изменений
+### View Changes
 
 ```bash
-# Посмотреть изменения между ветками
+# View changes between branches
 git diff main..develop
 
-# Посмотреть коммиты между ветками
+# View commits between branches
 git log main..develop --oneline
 
-# Посмотреть изменения в файле
+# View changes in file
 git diff HEAD~1 -- <file>
 ```
 
-### Работа с remote
+### Working with Remote
 
 ```bash
-# Посмотреть все remote
+# View all remotes
 git remote -v
 
-# Обновить upstream
+# Update upstream
 git fetch upstream
 
-# Посмотреть ветки upstream
+# View upstream branches
 git branch -r
 ```
 
-### Очистка
+### Cleanup
 
 ```bash
-# Удалить локальную ветку
+# Delete local branch
 git branch -d feature/old-feature
 
 # Удалить remote ветку
