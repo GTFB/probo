@@ -6,7 +6,7 @@ interface PageProps {
 }
 
 export default function SectionPageServer({ params }: PageProps) {
-  // Get server theme
+  // Получаем серверную тему
   const serverTheme = getServerTheme()
   
   return <SectionPageClient serverTheme={serverTheme} />

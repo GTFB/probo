@@ -546,6 +546,7 @@ export default function SectionPage() {
               </div>
             </div>
           </div>
+
         </div>
 
         {/* Desktop right table of contents */}
@@ -565,3 +566,4 @@ export default function SectionPage() {
       </div>
   )
 }
+

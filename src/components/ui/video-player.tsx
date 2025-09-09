@@ -202,7 +202,7 @@ export function VideoPlayer({
               className="bg-black/50 hover:bg-black/70 text-white"
             >
               <ExternalLink className="w-4 h-4 mr-2" />
-              Open in {type === 'youtube' ? 'YouTube' : 'VK'}
+              Открыть в {type === 'youtube' ? 'YouTube' : 'VK'}
             </Button>
           </div>
         </div>

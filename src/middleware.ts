@@ -6,27 +6,27 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next()
   
   try {
-    // Get current state from cookies
+    // Получаем текущее состояние из куки
     const currentState = getStateFromRequest(request)
     const migratedState = migrateAppState(currentState)
     
-    // Determine system theme from header
+    // Определяем системную тему по заголовку
     const prefersColorScheme = request.headers.get('sec-ch-prefers-color-scheme') || 
                               request.headers.get('prefers-color-scheme')
     
-    // If theme is not set, use system theme
+    // Если тема не установлена, используем системную
     let theme = migratedState.theme
     if (!theme && prefersColorScheme) {
       theme = prefersColorScheme === 'dark' ? 'dark' : 'light'
     }
     
-    // Update state
+    // Обновляем состояние
     const updatedState = {
       ...migratedState,
       theme: theme || 'light',
       lastVisitedPage: request.nextUrl.pathname
     }    
-    // Save updated state to cookies
+    // Сохраняем обновленное состояние в куки
     return setStateToResponse(response, updatedState)
   } catch (error) {
     console.error('Error in middleware:', error)

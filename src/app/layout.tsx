@@ -4,7 +4,7 @@ import { ThemeProvider } from 'next-themes'
 import Script from 'next/script'
 import './globals.css'
 import { PROJECT_SETTINGS } from '@/lib/settings'
-import { getServerTheme, getThemeClasses, getThemeAttributes } from '@/lib/server-theme'
+import { getServerTheme, getThemeClasses, getThemeAttributes, getServerLeftSidebarState, getServerRightSidebarState, getAllSidebarClasses } from '@/lib/server-theme'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,17 +22,23 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  // Get theme from server
+  // Получаем тему с сервера
   const serverTheme = getServerTheme()
   const themeClasses = getThemeClasses(serverTheme)
   const themeAttributes = getThemeAttributes(serverTheme)
   
-  // Debug information
+  // Получаем состояния сайдбаров с сервера
+  const leftSidebarOpen = getServerLeftSidebarState()
+  const rightSidebarOpen = getServerRightSidebarState()
+  const sidebarClasses = getAllSidebarClasses(leftSidebarOpen, rightSidebarOpen)
+  
+  // Отладочная информация
+  console.log('Server state:', { serverTheme, themeClasses, themeAttributes, leftSidebarOpen, rightSidebarOpen, sidebarClasses })
 
   return (
     <html 
       lang="ru" 
-      className={themeClasses}
+      className={`${themeClasses} ${sidebarClasses}`}
       {...themeAttributes}
       suppressHydrationWarning
     >

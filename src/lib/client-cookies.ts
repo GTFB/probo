@@ -1,8 +1,10 @@
-// Client utilities for working with cookies
+// Клиентские утилиты для работы с куки
 export interface AppState {
   theme?: 'light' | 'dark'
   sidebarOpen?: boolean
   sidebarCollapsed?: boolean
+  leftSidebarOpen?: boolean
+  rightSidebarOpen?: boolean
   lastVisitedPage?: string
   userPreferences?: {
     language?: string
@@ -12,19 +14,19 @@ export interface AppState {
   customData?: Record<string, any>
 }
 
-// Cookie configuration
+// Конфигурация куки
 const COOKIE_CONFIG = {
   name: 'app-state',
-  maxAge: 60 * 60 * 24 * 30, // 30 days
-  httpOnly: false, // Available for client
+  maxAge: 60 * 60 * 24 * 30, // 30 дней
+  httpOnly: false, // Доступно для клиента
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax' as const,
   path: '/'
 }
 
-// Client utilities for working with cookies
+// Клиентские утилиты для работы с куки
 export class ClientCookieManager {
-  // Get state from cookies
+  // Получить состояние из куки
   getState(): AppState {
     if (typeof window === 'undefined') return {}
     
@@ -39,7 +41,7 @@ export class ClientCookieManager {
     }
   }
 
-  // Save state to cookies
+  // Сохранить состояние в куки
   setState(state: AppState): void {
     if (typeof window === 'undefined') return
     
@@ -51,7 +53,7 @@ export class ClientCookieManager {
     }
   }
 
-  // Update part of state
+  // Обновить часть состояния
   updateState(updates: Partial<AppState>): AppState {
     const currentState = this.getState()
     const newState = { ...currentState, ...updates }
@@ -59,24 +61,24 @@ export class ClientCookieManager {
     return newState
   }
 
-  // Remove state
+  // Удалить состояние
   clearState(): void {
     if (typeof window === 'undefined') return
     this.setCookie(COOKIE_CONFIG.name, '', -1)
   }
 
-  // Get specific value
+  // Получить конкретное значение
   getValue<K extends keyof AppState>(key: K): AppState[K] | undefined {
     const state = this.getState()
     return state[key]
   }
 
-  // Set specific value
+  // Установить конкретное значение
   setValue<K extends keyof AppState>(key: K, value: AppState[K]): void {
     this.updateState({ [key]: value } as Partial<AppState>)
   }
 
-  // Helper methods for working with cookies
+  // Вспомогательные методы для работы с куки
   private getCookie(name: string): string | null {
     const value = `; ${document.cookie}`
     const parts = value.split(`; ${name}=`)
@@ -95,7 +97,7 @@ export class ClientCookieManager {
   }
 }
 
-// Hook for use on client
+// Хук для использования на клиенте
 export function useAppState() {
   const cookieManager = new ClientCookieManager()
   
@@ -109,12 +111,12 @@ export function useAppState() {
   }
 }
 
-// State validation utilities
+// Утилиты для валидации состояния
 export function validateAppState(state: any): state is AppState {
   if (typeof state !== 'object' || state === null) return false
   
-  // Check main fields
-  if (state.theme && !['light', 'dark', 'system'].includes(state.theme)) return false
+  // Проверяем основные поля
+  if (state.theme && !['light', 'dark'].includes(state.theme)) return false
   if (state.sidebarOpen && typeof state.sidebarOpen !== 'boolean') return false
   if (state.sidebarCollapsed && typeof state.sidebarCollapsed !== 'boolean') return false
   if (state.lastVisitedPage && typeof state.lastVisitedPage !== 'string') return false
@@ -122,12 +124,14 @@ export function validateAppState(state: any): state is AppState {
   return true
 }
 
-// State migration utilities
+// Утилиты для миграции состояния
 export function migrateAppState(state: any): AppState {
   const defaultState: AppState = {
-    theme: 'system',
+    theme: 'light',
     sidebarOpen: true,
     sidebarCollapsed: false,
+    leftSidebarOpen: true,
+    rightSidebarOpen: true,
     lastVisitedPage: '/',
     userPreferences: {
       language: 'ru',
