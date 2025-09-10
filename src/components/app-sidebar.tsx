@@ -21,6 +21,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
+import { useLeftSectionState } from './providers/LeftSectionStateProvider'
 
 interface NavigationItem {
   id: string
@@ -37,6 +38,7 @@ interface AppSidebarProps {
 }
 
 export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: AppSidebarProps) {
+  const {  setLeftSectionState } = useLeftSectionState()
   return (
     <Sidebar className="hidden lg:block transition-transform duration-300 ease-in-out theme-transition">
       <SidebarHeader className="px-6 h-25 flex justify-between flex-nowrap" style={{ height: 'calc(6.25rem + 1px)', flexFlow: 'nowrap' }}>
@@ -47,7 +49,11 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
           </div>
         </div>
         {onToggle && (
-          <Button variant="ghost" size="sm" className="mt-2 h-6 w-6 p-0 flex-shrink-0" onClick={onToggle}>
+          <Button variant="ghost" size="sm" className="mt-2 h-6 w-6 p-0 flex-shrink-0"
+           onClick={() => {
+            onToggle()
+            setLeftSectionState('close')
+           }}>
             <PanelLeftClose className="h-3 w-3" />
           </Button>
         )}

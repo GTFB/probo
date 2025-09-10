@@ -5,7 +5,8 @@ import { PanelRightClose, Search, Sun, Moon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { SearchEngine } from "@/components/search-engine"
-import { useAppState, useRightSidebar } from "@/hooks/use-app-state"
+import { useTheme } from "@/hooks/use-theme"
+import { useRightSectionState } from "./providers/RightSectionStateProvider"
 
 interface TableOfContentsProps {
   items: Array<{
@@ -24,11 +25,12 @@ interface TableOfContentsProps {
 export function TableOfContents({ items, activeSection, onSectionClick, onSectionChange, onToggle, defaultTheme = 'light', ...props }: TableOfContentsProps) {
 
   const [activeTab, setActiveTab] = React.useState<'toc' | 'search'>('toc')
-  const { state, updateState } = useAppState()
-  const { open: rightSidebarOpen, updateOpen: updateRightSidebarOpen } = useRightSidebar()
+
+  const  {theme, setTheme} = useTheme()
+  const {rightSectionState, setRightSectionState} = useRightSectionState()
+
   
   // Get theme from state or use passed default value
-  const theme = state.theme || defaultTheme
   const isDarkMode = theme === 'dark'
   
 
@@ -67,7 +69,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
     const newTheme: 'light' | 'dark' = theme === 'dark' ? 'light' : 'dark'
     
     // Update state in cookies
-    await updateState({ theme: newTheme })
+     setTheme(newTheme)
     
     // Apply theme to DOM
     if (newTheme === 'dark') {
@@ -127,7 +129,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
             </Button>
             <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-muted transition-colors duration-200" 
             onClick={() => {
-              updateRightSidebarOpen(!rightSidebarOpen)
+              setRightSectionState(rightSectionState !== 'open' ? 'open' : 'close')
               onToggle?.()
             }}>
               <PanelRightClose className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />

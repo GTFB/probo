@@ -1,10 +1,10 @@
 // Client utilities for working with cookies
 export interface AppState {
-  theme?: 'light' | 'dark' | 'system'
+  theme?: 'light' | 'dark'
   sidebarOpen?: boolean
   sidebarCollapsed?: boolean
-  leftSidebarOpen?: boolean
-  rightSidebarOpen?: boolean
+  leftSidebarState?: 'open' | 'close'
+  rightSidebarState?: 'open' | 'close'
   lastVisitedPage?: string
   userPreferences?: {
     language?: string
@@ -17,7 +17,7 @@ export interface AppState {
 // Cookie configuration
 const COOKIE_CONFIG = {
   name: 'app-state',
-  maxAge: 60 * 60 * 24 * 365, // 365 days
+  maxAge: 60 * 6036524 * 365, // 365 days
   httpOnly: false, // Available for client
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax' as const,
@@ -150,7 +150,9 @@ export function validateAppState(state: any): state is AppState {
   // Check basic fields
   if (state.theme && !['light', 'dark'].includes(state.theme)) return false
   if (state.sidebarOpen && typeof state.sidebarOpen !== 'boolean') return false
+  if (state.rightSidebarState && state.rightSidebarState !== 'open' && state.rightSidebarState !== 'close') return false
   if (state.sidebarCollapsed && typeof state.sidebarCollapsed !== 'boolean') return false
+  if (state.leftSidebarState && state.leftSidebarState !== 'open' && state.leftSidebarState !== 'close') return false
   if (state.lastVisitedPage && typeof state.lastVisitedPage !== 'string') return false
   
   return true
@@ -160,10 +162,9 @@ export function validateAppState(state: any): state is AppState {
 export function migrateAppState(state: any): AppState {
   const defaultState: AppState = {
     theme: 'light',
-    sidebarOpen: true,
+    rightSidebarState: 'open',
     sidebarCollapsed: false,
-    leftSidebarOpen: true,
-    rightSidebarOpen: true,
+    leftSidebarState: 'open',
     lastVisitedPage: '/',
     userPreferences: {
       language: 'ru',

@@ -44,6 +44,8 @@ import {
   Code,
 } from 'lucide-react'
 import { useMdx } from '@/components/providers/MdxProvider'
+import { useRightSectionState } from '@/components/providers/RightSectionStateProvider'
+import { useLeftSectionState } from '@/components/providers/LeftSectionStateProvider'
 
 // Function to get icon by name from frontmatter
 const getIconByName = (iconName: string) => {
@@ -67,27 +69,30 @@ export default function SectionPage() {
   const router = useRouter()
   const params = useParams()
   const slug = params?.slug as string
-  
+
   // Find section by slug
   const currentSection = NAVIGATION_ITEMS.find(item => item.slug === slug)
   const activeSection = currentSection?.id || '1'
-  const { mdx, setMdx } = useMdx()
-  
+  const { mdx,  } = useMdx()
+
+
+  const { rightSectionState, setRightSectionState } = useRightSectionState()
+  const { leftSectionState, setLeftSectionState } = useLeftSectionState()
 
   const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(mdx?.data || null)
 
   const [prevFrontmatter, setPrevFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number; slug?: string }>>([])
-  const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true)
-  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
+  const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(leftSectionState !== 'close')
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(rightSectionState !== 'close')
   const [isRightOffcanvasOpen, setIsRightOffcanvasOpen] = useState(false)
   const { width } = useWindowSize()
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // During server-side rendering, always return false
     if (typeof window === 'undefined') return false
-    
+
     // During client-side rendering, check localStorage
     try {
       const savedTheme = localStorage.getItem('theme')
@@ -211,27 +216,27 @@ export default function SectionPage() {
   const toggleTheme = useCallback(() => {
     const newTheme = !isDarkMode
     setIsDarkMode(newTheme)
-    
+
     // Save theme to localStorage with additional check
     try {
       localStorage.setItem('theme', newTheme ? 'dark' : 'light')
     } catch (error) {
       console.warn('Failed to save theme to localStorage:', error)
     }
-    
+
     // Immediately apply changes to DOM
     if (newTheme) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-    
+
     // Smooth theme transition for all elements
     const elements = document.querySelectorAll('.theme-transition')
     elements.forEach(el => {
       (el as HTMLElement).style.transition = 'background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease'
     })
-    
+
     // Remove transition after completion
     setTimeout(() => {
       elements.forEach(el => {
@@ -252,323 +257,327 @@ export default function SectionPage() {
 
   return (
     <div className="min-h-screen relative">
-        {/* Desktop left sidebar */}
-        <div 
-          className={`hidden lg:block fixed top-0 left-0 h-full transition-transform duration-300 ease-in-out z-40 ${
-            isLeftSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      {/* Desktop left sidebar */}
+      <div
+        className={`hidden lg:block fixed top-0 left-0 h-full transition-transform duration-300 ease-in-out z-40 ${isLeftSidebarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
-        >
-          <SidebarProvider defaultOpen={true}>
-            <AppSidebar
-              items={navigationItemsWithIcons}
-              activeSection={activeSection}
-              onSectionChange={handleSectionChange}
-              onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
-            />
-          </SidebarProvider>
-        </div>
-        
-        {/* Central section: Header, Content, Footer */}
-        <div 
-          className="flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out w-full lg:w-auto"
-          style={{
-            width: width < 1024 ? '100%' : `calc(100% - ${isLeftSidebarOpen ? '256px' : '0px'} - ${isRightSidebarOpen ? '320px' : '0px'})`,
-            marginLeft: width < 1024 ? '0px' : (isLeftSidebarOpen ? '256px' : '0px'),
-            marginRight: width < 1024 ? '0px' : (isRightSidebarOpen ? '320px' : '0px'),
-          }}
-        >
-          {/* Sticky Header for desktop */}
-          <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-            <div className={`px-4 sm:px-6 md:px-10 flex items-center transition-all duration-300 ease-in-out`} style={{ height: '72px' }}>
-              <div className="flex items-center justify-between w-full">
-                <div className={`flex items-center gap-4 transition-all duration-300 ease-in-out ${isLeftSidebarOpen ? '' : 'lg:ml-0'}`}>
-                  <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg flex items-center justify-center">
-                    {(() => {
-                      const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
-                      return <IconComponent className="w-4 h-4 text-white dark:text-black" />
-                    })()}
-                  </div>
-                  <div>
-                    <h1 className="text-lg font-semibold">{currentFrontmatter?.title || 'Loading...'}</h1>
-                    <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
-                    
-                  </div>
+      >
+        <SidebarProvider defaultOpen={true}>
+          <AppSidebar
+            items={navigationItemsWithIcons}
+            activeSection={activeSection}
+            onSectionChange={handleSectionChange}
+            onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
+          />
+        </SidebarProvider>
+      </div>
+
+      {/* Central section: Header, Content, Footer */}
+      <div
+        className="flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out w-full lg:w-auto"
+        style={{
+          width: width < 1024 ? '100%' : `calc(100% - ${isLeftSidebarOpen ? '256px' : '0px'} - ${isRightSidebarOpen ? '320px' : '0px'})`,
+          marginLeft: width < 1024 ? '0px' : (isLeftSidebarOpen ? '256px' : '0px'),
+          marginRight: width < 1024 ? '0px' : (isRightSidebarOpen ? '320px' : '0px'),
+        }}
+      >
+        {/* Sticky Header for desktop */}
+        <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+          <div className={`px-4 sm:px-6 md:px-10 flex items-center transition-all duration-300 ease-in-out`} style={{ height: '72px' }}>
+            <div className="flex items-center justify-between w-full">
+              <div className={`flex items-center gap-4 transition-all duration-300 ease-in-out ${isLeftSidebarOpen ? '' : 'lg:ml-0'}`}>
+                <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg flex items-center justify-center">
+                  {(() => {
+                    const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
+                    return <IconComponent className="w-4 h-4 text-white dark:text-black" />
+                  })()}
                 </div>
-                
-                <div className="flex gap-2">
-                  {!isLeftSidebarOpen && (
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => setIsLeftSidebarOpen(true)}
-                    >
-                      <Menu className="w-4 h-4 mr-2" />
-                      Navigation
-                    </Button>
-                  )}
-                  {!isRightSidebarOpen && (
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => setIsRightSidebarOpen(true)}
-                    >
-                      <List className="w-4 h-4 mr-2" />
-                      Table of Contents
-                    </Button>
-                  )}
+                <div>
+                  <h1 className="text-lg font-semibold">{currentFrontmatter?.title || 'Loading...'}</h1>
+                  <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
+
                 </div>
+              </div>
+
+              <div className="flex gap-2">
+                {!isLeftSidebarOpen && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setIsLeftSidebarOpen(true)
+                      setLeftSectionState('open')
+                    }
+                    }
+                  >
+                    <Menu className="w-4 h-4 mr-2" />
+                    Navigation
+                  </Button>
+                )}
+                {!isRightSidebarOpen && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setIsRightSidebarOpen(true)
+                      setRightSectionState('open')
+
+                    }}
+                  >
+                    <List className="w-4 h-4 mr-2" />
+                    Table of Contents
+                  </Button>
+                )}
               </div>
             </div>
           </div>
-          
-          {/* Main content */}
-          <main className="flex-1 overflow-y-auto">
-            {/* Mobile navigation */}
-            <div className="lg:hidden">
-              <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-                <div className="flex items-center justify-between px-4 py-3" style={{ height: '72px' }}>
-                  <div className="flex items-center gap-3">
-                    <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                      <SheetTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <Menu className="w-4 h-4" />
-                        </Button>
-                      </SheetTrigger>
-                      <SheetContent side="left" className="w-80 p-0">
-                        <div className="px-6 py-3 flex items-center justify-between" style={{ height: '72px' }}>
-                          <div className="flex items-center gap-2">
-                            <div>
-                              <h2 className="text-lg font-semibold">{PROJECT_SETTINGS.name}</h2>
-                              <p className="text-xs text-muted-foreground">{PROJECT_SETTINGS.description}</p>
-                            </div>
+        </div>
+
+        {/* Main content */}
+        <main className="flex-1 overflow-y-auto">
+          {/* Mobile navigation */}
+          <div className="lg:hidden">
+            <div className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+              <div className="flex items-center justify-between px-4 py-3" style={{ height: '72px' }}>
+                <div className="flex items-center gap-3">
+                  <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                    <SheetTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <Menu className="w-4 h-4" />
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent side="left" className="w-80 p-0">
+                      <div className="px-6 py-3 flex items-center justify-between" style={{ height: '72px' }}>
+                        <div className="flex items-center gap-2">
+                          <div>
+                            <h2 className="text-lg font-semibold">{PROJECT_SETTINGS.name}</h2>
+                            <p className="text-xs text-muted-foreground">{PROJECT_SETTINGS.description}</p>
                           </div>
                         </div>
-                        <div className="px-3 py-2">
-                          <div className="space-y-1">
-                            {navigationItemsWithIcons.map((item) => {
-                              const Icon = item.icon
-                              const isActive = activeSection === item.id
-                              
-                              return (
-                                <Button
-                                  key={item.id}
-                                  variant="ghost"
-                                  className={`w-full justify-start h-9 px-3 ${isActive ? "bg-accent" : ""}`}
-                                  onClick={() => handleSectionChange(item.id)}
-                                >
-                                  <Icon className="w-4 h-4 mr-3" />
-                                  <span>{item.title}</span>
-                                </Button>
-                              )
-                            })}
-                          </div>
+                      </div>
+                      <div className="px-3 py-2">
+                        <div className="space-y-1">
+                          {navigationItemsWithIcons.map((item) => {
+                            const Icon = item.icon
+                            const isActive = activeSection === item.id
+
+                            return (
+                              <Button
+                                key={item.id}
+                                variant="ghost"
+                                className={`w-full justify-start h-9 px-3 ${isActive ? "bg-accent" : ""}`}
+                                onClick={() => handleSectionChange(item.id)}
+                              >
+                                <Icon className="w-4 h-4 mr-3" />
+                                <span>{item.title}</span>
+                              </Button>
+                            )
+                          })}
                         </div>
-                      </SheetContent>
-                    </Sheet>
-                    
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg hidden sm:flex items-center justify-center">
-                        {(() => {
-                          const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
-                          return <IconComponent className="w-4 h-4 text-white dark:text-black" />
-                        })()}
                       </div>
-                      <div className="text-left">
-                        <h2 className="text-sm font-medium">{currentFrontmatter?.title || 'Loading...'}</h2>
-                        <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
-                      </div>
+                    </SheetContent>
+                  </Sheet>
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg hidden sm:flex items-center justify-center">
+                      {(() => {
+                        const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
+                        return <IconComponent className="w-4 h-4 text-white dark:text-black" />
+                      })()}
+                    </div>
+                    <div className="text-left">
+                      <h2 className="text-sm font-medium">{currentFrontmatter?.title || 'Loading...'}</h2>
+                      <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
                     </div>
                   </div>
-                  
-                  <div className="flex gap-2">
-                    <Sheet open={isRightOffcanvasOpen} onOpenChange={setIsRightOffcanvasOpen}>
-                      <SheetTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <List className="w-4 h-4" />
-                        </Button>
-                      </SheetTrigger>
-                      <SheetContent side="right" className="w-80 p-0">
-                        <div className="px-4 py-3 flex items-center justify-between" style={{ height: '72px' }}>
-                          <div className="flex items-center gap-2">
-                            <div>
-                              <h2 className="text-base font-semibold">Table of Contents</h2>
-                              <p className="text-xs text-muted-foreground">Section navigation</p>
-                            </div>
-                          </div>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            className="h-8 w-8 p-0 hover:bg-muted transition-colors duration-200 mr-5" 
-                            onClick={toggleTheme}
-                          >
-                            {isDarkMode ? (
-                              <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
-                            ) : (
-                              <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
-                            )}
-                          </Button>
-                        </div>
-                        <div className="px-2 py-2 overflow-y-auto scrollbar-hide h-[calc(100vh-72px)]">
-                          <div className="space-y-1 mb-6">
-                            {currentToc.length === 0 ? (
-                              <p className="text-sm text-muted-foreground">No headings</p>
-                            ) : (
-                              currentToc.map((item) => (
-                                <Button
-                                  key={item.id}
-                                  variant="ghost"
-                                  size="sm"
-                                  className="w-full justify-start text-left h-auto py-2 px-3"
-                                  style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
-                                  onClick={() => {
-                                    const element = document.getElementById(item.id)
-                                    if (element) {
-                                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                                      
-                                      // Update URL with hash
-                                      if (item.slug) {
-                                        const newUrl = `${window.location.pathname}#${item.slug}`
-                                        window.history.pushState(null, '', newUrl)
-                                      }
-                                    } else {
-                                      const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-                                      headings.forEach(heading => {
-                                        if (heading.textContent?.trim() === item.title) {
-                                          heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                                          
-                                          // Update URL with hash
-                                          if (item.slug) {
-                                            const newUrl = `${window.location.pathname}#${item.slug}`
-                                            window.history.pushState(null, '', newUrl)
-                                          }
-                                        }
-                                      })
-                                    }
-                                  }}
-                                >
-                                  <div className="flex flex-col items-start w-full">
-                                    <span className="text-sm truncate">{item.title}</span>
-                                  </div>
-                                </Button>
-                              ))
-                            )}
-                          </div>
-                          
-                          <div className="border-t pt-4 px-2">
-                            <h4 className="text-sm font-semibold mb-2">Search</h4>
-                            <SearchEngine 
-                              onResultClick={(result) => {
-                                const element = document.getElementById(result.id)
-                                if (element) {
-                                  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                                } else {
-                                      const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-                                      headings.forEach(heading => {
-                                        if (heading.textContent?.trim() === result.title) {
-                                          heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                                        }
-                                      })
-                                }
-                              }}
-                              onSectionChange={handleSectionChange}
-                            />
-                          </div>
-                        </div>
-                      </SheetContent>
-                    </Sheet>
-                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Content */}
-            <div className="pb-16 px-4 sm:px-6 md:px-6 lg:px-10 mobile-header-offset">
-              <div className="w-full">
-                <section>
-                  <div className="mb-8">
-                    <MDXContent 
-                      sectionId={activeSection} 
-                      onFrontmatterChange={handleFrontmatterChange}
-                      onTocChange={handleTocChange}
-                      onH1Change={handleH1Change}
-                      onLoadingChange={handleLoadingChange}
-                    />
-                  </div>
-                </section>
-              </div>
-            </div>
-          </main>
-          
-          {/* Footer */}
-          <div className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t py-2 h-16 z-30">
-            <div className="flex flex-col gap-2 p-4 items-center justify-center h-full">
-              {/* Desktop navigation */}
-              <div className={`hidden lg:flex w-full gap-4 transition-opacity duration-300 ${
-                (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) 
-                  ? 'justify-between' 
-                  : (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) 
-                    ? 'justify-start' 
-                    : 'justify-end'
-              }`}>
-                {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
-                  <Button variant="outline" size="sm" onClick={handlePrevSection}>
-                    <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
-                    {currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText}
-                  </Button>
-                )}
-                
-                {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
-                  <Button variant="outline" size="sm" onClick={handleNextSection}>
-                    <span>
-                      {currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText}
-                    </span>
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
-              </div>
+                <div className="flex gap-2">
+                  <Sheet open={isRightOffcanvasOpen} onOpenChange={setIsRightOffcanvasOpen}>
+                    <SheetTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <List className="w-4 h-4" />
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent side="right" className="w-80 p-0">
+                      <div className="px-4 py-3 flex items-center justify-between" style={{ height: '72px' }}>
+                        <div className="flex items-center gap-2">
+                          <div>
+                            <h2 className="text-base font-semibold">Table of Contents</h2>
+                            <p className="text-xs text-muted-foreground">Section navigation</p>
+                          </div>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 hover:bg-muted transition-colors duration-200 mr-5"
+                          onClick={toggleTheme}
+                        >
+                          {isDarkMode ? (
+                            <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
+                          ) : (
+                            <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
+                          )}
+                        </Button>
+                      </div>
+                      <div className="px-2 py-2 overflow-y-auto scrollbar-hide h-[calc(100vh-72px)]">
+                        <div className="space-y-1 mb-6">
+                          {currentToc.length === 0 ? (
+                            <p className="text-sm text-muted-foreground">No headings</p>
+                          ) : (
+                            currentToc.map((item) => (
+                              <Button
+                                key={item.id}
+                                variant="ghost"
+                                size="sm"
+                                className="w-full justify-start text-left h-auto py-2 px-3"
+                                style={{ paddingLeft: `${(item.level - 1) * 16 + 12}px` }}
+                                onClick={() => {
+                                  const element = document.getElementById(item.id)
+                                  if (element) {
+                                    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-              {/* Mobile navigation */}
-              <div className={`lg:hidden flex w-full px-4 gap-4 transition-opacity duration-300 ${
-                (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) 
-                  ? 'justify-between' 
-                  : (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) 
-                    ? 'justify-start' 
-                    : 'justify-end'
-              }`}>
-                {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
-                  <Button variant="outline" size="sm" onClick={handlePrevSection}>
-                    <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
-                    Back
-                  </Button>
-                )}
-                
-                {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
-                  <Button variant="outline" size="sm" onClick={handleNextSection}>
-                    <span>Forward</span>
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
+                                    // Update URL with hash
+                                    if (item.slug) {
+                                      const newUrl = `${window.location.pathname}#${item.slug}`
+                                      window.history.pushState(null, '', newUrl)
+                                    }
+                                  } else {
+                                    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+                                    headings.forEach(heading => {
+                                      if (heading.textContent?.trim() === item.title) {
+                                        heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+                                        // Update URL with hash
+                                        if (item.slug) {
+                                          const newUrl = `${window.location.pathname}#${item.slug}`
+                                          window.history.pushState(null, '', newUrl)
+                                        }
+                                      }
+                                    })
+                                  }
+                                }}
+                              >
+                                <div className="flex flex-col items-start w-full">
+                                  <span className="text-sm truncate">{item.title}</span>
+                                </div>
+                              </Button>
+                            ))
+                          )}
+                        </div>
+
+                        <div className="border-t pt-4 px-2">
+                          <h4 className="text-sm font-semibold mb-2">Search</h4>
+                          <SearchEngine
+                            onResultClick={(result) => {
+                              const element = document.getElementById(result.id)
+                              if (element) {
+                                element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                              } else {
+                                const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+                                headings.forEach(heading => {
+                                  if (heading.textContent?.trim() === result.title) {
+                                    heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                  }
+                                })
+                              }
+                            }}
+                            onSectionChange={handleSectionChange}
+                          />
+                        </div>
+                      </div>
+                    </SheetContent>
+                  </Sheet>
+                </div>
               </div>
             </div>
           </div>
 
+          {/* Content */}
+          <div className="pb-16 px-4 sm:px-6 md:px-6 lg:px-10 mobile-header-offset">
+            <div className="w-full">
+              <section>
+                <div className="mb-8">
+                  <MDXContent
+                    sectionId={activeSection}
+                    onFrontmatterChange={handleFrontmatterChange}
+                    onTocChange={handleTocChange}
+                    onH1Change={handleH1Change}
+                    onLoadingChange={handleLoadingChange}
+                  />
+                </div>
+              </section>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <div className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t py-2 h-16 z-30">
+          <div className="flex flex-col gap-2 p-4 items-center justify-center h-full">
+            {/* Desktop navigation */}
+            <div className={`hidden lg:flex w-full gap-4 transition-opacity duration-300 ${(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText)
+                ? 'justify-between'
+                : (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText)
+                  ? 'justify-start'
+                  : 'justify-end'
+              }`}>
+              {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
+                <Button variant="outline" size="sm" onClick={handlePrevSection}>
+                  <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+                  {currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText}
+                </Button>
+              )}
+
+              {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
+                <Button variant="outline" size="sm" onClick={handleNextSection}>
+                  <span>
+                    {currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText}
+                  </span>
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              )}
+            </div>
+
+            {/* Mobile navigation */}
+            <div className={`lg:hidden flex w-full px-4 gap-4 transition-opacity duration-300 ${(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText)
+                ? 'justify-between'
+                : (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText)
+                  ? 'justify-start'
+                  : 'justify-end'
+              }`}>
+              {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
+                <Button variant="outline" size="sm" onClick={handlePrevSection}>
+                  <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+                  Back
+                </Button>
+              )}
+
+              {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
+                <Button variant="outline" size="sm" onClick={handleNextSection}>
+                  <span>Forward</span>
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* Desktop right table of contents */}
-        <div 
-          className={`hidden lg:block fixed top-0 right-0 h-full w-80 bg-background border-l shadow-lg transition-transform duration-300 ease-in-out z-40 ${
-            isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          <TableOfContents
-            items={currentToc}
-            activeSection={activeSection}
-            onSectionClick={handleSectionChange}
-            onSectionChange={handleSectionChange}
-            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-          />
-        </div>
       </div>
+
+      {/* Desktop right table of contents */}
+      <div
+        className={`hidden lg:block fixed top-0 right-0 h-full w-80 bg-background border-l shadow-lg transition-transform duration-300 ease-in-out z-40 ${isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+      >
+        <TableOfContents
+          items={currentToc}
+          activeSection={activeSection}
+          onSectionClick={handleSectionChange}
+          onSectionChange={handleSectionChange}
+          onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
+        />
+      </div>
+    </div>
   )
 }
 

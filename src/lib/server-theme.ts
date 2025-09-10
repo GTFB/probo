@@ -41,52 +41,52 @@ export function getThemeAttributes(theme: 'light' | 'dark') {
 }
 
 // Get right sidebar state from server
-export function getServerRightSidebarState(): boolean {
+export function getServerRightSidebarState(): 'open' | 'close' {
   try {
     const cookieStore = cookies()
     const appStateCookie = cookieStore.get('app-state')
     
     if (!appStateCookie?.value) {
-      return true // Open by default
+      return 'open' // Open by default
     }
     
     const appState: AppState = JSON.parse(appStateCookie.value)
-    return appState.rightSidebarOpen !== undefined ? appState.rightSidebarOpen : true
+    return appState.rightSidebarState === 'close' ? 'close' : 'open'
   } catch (error) {
     console.error('Error parsing right sidebar state from server cookies:', error)
-    return true // Open by default
+    return 'open' // Open by default
   }
 }
 
 // Get left sidebar state from server
-export function getServerLeftSidebarState(): boolean {
+export function getServerLeftSidebarState(): 'open' | 'close' {
   try {
     const cookieStore = cookies()
     const appStateCookie = cookieStore.get('app-state')
     
     if (!appStateCookie?.value) {
-      return true // Open by default
+      return 'open' // Open by default
     }
     
     const appState: AppState = JSON.parse(appStateCookie.value)
-    return appState.leftSidebarOpen !== undefined ? appState.leftSidebarOpen : true
+    return appState.leftSidebarState === 'close' ? 'close' : 'open'
   } catch (error) {
     console.error('Error parsing left sidebar state from server cookies:', error)
-    return true // Open by default
+    return 'open' // Open by default
   }
 }
 
 // Get CSS classes for right sidebar state
-export function getRightSidebarClasses(rightSidebarOpen: boolean): string {
-  return rightSidebarOpen ? 'right-sidebar-open' : 'right-sidebar-closed'
+export function getRightSidebarClasses(rightSidebarState: boolean): string {
+  return rightSidebarState ? 'right-sidebar-open' : 'right-sidebar-closed'
 }
 
 // Get CSS classes for left sidebar state
-export function getLeftSidebarClasses(leftSidebarOpen: boolean): string {
-  return leftSidebarOpen ? 'left-sidebar-open' : 'left-sidebar-closed'
+export function getLeftSidebarClasses(leftSidebarState: boolean): string {
+  return leftSidebarState ? 'left-sidebar-open' : 'left-sidebar-closed'
 }
 
 // Get all CSS classes for sidebars
-export function getAllSidebarClasses(leftSidebarOpen: boolean, rightSidebarOpen: boolean): string {
-  return `${getLeftSidebarClasses(leftSidebarOpen)} ${getRightSidebarClasses(rightSidebarOpen)}`
+export function getAllSidebarClasses(leftSidebarState: boolean, rightSidebarState: boolean): string {
+  return `${getLeftSidebarClasses(leftSidebarState)} ${getRightSidebarClasses(rightSidebarState)}`
 }

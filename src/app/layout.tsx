@@ -6,6 +6,8 @@ import { PROJECT_SETTINGS } from '@/lib/settings'
 import { getServerTheme, getThemeClasses, getThemeAttributes, getServerLeftSidebarState, getServerRightSidebarState, getAllSidebarClasses } from '@/lib/server-theme'
 import { getSessionDataFromCookies } from '@/lib/cookies'
 import AuthProvider, { SessionData } from '@/components/providers/AuthProvider';
+import LeftSectionStateProvider from '@/components/providers/LeftSectionStateProvider'
+import RightSectionStateProvider from '@/components/providers/RightSectionStateProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,6 +32,7 @@ export default async function RootLayout({
 
   // Get theme from server
   const serverTheme = getServerTheme()
+
   const themeClasses = getThemeClasses(serverTheme)
   const themeAttributes = getThemeAttributes(serverTheme)
 
@@ -37,10 +40,11 @@ export default async function RootLayout({
 
 
   // Get sidebar states from server
-  const leftSidebarOpen = getServerLeftSidebarState()
-  const rightSidebarOpen = getServerRightSidebarState()
-  const sidebarClasses = getAllSidebarClasses(leftSidebarOpen, rightSidebarOpen)
+  const leftSidebarState = getServerLeftSidebarState()
+  const rightSidebarState = getServerRightSidebarState()
+  const sidebarClasses = getAllSidebarClasses(leftSidebarState === 'open', rightSidebarState === 'open')
 
+  
   return (
     <html
       lang="en"
@@ -57,16 +61,20 @@ export default async function RootLayout({
       </head>
       <body className={inter.className}>
         <AuthProvider initialSessionData={sessionData}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme={serverTheme}
-              themes={['light', 'dark']}
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
+          <LeftSectionStateProvider initialState={leftSidebarState }>
+            <RightSectionStateProvider initialState={rightSidebarState}>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme={serverTheme}
+                themes={['light', 'dark']}
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </RightSectionStateProvider>
+          </LeftSectionStateProvider>
         </AuthProvider>
       </body>
-    </html>
+    </html >
   )
 }

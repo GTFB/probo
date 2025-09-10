@@ -1,22 +1,39 @@
 'use client'
 
 import { useTheme as useNextTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark'
 
-export function useTheme(): Theme {
-  const { theme, resolvedTheme } = useNextTheme()
+export function useTheme(): { theme: Theme, setTheme: (theme: Theme) => void } {
+  const { theme,  setTheme  } = useNextTheme()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
+  const _setTheme = useCallback((theme: Theme) => {
+    setTheme(theme)
+    fetch(`/api/state`, {
+      method: 'PATCH',
+      body: JSON.stringify({ theme }),
+    }).catch(err => {
+      console.error('Error setting theme:', err)
+    })
+  }, [setTheme])
   if (!mounted) {
-    return 'light' // Default during SSR
+    return { theme: 'light', setTheme: _setTheme }
   }
 
-  return (resolvedTheme as Theme) || 'light'
+
+  return {
+    theme: (theme as Theme) || 'light',
+    setTheme: _setTheme,
+  }
 }
 
+export function setTheme() {
+  const { setTheme } = useNextTheme()
+  return setTheme
+}

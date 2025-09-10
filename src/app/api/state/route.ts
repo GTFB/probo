@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
       state: migratedState 
     })
     
+    console.log('migratedState', migratedState)
     return setStateToResponse(response, migratedState)
   } catch (error) {
     console.error('Error setting app state:', error)
