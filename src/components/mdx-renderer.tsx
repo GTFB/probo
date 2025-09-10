@@ -142,7 +142,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     h1: ({ children, ...props }: any) => {
       const id = getHeadingId(1, children)
       const tocItem = toc?.find(item => item.id === id)
-      console.log('tocItem', props)
+
       const copyLink = () => {
         if (tocItem?.slug) {
           const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`

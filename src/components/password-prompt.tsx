@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Lock, Eye, EyeOff } from 'lucide-react'
+import { useAuth } from '@/components/providers/AuthProvider'
 
 interface PasswordPromptProps {
   sectionId: string
@@ -18,6 +19,7 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [groupInfo, setGroupInfo] = useState<string>('')
+  const { setSessionData } = useAuth()
 
   // Handle Escape key and background click
   useEffect(() => {
@@ -66,6 +68,9 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
       })
 
       const data = await response.json()
+      console.log('data', data)
+      setSessionData(data)
+
 
       if (response.ok && data.success) {
         setGroupInfo(`Access granted to: ${data.groupName}`)

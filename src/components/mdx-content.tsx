@@ -342,7 +342,6 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   const onH1ChangeRef = useRef(onH1Change)
   const onLoadingChangeRef = useRef(onLoadingChange)
 
-  console.log('content', content)
 
   useEffect(() => {
     onFrontmatterChangeRef.current = onFrontmatterChange

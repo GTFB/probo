@@ -43,6 +43,7 @@ import {
   CheckCircle,
   Code,
 } from 'lucide-react'
+import { useMdx } from '@/components/providers/MdxProvider'
 
 // Function to get icon by name from frontmatter
 const getIconByName = (iconName: string) => {
@@ -70,8 +71,11 @@ export default function SectionPage() {
   // Find section by slug
   const currentSection = NAVIGATION_ITEMS.find(item => item.slug === slug)
   const activeSection = currentSection?.id || '1'
+  const { mdx, setMdx } = useMdx()
   
-  const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(null)
+
+  const [currentFrontmatter, setCurrentFrontmatter] = useState<MDXFrontmatter | null>(mdx?.data || null)
+
   const [prevFrontmatter, setPrevFrontmatter] = useState<MDXFrontmatter | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number; slug?: string }>>([])
