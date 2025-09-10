@@ -14,9 +14,12 @@ import {
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useSidebar } from "@/components/ui/sidebar"
+import { useTranslations } from "@/hooks/use-translations"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar()
+  const t = useTranslations('breadcrumb')
 
   return (
     <header className="flex sticky top-0 z-50 w-full items-center border-b bg-background">
@@ -34,16 +37,19 @@ export function SiteHeader() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#">
-                Building Your Application
+                {t('buildingApplication')}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+              <BreadcrumbPage>{t('dataFetching')}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <SearchForm className="w-full sm:ml-auto sm:w-auto" />
+        <div className="flex items-center gap-2 ml-auto">
+          <LanguageSwitcher />
+          <SearchForm className="w-full sm:w-auto" />
+        </div>
       </div>
     </header>
   )

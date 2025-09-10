@@ -37,9 +37,9 @@ export const PASSWORD_GROUPS = {
 } as const;
 
 const SECTIONS = [
-  { id: '1', title: 'Demo', icon: CheckCircle, slug: 'demo' },
-  { id: '2', title: 'Group 1 - Section A', icon: CheckCircle, slug: 'group-1-section-a' },
-  { id: '4', title: 'Group 2 - Section D', icon: CheckCircle, slug: 'group-2-section-d' },
+  { id: '1', title: 'Demo', icon: CheckCircle, slug: 'demo', translationKey: 'demo' },
+  { id: '2', title: 'Group 1 - Section A', icon: CheckCircle, slug: 'group-1-section-a', translationKey: 'group1SectionA' },
+  { id: '4', title: 'Group 2 - Section D', icon: CheckCircle, slug: 'group-2-section-d', translationKey: 'group2SectionD' },
 ] as const;
 
 

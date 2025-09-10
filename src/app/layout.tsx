@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
+import { cookies } from 'next/headers'
 import './globals.css'
 import { PROJECT_SETTINGS } from '@/lib/settings'
 import { getServerTheme, getThemeClasses, getThemeAttributes, getServerLeftSidebarState, getServerRightSidebarState, getAllSidebarClasses } from '@/lib/server-theme'
@@ -22,7 +25,6 @@ export const metadata: Metadata = {
 interface RootLayoutProps {
   children: React.ReactNode
   params: {
-    slug: string
   }
 }
 
@@ -38,16 +40,35 @@ export default async function RootLayout({
 
   const sessionData = getSessionDataFromCookies() as SessionData
 
-
   // Get sidebar states from server
   const leftSidebarState = getServerLeftSidebarState()
   const rightSidebarState = getServerRightSidebarState()
   const sidebarClasses = getAllSidebarClasses(leftSidebarState === 'open', rightSidebarState === 'open')
 
+  // Get locale from cookies
+  const cookieStore = await cookies()
+  const appStateCookie = cookieStore.get('app-state')?.value
+  let locale = 'en' // default
+  
+  if (appStateCookie) {
+    try {
+      const appState = JSON.parse(appStateCookie)
+      const supportedLocales = ['en', 'ru', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'ko', 'zh', 'ar', 'hi']
+      if (appState.locale && supportedLocales.includes(appState.locale)) {
+        locale = appState.locale
+      }
+    } catch (error) {
+      console.warn('Failed to parse app state cookie in layout:', error)
+    }
+  }
+
+  // Get messages for internationalization
+  const messages = await getMessages()
+
   
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${themeClasses} ${sidebarClasses}`}
       {...themeAttributes}
       suppressHydrationWarning
@@ -60,20 +81,22 @@ export default async function RootLayout({
 
       </head>
       <body className={inter.className}>
-        <AuthProvider initialSessionData={sessionData}>
-          <LeftSectionStateProvider initialState={leftSidebarState }>
-            <RightSectionStateProvider initialState={rightSidebarState}>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme={serverTheme}
-                themes={['light', 'dark']}
-                disableTransitionOnChange
-              >
-                {children}
-              </ThemeProvider>
-            </RightSectionStateProvider>
-          </LeftSectionStateProvider>
-        </AuthProvider>
+        <NextIntlClientProvider messages={messages}>
+          <AuthProvider initialSessionData={sessionData}>
+            <LeftSectionStateProvider initialState={leftSidebarState }>
+              <RightSectionStateProvider initialState={rightSidebarState}>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme={serverTheme}
+                  themes={['light', 'dark']}
+                  disableTransitionOnChange
+                >
+                  {children}
+                </ThemeProvider>
+              </RightSectionStateProvider>
+            </LeftSectionStateProvider>
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html >
   )

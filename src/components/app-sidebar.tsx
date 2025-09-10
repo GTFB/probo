@@ -1,6 +1,7 @@
 "use client"
 
 import { PROJECT_SETTINGS } from '@/lib/settings'
+import { useTranslations } from '@/hooks/use-translations'
 import {
   Lightbulb,
   TrendingUp,
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { useLeftSectionState } from './providers/LeftSectionStateProvider'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 interface NavigationItem {
   id: string
@@ -39,13 +41,15 @@ interface AppSidebarProps {
 
 export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: AppSidebarProps) {
   const {  setLeftSectionState } = useLeftSectionState()
+  const t = useTranslations()
+  
   return (
     <Sidebar className="hidden lg:block transition-transform duration-300 ease-in-out theme-transition">
       <SidebarHeader className="px-6 h-25 flex justify-between flex-nowrap" style={{ height: 'calc(6.25rem + 1px)', flexFlow: 'nowrap' }}>
         <div className="flex items-center gap-2">
           <div>
-            <h2 className="text-lg font-semibold">{PROJECT_SETTINGS.name}</h2>
-            <p className="text-xs text-muted-foreground">{PROJECT_SETTINGS.description}</p>
+            <h2 className="text-lg font-semibold">{t('project.name')}</h2>
+            <p className="text-xs text-muted-foreground">{t('project.description')}</p>
           </div>
         </div>
         {onToggle && (
@@ -79,7 +83,8 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
         </SidebarMenu>
       </SidebarContent>
       
-      <SidebarFooter className="px-6 py-2 h-16 flex items-start justify-center">
+      <SidebarFooter className="px-6 py-2 h-16 flex flex-col items-center justify-center gap-2">
+        <LanguageSwitcher variant="compact" showText={true} size="sm" />
         <img 
           src="/logo.svg" 
           alt="Logo" 

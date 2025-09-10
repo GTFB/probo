@@ -5,6 +5,7 @@ import { NavigationItem } from '@/types/proposal'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import * as Icons from 'lucide-react'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 interface NavigationProps {
   items: NavigationItem[]
@@ -34,6 +35,9 @@ export function Navigation({ items, activeSection, onSectionChange, className }:
     return (
       <header className="sticky top-0 z-50 bg-background border-b border-border md:hidden">
         <div className="p-4">
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <LanguageSwitcher variant="inline" showGlobe={false} />
+          </div>
           <nav className="flex gap-2 overflow-x-auto scrollbar-hide">
             {items.map((item, index) => (
               <Button
@@ -54,6 +58,9 @@ export function Navigation({ items, activeSection, onSectionChange, className }:
 
   return (
     <aside className={cn("md:block w-72 bg-card border-r border-border p-6 flex-shrink-0 flex flex-col h-screen sticky top-0", className)}>
+      <div className="flex items-center justify-center mb-6">
+        <LanguageSwitcher variant="inline" showGlobe={true} />
+      </div>
       <div className="flex-1">
         <nav className="flex flex-col gap-2">
           {items.map((item) => (

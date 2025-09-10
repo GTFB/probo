@@ -6,7 +6,9 @@ import { PanelRightClose, Search, Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SearchEngine } from "@/components/search-engine"
 import { useTheme } from "@/hooks/use-theme"
+import { useTranslations } from "@/hooks/use-translations"
 import { useRightSectionState } from "./providers/RightSectionStateProvider"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 interface TableOfContentsProps {
   items: Array<{
@@ -28,6 +30,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
 
   const  {theme, setTheme} = useTheme()
   const {rightSectionState, setRightSectionState} = useRightSectionState()
+  const t = useTranslations()
 
   
   // Get theme from state or use passed default value
@@ -103,7 +106,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               onClick={() => setActiveTab('toc')}
               className={`h-7 px-2 text-sm ${activeTab === 'toc' ? 'bg-muted text-muted-foreground' : ''}`}
             >
-              Table of Contents
+              {t('navigation.tableOfContents')}
             </Button>
             <Button
               variant="ghost"
@@ -111,10 +114,11 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               onClick={() => setActiveTab('search')}
               className={`h-7 px-2 text-sm ${activeTab === 'search' ? 'bg-muted text-muted-foreground' : ''}`}
             >
-              Search
+              {t('common.search')}
             </Button>
           </div>
           <div className="flex items-center gap-2">
+            <LanguageSwitcher variant="minimal" />
             <Button 
               variant="ghost" 
               size="sm" 
@@ -142,7 +146,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
         {activeTab === 'toc' && (
           <div className="space-y-1">
             {items.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No headings</p>
+              <p className="text-sm text-muted-foreground">{t('search.noHeadings')}</p>
             ) : (
               items.map((item) => (
                 <Button

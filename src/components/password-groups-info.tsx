@@ -3,13 +3,16 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PASSWORD_GROUPS } from '@/lib/settings'
+import { useTranslations } from '@/hooks/use-translations'
 
 export function PasswordGroupsInfo() {
+  const t = useTranslations('passwordGroups')
+  
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold">Password Groups Configuration</h3>
+      <h3 className="text-lg font-semibold">{t('title')}</h3>
       <p className="text-sm text-muted-foreground">
-        Each section ID is automatically assigned to a password group based on the configuration below.
+        {t('description')}
       </p>
       <div className="grid gap-4">
         {Object.entries(PASSWORD_GROUPS).map(([groupKey, config]) => (
@@ -24,23 +27,23 @@ export function PasswordGroupsInfo() {
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="text-sm font-medium">Password: </span>
+                  <span className="text-sm font-medium">{t('password')} </span>
                   <code className="bg-muted px-2 py-1 rounded text-sm">{config.password}</code>
                 </div>
                 <div>
-                  <span className="text-sm font-medium">Sections: </span>
+                  <span className="text-sm font-medium">{t('sections')} </span>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {(config.sections as readonly (string | '*')[]).map((section) => (
                       <Badge key={section} variant="secondary" className="text-xs">
-                        {section === '*' ? 'All other sections' : `Section ${section}`}
+                        {section === '*' ? t('allOtherSections') : `${t('section')} ${section}`}
                       </Badge>
                     ))}
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground">
                   {(config.sections as readonly (string | '*')[]).some((s) => s === '*') 
-                    ? 'This group covers all sections not explicitly assigned to other groups'
-                    : 'This group covers only the specified sections'
+                    ? t('coversAllSections')
+                    : t('coversSpecifiedSections')
                   }
                 </div>
               </div>

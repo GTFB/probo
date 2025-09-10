@@ -1,0 +1,69 @@
+{
+  "common": {
+    "search": "Search",
+    "searchPlaceholder": "Type to search...",
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "close": "Close",
+    "open": "Open",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "goTo": "Go to",
+    "relevance": "Relevance",
+    "password": "Password",
+    "enterPassword": "Enter password",
+    "unlockContent": "Unlock Content",
+    "verifying": "Verifying...",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "navigation": {
+    "tableOfContents": "Table of Contents",
+    "search": "Search",
+    "overview": "Overview",
+    "projects": "Projects",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "demo": "Demo",
+    "group1SectionA": "Group 1 - Section A",
+    "group2SectionD": "Group 2 - Section D"
+  },
+  "auth": {
+    "protectedContent": "Protected Content",
+    "passwordProtected": "This content is password protected. Please enter the password to continue.",
+    "accessGranted": "Access granted to:",
+    "authenticationFailed": "Authentication failed",
+    "networkError": "Network error. Please try again."
+  },
+  "search": {
+    "nothingFound": "Nothing found",
+    "tryDifferentKeywords": "Try different keywords",
+    "noHeadings": "No headings"
+  },
+  "passwordGroups": {
+    "title": "Password Groups Configuration",
+    "description": "Each section ID is automatically assigned to a password group based on the configuration below.",
+    "password": "Password:",
+    "sections": "Sections:",
+    "allOtherSections": "All other sections",
+    "section": "Section",
+    "coversAllSections": "This group covers all sections not explicitly assigned to other groups",
+    "coversSpecifiedSections": "This group covers only the specified sections"
+  },
+  "project": {
+    "name": "Probo",
+    "description": "Commercial Proposal Generator"
+  },
+  "breadcrumb": {
+    "buildingApplication": "Building Your Application",
+    "dataFetching": "Data Fetching"
+  },
+  "tariff": {
+    "popular": "Popular"
+  }
+}

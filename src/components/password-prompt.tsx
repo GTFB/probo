@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Lock, Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '@/components/providers/AuthProvider'
+import { useTranslations } from '@/hooks/use-translations'
 
 interface PasswordPromptProps {
   sectionId: string
@@ -20,6 +21,7 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
   const [error, setError] = useState('')
   const [groupInfo, setGroupInfo] = useState<string>('')
   const { setSessionData } = useAuth()
+  const t = useTranslations()
 
   // Handle Escape key and background click
   useEffect(() => {
@@ -73,13 +75,13 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
 
 
       if (response.ok && data.success) {
-        setGroupInfo(`Access granted to: ${data.groupName}`)
+        setGroupInfo(`${t('auth.accessGranted')} ${data.groupName}`)
         onSuccess()
       } else {
-        setError(data.error || 'Authentication failed')
+        setError(data.error || t('auth.authenticationFailed'))
       }
     } catch (err) {
-      setError('Network error. Please try again.')
+      setError(t('auth.networkError'))
     } finally {
       setIsLoading(false)
     }
@@ -95,9 +97,9 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
             <Lock className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle>Protected Content</CardTitle>
+          <CardTitle>{t('auth.protectedContent')}</CardTitle>
           <CardDescription>
-            This content is password protected. Please enter the password to continue.
+            {t('auth.passwordProtected')}
             {groupInfo && (
               <div className="mt-2 text-sm text-green-600 dark:text-green-400">
                 {groupInfo}
@@ -109,7 +111,7 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium">
-                Password
+                {t('common.password')}
               </label>
               <div className="relative">
                 <Button
@@ -130,7 +132,7 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
+                  placeholder={t('common.enterPassword')}
                   className="pl-10"
                   required
                 />
@@ -145,11 +147,11 @@ export function PasswordPrompt({ sectionId, onSuccess, onCancel }: PasswordPromp
 
             <div className="flex gap-2">
               <Button type="submit" className="flex-1" disabled={isLoading}>
-                {isLoading ? 'Verifying...' : 'Unlock Content'}
+                {isLoading ? t('common.verifying') : t('common.unlockContent')}
               </Button>
               {onCancel && (
                 <Button type="button" variant="outline" onClick={onCancel}>
-                  Cancel
+                  {t('common.cancel')}
                 </Button>
               )}
             </div>

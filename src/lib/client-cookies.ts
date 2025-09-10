@@ -6,6 +6,7 @@ export interface AppState {
   leftSidebarState?: 'open' | 'close'
   rightSidebarState?: 'open' | 'close'
   lastVisitedPage?: string
+  locale?: string
   userPreferences?: {
     language?: string
     timezone?: string
@@ -166,9 +167,10 @@ export function migrateAppState(state: any): AppState {
     sidebarCollapsed: false,
     leftSidebarState: 'open',
     lastVisitedPage: '/',
+    locale: 'en',
     userPreferences: {
-      language: 'ru',
-      timezone: 'Europe/Moscow',
+      language: 'en',
+      timezone: 'UTC',
       notifications: true
     },
     customData: {}
