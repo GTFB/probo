@@ -31,6 +31,7 @@ import { ToggleGroup } from './ui/toggle-group'
 import { Tooltip } from './ui/tooltip'
 import { Input } from './ui/input'
 import { VideoPlayer } from './ui/video-player'
+import { useAuth } from '@/components/providers/AuthProvider'
 
 // Interface for diagram settings
 interface MermaidSettings {
@@ -750,6 +751,8 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
 
 export function MDXRenderer({ markdownContent, mermaidCharts, toc }: MDXRendererProps) {
   const theme = useTheme()
+  const { sessionData } = useAuth()
+
   // Check that markdownContent exists
   if (!markdownContent) {
     return <div className="mdx-content">Loading...</div>

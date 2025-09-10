@@ -6,6 +6,8 @@ import { MDXLayout } from './mdx-layout'
 import { MDXRenderer } from './mdx-renderer'
 import { PasswordPrompt } from './password-prompt'
 import { NAVIGATION_ITEMS } from '@/lib/settings'
+import { useAuth } from '@/components/providers/AuthProvider'
+import { useMdx } from './providers/MdxProvider'
 
 interface MDXFrontmatter {
   title: string
@@ -111,7 +113,7 @@ function processTable(tableLines: string[]): string {
   const [headerLine, separatorLine, ...bodyLines] = tableLines
   const headers = headerLine.split('|').map(h => h.trim()).filter(Boolean)
   const rows = bodyLines.map(rowLine => rowLine.split('|').map(c => c.trim()).filter(Boolean))
-  
+
   // Determine alignment for each column
   const alignments: string[] = []
   if (separatorLine) {
@@ -168,16 +170,16 @@ interface MermaidSettings {
 // Function to extract settings from comments in diagram code
 function extractMermaidSettings(code: string): MermaidSettings {
   const settings: MermaidSettings = {}
-  
+
   // Look for comments with settings
   const lines = code.split('\n')
-  
+
   for (const line of lines) {
     const trimmedLine = line.trim()
-    
+
     // Skip empty lines and comments without settings
     if (!trimmedLine || !trimmedLine.startsWith('%%')) continue
-    
+
     // Extract settings from comments like %% zoom: true
     if (trimmedLine.includes('zoom:')) {
       const zoomMatch = trimmedLine.match(/zoom:\s*(true|false)/i)
@@ -185,42 +187,42 @@ function extractMermaidSettings(code: string): MermaidSettings {
         settings.enableZoom = zoomMatch[1].toLowerCase() === 'true'
       }
     }
-    
+
     if (trimmedLine.includes('height:')) {
       const heightMatch = trimmedLine.match(/height:\s*([^\s]+)/i)
       if (heightMatch) {
         settings.height = heightMatch[1]
       }
     }
-    
+
     if (trimmedLine.includes('zoom-min:')) {
       const zoomMinMatch = trimmedLine.match(/zoom-min:\s*([0-9.]+)/i)
       if (zoomMinMatch) {
         settings.zoomMin = parseFloat(zoomMinMatch[1])
       }
     }
-    
+
     if (trimmedLine.includes('zoom-max:')) {
       const zoomMaxMatch = trimmedLine.match(/zoom-max:\s*([0-9.]+)/i)
       if (zoomMaxMatch) {
         settings.zoomMax = parseFloat(zoomMaxMatch[1])
       }
     }
-    
+
     if (trimmedLine.includes('zoom-initial:')) {
       const zoomInitialMatch = trimmedLine.match(/zoom-initial:\s*([0-9.]+)/i)
       if (zoomInitialMatch) {
         settings.zoomInitial = parseFloat(zoomInitialMatch[1])
       }
     }
-    
+
     if (trimmedLine.includes('tooltip:')) {
       const tooltipMatch = trimmedLine.match(/tooltip:\s*(.+)/i)
       if (tooltipMatch) {
         settings.tooltipText = tooltipMatch[1].trim()
       }
     }
-    
+
     if (trimmedLine.includes('disable-tooltip:')) {
       const disableTooltipMatch = trimmedLine.match(/disable-tooltip:\s*(true|false)/i)
       if (disableTooltipMatch) {
@@ -228,22 +230,19 @@ function extractMermaidSettings(code: string): MermaidSettings {
       }
     }
   }
-  
+
   return settings
 }
 
 async function processMarkdownContent(markdown: string): Promise<{ content: string; mermaidCharts: string[] }> {
   const contentWithoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim()
-  
+
   // Remove slug lines from content
-  const cleanContent = contentWithoutFrontmatter
-    .replace(/\r/g, '')
-    .split('\n')
-    .filter(line => !line.trim().startsWith('slug:'))
-    .join('\n')
+  const cleanContent = contentCleaner(contentWithoutFrontmatter)
+
 
   const mermaidCharts: string[] = []
-  
+
   // Extract Mermaid diagrams
   const mermaidRegex = /```mermaid\n([\s\S]*?)\n```/g
   cleanContent.replace(mermaidRegex, (match, code) => {
@@ -268,14 +267,14 @@ function transliterateToLatin(text: string): string {
     'Ф': 'F', 'Х': 'H', 'Ц': 'Ts', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sch',
     'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
   }
-  
+
   return text.split('').map(char => translitMap[char] || char).join('')
 }
 
 function generateSlug(title: string): string {
   // First transliterate Cyrillic to Latin
   const transliterated = transliterateToLatin(title)
-  
+
   // Then apply standard slug generation
   return transliterated
     .toLowerCase()
@@ -295,11 +294,11 @@ function extractToc(markdown: string, pageSlug?: string): Array<{ id: string; ti
       const level = trimmedLine.match(/^#+/)?.[0].length || 0
       if (level > 0 && level <= 6) {
         const title = trimmedLine.substring(level).trim().replace(/\*\*/g, '')
-        
+
         // Check if next line contains slug definition
         const nextLine = lines[index + 1]?.trim()
         let headingSlug: string | undefined
-        
+
         if (nextLine && nextLine.startsWith('slug:')) {
           // Extract slug from next line
           headingSlug = nextLine.replace('slug:', '').trim().replace(/['"]/g, '')
@@ -307,7 +306,7 @@ function extractToc(markdown: string, pageSlug?: string): Array<{ id: string; ti
           // Fallback to auto-generated slug with transliteration
           headingSlug = generateSlug(title)
         }
-        
+
         const id = headingSlug // Use only slug as ID for URL compatibility
         toc.push({ id, title, level, slug: headingSlug })
       }
@@ -330,17 +329,20 @@ function extractH1Title(markdown: string): string | null {
 
 export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Change, onLoadingChange }: MDXContentProps) {
   const router = useRouter()
-  const [content, setContent] = useState<string>('')
+  const { mdx, setMdx } = useMdx()
+
+  const [content, setContent] = useState<string>(contentCleaner(mdx?.content || ''))
   const [mermaidCharts, setMermaidCharts] = useState<string[]>([])
   const [toc, setToc] = useState<Array<{ id: string; title: string; level: number; slug?: string }>>([])
   const [contentCache, setContentCache] = useState<Record<string, { content: string; mermaidCharts: string[]; frontmatter?: any; toc?: any; h1Title?: string }>>({})
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const [isLocked, setIsLocked] = useState<boolean>(false)
-  const [isCheckingAccess, setIsCheckingAccess] = useState<boolean>(true)
+  const { sessionData, setSessionData } = useAuth()
   const onFrontmatterChangeRef = useRef(onFrontmatterChange)
   const onTocChangeRef = useRef(onTocChange)
   const onH1ChangeRef = useRef(onH1Change)
   const onLoadingChangeRef = useRef(onLoadingChange)
+
+  console.log('content', content)
 
   useEffect(() => {
     onFrontmatterChangeRef.current = onFrontmatterChange
@@ -350,57 +352,32 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   }, [onFrontmatterChange, onTocChange, onH1Change, onLoadingChange])
 
   // Check authentication status
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // Reset authentication state for each section
-        setIsAuthenticated(null)
-        setIsLocked(false)
-        setIsCheckingAccess(true)
-        
-        const response = await fetch('/api/auth')
-        const data = await response.json()
-        
-        
-        if (data.authenticated) {
-          // Check if user has access to this specific section
-          const hasAccess = data.sections.includes(sectionId as any) || data.sections.includes('*' as any)
-          setIsAuthenticated(hasAccess)
-        } else {
-          setIsAuthenticated(false)
-        }
-      } catch (error) {
-        console.error('Auth check failed:', error)
-        setIsAuthenticated(false)
-      } finally {
-        setIsCheckingAccess(false)
-      }
-    }
-    
-    checkAuth()
-  }, [sectionId])
+
+
+  const isAuthenticated = sessionData?.sections.includes(sectionId) || sessionData?.sections.includes('*')
 
   useEffect(() => {
     const loadMDX = async () => {
       // Don't load content if we're still checking access
-      if (isCheckingAccess) return
-            
+
+
+
       try {
         // Check cache
         if (contentCache[sectionId]) {
           const cached = contentCache[sectionId]
-          
-          
+
+
           // Check if content is locked and user is not authenticated
           if (cached.frontmatter?.locked === true && !isAuthenticated) {
             setIsLocked(true)
             return
           }
-          
+
           setContent(cached.content)
           setMermaidCharts(cached.mermaidCharts)
           setToc(cached.toc || [])
-          
+
           if (cached.frontmatter) {
             onFrontmatterChangeRef.current?.(cached.frontmatter)
           }
@@ -414,32 +391,32 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
         }
 
         onLoadingChangeRef.current?.(true)
-        
+
         const response = await fetch(`/api/mdx/${sectionId}`)
         if (!response.ok) {
           const errorText = await response.text()
           console.error(`API Error ${response.status}:`, errorText)
           throw new Error(`Failed to load MDX: ${response.status} - ${errorText}`)
         }
-        
+
         const data = await response.json()
         if (data.error) {
           console.error('API returned error:', data.error)
           throw new Error(data.error)
         }
-        
-        
+
+
         // Check if content is locked and user is not authenticated
         if (data.frontmatter?.locked === true && !isAuthenticated) {
           setIsLocked(true)
           return
         }
-        
+
         const { content: markdownContent, mermaidCharts: charts } = await processMarkdownContent(data.content)
-        
+
         const toc = extractToc(data.content, data.frontmatter?.slug)
         const h1Title = extractH1Title(data.content)
-        
+
         // Save to cache
         const cacheData = {
           content: markdownContent,
@@ -448,24 +425,24 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
           toc,
           h1Title: h1Title || undefined
         }
-        
+
         setContentCache(prev => ({ ...prev, [sectionId]: cacheData }))
         setContent(markdownContent)
         setMermaidCharts(charts)
         setToc(toc)
-        
+
         if (data.frontmatter) {
           onFrontmatterChangeRef.current?.(data.frontmatter)
         }
-        
+
         if (toc) {
           onTocChangeRef.current?.(toc)
         }
-        
+
         if (h1Title) {
           onH1ChangeRef.current?.(h1Title)
         }
-        
+
       } catch (error) {
         console.error('Error loading MDX:', error)
         setContent(`<h1>Error loading content for section ${sectionId}</h1>`)
@@ -475,10 +452,9 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
     }
 
     loadMDX()
-  }, [sectionId, isAuthenticated, isCheckingAccess])
+  }, [sectionId, isAuthenticated])
 
   const handleAuthSuccess = () => {
-    setIsAuthenticated(true)
     setIsLocked(false)
   }
 
@@ -495,16 +471,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
     }
   }
 
-  // Show loading while checking access
-  if (isCheckingAccess) {
-    return (
-      <MDXLayout>
-        <div className="mt-8 flex items-center justify-center">
-          <div className="text-muted-foreground">Checking access...</div>
-        </div>
-      </MDXLayout>
-    )
-  }
+
 
   // Show password prompt if content is locked and user is not authenticated
   if (isLocked && !isAuthenticated) {
@@ -514,8 +481,18 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   return (
     <MDXLayout>
       <div className="mt-8">
-        <MDXRenderer markdownContent={content} mermaidCharts={mermaidCharts} toc={toc} />
+        <MDXRenderer
+          markdownContent={content}
+          mermaidCharts={mermaidCharts}
+          toc={toc} />
       </div>
     </MDXLayout>
   )
+}
+
+const contentCleaner = (content: string) => {
+  return content.replace(/\r/g, '')
+    .split('\n')
+    .filter(line => !line.trim().startsWith('slug:'))
+    .join('\n')
 }

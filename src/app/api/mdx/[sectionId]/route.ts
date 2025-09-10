@@ -19,7 +19,6 @@ export async function GET(
     }
     
     const mdxPath = join(process.cwd(), 'content', `${sectionId}.mdx`)
-    console.log('Looking for MDX file at:', mdxPath)
     
     // Check file existence
     if (!existsSync(mdxPath)) {
@@ -31,7 +30,6 @@ export async function GET(
     }
     
     const source = readFileSync(mdxPath, 'utf8')
-    console.log('Successfully loaded MDX file:', sectionId)
     
     // Simple function to extract frontmatter
     function extractFrontmatter(content: string) {

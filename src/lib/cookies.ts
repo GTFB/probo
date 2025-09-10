@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppState } from './client-cookies'
+import { SessionData } from '@/components/providers/AuthProvider'
 
 // Cookie configuration
 const COOKIE_CONFIG = {
@@ -14,7 +15,7 @@ const COOKIE_CONFIG = {
 
 // Server utilities for working with cookies
 export class ServerCookieManager {
-  private cookieStore: ReturnType<typeof cookies>
+  public cookieStore: ReturnType<typeof cookies>
 
   constructor() {
     this.cookieStore = cookies()
@@ -91,6 +92,18 @@ export function setStateToResponse(response: NextResponse, state: AppState): Nex
     console.error('Error setting app state to response cookies:', error)
     return response
   }
+}
+
+// Session data utilities
+export function getSessionDataFromCookies() {
+  const cookieManager = new ServerCookieManager()
+  
+  const cookieValue = cookieManager.cookieStore.get('mdx_access')?.value
+
+  if (!cookieValue) return {}
+  const sessionData = JSON.parse(cookieValue) as SessionData
+
+  return sessionData || null
 }
 
 // Import utilities from client file
