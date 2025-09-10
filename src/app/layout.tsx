@@ -22,22 +22,20 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  // Получаем тему с сервера
+  // Get theme from server
   const serverTheme = getServerTheme()
   const themeClasses = getThemeClasses(serverTheme)
   const themeAttributes = getThemeAttributes(serverTheme)
   
-  // Получаем состояния сайдбаров с сервера
+  // Get sidebar states from server
   const leftSidebarOpen = getServerLeftSidebarState()
   const rightSidebarOpen = getServerRightSidebarState()
   const sidebarClasses = getAllSidebarClasses(leftSidebarOpen, rightSidebarOpen)
   
-  // Отладочная информация
-  console.log('Server state:', { serverTheme, themeClasses, themeAttributes, leftSidebarOpen, rightSidebarOpen, sidebarClasses })
 
   return (
     <html 
-      lang="ru" 
+      lang="en" 
       className={`${themeClasses} ${sidebarClasses}`}
       {...themeAttributes}
       suppressHydrationWarning

@@ -11,6 +11,26 @@ import { useTheme } from '../hooks/use-theme'
 import { Button } from './ui/button'
 import Link from 'next/link'
 import { Check, Square,  } from 'lucide-react'
+import { Accordion, AccordionItem } from './ui/accordion'
+import { Avatar } from './ui/avatar'
+import { Breadcrumb } from './ui/breadcrumb'
+import { Badge } from './ui/badge'
+import { Card } from './ui/card'
+import { Carousel } from './ui/carousel'
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle,  } from './ui/chart'
+import { Checkbox } from './ui/checkbox'
+import { Collapsible } from './ui/collapsible'
+import { DropdownMenu } from './ui/dropdown-menu'
+import { Label } from './ui/label'
+import { Select } from './ui/select'
+import { Separator } from './ui/separator'
+import { Switch } from './ui/switch'
+import { Tabs } from './ui/tabs'
+import { Toggle } from './ui/toggle'
+import { ToggleGroup } from './ui/toggle-group'
+import { Tooltip } from './ui/tooltip'
+import { Input } from './ui/input'
+import { VideoPlayer } from './ui/video-player'
 
 // Interface for diagram settings
 interface MermaidSettings {
@@ -121,7 +141,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     h1: ({ children, ...props }: any) => {
       const id = getHeadingId(1, children)
       const tocItem = toc?.find(item => item.id === id)
-      
+      console.log('tocItem', props)
       const copyLink = () => {
         if (tocItem?.slug) {
           const url = `${window.location.origin}${window.location.pathname}#${tocItem.slug}`
@@ -479,7 +499,195 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
       />
     )
   },
-  
+  //Accordion
+  accordionui: ({ children, ...props }: any) => {
+    return (
+      <Accordion {...props}>
+        {children}
+      </Accordion>
+    )
+  },
+  //AccordionItem
+  accordionitemui: ({ children, ...props }: any) => {
+    return (
+      <AccordionItem {...props}>
+        {children}
+      </AccordionItem>)
+  },
+  //buttonui
+  buttonui: ({ children, ...props }: any) => {
+    return (
+      <Button {...props}>
+        {children}
+      </Button>)
+  },
+  //avatarui
+  avatarui: ({ children, ...props }: any) => {
+    return (
+      <Avatar {...props}>
+        {children}
+      </Avatar>)
+  },
+  //badgeui
+  badgeui: ({ children, ...props }: any) => {
+    return (
+      <Badge {...props}>
+        {children}
+      </Badge>)
+  },
+  //breadcrumbui
+  breadcrumbui: ({ children, ...props }: any) => {
+    return (
+      <Breadcrumb {...props}>
+        {children}
+      </Breadcrumb>)
+  },
+  cardui: ({ children, ...props }: any) => {
+    return (
+      <Card {...props}>
+        {children}
+      </Card>)
+  },
+  //carouselui
+  carouselui: ({ children, ...props }: any) => {
+    return (
+      <Carousel {...props}>
+        {children}
+      </Carousel>)
+  },
+  //chartstyleui
+  chartstyleui: ({ children, ...props }: any) => {
+    return (
+      <ChartStyle {...props}>
+        {children}
+      </ChartStyle>)
+  },
+  //charttooltipui
+  charttooltipui: ({ children, ...props }: any) => {
+    return (
+      <ChartTooltip {...props}>
+        {children}
+      </ChartTooltip>)
+  },
+  //charttooltipcontentui
+  charttooltipcontentui: ({ children, ...props }: any) => {
+    return (
+      <ChartTooltipContent {...props}>
+        {children}
+      </ChartTooltipContent>)
+  },
+  //chartlegendui
+  chartlegendui: ({ children, ...props }: any) => {
+    return (
+      <ChartLegend {...props}>
+        {children}
+      </ChartLegend>)
+  },
+  //chartlegendcontentui
+  chartlegendcontentui: ({ children, ...props }: any) => {
+    return (
+      <ChartLegendContent {...props}>
+        {children}
+      </ChartLegendContent>)
+  },
+  //chartcontainerui
+  chartcontainerui: ({ children, ...props }: any) => {
+    return (
+      <ChartContainer {...props}>
+        {children}
+      </ChartContainer>)
+  },
+  //checkboxui
+  checkboxui: ({ children, ...props }: any) => {
+    return (
+      <Checkbox {...props}>
+        {children}
+      </Checkbox>)
+  },
+  //collapsibleui
+  collapsibleui: ({ children, ...props }: any) => {
+    return (
+      <Collapsible {...props}>
+        {children}
+      </Collapsible>)
+  },
+  //dropdownmenuui
+  dropdownmenuui: ({ children, ...props }: any) => {
+    return (
+      <DropdownMenu {...props}>
+        {children}
+      </DropdownMenu>)
+  },
+  //labelui
+  labelui: ({ children, ...props }: any) => {
+    return (
+      <Label {...props}>
+        {children}
+      </Label>)
+  },
+  //selectui
+  selectui: ({ children, ...props }: any) => {
+    return (
+      <Select {...props}>
+        {children}
+      </Select>)
+  },
+  //separatorui
+  separatorui: ({ children, ...props }: any) => {
+    return (
+      <Separator {...props}>
+        {children}
+      </Separator>)
+  },
+  //switchui
+  switchui: ({ children, ...props }: any) => {
+    return (
+      <Switch {...props}>
+        {children}
+      </Switch>)
+  },
+  //tabsui
+  tabsui: ({ children, ...props }: any) => {
+    return (
+      <Tabs {...props}>
+        {children}
+      </Tabs>)
+  }, 
+  //tooggleui
+  tooggleui: ({ children, ...props }: any) => {
+    return (
+      <Toggle {...props}>
+        {children}
+      </Toggle>)
+  },
+  //toogglegroupui
+  toogglegroupui: ({ children, ...props }: any) => {
+    return (
+      <ToggleGroup {...props}>
+        {children}
+      </ToggleGroup>)
+  },
+  //tooltipui
+  tooltipui: ({ children, ...props }: any) => {
+    return (
+      <Tooltip {...props}>
+        {children}
+      </Tooltip>)
+  },
+  //inputui
+  inputui: ({ children, ...props }: any) => {
+    return (
+      <Input {...props}>
+        {children}
+      </Input>)
+  },
+  //VideoPlayeroui
+  videoplayerui: ({ children, ...props }: any) => {
+    return (
+      <VideoPlayer {...props}>
+        {children}
+      </VideoPlayer>)
+  },
   // Horizontal line
   hr: ({ ...props }: any) => (
     <hr className="my-8 border-t border-border" {...props} />
@@ -542,7 +750,6 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
 
 export function MDXRenderer({ markdownContent, mermaidCharts, toc }: MDXRendererProps) {
   const theme = useTheme()
-  
   // Check that markdownContent exists
   if (!markdownContent) {
     return <div className="mdx-content">Loading...</div>
@@ -550,7 +757,6 @@ export function MDXRenderer({ markdownContent, mermaidCharts, toc }: MDXRenderer
   
   // Create components with TOC support
   const components = createHeadingComponents(toc)
-  
   // Process Mermaid diagrams
   let processedContent = markdownContent
   let chartIndex = 0

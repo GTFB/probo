@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { ServerCookieManager, getStateFromRequest, setStateToResponse } from '@/lib/cookies'
 import { validateAppState, migrateAppState } from '@/lib/client-cookies'
 
-// GET - получить состояние
+// GET - get state
 export async function GET(request: NextRequest) {
   try {
     const state = getStateFromRequest(request)
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST - установить состояние
+// POST - set state
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PATCH - обновить состояние
+// PATCH - update state
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json()
@@ -80,7 +80,7 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
-// DELETE - очистить состояние
+// DELETE - clear state
 export async function DELETE() {
   try {
     const response = NextResponse.json({ 

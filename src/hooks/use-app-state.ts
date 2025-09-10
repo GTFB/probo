@@ -9,30 +9,40 @@ export function useAppState() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Загрузить состояние при монтировании
+  // Load state on mount
   useEffect(() => {
     const loadState = async () => {
       try {
         setIsLoading(true)
         setError(null)
         
-        // Сначала пытаемся загрузить из куки
+        // First try to load from cookies
         const cookieState = cookieManager.getState()
         if (Object.keys(cookieState).length > 0) {
           setState(cookieState)
         } else {
-          // Если в куки нет данных, загружаем с сервера
-          const response = await fetch('/api/state')
-          if (response.ok) {
-            const data = await response.json()
-            setState(data.state)
-            // Сохраняем в куки для быстрого доступа
-            cookieManager.setState(data.state)
+
+          // If no data in cookies, load from server
+          try {
+            const response = await fetch('/api/state')
+            if (response.ok) {
+              const data = await response.json()
+              setState(data.state)
+              // Save to cookies for quick access
+              cookieManager.setState(data.state)
+            }
+          } catch (serverError) {
+            console.warn('Failed to load from server, using default state:', serverError)
+            // Use default state if server is unavailable
+            setState({})
           }
         }
       } catch (err) {
         console.error('Error loading app state:', err)
         setError('Failed to load app state')
+        // Clear potentially corrupted cookies
+        cookieManager.clearState()
+        setState({})
       } finally {
         setIsLoading(false)
       }
@@ -41,19 +51,19 @@ export function useAppState() {
     loadState()
   }, [])
 
-  // Обновить состояние
+  // Update state
   const updateState = useCallback(async (updates: Partial<AppState>) => {
     try {
       setError(null)
       const newState = { ...state, ...updates }
       
-      // Обновляем локальное состояние
+      // Update local state
       setState(newState)
       
-      // Сохраняем в куки
+      // Save to cookies
       cookieManager.setState(newState)
       
-      // Отправляем на сервер
+      // Send to server
       const response = await fetch('/api/state', {
         method: 'PATCH',
         headers: {
@@ -71,7 +81,7 @@ export function useAppState() {
     }
   }, [state, cookieManager])
 
-  // Установить конкретное значение
+  // Set specific value
   const setValue = useCallback(async <K extends keyof AppState>(
     key: K, 
     value: AppState[K]
@@ -79,12 +89,12 @@ export function useAppState() {
     await updateState({ [key]: value } as Partial<AppState>)
   }, [updateState])
 
-  // Получить конкретное значение
+  // Get specific value
   const getValue = useCallback(<K extends keyof AppState>(key: K): AppState[K] | undefined => {
     return state[key]
   }, [state])
 
-  // Очистить состояние
+  // Clear state
   const clearState = useCallback(async () => {
     try {
       setError(null)
@@ -104,7 +114,7 @@ export function useAppState() {
     }
   }, [cookieManager])
 
-  // Синхронизировать с сервером
+  // Sync with server
   const syncWithServer = useCallback(async () => {
     try {
       setError(null)
@@ -132,7 +142,7 @@ export function useAppState() {
   }
 }
 
-// Хук для работы с конкретными значениями
+// Hook for working with specific values
 export function useAppStateValue<K extends keyof AppState>(key: K) {
   const { state, setValue, getValue } = useAppState()
   
@@ -142,7 +152,7 @@ export function useAppStateValue<K extends keyof AppState>(key: K) {
   }
 }
 
-// Хук для работы с темой
+// Hook for working with theme
 export function useTheme() {
   const { value: theme, setValue: setTheme } = useAppStateValue('theme')
   
@@ -152,7 +162,7 @@ export function useTheme() {
   }
 }
 
-// Хук для работы с сайдбаром
+// Hook for working with sidebar
 export function useSidebar() {
   const { value: sidebarOpen, setValue: setSidebarOpen } = useAppStateValue('sidebarOpen')
   const { value: sidebarCollapsed, setValue: setSidebarCollapsed } = useAppStateValue('sidebarCollapsed')
@@ -165,7 +175,7 @@ export function useSidebar() {
   }
 }
 
-// Хук для работы с пользовательскими настройками
+// Hook for working with user preferences
 export function useUserPreferences() {
   const { value: preferences, setValue: setPreferences } = useAppStateValue('userPreferences')
   
@@ -182,7 +192,7 @@ export function useUserPreferences() {
   }
 }
 
-// Хук для управления левым сайдбаром
+// Hook for managing left sidebar
 export function useLeftSidebar() {
   const { state, updateState } = useAppState()
   
@@ -192,7 +202,7 @@ export function useLeftSidebar() {
   }
 }
 
-// Хук для управления правым сайдбаром
+// Hook for managing right sidebar
 export function useRightSidebar() {
   const { state, updateState } = useAppState()
   

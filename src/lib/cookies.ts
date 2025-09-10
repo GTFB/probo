@@ -2,17 +2,17 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppState } from './client-cookies'
 
-// Конфигурация куки
+// Cookie configuration
 const COOKIE_CONFIG = {
   name: 'app-state',
-  maxAge: 60 * 60 * 24 * 30, // 30 дней
-  httpOnly: false, // Доступно для клиента
+  maxAge: 60 * 60 * 24 * 30, // 30 days
+  httpOnly: false, // Available for client
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax' as const,
   path: '/'
 }
 
-// Серверные утилиты для работы с куки
+// Server utilities for working with cookies
 export class ServerCookieManager {
   private cookieStore: ReturnType<typeof cookies>
 
@@ -20,7 +20,7 @@ export class ServerCookieManager {
     this.cookieStore = cookies()
   }
 
-  // Получить состояние из куки
+  // Get state from cookies
   getState(): AppState {
     try {
       const cookieValue = this.cookieStore.get(COOKIE_CONFIG.name)?.value
@@ -33,7 +33,7 @@ export class ServerCookieManager {
     }
   }
 
-  // Сохранить состояние в куки
+  // Save state to cookies
   setState(state: AppState): void {
     try {
       const stateString = JSON.stringify(state)
@@ -43,7 +43,7 @@ export class ServerCookieManager {
     }
   }
 
-  // Обновить часть состояния
+  // Update part of state
   updateState(updates: Partial<AppState>): AppState {
     const currentState = this.getState()
     const newState = { ...currentState, ...updates }
@@ -51,25 +51,25 @@ export class ServerCookieManager {
     return newState
   }
 
-  // Удалить состояние
+  // Clear state
   clearState(): void {
     this.cookieStore.delete(COOKIE_CONFIG.name)
   }
 
-  // Получить конкретное значение
+  // Get specific value
   getValue<K extends keyof AppState>(key: K): AppState[K] | undefined {
     const state = this.getState()
     return state[key]
   }
 
-  // Установить конкретное значение
+  // Set specific value
   setValue<K extends keyof AppState>(key: K, value: AppState[K]): void {
     this.updateState({ [key]: value } as Partial<AppState>)
   }
 }
 
 
-// Утилиты для middleware
+// Utilities for middleware
 export function getStateFromRequest(request: NextRequest): AppState {
   try {
     const cookieValue = request.cookies.get(COOKIE_CONFIG.name)?.value
@@ -93,5 +93,5 @@ export function setStateToResponse(response: NextResponse, state: AppState): Nex
   }
 }
 
-// Импортируем утилиты из клиентского файла
+// Import utilities from client file
 export { validateAppState, migrateAppState } from './client-cookies'

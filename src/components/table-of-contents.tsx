@@ -22,12 +22,12 @@ interface TableOfContentsProps {
 }
 
 export function TableOfContents({ items, activeSection, onSectionClick, onSectionChange, onToggle, defaultTheme = 'light', ...props }: TableOfContentsProps) {
-  console.log('TableOfContents defaultTheme:', props) 
+
   const [activeTab, setActiveTab] = React.useState<'toc' | 'search'>('toc')
   const { state, updateState } = useAppState()
   const { open: rightSidebarOpen, updateOpen: updateRightSidebarOpen } = useRightSidebar()
   
-  // Получаем тему из состояния или используем переданное значение по умолчанию
+  // Get theme from state or use passed default value
   const theme = state.theme || defaultTheme
   const isDarkMode = theme === 'dark'
   
@@ -58,18 +58,18 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
       }
     }
 
-    // Применяем тему при загрузке
+    // Apply theme on load
     updateTheme()
   }, [theme])
 
   const toggleTheme = async () => {
-    // Определяем новую тему на основе текущей
+    // Determine new theme based on current
     const newTheme: 'light' | 'dark' = theme === 'dark' ? 'light' : 'dark'
     
-    // Обновляем состояние в куки
+    // Update state in cookies
     await updateState({ theme: newTheme })
     
-    // Применяем тему к DOM
+    // Apply theme to DOM
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark')
     } else {
@@ -120,9 +120,9 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               onClick={toggleTheme}
               suppressHydrationWarning
             >
-              {/* Иконка для светлой темы - скрывается в темной теме */}
+              {/* Icon for light theme - hidden in dark theme */}
               <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200 dark:hidden" />
-              {/* Иконка для темной темы - скрывается в светлой теме */}
+              {/* Icon for dark theme - hidden in light theme */}
               <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200 hidden dark:block" />
             </Button>
             <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-muted transition-colors duration-200" 

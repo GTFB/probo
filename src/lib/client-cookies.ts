@@ -1,6 +1,6 @@
-// Клиентские утилиты для работы с куки
+// Client utilities for working with cookies
 export interface AppState {
-  theme?: 'light' | 'dark'
+  theme?: 'light' | 'dark' | 'system'
   sidebarOpen?: boolean
   sidebarCollapsed?: boolean
   leftSidebarOpen?: boolean
@@ -14,19 +14,19 @@ export interface AppState {
   customData?: Record<string, any>
 }
 
-// Конфигурация куки
+// Cookie configuration
 const COOKIE_CONFIG = {
   name: 'app-state',
-  maxAge: 60 * 60 * 24 * 30, // 30 дней
-  httpOnly: false, // Доступно для клиента
+  maxAge: 60 * 60 * 24 * 365, // 365 days
+  httpOnly: false, // Available for client
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax' as const,
   path: '/'
 }
 
-// Клиентские утилиты для работы с куки
+// Client utilities for working with cookies
 export class ClientCookieManager {
-  // Получить состояние из куки
+  // Get state from cookies
   getState(): AppState {
     if (typeof window === 'undefined') return {}
     
@@ -34,14 +34,30 @@ export class ClientCookieManager {
       const cookieValue = this.getCookie(COOKIE_CONFIG.name)
       if (!cookieValue) return {}
       
-      return JSON.parse(cookieValue) as AppState
+      // Additional validation for JSON string
+      if (typeof cookieValue !== 'string' || cookieValue.trim() === '') {
+        return {}
+      }
+      
+      const parsed = JSON.parse(cookieValue)
+      
+      // Validate that parsed value is an object
+      if (typeof parsed !== 'object' || parsed === null) {
+        console.warn('Invalid app state format in cookie, clearing...')
+        this.clearState()
+        return {}
+      }
+      
+      return parsed as AppState
     } catch (error) {
       console.error('Error parsing app state from cookies:', error)
+      // Clear invalid cookie
+      this.clearState()
       return {}
     }
   }
 
-  // Сохранить состояние в куки
+  // Save state to cookies
   setState(state: AppState): void {
     if (typeof window === 'undefined') return
     
@@ -53,7 +69,7 @@ export class ClientCookieManager {
     }
   }
 
-  // Обновить часть состояния
+  // Update part of state
   updateState(updates: Partial<AppState>): AppState {
     const currentState = this.getState()
     const newState = { ...currentState, ...updates }
@@ -61,29 +77,39 @@ export class ClientCookieManager {
     return newState
   }
 
-  // Удалить состояние
+  // Clear state
   clearState(): void {
     if (typeof window === 'undefined') return
     this.setCookie(COOKIE_CONFIG.name, '', -1)
   }
 
-  // Получить конкретное значение
+  // Get specific value
   getValue<K extends keyof AppState>(key: K): AppState[K] | undefined {
     const state = this.getState()
     return state[key]
   }
 
-  // Установить конкретное значение
+  // Set specific value
   setValue<K extends keyof AppState>(key: K, value: AppState[K]): void {
     this.updateState({ [key]: value } as Partial<AppState>)
   }
 
-  // Вспомогательные методы для работы с куки
+  // Helper methods for working with cookies
   private getCookie(name: string): string | null {
     const value = `; ${document.cookie}`
     const parts = value.split(`; ${name}=`)
     if (parts.length === 2) {
-      return parts.pop()?.split(';').shift() || null
+      const cookieValue = parts.pop()?.split(';').shift() || null
+      if (cookieValue) {
+        try {
+          // Decode URL-encoded values
+          return decodeURIComponent(cookieValue)
+        } catch (error) {
+          console.error('Error decoding cookie value:', error)
+          return cookieValue
+        }
+      }
+      return null
     }
     return null
   }
@@ -93,11 +119,17 @@ export class ClientCookieManager {
       ? 'expires=Thu, 01 Jan 1970 00:00:00 GMT'
       : `expires=${new Date(Date.now() + maxAge * 1000).toUTCString()}`
     
-    document.cookie = `${name}=${value}; ${expires}; path=${COOKIE_CONFIG.path}; ${COOKIE_CONFIG.secure ? 'secure; ' : ''}samesite=${COOKIE_CONFIG.sameSite}`
+    try {
+      // Encode the value to prevent issues with special characters
+      const encodedValue = encodeURIComponent(value)
+      document.cookie = `${name}=${encodedValue}; ${expires}; path=${COOKIE_CONFIG.path}; ${COOKIE_CONFIG.secure ? 'secure; ' : ''}samesite=${COOKIE_CONFIG.sameSite}`
+    } catch (error) {
+      console.error('Error setting cookie:', error)
+    }
   }
 }
 
-// Хук для использования на клиенте
+// Hook for use on client
 export function useAppState() {
   const cookieManager = new ClientCookieManager()
   
@@ -111,11 +143,11 @@ export function useAppState() {
   }
 }
 
-// Утилиты для валидации состояния
+// Utilities for state validation
 export function validateAppState(state: any): state is AppState {
   if (typeof state !== 'object' || state === null) return false
   
-  // Проверяем основные поля
+  // Check basic fields
   if (state.theme && !['light', 'dark'].includes(state.theme)) return false
   if (state.sidebarOpen && typeof state.sidebarOpen !== 'boolean') return false
   if (state.sidebarCollapsed && typeof state.sidebarCollapsed !== 'boolean') return false
@@ -124,7 +156,7 @@ export function validateAppState(state: any): state is AppState {
   return true
 }
 
-// Утилиты для миграции состояния
+// Utilities for state migration
 export function migrateAppState(state: any): AppState {
   const defaultState: AppState = {
     theme: 'light',
