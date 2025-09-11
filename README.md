@@ -288,32 +288,65 @@ All Shadcn/ui components are available with `ui` suffix:
 <!-- Separator -->
 <separatorui />
 
-<!-- Tooltip -->
-<tooltipui content="This is a tooltip">
-  <buttonui variant="outline">Hover me</buttonui>
-</tooltipui>
-
 <!-- Tabs -->
 <tabsui defaultValue="tab1">
-  <div>
-    <h3>Tab 1 Content</h3>
-    <p>This is the content of the first tab.</p>
-  </div>
-  <div>
-    <h3>Tab 2 Content</h3>
-    <p>This is the content of the second tab.</p>
-  </div>
+  <tabslistui>
+    <tabstriggerui value="tab1">Account</tabstriggerui>
+    <tabstriggerui value="tab2">Password</tabstriggerui>
+    <tabstriggerui value="tab3">Settings</tabstriggerui>
+  </tabslistui>
+  <tabscontentui value="tab1">
+    <h3>Account</h3>
+    <p>Manage your account settings and preferences.</p>
+  </tabscontentui>
+  <tabscontentui value="tab2">
+    <h3>Password</h3>
+    <p>Change your password and security settings.</p>
+  </tabscontentui>
+  <tabscontentui value="tab3">
+    <h3>Settings</h3>
+    <p>Configure your application preferences.</p>
+  </tabscontentui>
 </tabsui>
+
+
+<!-- Table -->
+<tableui>
+  <tablecaptionui>A list of your recent invoices.</tablecaptionui>
+  <tableheaderui>
+    <tablerowui>
+      <tableheadui className="w-[100px]">Invoice</tableheadui>
+      <tableheadui>Status</tableheadui>
+      <tableheadui>Method</tableheadui>
+      <tableheadui className="text-right">Amount</tableheadui>
+    </tablerowui>
+  </tableheaderui>
+  <tablebodyui>
+    <tablerowui>
+      <tablecellui className="font-medium">INV001</tablecellui>
+      <tablecellui>Paid</tablecellui>
+      <tablecellui>Credit Card</tablecellui>
+      <tablecellui className="text-right">$250.00</tablecellui>
+    </tablerowui>
+  </tablebodyui>
+  <tablefooterui>
+    <tablerowui>
+      <tablecellui colSpan={3}>Total</tablecellui>
+      <tablecellui className="text-right">$2,500.00</tablecellui>
+    </tablerowui>
+  </tablefooterui>
+</tableui>
 ```
 
 **All available UI components with `ui` suffix:**
 - `accordionui`, `accordionitemui`, `accordiontriggerui`, `accordioncontentui`
 - `buttonui`, `cardui`, `badgeui`, `avatarui`, `breadcrumbui`
 - `inputui`, `switchui`, `checkboxui`, `selectui`, `labelui`
-- `tooggleui`, `toogglegroupui`, `tabsui`, `tooltipui`
+- `tooggleui`, `toogglegroupui`, `tabsui`, `tabslistui`, `tabstriggerui`, `tabscontentui`
 - `separatorui`, `carouselui`, `collapsibleui`, `dropdownmenuui`
 - `chartstyleui`, `charttooltipui`, `charttooltipcontentui`, `chartlegendui`, `chartlegendcontentui`, `chartcontainerui`
 - `videoplayerui`
+- `tableui`, `tableheaderui`, `tablebodyui`, `tablefooterui`, `tableheadui`, `tablerowui`, `tablecellui`, `tablecaptionui`
 
 ## Environment Setup
 - All terminal operations use Makefile commands

@@ -431,33 +431,37 @@ This block demonstrates the ability to create informational messages without a t
 </breadcrumbui>
 
 
-### Switch Components
-
-<switchui />
-<switchui defaultChecked />
 
 ### Tabs Components
 
 <tabsui defaultValue="tab1">
-  <div>
-    <h3>Tab 1 Content</h3>
-    <p>This is the content of the first tab.</p>
-  </div>
-  <div>
-    <h3>Tab 2 Content</h3>
-    <p>This is the content of the second tab.</p>
-  </div>
+  <tabslistui>
+    <tabstriggerui value="tab1">Account</tabstriggerui>
+    <tabstriggerui value="tab2">Password</tabstriggerui>
+    <tabstriggerui value="tab3">Settings</tabstriggerui>
+  </tabslistui>
+  <tabscontentui value="tab1">
+    <h3>Account</h3>
+    <p>Manage your account settings and preferences.</p>
+  </tabscontentui>
+  <tabscontentui value="tab2">
+    <h3>Password</h3>
+    <p>Change your password and security settings.</p>
+  </tabscontentui>
+  <tabscontentui value="tab3">
+    <h3>Settings</h3>
+    <p>Configure your application preferences.</p>
+  </tabscontentui>
 </tabsui>
-
-### Tooltip Components
-
-<tooltipui content="This is a tooltip">
-  <buttonui variant="outline">Hover me</buttonui>
-</tooltipui>
 
 ### Separator Components
 
-<separatorui />
+<separatorui> </separatorui>
+
+### Switch Component
+
+<switchui> </switchui>
+
 
 ### Toggle Components
 
@@ -471,6 +475,48 @@ This block demonstrates the ability to create informational messages without a t
   <tooggleui value="option2">Option 2</tooggleui>
   <tooggleui value="option3">Option 3</tooggleui>
 </toogglegroupui>
+
+
+
+### Table Components
+
+<tableui>
+  <tablecaptionui>A list of your recent invoices.</tablecaptionui>
+  <tableheaderui>
+    <tablerowui>
+      <tableheadui className="w-[100px]">Invoice</tableheadui>
+      <tableheadui>Status</tableheadui>
+      <tableheadui>Method</tableheadui>
+      <tableheadui className="text-right">Amount</tableheadui>
+    </tablerowui>
+  </tableheaderui>
+  <tablebodyui>
+    <tablerowui>
+      <tablecellui className="font-medium">INV001</tablecellui>
+      <tablecellui>Paid</tablecellui>
+      <tablecellui>Credit Card</tablecellui>
+      <tablecellui className="text-right">$250.00</tablecellui>
+    </tablerowui>
+    <tablerowui>
+      <tablecellui className="font-medium">INV002</tablecellui>
+      <tablecellui>Pending</tablecellui>
+      <tablecellui>PayPal</tablecellui>
+      <tablecellui className="text-right">$150.00</tablecellui>
+    </tablerowui>
+    <tablerowui>
+      <tablecellui className="font-medium">INV003</tablecellui>
+      <tablecellui>Unpaid</tablecellui>
+      <tablecellui>Bank Transfer</tablecellui>
+      <tablecellui className="text-right">$350.00</tablecellui>
+    </tablerowui>
+  </tablebodyui>
+  <tablefooterui>
+    <tablerowui>
+      <tablecellui colSpan={3}>Total</tablecellui>
+      <tablecellui className="text-right">$2,500.00</tablecellui>
+    </tablerowui>
+  </tablefooterui>
+</tableui>
 
 ## Conclusion
 
