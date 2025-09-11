@@ -10,7 +10,7 @@ import { shouldEnableZoom } from '../lib/mermaid-config'
 import { useTheme } from '../hooks/use-theme'
 import { Button } from './ui/button'
 import Link from 'next/link'
-import { Check, Square,  } from 'lucide-react'
+import { Check, Square, CheckSquare, SquareCheck } from 'lucide-react'
 import { Accordion, AccordionItem } from './ui/accordion'
 import { Avatar } from './ui/avatar'
 import { Breadcrumb } from './ui/breadcrumb'
@@ -350,40 +350,29 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
       {children}
     </ol>
   ),
-  li: ({ children, checked, ...props }: any) => {
-    // remark-gfm adds the `checked` property (true/false) for task list items.
-    // For regular list items `checked` will be `undefined`.
-    if (typeof checked === 'boolean') {
-      // This is a task list item.
-      // The first child element that remark-gfm adds is <input type="checkbox">.
-      // We'll filter it out and keep only the task text.
-      const taskText = React.Children.toArray(children).slice(1);
-
+  input: ({ children, checked, type, ...props }: any) => {
+    if (type === 'checkbox') {
       return (
-        <li
-          // Use flexbox for beautiful alignment and remove the standard list marker
-          className="flex items-start gap-2 mb-2 list-none -ml-6" 
-          {...props}
-        >
-          {/* Our custom icon */}
-          <div className="flex-shrink-0 mt-1"> {/* mt-1 for better vertical alignment with text */}
-            {checked ? (
-              <Check className="w-4 h-4 text-green-600 dark:text-green-400" />
-            ) : (
-              <Square className="w-4 h-4 text-muted-foreground" />
-            )}
-          </div>
-          {/* Task text */}
-          <span className="flex-grow text-foreground text-sm sm:text-base leading-relaxed">
-            {taskText}
-          </span>
-        </li>
-      );
+        <div className="absolute -left-6 top-1/2 -translate-y-1/2 flex-shrink-0">
+          {checked ? (
+            <CheckSquare className="w-4 h-4 text-green-600 dark:text-green-400" />
+          ) : (
+            <Square className="w-4 h-4 text-muted-foreground" />
+          )}
+        </div>
+      )
     }
-
-    // This is a regular list item
+    return <input {...props} />
+  },
+  li: ({ children,  ...props }: any) => {
+    
+    const isTaskListItem = props.className?.includes('task-list-item')
+    const baseClasses = 'text-foreground text-sm sm:text-base leading-relaxed mb-1 relative'
+    const listClasses = isTaskListItem ? 'list-none' : ''
+    
+    props.className = (props.className || '') + ' ' + baseClasses + ' ' + listClasses
     return (
-      <li className="text-foreground text-sm sm:text-base leading-relaxed mb-1" {...props}>
+      <li {...props}>
         {children}
       </li>
     );
@@ -784,7 +773,7 @@ export function MDXRenderer({ markdownContent, mermaidCharts, toc }: MDXRenderer
   const parts = processedContent.split(/(MERMAID_PLACEHOLDER_\d+)/g)
   
   return (
-    <div className="mdx-content" key={theme}>
+    <div className="mdx-content" key={theme.theme || 'light'}>
       {parts.map((part, index) => {
         if (part.startsWith('MERMAID_PLACEHOLDER_')) {
           const chartIndex = parseInt(part.replace('MERMAID_PLACEHOLDER_', ''), 10)
@@ -808,7 +797,7 @@ export function MDXRenderer({ markdownContent, mermaidCharts, toc }: MDXRenderer
                   id={`mermaid-${chartIndex}-${chart.slice(0, 20)}`}
               enableZoom={enableZoom}
                   settings={settings}
-              theme={theme}
+              theme={theme.theme || 'light'}
                 />
               </div>
             )
