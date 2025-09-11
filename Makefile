@@ -1,4 +1,4 @@
-.PHONY: install dev build start test lint format clean start-protocol start-protocol-stash
+.PHONY: install dev build start test lint format clean start-protocol start-protocol-stash git-save push switch-develop
 
 # Install dependencies
 install:
@@ -43,6 +43,19 @@ start-protocol:
 	sh -c 'if [ -n "$(git ls-files -u)" ]; then echo "Merge conflicts detected during merge from main into develop. Resolve conflicts and rerun."; exit 1; else echo "Merge successful. No conflicts."; fi'
 	sh -c 'git branch --merged develop | grep -v "\\*" | grep -Ev "^(main|develop)$" | xargs -r -n 1 git branch -d 2>/dev/null || true'
 	@echo System Initialized. Workspace is clean and synchronized. Awaiting new goal for EXECUTE_TASK protocol.
+
+# Git helpers
+git-save:
+	sh -c 'BR=$$(git rev-parse --abbrev-ref HEAD); if [ "$$BR" = "main" ] || [ "$$BR" = "develop" ]; then TS=$$(date +%Y%m%d-%H%M%S); NEW=feature/auto-$$TS; git checkout -b $$NEW; echo Created branch $$NEW; fi;'
+	git add -A
+	git commit -m "chore: save workspace state"
+	git push -u origin HEAD
+
+push:
+	git push -u origin HEAD
+
+switch-develop:
+	git switch develop
 
 # START protocol with auto-stash
 start-protocol-stash:
