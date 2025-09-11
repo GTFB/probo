@@ -4,6 +4,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import { CodeHighlight } from './code-highlight'
 import rehypeRaw from 'rehype-raw'
 import { InteractiveMermaid } from './interactive-mermaid'
 import { shouldEnableZoom } from '../lib/mermaid-config'
@@ -420,20 +421,60 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           </code>
         )
       }
-      // For code blocks with syntax highlighting, use classes from rehype-highlight
+      // For code blocks with language, pass through to pre component
       return (
-        <code className={`${className} hljs`} {...props}>
+        <code className={className} {...props}>
           {children}
         </code>
       )
     },
 
     // Code blocks
-    pre: ({ children, ...props }: any) => (
-      <pre className="relative my-6 rounded-lg overflow-hidden border bg-muted/50 hljs" {...props}>
-        {children}
-      </pre>
-    ),
+    pre: ({ children, ...props }: any) => {
+      // Check if this is a code block with language
+      if (React.Children.count(children) === 1) {
+        const codeElement = React.Children.only(children) as React.ReactElement
+        
+        // Check if it's a code element with language class
+        if (codeElement?.props?.className?.includes('language-')) {
+          const match = codeElement.props.className.match(/language-(\w+)/)
+          
+          if (match) {
+            const language = match[1]
+            // Extract text content from React elements
+            const extractText = (children: any): string => {
+              if (typeof children === 'string') {
+                return children
+              }
+              if (Array.isArray(children)) {
+                return children.map(extractText).join('')
+              }
+              if (children && typeof children === 'object' && children.props) {
+                return extractText(children.props.children)
+              }
+              return String(children || '')
+            }
+            
+            const code = extractText(codeElement.props.children)
+            
+            return (
+              <CodeHighlight 
+                code={code} 
+                language={language}
+                className="shiki-code-block"
+              />
+            )
+          }
+        }
+      }
+      
+      // Fallback for regular pre blocks
+      return (
+        <pre className="relative my-6 rounded-lg overflow-hidden border bg-muted/50" {...props}>
+          {children}
+        </pre>
+      )
+    },
 
     // Blockquotes
     blockquote: ({ children, ...props }: any) => (
