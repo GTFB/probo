@@ -16,7 +16,7 @@ import { Avatar } from './ui/avatar'
 import { Breadcrumb } from './ui/breadcrumb'
 import { Badge } from './ui/badge'
 import { Card } from './ui/card'
-import { Carousel } from './ui/carousel'
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from './ui/carousel'
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle, } from './ui/chart'
 import { Checkbox } from './ui/checkbox'
 import { Collapsible } from './ui/collapsible'
@@ -554,13 +554,39 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           {children}
         </Card>)
     },
-    //carouselui
-    carouselui: ({ children, ...props }: any) => {
-      return (
-        <Carousel {...props}>
-          {children}
-        </Carousel>)
-    },
+     //carouselui
+     carouselui: ({ children, ...props }: any) => {
+       return (
+         <Carousel {...props}>
+           {children}
+         </Carousel>)
+     },
+     //carouselcontentui
+     carouselcontentui: ({ children, ...props }: any) => {
+       return (
+         <CarouselContent {...props}>
+           {children}
+         </CarouselContent>)
+     },
+     //carouselitemui
+     carouselitemui: ({ children, ...props }: any) => {
+       return (
+         <CarouselItem {...props}>
+           {children}
+         </CarouselItem>)
+     },
+     //carouselpreviousui
+     carouselpreviousui: ({ ...props }: any) => {
+       return (
+         <CarouselPrevious {...props} />
+       )
+     },
+     //carouselnextui
+     carouselnextui: ({ ...props }: any) => {
+       return (
+         <CarouselNext {...props} />
+       )
+     },
     //chartstyleui
     chartstyleui: ({ children, ...props }: any) => {
       return (

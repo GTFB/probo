@@ -288,6 +288,26 @@ All Shadcn/ui components are available with `ui` suffix:
 <!-- Separator -->
 <separatorui />
 
+<!-- Carousel -->
+<carouselui className="w-full max-w-2xl mx-auto">
+  <carouselcontentui>
+    <carouselitemui>
+      <cardui>
+        <h4>Slide 1</h4>
+        <p>This is the first slide of the carousel.</p>
+      </cardui>
+    </carouselitemui>
+    <carouselitemui>
+      <cardui>
+        <h4>Slide 2</h4>
+        <p>This is the second slide of the carousel.</p>
+      </cardui>
+    </carouselitemui>
+  </carouselcontentui>
+  <carouselpreviousui />
+  <carouselnextui />
+</carouselui>
+
 <!-- Tabs -->
 <tabsui defaultValue="tab1">
   <tabslistui>
@@ -343,7 +363,7 @@ All Shadcn/ui components are available with `ui` suffix:
 - `buttonui`, `cardui`, `badgeui`, `avatarui`, `breadcrumbui`
 - `inputui`, `switchui`, `checkboxui`, `selectui`, `labelui`
 - `tooggleui`, `toogglegroupui`, `tabsui`, `tabslistui`, `tabstriggerui`, `tabscontentui`
-- `separatorui`, `carouselui`, `collapsibleui`, `dropdownmenuui`
+- `separatorui`, `carouselui`, `carouselcontentui`, `carouselitemui`, `carouselpreviousui`, `carouselnextui`, `collapsibleui`, `dropdownmenuui`
 - `chartstyleui`, `charttooltipui`, `charttooltipcontentui`, `chartlegendui`, `chartlegendcontentui`, `chartcontainerui`
 - `videoplayerui`
 - `tableui`, `tableheaderui`, `tablebodyui`, `tablefooterui`, `tableheadui`, `tablerowui`, `tablecellui`, `tablecaptionui`
