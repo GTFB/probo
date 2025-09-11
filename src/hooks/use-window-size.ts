@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 
 export function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0,
-    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+    width: typeof window !== 'undefined' ? window.innerWidth : 1024, // Default to desktop size
+    height: typeof window !== 'undefined' ? window.innerHeight : 768,
   })
 
   useEffect(() => {

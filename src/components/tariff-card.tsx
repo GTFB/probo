@@ -2,8 +2,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Check } from 'lucide-react'
-
+import { Check,  } from 'lucide-react'
+import Link from 'next/link'
+import { useTranslations } from '@/hooks/use-translations'
 interface TariffCardProps {
   title: string
   description: string
@@ -25,12 +26,14 @@ export function TariffCard({
   ctaText,
   ctaLink 
 }: TariffCardProps) {
+  const t = useTranslations('tariff')
+  
   return (
     <Card className={`relative h-full flex flex-col ${isRecommended ? 'border-primary scale-105 shadow-lg' : ''}`}>
       {isPopular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
           <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-            Popular
+            {t('popular')}
           </span>
         </div>
       )}
@@ -57,9 +60,9 @@ export function TariffCard({
           variant={isRecommended ? "default" : "outline"}
           asChild
         >
-          <a href={ctaLink} target="_blank" rel="noopener noreferrer">
+          <Link href={ctaLink} target="_blank" rel="noopener noreferrer">
             {ctaText}
-          </a>
+          </Link>
         </Button>
       </CardContent>
     </Card>

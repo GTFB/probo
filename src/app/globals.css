@@ -524,3 +524,184 @@
     @apply text-white text-xs flex items-center justify-center;
   }
 }
+
+/* Video Player Styles */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  border: none;
+}
+
+/* Управление состоянием сайдбаров через CSS */
+@media (min-width: 1024px) {
+  /* CSS переменные для состояния сайдбаров */
+  :root {
+    --left-sidebar-open: 1;
+    --right-sidebar-open: 1;
+    --left-sidebar-width: 256px;
+    --right-sidebar-width: 320px;
+  }
+  
+  /* Классы для открытого состояния */
+  .left-sidebar-open {
+    --left-sidebar-open: 1;
+  }
+  
+  .right-sidebar-open {
+    --right-sidebar-open: 1;
+  }
+  
+  /* Классы для закрытого состояния */
+  .left-sidebar-closed {
+    --left-sidebar-open: 0;
+  }
+  
+  .right-sidebar-closed {
+    --right-sidebar-open: 0;
+  }
+  
+  /* Левый сайдбар - открытое состояние */
+  .left-sidebar-open .left-sidebar-open-state {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .left-sidebar-open .left-sidebar-closed-state {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  /* Левый сайдбар - закрытое состояние */
+  .left-sidebar-closed .left-sidebar-open-state {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .left-sidebar-closed .left-sidebar-closed-state {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  /* Правый сайдбар - открытое состояние */
+  .right-sidebar-open .right-sidebar-open-state {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .right-sidebar-open .right-sidebar-closed-state {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  /* Правый сайдбар - закрытое состояние */
+  .right-sidebar-closed .right-sidebar-open-state {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .right-sidebar-closed .right-sidebar-closed-state {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  /* Управление шириной контента */
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out, margin-right 0.3s ease-in-out;
+  }
+  
+  /* Ширина контента когда оба сайдбара открыты */
+  .left-sidebar-open.right-sidebar-open .main-content {
+    width: calc(100% - var(--left-sidebar-width) - var(--right-sidebar-width));
+    margin-left: var(--left-sidebar-width);
+    margin-right: var(--right-sidebar-width);
+  }
+  
+  /* Ширина контента когда только левый сайдбар открыт */
+  .left-sidebar-open.right-sidebar-closed .main-content {
+    width: calc(100% - var(--left-sidebar-width));
+    margin-left: var(--left-sidebar-width);
+    margin-right: 0;
+  }
+  
+  /* Ширина контента когда только правый сайдбар открыт */
+  .left-sidebar-closed.right-sidebar-open .main-content {
+    width: calc(100% - var(--right-sidebar-width));
+    margin-left: 0;
+    margin-right: var(--right-sidebar-width);
+  }
+  
+  /* Управление видимостью кнопок навигации */
+  .nav-buttons {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .nav-buttons.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Показать кнопки навигации когда левый сайдбар закрыт */
+  .left-sidebar-closed .nav-buttons {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* Управление видимостью кнопок Table of Contents */
+  .toc-buttons {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .toc-buttons.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Показать кнопки Table of Contents когда правый сайдбар закрыт */
+  .right-sidebar-closed .toc-buttons {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* Плавные переходы */
+  .left-sidebar-open-state,
+  .left-sidebar-closed-state,
+  .right-sidebar-open-state,
+  .right-sidebar-closed-state {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+}

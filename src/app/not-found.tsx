@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+
 export default function NotFound() {
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -8,12 +11,11 @@ export default function NotFound() {
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
           Page Not Found
         </p>
-        <a
-          href="/"
-          className="mt-6 inline-block rounded-md bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
-        >
-          Return to Home
-        </a>
+        <Button asChild className="mt-6">
+          <Link href="/">
+            Return to Home
+          </Link>
+        </Button>
       </div>
     </div>
   )

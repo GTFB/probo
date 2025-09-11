@@ -1,34 +1,39 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useTheme as useNextTheme } from 'next-themes'
+import { useCallback, useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark'
 
-function getInitialTheme(): Theme {
-  if (typeof window === 'undefined') {
-    return 'light'
-  }
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-}
-
-export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+export function useTheme(): { theme: Theme, setTheme: (theme: Theme) => void } {
+  const { theme,  setTheme  } = useNextTheme()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.attributeName === 'class') {
-          const newTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-          setTheme(newTheme)
-        }
-      }
-    })
-
-    observer.observe(document.documentElement, { attributes: true })
-
-    return () => observer.disconnect()
+    setMounted(true)
   }, [])
 
-  return theme
+  const _setTheme = useCallback((theme: Theme) => {
+    setTheme(theme)
+    fetch(`/api/state`, {
+      method: 'PATCH',
+      body: JSON.stringify({ theme }),
+    }).catch(err => {
+      console.error('Error setting theme:', err)
+    })
+  }, [setTheme])
+  if (!mounted) {
+    return { theme: 'light', setTheme: _setTheme }
+  }
+
+
+  return {
+    theme: (theme as Theme) || 'light',
+    setTheme: _setTheme,
+  }
 }
 
+export function setTheme() {
+  const { setTheme } = useNextTheme()
+  return setTheme
+}

@@ -1,0 +1,69 @@
+{
+  "common": {
+    "search": "Поиск",
+    "searchPlaceholder": "Введите для поиска...",
+    "loading": "Загрузка...",
+    "cancel": "Отмена",
+    "close": "Закрыть",
+    "open": "Открыть",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Предыдущий",
+    "goTo": "Перейти к",
+    "relevance": "Релевантность",
+    "password": "Пароль",
+    "enterPassword": "Введите пароль",
+    "unlockContent": "Разблокировать контент",
+    "verifying": "Проверка...",
+    "theme": "Тема",
+    "light": "Светлая",
+    "dark": "Темная"
+  },
+  "navigation": {
+    "tableOfContents": "Оглавление",
+    "search": "Поиск",
+    "overview": "Обзор",
+    "projects": "Проекты",
+    "analytics": "Аналитика",
+    "settings": "Настройки",
+    "demo": "Демо",
+    "group1SectionA": "Группа 1 - Раздел A",
+    "group2SectionD": "Группа 2 - Раздел D"
+  },
+  "auth": {
+    "protectedContent": "Защищенный контент",
+    "passwordProtected": "Этот контент защищен паролем. Пожалуйста, введите пароль для продолжения.",
+    "accessGranted": "Доступ предоставлен к:",
+    "authenticationFailed": "Ошибка аутентификации",
+    "networkError": "Ошибка сети. Попробуйте еще раз."
+  },
+  "search": {
+    "nothingFound": "Ничего не найдено",
+    "tryDifferentKeywords": "Попробуйте другие ключевые слова",
+    "noHeadings": "Нет заголовков"
+  },
+  "passwordGroups": {
+    "title": "Конфигурация групп паролей",
+    "description": "Каждый ID раздела автоматически назначается группе паролей на основе конфигурации ниже.",
+    "password": "Пароль:",
+    "sections": "Разделы:",
+    "allOtherSections": "Все остальные разделы",
+    "section": "Раздел",
+    "coversAllSections": "Эта группа покрывает все разделы, не назначенные явно другим группам",
+    "coversSpecifiedSections": "Эта группа покрывает только указанные разделы"
+  },
+  "project": {
+    "name": "Probo",
+    "description": "Генератор коммерческих предложений"
+  },
+  "breadcrumb": {
+    "buildingApplication": "Создание приложения",
+    "dataFetching": "Получение данных"
+  },
+  "tariff": {
+    "popular": "Популярный"
+  }
+}
