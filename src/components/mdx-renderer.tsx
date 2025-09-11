@@ -10,7 +10,7 @@ import { shouldEnableZoom } from '../lib/mermaid-config'
 import { useTheme } from '../hooks/use-theme'
 import { Button } from './ui/button'
 import Link from 'next/link'
-import { Check, Square, CheckSquare, SquareCheck } from 'lucide-react'
+import { Check, Square, CheckSquare, SquareCheck, Info, CheckCircle, AlertTriangle, XCircle } from 'lucide-react'
 import { Accordion, AccordionItem } from './ui/accordion'
 import { Avatar } from './ui/avatar'
 import { Breadcrumb } from './ui/breadcrumb'
@@ -677,6 +677,57 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
       <VideoPlayer {...props}>
         {children}
       </VideoPlayer>)
+  },
+  
+  // Admonitions
+  admonition: ({ children, type = 'info', title, ...props }: any) => {
+    const admonitionConfig = {
+      info: {
+        icon: Info,
+        className: 'border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950',
+        iconClassName: 'text-blue-600 dark:text-blue-400',
+        titleClassName: 'text-blue-800 dark:text-blue-200'
+      },
+      success: {
+        icon: CheckCircle,
+        className: 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950',
+        iconClassName: 'text-green-600 dark:text-green-400',
+        titleClassName: 'text-green-800 dark:text-green-200'
+      },
+      warning: {
+        icon: AlertTriangle,
+        className: 'border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-950',
+        iconClassName: 'text-yellow-600 dark:text-yellow-400',
+        titleClassName: 'text-yellow-800 dark:text-yellow-200'
+      },
+      danger: {
+        icon: XCircle,
+        className: 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950',
+        iconClassName: 'text-red-600 dark:text-red-400',
+        titleClassName: 'text-red-800 dark:text-red-200'
+      }
+    }
+
+    const config = admonitionConfig[type as keyof typeof admonitionConfig] || admonitionConfig.info
+    const IconComponent = config.icon
+
+    return (
+      <div className={`rounded-lg border p-4 my-4 ${config.className}`} {...props}>
+        <div className="flex items-start gap-3">
+          <IconComponent className={`w-5 h-5 flex-shrink-0 mt-0.5 ${config.iconClassName}`} />
+          <div className="flex-1">
+            {title && (
+              <h4 className={`font-semibold mb-2 ${config.titleClassName}`}>
+                {title}
+              </h4>
+            )}
+            <div className="text-sm text-foreground">
+              {children}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   },
   // Horizontal line
   hr: ({ ...props }: any) => (

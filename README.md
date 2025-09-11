@@ -37,6 +37,9 @@ probo/
 - Theme customization
 - Responsive design
 - Type-safe development
+- Custom MDX components (Admonitions, Task Lists)
+- Interactive Mermaid diagrams
+- Table of Contents with scroll tracking
 
 ## Working with Template
 
@@ -127,6 +130,64 @@ bun run build
 
 # Run tests
 bun test
+```
+
+## MDX Components
+
+### Admonitions (Information Blocks)
+
+Use the `<admonition>` component to create information blocks:
+
+```mdx
+<admonition type="info" title="Information">
+This is an information block with blue color.
+</admonition>
+
+<admonition type="success" title="Success">
+This is a success block with green color.
+</admonition>
+
+<admonition type="warning" title="Warning">
+This is a warning block with yellow color.
+</admonition>
+
+<admonition type="danger" title="Danger">
+This is a danger block with red color.
+</admonition>
+```
+
+**Available types:**
+- `info` - blue (information)
+- `success` - green (success/advice)
+- `warning` - yellow (warning)
+- `danger` - red (danger/forbidden)
+
+**Parameters:**
+- `type` - block type (required)
+- `title` - block title (optional)
+
+### Task Lists (Checklists)
+
+Checklists are automatically styled with icons:
+
+```mdx
+- [x] Completed task
+- [ ] Uncompleted task
+- [x] Another completed task
+```
+
+### Mermaid Diagrams
+
+Interactive diagrams with zoom support:
+
+```mdx
+```mermaid
+%% zoom: true
+%% height: 60vh
+flowchart TD
+    A[Start] --> B[Process]
+    B --> C[End]
+```
 ```
 
 ## Environment Setup
