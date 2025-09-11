@@ -190,6 +190,131 @@ flowchart TD
 ```
 ```
 
+### UI Components
+
+All Shadcn/ui components are available with `ui` suffix:
+
+#### Accordion Components
+
+```mdx
+<accordionui type="single" collapsible>
+  <accordionitemui value="item-1">
+    <accordiontriggerui>What is this project about?</accordiontriggerui>
+    <accordioncontentui>
+      <p>This is a system for generating commercial proposals based on MDX files.</p>
+    </accordioncontentui>
+  </accordionitemui>
+  <accordionitemui value="item-2">
+    <accordiontriggerui>What technologies are used?</accordiontriggerui>
+    <accordioncontentui>
+      <p>Next.js 14, TypeScript, Tailwind CSS 4, and Shadcn/ui components.</p>
+    </accordioncontentui>
+  </accordionitemui>
+</accordionui>
+```
+
+**Available accordion components:**
+- `accordionui` - main accordion container
+- `accordionitemui` - individual accordion item
+- `accordiontriggerui` - clickable header (no underline on hover)
+- `accordioncontentui` - collapsible content
+
+#### Basic Components
+
+```mdx
+<!-- Buttons -->
+<buttonui variant="default">Default Button</buttonui>
+<buttonui variant="secondary">Secondary Button</buttonui>
+<buttonui variant="outline">Outline Button</buttonui>
+<buttonui variant="destructive">Destructive Button</buttonui>
+
+<!-- Cards -->
+<cardui>
+  <h4>Card Title</h4>
+  <p>Card content with automatic padding.</p>
+  <buttonui variant="outline">Action Button</buttonui>
+</cardui>
+
+<!-- Badges -->
+<badgeui variant="default">Default</badgeui>
+<badgeui variant="secondary">Secondary</badgeui>
+<badgeui variant="destructive">Destructive</badgeui>
+<badgeui variant="outline">Outline</badgeui>
+
+<!-- Avatar -->
+<avatarui>
+  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+    JD
+  </div>
+</avatarui>
+
+<!-- Breadcrumb -->
+<breadcrumbui>
+  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+    <a href="#" className="hover:text-foreground">Home</a>
+    <span>/</span>
+    <a href="#" className="hover:text-foreground">Projects</a>
+    <span>/</span>
+    <span className="text-foreground">Current Project</span>
+  </div>
+</breadcrumbui>
+```
+
+#### Form Components
+
+```mdx
+<!-- Input -->
+<inputui placeholder="Enter text..." />
+
+<!-- Switch -->
+<switchui />
+<switchui defaultChecked />
+
+<!-- Toggle -->
+<tooggleui>Toggle Button</tooggleui>
+<tooggleui pressed>Pressed Toggle</tooggleui>
+
+<!-- Toggle Group -->
+<toogglegroupui type="single">
+  <tooggleui value="option1">Option 1</tooggleui>
+  <tooggleui value="option2">Option 2</tooggleui>
+  <tooggleui value="option3">Option 3</tooggleui>
+</toogglegroupui>
+```
+
+#### Layout Components
+
+```mdx
+<!-- Separator -->
+<separatorui />
+
+<!-- Tooltip -->
+<tooltipui content="This is a tooltip">
+  <buttonui variant="outline">Hover me</buttonui>
+</tooltipui>
+
+<!-- Tabs -->
+<tabsui defaultValue="tab1">
+  <div>
+    <h3>Tab 1 Content</h3>
+    <p>This is the content of the first tab.</p>
+  </div>
+  <div>
+    <h3>Tab 2 Content</h3>
+    <p>This is the content of the second tab.</p>
+  </div>
+</tabsui>
+```
+
+**All available UI components with `ui` suffix:**
+- `accordionui`, `accordionitemui`, `accordiontriggerui`, `accordioncontentui`
+- `buttonui`, `cardui`, `badgeui`, `avatarui`, `breadcrumbui`
+- `inputui`, `switchui`, `checkboxui`, `selectui`, `labelui`
+- `tooggleui`, `toogglegroupui`, `tabsui`, `tooltipui`
+- `separatorui`, `carouselui`, `collapsibleui`, `dropdownmenuui`
+- `chartstyleui`, `charttooltipui`, `charttooltipcontentui`, `chartlegendui`, `chartlegendcontentui`, `chartcontainerui`
+- `videoplayerui`
+
 ## Environment Setup
 - All terminal operations use Makefile commands
 - File structure changes are automatically reflected in structure.md

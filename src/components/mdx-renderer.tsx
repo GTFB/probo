@@ -11,7 +11,7 @@ import { useTheme } from '../hooks/use-theme'
 import { Button } from './ui/button'
 import Link from 'next/link'
 import { Check, Square, CheckSquare, SquareCheck, Info, CheckCircle, AlertTriangle, XCircle } from 'lucide-react'
-import { Accordion, AccordionItem } from './ui/accordion'
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './ui/accordion'
 import { Avatar } from './ui/avatar'
 import { Breadcrumb } from './ui/breadcrumb'
 import { Badge } from './ui/badge'
@@ -186,7 +186,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h2 
             id={id}
-            className="text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20" 
+            className="text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20 mt-8" 
             {...props}
           >
             {children}
@@ -218,7 +218,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h3 
             id={id}
-            className="text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20" 
+            className="text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20 mt-8" 
             {...props}
           >
             {children}
@@ -350,7 +350,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
       {children}
     </ol>
   ),
-  input: ({ children, checked, type, ...props }: any) => {
+  input: ({ checked, type, ...props }: any) => {
     if (type === 'checkbox') {
       return (
         <div className="absolute -left-6 top-1/2 -translate-y-1/2 flex-shrink-0">
@@ -504,6 +504,20 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         {children}
       </AccordionItem>)
   },
+  //AccordionTrigger
+  accordiontriggerui: ({ children, ...props }: any) => {
+    return (
+      <AccordionTrigger className="hover:no-underline" {...props}>
+        {children}
+      </AccordionTrigger>)
+  },
+  //AccordionContent
+  accordioncontentui: ({ children, ...props }: any) => {
+    return (
+      <AccordionContent {...props}>
+        {children}
+      </AccordionContent>)
+  },
   //buttonui
   buttonui: ({ children, ...props }: any) => {
     return (
@@ -521,7 +535,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
   //badgeui
   badgeui: ({ children, ...props }: any) => {
     return (
-      <Badge {...props}>
+      <Badge {...props} span={true}>
         {children}
       </Badge>)
   },
@@ -534,7 +548,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
   },
   cardui: ({ children, ...props }: any) => {
     return (
-      <Card {...props}>
+      <Card className="p-6" {...props}>
         {children}
       </Card>)
   },

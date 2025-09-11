@@ -335,27 +335,6 @@ graph TB
     E --> G
 ```
 
-## Admonitions (Информационные блоки)
-
-<admonition type="info" title="Информация">
-Это информационный блок с синим цветом. Используется для предоставления дополнительной информации.
-</admonition>
-
-<admonition type="success" title="Успех">
-Это блок успеха с зеленым цветом. Используется для отображения положительных результатов или советов.
-</admonition>
-
-<admonition type="warning" title="Предупреждение">
-Это блок предупреждения с желтым цветом. Используется для привлечения внимания к важным моментам.
-</admonition>
-
-<admonition type="danger" title="Опасно">
-Это блок опасности с красным цветом. Используется для предупреждения о критических моментах или запретах.
-</admonition>
-
-<admonition type="info">
-Блок без заголовка - просто информационное сообщение.
-</admonition>
 
 ## HTML Elements
 
@@ -389,6 +368,109 @@ Incorrect configuration may lead to data loss.
 <admonition type="info">
 This block demonstrates the ability to create informational messages without a title. Useful for additional notes or explanations.
 </admonition>
+
+## UI Components Examples
+
+### Accordion Components
+
+<accordionui type="single" collapsible>
+  <accordionitemui value="item-1">
+    <accordiontriggerui>What is this project about?</accordiontriggerui>
+    <accordioncontentui>
+      <p>This is a system for generating commercial proposals based on MDX files with dynamic content management.</p>
+    </accordioncontentui>
+  </accordionitemui>
+  <accordionitemui value="item-2">
+    <accordiontriggerui>What technologies are used?</accordiontriggerui>
+    <accordioncontentui>
+      <p>Next.js 14, TypeScript, Tailwind CSS 4, and Shadcn/ui components.</p>
+    </accordioncontentui>
+  </accordionitemui>
+</accordionui>
+
+### Button Components
+
+<buttonui variant="default">Default Button</buttonui>
+<buttonui variant="secondary">Secondary Button</buttonui>
+<buttonui variant="outline">Outline Button</buttonui>
+<buttonui variant="destructive">Destructive Button</buttonui>
+
+### Card Components
+
+<cardui>
+  <h4>Project Information</h4>
+  <p>This card demonstrates the cardui component with custom content.</p>
+  <buttonui variant="outline">Action Button</buttonui>
+</cardui>
+
+### Badge Components
+
+<badgeui variant="default">Default</badgeui>
+<badgeui variant="secondary">Secondary</badgeui>
+<badgeui variant="destructive">Destructive</badgeui>
+<badgeui variant="outline">Outline</badgeui>
+
+### Avatar Components
+
+<avatarui>
+  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+    JD
+  </div>
+</avatarui>
+
+### Breadcrumb Components
+
+<breadcrumbui>
+  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+    <a href="#" className="hover:text-foreground">Home</a>
+    <span>/</span>
+    <a href="#" className="hover:text-foreground">Projects</a>
+    <span>/</span>
+    <span className="text-foreground">Current Project</span>
+  </div>
+</breadcrumbui>
+
+
+### Switch Components
+
+<switchui />
+<switchui defaultChecked />
+
+### Tabs Components
+
+<tabsui defaultValue="tab1">
+  <div>
+    <h3>Tab 1 Content</h3>
+    <p>This is the content of the first tab.</p>
+  </div>
+  <div>
+    <h3>Tab 2 Content</h3>
+    <p>This is the content of the second tab.</p>
+  </div>
+</tabsui>
+
+### Tooltip Components
+
+<tooltipui content="This is a tooltip">
+  <buttonui variant="outline">Hover me</buttonui>
+</tooltipui>
+
+### Separator Components
+
+<separatorui />
+
+### Toggle Components
+
+<tooggleui>Toggle Button</tooggleui>
+<tooggleui pressed>Pressed Toggle</tooggleui>
+
+### Toggle Group Components
+
+<toogglegroupui type="single">
+  <tooggleui value="option1">Option 1</tooggleui>
+  <tooggleui value="option2">Option 2</tooggleui>
+  <tooggleui value="option3">Option 3</tooggleui>
+</toogglegroupui>
 
 ## Conclusion
 
