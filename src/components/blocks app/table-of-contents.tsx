@@ -152,9 +152,9 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
   }
 
   return (
-    <div className="hidden lg:block w-80 bg-muted/10 h-screen theme-transition sticky top-0 scrollbar-hide">
+    <div className="hidden lg:block w-80 bg-sidebar h-screen theme-transition sticky top-0 scrollbar-hide">
       <div className="h-full overflow-y-auto scrollbar-hide">
-        <div className="sticky top-0 bg-muted/10 backdrop-blur-sm z-10 flex items-center justify-between p-4 mb-4">
+        <div className="sticky top-0 bg-sidebar backdrop-blur-sm z-10 flex items-center justify-between p-4 mb-4">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"

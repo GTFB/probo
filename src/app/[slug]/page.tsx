@@ -297,7 +297,7 @@ export default function SectionPage() {
                 </div>
                 <div>
                   <h1 className="text-lg font-semibold">{currentFrontmatter?.title || 'Loading...'}</h1>
-                  <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
+                  <p className="text-xs text-muted-foreground">{t('common.sectionOf', { current: sectionNumber, total: navigationItems.length })}</p>
 
                 </div>
               </div>
@@ -349,16 +349,16 @@ export default function SectionPage() {
                         <Menu className="w-4 h-4" />
                       </Button>
                     </SheetTrigger>
-                    <SheetContent side="left" className="w-80 p-0">
+                    <SheetContent side="left" className="w-80 p-0 flex flex-col">
                       <div className="px-6 py-3 flex items-center justify-between" style={{ height: '72px' }}>
                         <div className="flex items-center gap-2">
                           <div>
-                            <h2 className="text-lg font-semibold">{PROJECT_SETTINGS.name}</h2>
-                            <p className="text-xs text-muted-foreground">{PROJECT_SETTINGS.description}</p>
+                            <h2 className="text-lg font-semibold">{t('project.name')}</h2>
+                            <p className="text-xs text-muted-foreground">{t('project.description')}</p>
                           </div>
                         </div>
                       </div>
-                      <div className="px-3 py-2">
+                      <div className="px-3 py-2 flex-1">
                         <div className="space-y-1">
                           {navigationItemsWithIcons.map((item) => {
                             const Icon = item.icon
@@ -368,7 +368,7 @@ export default function SectionPage() {
                               <Button
                                 key={item.id}
                                 variant="ghost"
-                                className={`w-full justify-start h-9 px-3 ${isActive ? "bg-accent" : ""}`}
+                                className={`w-full justify-start h-9 px-3 ${isActive ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"}`}
                                 onClick={() => handleSectionChange(item.id)}
                               >
                                 <Icon className="w-4 h-4 mr-3" />
@@ -377,6 +377,15 @@ export default function SectionPage() {
                             )
                           })}
                         </div>
+                      </div>
+                      
+                      <div className="px-6 py-2 h-16 flex flex-col items-start justify-center gap-2 border-sidebar-border">
+                        <img 
+                          src="/logo.svg" 
+                          alt="Logo" 
+                          className="h-8 w-auto"
+                          style={{ WebkitWritingMode: 'vertical-lr' }}
+                        />
                       </div>
                     </SheetContent>
                   </Sheet>
@@ -390,7 +399,7 @@ export default function SectionPage() {
                     </div>
                     <div className="text-left">
                       <h2 className="text-sm font-medium">{currentFrontmatter?.title || 'Loading...'}</h2>
-                      <p className="text-xs text-muted-foreground">Section {sectionNumber} of {navigationItems.length}</p>
+                      <p className="text-xs text-muted-foreground">{t('common.sectionOf', { current: sectionNumber, total: navigationItems.length })}</p>
                     </div>
                   </div>
                 </div>

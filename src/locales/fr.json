@@ -1,4 +1,8 @@
 {
+  "project": {
+    "name": "Probo",
+    "description": "Générateur de propositions commerciales"
+  },
   "common": {
     "search": "Rechercher",
     "searchPlaceholder": "Tapez pour rechercher...",
@@ -28,7 +32,8 @@
     "verifying": "Vérification...",
     "theme": "Thème",
     "light": "Clair",
-    "dark": "Sombre"
+    "dark": "Sombre",
+    "sectionOf": "Section {current} sur {total}"
   },
   "navigation": {
     "tableOfContents": "Table des matières",

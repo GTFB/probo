@@ -1,4 +1,8 @@
 {
+  "project": {
+    "name": "Probo",
+    "description": "Генератор коммерческих предложений"
+  },
   "common": {
     "search": "Поиск",
     "searchPlaceholder": "Введите для поиска...",
@@ -29,7 +33,8 @@
     "verifying": "Проверка...",
     "theme": "Тема",
     "light": "Светлая",
-    "dark": "Темная"
+    "dark": "Темная",
+    "sectionOf": "Раздел {current} из {total}"
   },
   "navigation": {
     "search": "Поиск",

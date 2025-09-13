@@ -32,7 +32,7 @@
   --chart-3: 221.4336 86.3731% 54.0624%;
   --chart-4: 223.6587 78.7180% 47.8635%;
   --chart-5: 226.5426 70.0108% 39.9224%;
-  --sidebar: 223.8136 0.0004% 98.0256%;
+  --sidebar: 60 5% 96%;
   --sidebar-foreground: 223.8136 0.0000% 3.9388%;
   --sidebar-primary: 223.8136 0.0000% 9.0527%;
   --sidebar-primary-foreground: 223.8136 0.0004% 98.0256%;
@@ -81,7 +81,7 @@
   --chart-3: 221.4336 86.3731% 54.0624%;
   --chart-4: 223.6587 78.7180% 47.8635%;
   --chart-5: 226.5426 70.0108% 39.9224%;
-  --sidebar: 223.8136 0.0000% 9.0527%;
+  --sidebar: 20 6% 15%;
   --sidebar-foreground: 223.8136 0.0004% 98.0256%;
   --sidebar-primary: 225.3451 84.0953% 48.9841%;
   --sidebar-primary-foreground: 223.8136 0.0004% 98.0256%;
@@ -128,7 +128,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
+  --color-sidebar: hsl(var(--sidebar));
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -837,4 +837,9 @@
     outline: none !important;
     box-shadow: none !important;
   }
+}
+
+/* Custom sidebar background class */
+.bg-sidebar {
+  background-color: hsl(var(--sidebar));
 }

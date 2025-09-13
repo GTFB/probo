@@ -1,4 +1,8 @@
 {
+  "project": {
+    "name": "Probo",
+    "description": "Kommerzieller Angebotsgenerator"
+  },
   "common": {
     "search": "Suchen",
     "searchPlaceholder": "Tippen zum Suchen...",
@@ -28,7 +32,8 @@
     "verifying": "Überprüfung...",
     "theme": "Design",
     "light": "Hell",
-    "dark": "Dunkel"
+    "dark": "Dunkel",
+    "sectionOf": "Abschnitt {current} von {total}"
   },
   "navigation": {
     "tableOfContents": "Inhaltsverzeichnis",

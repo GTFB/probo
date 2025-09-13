@@ -1,4 +1,8 @@
 {
+  "project": {
+    "name": "Probo",
+    "description": "Commercial Proposal Generator"
+  },
   "common": {
     "search": "Search",
     "searchPlaceholder": "Type to search...",
@@ -27,7 +31,8 @@
     "verifying": "Verifying...",
     "theme": "Theme",
     "light": "Light",
-    "dark": "Dark"
+    "dark": "Dark",
+    "sectionOf": "Section {current} of {total}"
   },
   "navigation": {
     "tableOfContents": "Table of Contents",
