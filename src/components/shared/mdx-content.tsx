@@ -7,7 +7,7 @@ import { MDXRenderer } from './mdx-renderer'
 import { PasswordPrompt } from './password-prompt'
 import { NAVIGATION_ITEMS } from '@/lib/settings'
 import { useAuth } from '@/components/providers/AuthProvider'
-import { useMdx } from './providers/MdxProvider'
+import { useMdx } from '../providers/MdxProvider'
 
 interface MDXFrontmatter {
   title: string
@@ -353,7 +353,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
   // Check authentication status
 
 
-  const isAuthenticated = sessionData?.sections.includes(sectionId) || sessionData?.sections.includes('*')
+  const isAuthenticated = sessionData?.sections?.includes(sectionId) || sessionData?.sections?.includes('*')
 
   useEffect(() => {
     const loadMDX = async () => {

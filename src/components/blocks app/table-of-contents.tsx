@@ -4,11 +4,11 @@ import * as React from "react"
 import { PanelRightClose, Search, Sun, Moon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { SearchEngine } from "@/components/search-engine"
+import { SearchEngine } from "@/components/shared/search-engine"
 import { useTheme } from "@/hooks/use-theme"
 import { useTranslations } from "@/hooks/use-translations"
-import { useRightSectionState } from "./providers/RightSectionStateProvider"
-import { LanguageSwitcher } from "@/components/language-switcher"
+import { useRightSectionState } from "../providers/RightSectionStateProvider"
+import { LanguageSwitcher } from "@/components/shared/language-switcher"
 
 interface TableOfContentsProps {
   items: Array<{

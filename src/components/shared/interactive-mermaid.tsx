@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState, memo } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import mermaid from 'mermaid'
 import { Plus, Minus, Maximize, Info } from 'lucide-react'
-import { getZoomSettings, defaultMermaidConfig } from '../lib/mermaid-config'
+import { getZoomSettings, defaultMermaidConfig } from '../../lib/mermaid-config'
 
 interface InteractiveMermaidProps {
   chart: string

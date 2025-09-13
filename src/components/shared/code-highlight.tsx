@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { highlightCode } from '../lib/shiki-config'
-import { useTheme } from '../hooks/use-theme'
+import { highlightCode } from '../../lib/shiki-config'
+import { useTheme } from '../../hooks/use-theme'
 
 interface CodeHighlightProps {
   code: string

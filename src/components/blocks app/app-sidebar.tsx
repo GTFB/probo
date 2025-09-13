@@ -22,8 +22,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
-import { useLeftSectionState } from './providers/LeftSectionStateProvider'
-import { LanguageSwitcher } from '@/components/language-switcher'
+import { useLeftSectionState } from '../providers/LeftSectionStateProvider'
+import { LanguageSwitcher } from '@/components/shared/language-switcher'
 
 interface NavigationItem {
   id: string

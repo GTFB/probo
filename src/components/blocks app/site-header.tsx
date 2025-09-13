@@ -2,7 +2,7 @@
 
 import { SidebarIcon } from "lucide-react"
 
-import { SearchForm } from "@/components/search-form"
+import { SearchForm } from "@/components/shared/search-form"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,11 +15,11 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useSidebar } from "@/components/ui/sidebar"
 import { useTranslations } from "@/hooks/use-translations"
-import { LanguageSwitcher } from "@/components/language-switcher"
+import { LanguageSwitcher } from "@/components/shared/language-switcher"
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar()
-  const t = useTranslations('breadcrumb')
+  const t = useTranslations()
 
   return (
     <header className="flex sticky top-0 z-50 w-full items-center border-b bg-background">

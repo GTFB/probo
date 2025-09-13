@@ -9,7 +9,7 @@ export default async function Layout({ children, params,
 
     let initialMdx = await MdxRepository.getInstance().findMdxBySlug(params.slug)
 
-    if (initialMdx && sessionData && !sessionData.sections.includes(initialMdx.id)) {
+    if (initialMdx && sessionData && !sessionData.sections?.includes(initialMdx.id)) {
         initialMdx = null
     }
 

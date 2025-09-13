@@ -81,29 +81,33 @@ probo/
 │   │   │   ├── toggle-group.tsx
 │   │   │   ├── toggle.tsx
 │   │   │   └── tooltip.tsx
-│   │   ├── app-sidebar.tsx
-│   │   ├── chart-area-interactive.tsx
-│   │   ├── competitor-chart.tsx
-│   │   ├── data-table.tsx
-│   │   ├── interactive-mermaid.tsx
-│   │   ├── mdx-content.tsx
-│   │   ├── mdx-content-new.tsx
-│   │   ├── mdx-content-old.tsx
-│   │   ├── mdx-layout.tsx
-│   │   ├── mdx-renderer-new.tsx
-│   │   ├── mdx-renderer.tsx
-│   │   ├── nav-documents.tsx
-│   │   ├── nav-main.tsx
-│   │   ├── nav-projects.tsx
-│   │   ├── nav-secondary.tsx
-│   │   ├── nav-user.tsx
-│   │   ├── navigation.tsx
-│   │   ├── search-engine.tsx
-│   │   ├── search-form.tsx
-│   │   ├── section-cards.tsx
-│   │   ├── site-header.tsx
-│   │   ├── table-of-contents.tsx
-│   │   └── tariff-card.tsx
+│   │   ├── blocks app/
+│   │   │   ├── app-sidebar.tsx
+│   │   │   ├── nav-documents.tsx
+│   │   │   ├── nav-main.tsx
+│   │   │   ├── nav-projects.tsx
+│   │   │   ├── nav-secondary.tsx
+│   │   │   ├── nav-user.tsx
+│   │   │   ├── navigation.tsx
+│   │   │   ├── site-header.tsx
+│   │   │   └── table-of-contents.tsx
+│   │   ├── shared/
+│   │   │   ├── chart-area-interactive.tsx
+│   │   │   ├── code-highlight.tsx
+│   │   │   ├── competitor-chart.tsx
+│   │   │   ├── data-table.tsx
+│   │   │   ├── interactive-mermaid.tsx
+│   │   │   ├── language-switcher.tsx
+│   │   │   ├── mdx-content.tsx
+│   │   │   ├── mdx-layout.tsx
+│   │   │   ├── mdx-renderer.tsx
+│   │   │   ├── mermaid-diagram.tsx
+│   │   │   ├── password-groups-info.tsx
+│   │   │   ├── password-prompt.tsx
+│   │   │   ├── search-engine.tsx
+│   │   │   ├── search-form.tsx
+│   │   │   ├── section-cards.tsx
+│   │   │   └── tariff-card.tsx
 │   ├── hooks/
 │   │   └── use-mobile.tsx
 │   ├── lib/

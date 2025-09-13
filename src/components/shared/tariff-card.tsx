@@ -26,7 +26,7 @@ export function TariffCard({
   ctaText,
   ctaLink 
 }: TariffCardProps) {
-  const t = useTranslations('tariff')
+  const t = useTranslations()
   
   return (
     <Card className={`relative h-full flex flex-col ${isRecommended ? 'border-primary scale-105 shadow-lg' : ''}`}>

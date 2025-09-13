@@ -6,7 +6,7 @@ import { PASSWORD_GROUPS } from '@/lib/settings'
 import { useTranslations } from '@/hooks/use-translations'
 
 export function PasswordGroupsInfo() {
-  const t = useTranslations('passwordGroups')
+  const t = useTranslations()
   
   return (
     <div className="space-y-4">

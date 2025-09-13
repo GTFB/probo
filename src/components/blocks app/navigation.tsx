@@ -5,7 +5,7 @@ import { NavigationItem } from '@/types/proposal'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import * as Icons from 'lucide-react'
-import { LanguageSwitcher } from '@/components/language-switcher'
+import { LanguageSwitcher } from '@/components/shared/language-switcher'
 
 interface NavigationProps {
   items: NavigationItem[]
