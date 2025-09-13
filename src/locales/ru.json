@@ -3,6 +3,15 @@
     "search": "Поиск",
     "searchPlaceholder": "Введите для поиска...",
     "loading": "Загрузка...",
+    "loadingApplication": "Загрузка приложения",
+    "takingToMainPage": "Переход на главную страницу",
+    "indexingContent": "Индексация контента...",
+    "preparingSearch": "Подготовка поиска...",
+    "navigation": "Навигация",
+    "forward": "Вперед",
+    "sectionNavigation": "Навигация по разделам",
+    "tableOfContents": "Оглавление",
+    "noHeadings": "Нет заголовков",
     "cancel": "Отмена",
     "close": "Закрыть",
     "open": "Открыть",
@@ -23,7 +32,6 @@
     "dark": "Темная"
   },
   "navigation": {
-    "tableOfContents": "Оглавление",
     "search": "Поиск",
     "overview": "Обзор",
     "projects": "Проекты",

@@ -3,6 +3,8 @@
 import { useState, useCallback, useEffect } from 'react'
 import { AppSidebar } from '@/components/blocks app/app-sidebar'
 import { useWindowSize } from '@/hooks/use-window-size'
+import { useTranslations } from '@/hooks/use-translations'
+import { LanguageSwitcher } from '@/components/shared/language-switcher'
 import { TableOfContents } from '@/components/blocks app/table-of-contents'
 import { PROJECT_SETTINGS, NAVIGATION_ITEMS } from '@/lib/settings'
 import { SearchEngine } from '@/components/shared/search-engine'
@@ -69,6 +71,7 @@ export default function SectionPage() {
   const router = useRouter()
   const params = useParams()
   const slug = params?.slug as string
+  const t = useTranslations()
 
   // Find section by slug
   const currentSection = NAVIGATION_ITEMS.find(item => item.slug === slug)
@@ -286,10 +289,10 @@ export default function SectionPage() {
           <div className={`px-4 sm:px-6 md:px-10 flex items-center transition-all duration-300 ease-in-out`} style={{ height: '72px' }}>
             <div className="flex items-center justify-between w-full">
               <div className={`flex items-center gap-4 transition-all duration-300 ease-in-out ${isLeftSidebarOpen ? '' : 'lg:ml-0'}`}>
-                <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   {(() => {
                     const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
-                    return <IconComponent className="w-4 h-4 text-white dark:text-black" />
+                    return <IconComponent className="w-4 h-4 text-primary-foreground" />
                   })()}
                 </div>
                 <div>
@@ -311,7 +314,7 @@ export default function SectionPage() {
                     }
                   >
                     <Menu className="w-4 h-4 mr-2" />
-                    Navigation
+                    {t('common.navigation')}
                   </Button>
                 )}
                 {!isRightSidebarOpen && (
@@ -325,7 +328,7 @@ export default function SectionPage() {
                     }}
                   >
                     <List className="w-4 h-4 mr-2" />
-                    Table of Contents
+                    {t('common.tableOfContents')}
                   </Button>
                 )}
               </div>
@@ -379,10 +382,10 @@ export default function SectionPage() {
                   </Sheet>
 
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gray-600 dark:bg-gray-400 rounded-lg hidden sm:flex items-center justify-center">
+                    <div className="w-8 h-8 bg-primary rounded-lg hidden sm:flex items-center justify-center">
                       {(() => {
                         const IconComponent = getIconByName(currentFrontmatter?.icon || 'Gem')
-                        return <IconComponent className="w-4 h-4 text-white dark:text-black" />
+                        return <IconComponent className="w-4 h-4 text-primary-foreground" />
                       })()}
                     </div>
                     <div className="text-left">
@@ -403,27 +406,30 @@ export default function SectionPage() {
                       <div className="px-4 py-3 flex items-center justify-between" style={{ height: '72px' }}>
                         <div className="flex items-center gap-2">
                           <div>
-                            <h2 className="text-base font-semibold">Table of Contents</h2>
-                            <p className="text-xs text-muted-foreground">Section navigation</p>
+                            <h2 className="text-base font-semibold">{t('common.tableOfContents')}</h2>
+                            <p className="text-xs text-muted-foreground">{t('common.sectionNavigation')}</p>
                           </div>
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 hover:bg-muted transition-colors duration-200 mr-5"
-                          onClick={toggleTheme}
-                        >
-                          {isDarkMode ? (
-                            <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
-                          ) : (
-                            <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
-                          )}
-                        </Button>
+                        <div className="flex items-center gap-2">
+                          <LanguageSwitcher variant="minimal" />
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            className="h-8 w-8 p-4 hover:bg-muted transition-colors duration-200 border-0 focus:ring-0 focus:outline-none mr-5"
+                            onClick={toggleTheme}
+                          >
+                            {isDarkMode ? (
+                              <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
+                            ) : (
+                              <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
+                            )}
+                          </Button>
+                        </div>
                       </div>
                       <div className="px-2 py-2 overflow-y-auto scrollbar-hide h-[calc(100vh-72px)]">
                         <div className="space-y-1 mb-6">
                           {currentToc.length === 0 ? (
-                            <p className="text-sm text-muted-foreground">No headings</p>
+                            <p className="text-sm text-muted-foreground">{t('common.noHeadings')}</p>
                           ) : (
                             currentToc.map((item) => (
                               <Button
@@ -467,7 +473,7 @@ export default function SectionPage() {
                         </div>
 
                         <div className="border-t pt-4 px-2">
-                          <h4 className="text-sm font-semibold mb-2">Search</h4>
+                          <h4 className="text-sm font-semibold mb-2">{t('common.search')}</h4>
                           <SearchEngine
                             onResultClick={(result) => {
                               const element = document.getElementById(result.id)
@@ -548,13 +554,13 @@ export default function SectionPage() {
               {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
                 <Button variant="outline" size="sm" onClick={handlePrevSection}>
                   <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
-                  Back
+                  {t('common.back')}
                 </Button>
               )}
 
               {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
                 <Button variant="outline" size="sm" onClick={handleNextSection}>
-                  <span>Forward</span>
+                  <span>{t('common.forward')}</span>
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               )}

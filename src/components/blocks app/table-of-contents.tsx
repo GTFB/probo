@@ -162,7 +162,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               onClick={() => setActiveTab('toc')}
               className={`h-7 px-2 text-sm ${activeTab === 'toc' ? 'bg-muted text-muted-foreground' : ''}`}
             >
-              {t('navigation.tableOfContents')}
+              {t('common.tableOfContents')}
             </Button>
             <Button
               variant="ghost"

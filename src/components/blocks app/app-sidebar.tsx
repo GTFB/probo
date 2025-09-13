@@ -71,7 +71,7 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
               <SidebarMenuItem key={item.id}>
                 <SidebarMenuButton
                   onClick={() => onSectionChange(item.id)}
-                  className={isActive ? "bg-accent" : ""}
+                  className={isActive ? "bg-primary text-primary-foreground" : ""}
                 >
                   <Icon className="w-4 h-4" />
                   <span>{item.title}</span>

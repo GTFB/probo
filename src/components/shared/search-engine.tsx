@@ -247,7 +247,7 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
         {/* Indexing status */}
         {!isIndexed && (
           <div className="text-xs text-muted-foreground text-center">
-            {isSearching ? 'Indexing content...' : 'Preparing search...'}
+            {isSearching ? t('common.indexingContent') : t('common.preparingSearch')}
           </div>
         )}
 

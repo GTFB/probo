@@ -601,7 +601,8 @@ blockquote: ({ children, ...props }: any) => {
 
   return (
     <blockquote 
-      className="my-6 border-l-4 border-primary/50 pl-6 pr-6 py-2 italic text-muted-foreground bg-secondary/30 rounded-r-lg" 
+      className="my-6 border-l-4 border-primary/40 pl-6 pr-6 py-2 italic text-muted-foreground rounded-r-lg"
+      style={{ backgroundColor: 'hsl(var(--primary) / 0.07)' }} 
       {...props}
     >
       {processedContent}

@@ -91,7 +91,7 @@ export function LanguageSwitcher({
           <Button 
             variant="ghost" 
             size="sm" 
-            className={`h-6 w-6 p-0 border-0 focus:ring-0 focus:outline-none ${className}`}
+            className={`h-8 w-8 p-0 hover:bg-muted transition-colors duration-200 border-0 focus:ring-0 focus:outline-none ${className}`}
           >
             <currentLanguage.flag className="w-4 h-3" />
           </Button>
