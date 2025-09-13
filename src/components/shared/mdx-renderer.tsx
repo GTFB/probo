@@ -433,8 +433,8 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
 
       if (isCheckedItem) {
         return (
-          <div className="flex items-start gap-2 text-foreground text-sm sm:text-base leading-relaxed mb-1">
-            <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+          <div className="flex items-center gap-2 text-foreground text-sm sm:text-base leading-relaxed mb-1">
+            <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
             <span>{content}</span>
           </div>
         );
