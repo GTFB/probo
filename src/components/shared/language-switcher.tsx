@@ -10,20 +10,21 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Globe } from 'lucide-react'
 import { useLocale } from '@/hooks/use-locale'
+import { US, RU, ES, FR, DE, IT, PT, JP, KR, CN, SA, IN } from 'country-flag-icons/react/3x2'
 
 const languages = [
-  { code: 'en', name: 'English', shortName: 'EN', flag: '🇺🇸' },
-  { code: 'ru', name: 'Русский', shortName: 'RU', flag: '🇷🇺' },
-  { code: 'es', name: 'Español', shortName: 'ES', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', shortName: 'FR', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', shortName: 'DE', flag: '🇩🇪' },
-  { code: 'it', name: 'Italiano', shortName: 'IT', flag: '🇮🇹' },
-  { code: 'pt', name: 'Português', shortName: 'PT', flag: '🇵🇹' },
-  { code: 'ja', name: '日本語', shortName: 'JP', flag: '🇯🇵' },
-  { code: 'ko', name: '한국어', shortName: 'KR', flag: '🇰🇷' },
-  { code: 'zh', name: '中文', shortName: 'CN', flag: '🇨🇳' },
-  { code: 'ar', name: 'العربية', shortName: 'AR', flag: '🇸🇦' },
-  { code: 'hi', name: 'हिन्दी', shortName: 'IN', flag: '🇮🇳' },
+  { code: 'en', name: 'English', shortName: 'EN', flag: US },
+  { code: 'ru', name: 'Русский', shortName: 'RU', flag: RU },
+  { code: 'es', name: 'Español', shortName: 'ES', flag: ES },
+  { code: 'fr', name: 'Français', shortName: 'FR', flag: FR },
+  { code: 'de', name: 'Deutsch', shortName: 'DE', flag: DE },
+  { code: 'it', name: 'Italiano', shortName: 'IT', flag: IT },
+  { code: 'pt', name: 'Português', shortName: 'PT', flag: PT },
+  { code: 'ja', name: '日本語', shortName: 'JP', flag: JP },
+  { code: 'ko', name: '한국어', shortName: 'KR', flag: KR },
+  { code: 'zh', name: '中文', shortName: 'CN', flag: CN },
+  { code: 'ar', name: 'العربية', shortName: 'AR', flag: SA },
+  { code: 'hi', name: 'हिन्दी', shortName: 'IN', flag: IN },
 ]
 
 type LanguageSwitcherVariant = 'default' | 'compact' | 'minimal' | 'inline'
@@ -73,7 +74,7 @@ export function LanguageSwitcher({
               onClick={() => handleLanguageChange(language.code)}
               className="h-6 px-2 text-xs"
             >
-              <span className="mr-1">{language.flag}</span>
+              <language.flag className="w-4 h-3 mr-1" />
               <span>{language.shortName}</span>
             </Button>
           ))}
@@ -90,9 +91,9 @@ export function LanguageSwitcher({
           <Button 
             variant="ghost" 
             size="sm" 
-            className={`h-6 w-6 p-0 ${className}`}
+            className={`h-6 w-6 p-0 border-0 focus:ring-0 focus:outline-none ${className}`}
           >
-            {currentLanguage.flag}
+            <currentLanguage.flag className="w-4 h-3" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
@@ -102,7 +103,7 @@ export function LanguageSwitcher({
               onClick={() => handleLanguageChange(language.code)}
               className={`cursor-pointer ${locale === language.code ? 'bg-accent' : ''}`}
             >
-              <span className="mr-2">{language.flag}</span>
+              <language.flag className="w-4 h-3 mr-2" />
               <span>{language.name}</span>
               {locale === language.code && (
                 <span className="ml-auto text-xs text-muted-foreground">✓</span>
@@ -122,11 +123,11 @@ export function LanguageSwitcher({
           <Button 
             variant="ghost" 
             size="sm" 
-            className={`${sizeClasses[size]} w-auto px-2 ${className}`}
+            className={`${sizeClasses[size]} w-auto px-2 border-0 focus:ring-0 focus:outline-none ${className}`}
           >
             <Globe className="h-4 w-4" />
             {showText && (
-              <span className="ml-1 text-xs">{currentLanguage.flag}</span>
+              <currentLanguage.flag className="w-3 h-2 ml-1" />
             )}
           </Button>
         </DropdownMenuTrigger>
@@ -137,7 +138,7 @@ export function LanguageSwitcher({
               onClick={() => handleLanguageChange(language.code)}
               className={`cursor-pointer ${locale === language.code ? 'bg-accent' : ''}`}
             >
-              <span className="mr-2">{language.flag}</span>
+              <language.flag className="w-4 h-3 mr-2" />
               <span>{language.name}</span>
               {locale === language.code && (
                 <span className="ml-auto text-xs text-muted-foreground">✓</span>
@@ -153,15 +154,20 @@ export function LanguageSwitcher({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className={`h-8 w-auto px-2 ${className}`}>
+        <Button variant="ghost" size="sm" className={`h-8 w-auto px-2 border-0 focus:ring-0 focus:outline-none ${className}`}>
           {showGlobe && <Globe className="h-4 w-4 mr-2" />}
           {showText && (
             <>
-              <span className="hidden sm:inline">{currentLanguage.flag} {currentLanguage.name}</span>
-              <span className="sm:hidden">{currentLanguage.flag}</span>
+              <span className="hidden sm:flex items-center gap-1">
+                <currentLanguage.flag className="w-4 h-3" />
+                {currentLanguage.name}
+              </span>
+              <span className="sm:hidden">
+                <currentLanguage.flag className="w-4 h-3" />
+              </span>
             </>
           )}
-          {!showText && currentLanguage.flag}
+          {!showText && <currentLanguage.flag className="w-4 h-3" />}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">

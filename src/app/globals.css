@@ -704,4 +704,20 @@
   .right-sidebar-closed-state {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
+
+  /* Убираем бордеры у кнопок переключателя языков */
+  [data-radix-collection-item] button,
+  [data-radix-dropdown-menu-trigger] button,
+  button[data-state="open"],
+  button[data-state="closed"] {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  /* Дополнительная защита от фокуса */
+  button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 }

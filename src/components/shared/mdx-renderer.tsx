@@ -543,78 +543,56 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     //AccordionItem
     accordionitemui: ({ children, ...props }: any) => {
       return (
-        <AccordionItem {...props}>
-          {children}
-        </AccordionItem>)
+        <AccordionItem {...props}>{children}</AccordionItem>)
     },
     //AccordionTrigger
     accordiontriggerui: ({ children, ...props }: any) => {
       return (
-        <AccordionTrigger className="hover:no-underline" {...props}>
-          {children}
-        </AccordionTrigger>)
+        <AccordionTrigger className="hover:no-underline" {...props}>{children}</AccordionTrigger>)
     },
     //AccordionContent
     accordioncontentui: ({ children, ...props }: any) => {
       return (
-        <AccordionContent {...props}>
-          {children}
-        </AccordionContent>)
+        <AccordionContent {...props}>{children}</AccordionContent>)
     },
     //buttonui
     buttonui: ({ children, ...props }: any) => {
       return (
-        <Button {...props}>
-          {children}
-        </Button>)
+        <Button {...props}>{children}</Button>)
     },
     //avatarui
     avatarui: ({ children, ...props }: any) => {
       return (
-        <Avatar {...props}>
-          {children}
-        </Avatar>)
+        <Avatar {...props}>{children}</Avatar>)
     },
     //badgeui
     badgeui: ({ children, ...props }: any) => {
       return (
-        <Badge {...props} span={true}>
-          {children}
-        </Badge>)
+        <Badge {...props} span={true}>{children}</Badge>)
     },
     //breadcrumbui
     breadcrumbui: ({ children, ...props }: any) => {
       return (
-        <Breadcrumb {...props}>
-          {children}
-        </Breadcrumb>)
+        <Breadcrumb {...props}>{children}</Breadcrumb>)
     },
     cardui: ({ children, ...props }: any) => {
       return (
-        <Card className="p-6" {...props}>
-          {children}
-        </Card>)
+        <Card className="p-6" {...props}>{children}</Card>)
     },
      //carouselui
      carouselui: ({ children, ...props }: any) => {
        return (
-         <Carousel {...props}>
-           {children}
-         </Carousel>)
+         <Carousel {...props}>{children}</Carousel>)
      },
      //carouselcontentui
      carouselcontentui: ({ children, ...props }: any) => {
        return (
-         <CarouselContent {...props}>
-           {children}
-         </CarouselContent>)
+         <CarouselContent {...props}>{children}</CarouselContent>)
      },
      //carouselitemui
      carouselitemui: ({ children, ...props }: any) => {
        return (
-         <CarouselItem {...props}>
-           {children}
-         </CarouselItem>)
+         <CarouselItem {...props}>{children}</CarouselItem>)
      },
      //carouselpreviousui
      carouselpreviousui: ({ ...props }: any) => {
@@ -631,86 +609,62 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     //chartstyleui
     chartstyleui: ({ children, ...props }: any) => {
       return (
-        <ChartStyle {...props}>
-          {children}
-        </ChartStyle>)
+        <ChartStyle {...props}>{children}</ChartStyle>)
     },
     //charttooltipui
     charttooltipui: ({ children, ...props }: any) => {
       return (
-        <ChartTooltip {...props}>
-          {children}
-        </ChartTooltip>)
+        <ChartTooltip {...props}>{children}</ChartTooltip>)
     },
     //charttooltipcontentui
     charttooltipcontentui: ({ children, ...props }: any) => {
       return (
-        <ChartTooltipContent {...props}>
-          {children}
-        </ChartTooltipContent>)
+        <ChartTooltipContent {...props}>{children}</ChartTooltipContent>)
     },
     //chartlegendui
     chartlegendui: ({ children, ...props }: any) => {
       return (
-        <ChartLegend {...props}>
-          {children}
-        </ChartLegend>)
+        <ChartLegend {...props}>{children}</ChartLegend>)
     },
     //chartlegendcontentui
     chartlegendcontentui: ({ children, ...props }: any) => {
       return (
-        <ChartLegendContent {...props}>
-          {children}
-        </ChartLegendContent>)
+        <ChartLegendContent {...props}>{children}</ChartLegendContent>)
     },
     //chartcontainerui
     chartcontainerui: ({ children, ...props }: any) => {
       return (
-        <ChartContainer {...props}>
-          {children}
-        </ChartContainer>)
+        <ChartContainer {...props}>{children}</ChartContainer>)
     },
     //checkboxui
     checkboxui: ({ children, ...props }: any) => {
       return (
-        <Checkbox {...props}>
-          {children}
-        </Checkbox>)
+        <Checkbox {...props}>{children}</Checkbox>)
     },
     //collapsibleui
     collapsibleui: ({ children, ...props }: any) => {
       return (
-        <Collapsible {...props}>
-          {children}
-        </Collapsible>)
+        <Collapsible {...props}>{children}</Collapsible>)
     },
     //dropdownmenuui
     dropdownmenuui: ({ children, ...props }: any) => {
       return (
-        <DropdownMenu {...props}>
-          {children}
-        </DropdownMenu>)
+        <DropdownMenu {...props}>{children}</DropdownMenu>)
     },
     //labelui
     labelui: ({ children, ...props }: any) => {
       return (
-        <Label {...props}>
-          {children}
-        </Label>)
+        <Label {...props}>{children}</Label>)
     },
     //selectui
     selectui: ({ children, ...props }: any) => {
       return (
-        <Select {...props}>
-          {children}
-        </Select>)
+        <Select {...props}>{children}</Select>)
     },
     //separatorui
     separatorui: ({ children, ...props }: any) => {
       return (
-        <Separator {...props}>
-          {children}
-        </Separator>)
+        <Separator {...props}>{children}</Separator>)
     },
     //switchui
     switchui: ({ ...props }: any) => {
@@ -721,65 +675,47 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     //tabsui
     tabsui: ({ children, ...props }: any) => {
       return (
-        <Tabs {...props}>
-          {children}
-        </Tabs>)
+        <Tabs {...props}>{children}</Tabs>)
     },
     //tabslistui
     tabslistui: ({ children, ...props }: any) => {
       return (
-        <TabsList {...props}>
-          {children}
-        </TabsList>)
+        <TabsList {...props}>{children}</TabsList>)
     },
     //tabstriggerui
     tabstriggerui: ({ children, ...props }: any) => {
       return (
-        <TabsTrigger {...props}>
-          {children}
-        </TabsTrigger>)
+        <TabsTrigger {...props}>{children}</TabsTrigger>)
     },
     //tabscontentui
     tabscontentui: ({ children, ...props }: any) => {
       return (
-        <TabsContent {...props}>
-          {children}
-        </TabsContent>)
+        <TabsContent {...props}>{children}</TabsContent>)
     },
     //tooggleui
     tooggleui: ({ children, ...props }: any) => {
       return (
-        <Toggle {...props}>
-          {children}
-        </Toggle>)
+        <Toggle {...props}>{children}</Toggle>)
     },
     //toogglegroupui
     toogglegroupui: ({ children, ...props }: any) => {
       return (
-        <ToggleGroup {...props}>
-          {children}
-        </ToggleGroup>)
+        <ToggleGroup {...props}>{children}</ToggleGroup>)
     },
     //tooltipui
     tooltipui: ({ children, ...props }: any) => {
       return (
-        <Tooltip {...props}>
-          {children}
-        </Tooltip>)
+        <Tooltip {...props}>{children}</Tooltip>)
     },
     //inputui
     inputui: ({ children, ...props }: any) => {
       return (
-        <Input {...props}>
-          {children}
-        </Input>)
+        <Input {...props}>{children}</Input>)
     },
     //VideoPlayeroui
     videoplayerui: ({ children, ...props }: any) => {
       return (
-        <VideoPlayer {...props}>
-          {children}
-        </VideoPlayer>)
+        <VideoPlayer {...props}>{children}</VideoPlayer>)
     },
   //skeletonui
   skeletonui: ({ children, ...props }: any) => {
@@ -791,58 +727,42 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     //tableui
     tableui: ({ children, ...props }: any) => {
       return (
-        <Table {...props}>
-          {children}
-        </Table>)
+        <Table {...props}>{children}</Table>)
     },
     //tableheaderui
     tableheaderui: ({ children, ...props }: any) => {
       return (
-        <TableHeader {...props}>
-          {children}
-        </TableHeader>)
+        <TableHeader {...props}>{children}</TableHeader>)
     },
     //tablebodyui
     tablebodyui: ({ children, ...props }: any) => {
       return (
-        <TableBody {...props}>
-          {children}
-        </TableBody>)
+        <TableBody {...props}>{children}</TableBody>)
     },
     //tablefooterui
     tablefooterui: ({ children, ...props }: any) => {
       return (
-        <TableFooter {...props}>
-          {children}
-        </TableFooter>)
+        <TableFooter {...props}>{children}</TableFooter>)
     },
     //tableheadui
     tableheadui: ({ children, ...props }: any) => {
       return (
-        <TableHead {...props}>
-          {children}
-        </TableHead>)
+        <TableHead {...props}>{children}</TableHead>)
     },
     //tablerowui
     tablerowui: ({ children, ...props }: any) => {
       return (
-        <TableRow {...props}>
-          {children}
-        </TableRow>)
+        <TableRow {...props}>{children}</TableRow>)
     },
     //tablecellui
     tablecellui: ({ children, ...props }: any) => {
       return (
-        <TableCell {...props}>
-          {children}
-        </TableCell>)
+        <TableCell {...props}>{children}</TableCell>)
     },
     //tablecaptionui
     tablecaptionui: ({ children, ...props }: any) => {
       return (
-        <TableCaption {...props}>
-          {children}
-        </TableCaption>)
+        <TableCaption {...props}>{children}</TableCaption>)
     },
 
     // Admonitions

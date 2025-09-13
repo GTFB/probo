@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { useLeftSectionState } from '../providers/LeftSectionStateProvider'
-import { LanguageSwitcher } from '@/components/shared/language-switcher'
 
 interface NavigationItem {
   id: string
@@ -83,8 +82,7 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
         </SidebarMenu>
       </SidebarContent>
       
-      <SidebarFooter className="px-6 py-2 h-16 flex flex-col items-center justify-center gap-2">
-        <LanguageSwitcher variant="compact" showText={true} size="sm" />
+      <SidebarFooter className="px-6 py-2 h-16 flex flex-col items-start justify-center gap-2">
         <img 
           src="/logo.svg" 
           alt="Logo" 
