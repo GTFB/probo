@@ -120,6 +120,19 @@ interface MDXRendererProps {
   toc?: Array<{ id: string; title: string; level: number; slug?: string }>
 }
 
+const extractText = (children: any): string => {
+  if (typeof children === 'string') {
+    return children;
+  }
+  if (Array.isArray(children)) {
+    return children.map(extractText).join('');
+  }
+  if (children && typeof children === 'object' && children.props) {
+    return extractText(children.props.children);
+  }
+  return '';
+};
+
 // Function to create heading components with ID support
 const createHeadingComponents = (toc?: Array<{ id: string; title: string; level: number; slug?: string }>) => {
   const getHeadingId = (level: number, children: any) => {
@@ -336,18 +349,48 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     },
 
     // Paragraphs
-    p: ({ children, ...props }: any) => (
-      <p className="text-foreground mb-4 leading-relaxed text-sm sm:text-base" {...props}>
-        {children}
-      </p>
-    ),
+    p: ({ node, children, ...props }: any) => {
+      if (
+        node &&
+        node.children.length === 1 &&
+        node.children[0].type === 'element' &&
+        node.children[0].tagName.endsWith('ui')
+      ) {
+        return <>{children}</>;
+      }
+      return (
+        <p className="text-foreground mb-4 leading-relaxed text-sm sm:text-base" {...props}>
+          {children}
+        </p>
+      );
+    },
 
     // Lists
-    ul: ({ children, ...props }: any) => (
-      <ul className="mb-6 space-y-2 pl-6 list-disc" {...props}>
-        {children}
-      </ul>
-    ),
+    ul: ({ children, ...props }: any) => {
+      // Check if any child contains ✓ symbol
+      const hasCheckedItems = React.Children.toArray(children).some(child => {
+        if (React.isValidElement(child)) {
+          const childText = child.props?.children?.toString() || ''
+          return childText.includes('✓')
+        }
+        return false
+      })
+
+      if (hasCheckedItems) {
+        // For checked lists, render as div container instead of ul
+        return (
+          <div className="mb-6 space-y-2" {...props}>
+            {children}
+          </div>
+        )
+      }
+
+      return (
+        <ul className="mb-6 space-y-2 pl-6 list-disc" {...props}>
+          {children}
+        </ul>
+      )
+    },
     ol: ({ children, ...props }: any) => (
       <ol className="mb-6 space-y-2 pl-6 list-decimal" {...props}>
         {children}
@@ -368,12 +411,38 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
       return <input {...props} />
     },
     li: ({ children, ...props }: any) => {
-
       const isTaskListItem = props.className?.includes('task-list-item')
       const baseClasses = 'text-foreground text-sm sm:text-base leading-relaxed mb-1 relative'
       const listClasses = isTaskListItem ? 'list-none' : ''
 
-      props.className = (props.className || '') + ' ' + baseClasses + ' ' + listClasses
+      // Check if the first child is text that starts with "✓ "
+      const childrenArray = React.Children.toArray(children)
+      const firstChild = childrenArray[0]
+      let isCheckedItem = false
+      let content = children
+
+      if (typeof firstChild === 'string' && firstChild.startsWith('✓ ')) {
+        isCheckedItem = true
+        content = childrenArray.slice(0, 1).map((child, index) => {
+          if (index === 0 && typeof child === 'string') {
+            return child.slice(2) // Remove "✓ " prefix
+          }
+          return child
+        }).concat(childrenArray.slice(1))
+      }
+
+      if (isCheckedItem) {
+        return (
+          <div className="flex items-start gap-2 text-foreground text-sm sm:text-base leading-relaxed mb-1">
+            <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+            <span>{content}</span>
+          </div>
+        );
+      }
+
+      const finalListClasses = listClasses
+      props.className = (props.className || '') + ' ' + baseClasses + ' ' + finalListClasses
+      
       return (
         <li {...props}>
           {children}
@@ -441,21 +510,8 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           
           if (match) {
             const language = match[1]
-            // Extract text content from React elements
-            const extractText = (children: any): string => {
-              if (typeof children === 'string') {
-                return children
-              }
-              if (Array.isArray(children)) {
-                return children.map(extractText).join('')
-              }
-              if (children && typeof children === 'object' && children.props) {
-                return extractText(children.props.children)
-              }
-              return String(children || '')
-            }
             
-            const code = extractText(codeElement.props.children)
+            const code = String(codeElement.props.children || '')
             
             return (
               <CodeHighlight 
@@ -476,12 +532,89 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
       )
     },
 
-    // Blockquotes
-    blockquote: ({ children, ...props }: any) => (
-      <blockquote className="my-6 border-l-4 border-primary/50 pl-6 py-4 italic text-muted-foreground bg-secondary/30 rounded-r-lg" {...props}>
-        {children}
-      </blockquote>
-    ),
+// Blockquote
+blockquote: ({ children, ...props }: any) => {
+  const childrenArray = React.Children.toArray(children);
+  
+  // Find the last React element (not string)
+  const reactElements = childrenArray.filter(child => React.isValidElement(child));
+  const lastChild = reactElements[reactElements.length - 1];
+
+  let author = null;
+  let content = children;
+
+  if (
+    React.isValidElement(lastChild) &&
+    typeof lastChild.type === 'function' &&
+    lastChild.type.name === 'p'
+  ) {
+    const lastChildText = extractText(lastChild.props.children);
+
+    if (lastChildText.trim().startsWith('—')) {
+      // Extract author as React element (preserving links and other markup)
+      const authorContent = lastChild.props.children;
+      // Remove the "— " prefix from the author content
+      if (Array.isArray(authorContent)) {
+        // If it's an array, find the first text element and remove "— " from it
+        const modifiedAuthorContent = authorContent.map((item, index) => {
+          if (index === 0 && typeof item === 'string' && item.startsWith('— ')) {
+            return item.substring(2); // Remove "— " prefix
+          }
+          return item;
+        });
+        author = modifiedAuthorContent;
+      } else if (typeof authorContent === 'string' && authorContent.startsWith('— ')) {
+        author = authorContent.substring(2); // Remove "— " prefix
+      } else {
+        author = authorContent;
+      }
+      
+      // Remove the last React element from content
+      const lastElementIndex = childrenArray.lastIndexOf(lastChild);
+      content = childrenArray.slice(0, lastElementIndex);
+
+      if (content.length === 0) {
+        content = children;
+        author = null;
+      }
+    }
+  }
+
+  // Process content to modify heading styles inside blockquote
+  const processedContent = React.Children.map(content, (child) => {
+    if (React.isValidElement(child) && typeof child.type === 'function') {
+      // Check if it's a heading element
+      if (child.type.name === 'h1' || child.type.name === 'h2' || child.type.name === 'h3' || 
+          child.type.name === 'h4' || child.type.name === 'h5' || child.type.name === 'h6') {
+        // Clone the element with modified className
+        const originalClassName = (child.props as any).className || '';
+        const modifiedClassName = originalClassName.replace(/mt-\d+/g, 'mt-2');
+        
+        return React.cloneElement(child, {
+          ...(child.props as any),
+          className: modifiedClassName
+        });
+      }
+    }
+    return child;
+  });
+
+  return (
+    <blockquote 
+      className="my-6 border-l-4 border-primary/50 pl-6 pr-6 py-2 italic text-muted-foreground bg-secondary/30 rounded-r-lg" 
+      {...props}
+    >
+      {processedContent}
+      {author && (
+        <footer 
+          className="mt-4 text-sm font-bold text-foreground not-italic text-left sm:text-right"
+        >
+          {author}
+        </footer>
+      )}
+    </blockquote>
+  );
+},
 
     // Tables
     table: ({ children, ...props }: any) => (
@@ -664,7 +797,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     //separatorui
     separatorui: ({ children, ...props }: any) => {
       return (
-        <hr className="my-4 border-border" {...props} />)
+        <div className="my-4 h-px bg-border" {...props} />)
     },
     //switchui
     switchui: ({ ...props }: any) => {
@@ -733,15 +866,24 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     },
     //tableheaderui
     tableheaderui: ({ children, ...props }: any) => {
-      return (<TableHeader {...props}>{children}</TableHeader>)
+      const filteredChildren = React.Children.toArray(children).filter(
+        child => !(typeof child === 'string' && child.trim() === '')
+      );
+      return (<TableHeader {...props}>{filteredChildren}</TableHeader>)
     },
     //tablebodyui
     tablebodyui: ({ children, ...props }: any) => {
-      return (<TableBody {...props}>{children}</TableBody>)
+      const filteredChildren = React.Children.toArray(children).filter(
+        child => !(typeof child === 'string' && child.trim() === '')
+      );
+      return (<TableBody {...props}>{filteredChildren}</TableBody>)
     },
     //tablefooterui
     tablefooterui: ({ children, ...props }: any) => {
-      return (<TableFooter {...props}>{children}</TableFooter>)
+      const filteredChildren = React.Children.toArray(children).filter(
+        child => !(typeof child === 'string' && child.trim() === '')
+      );
+      return (<TableFooter {...props}>{filteredChildren}</TableFooter>)
     },
     //tableheadui
     tableheadui: ({ children, ...props }: any) => {
@@ -878,6 +1020,7 @@ export function MDXRenderer({ markdownContent, mermaidCharts, toc }: MDXRenderer
   if (!markdownContent) {
     return <div className="mdx-content">Loading...</div>
   }
+
 
   // Create components with TOC support
   const components = createHeadingComponents(toc)
