@@ -513,7 +513,7 @@ export default function SectionPage() {
 
         {/* Footer */}
         <div className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t py-2 h-16 z-30">
-          <div className="flex flex-col gap-2 p-4 items-center justify-center h-full">
+          <div className="flex flex-col gap-2 lg:px-10 py-4 items-center justify-center h-full">
             {/* Desktop navigation */}
             <div className={`hidden lg:flex w-full gap-4 transition-opacity duration-300 ${(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText)
                 ? 'justify-between'
@@ -539,7 +539,7 @@ export default function SectionPage() {
             </div>
 
             {/* Mobile navigation */}
-            <div className={`lg:hidden flex w-full px-4 gap-4 transition-opacity duration-300 ${(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText)
+            <div className={`lg:hidden flex w-full px-4 sm:px-6 md:px-6 gap-4 transition-opacity duration-300 ${(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText)
                 ? 'justify-between'
                 : (currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText)
                   ? 'justify-start'
@@ -566,7 +566,7 @@ export default function SectionPage() {
 
       {/* Desktop right table of contents */}
       <div
-        className={`hidden lg:block fixed top-0 right-0 h-full w-80 bg-background border-l shadow-lg transition-transform duration-300 ease-in-out z-40 ${isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`hidden lg:block fixed top-0 right-0 h-full w-80 bg-background border-l transition-transform duration-300 ease-in-out z-40 ${isRightSidebarOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <TableOfContents

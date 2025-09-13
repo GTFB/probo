@@ -11,7 +11,7 @@ import { shouldEnableZoom } from '../../lib/mermaid-config'
 import { useTheme } from '../../hooks/use-theme'
 import { Button } from '../ui/button'
 import Link from 'next/link'
-import { Check, Square, CheckSquare, SquareCheck, Info, CheckCircle, AlertTriangle, XCircle } from 'lucide-react'
+import { Check, Square, CheckSquare, SquareCheck, Info, CheckCircle, AlertTriangle, XCircle, Link as LinkIcon } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '../ui/accordion'
 import { Avatar } from '../ui/avatar'
 import { Breadcrumb } from '../ui/breadcrumb'
@@ -165,10 +165,10 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           {tocItem?.slug && (
             <button
               onClick={copyLink}
-              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              className="absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
+              <LinkIcon className="h-4 w-4 text-muted-foreground hover:text-foreground" />
             </button>
           )}
         </div>
@@ -197,10 +197,10 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           {tocItem?.slug && (
             <button
               onClick={copyLink}
-              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              className="absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
+              <LinkIcon className="h-4 w-4 text-muted-foreground hover:text-foreground" />
             </button>
           )}
         </div>
@@ -227,13 +227,13 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
             {children}
           </h3>
           {tocItem?.slug && (
-            <Button
+            <button
               onClick={copyLink}
-              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              className="absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
-            </Button>
+              <LinkIcon className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+            </button>
           )}
         </div>
       )
@@ -261,10 +261,10 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           {tocItem?.slug && (
             <button
               onClick={copyLink}
-              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              className="absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
+              <LinkIcon className="h-4 w-4 text-muted-foreground hover:text-foreground" />
             </button>
           )}
         </div>
@@ -293,10 +293,10 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           {tocItem?.slug && (
             <button
               onClick={copyLink}
-              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              className="absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
+              <LinkIcon className="h-4 w-4 text-muted-foreground hover:text-foreground" />
             </button>
           )}
         </div>
@@ -325,10 +325,10 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           {tocItem?.slug && (
             <button
               onClick={copyLink}
-              className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-muted rounded"
+              className="absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded"
               title="Copy link to this heading"
             >
-              <Link className="h-4 w-4 text-muted-foreground hover:text-foreground" href={`#${tocItem.slug}`} />
+              <LinkIcon className="h-4 w-4 text-muted-foreground hover:text-foreground" />
             </button>
           )}
         </div>
@@ -664,7 +664,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     //separatorui
     separatorui: ({ children, ...props }: any) => {
       return (
-        <Separator {...props}>{children}</Separator>)
+        <hr className="my-4 border-border" {...props} />)
     },
     //switchui
     switchui: ({ ...props }: any) => {
@@ -674,8 +674,11 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
     },
     //tabsui
     tabsui: ({ children, ...props }: any) => {
+      // Convert defaultvalue to defaultValue for React compatibility
+      const { defaultvalue, ...restProps } = props;
+      const correctedProps = defaultvalue !== undefined ? { ...restProps, defaultValue: defaultvalue } : restProps;
       return (
-        <Tabs {...props}>{children}</Tabs>)
+        <Tabs {...correctedProps}>{children}</Tabs>)
     },
     //tabslistui
     tabslistui: ({ children, ...props }: any) => {
@@ -726,43 +729,35 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
   },
     //tableui
     tableui: ({ children, ...props }: any) => {
-      return (
-        <Table {...props}>{children}</Table>)
+      return (<Table {...props}>{children}</Table>)
     },
     //tableheaderui
     tableheaderui: ({ children, ...props }: any) => {
-      return (
-        <TableHeader {...props}>{children}</TableHeader>)
+      return (<TableHeader {...props}>{children}</TableHeader>)
     },
     //tablebodyui
     tablebodyui: ({ children, ...props }: any) => {
-      return (
-        <TableBody {...props}>{children}</TableBody>)
+      return (<TableBody {...props}>{children}</TableBody>)
     },
     //tablefooterui
     tablefooterui: ({ children, ...props }: any) => {
-      return (
-        <TableFooter {...props}>{children}</TableFooter>)
+      return (<TableFooter {...props}>{children}</TableFooter>)
     },
     //tableheadui
     tableheadui: ({ children, ...props }: any) => {
-      return (
-        <TableHead {...props}>{children}</TableHead>)
+      return (<TableHead {...props}>{children}</TableHead>)
     },
     //tablerowui
     tablerowui: ({ children, ...props }: any) => {
-      return (
-        <TableRow {...props}>{children}</TableRow>)
+      return (<TableRow {...props}>{children}</TableRow>)
     },
     //tablecellui
     tablecellui: ({ children, ...props }: any) => {
-      return (
-        <TableCell {...props}>{children}</TableCell>)
+      return (<TableCell {...props}>{children}</TableCell>)
     },
     //tablecaptionui
     tablecaptionui: ({ children, ...props }: any) => {
-      return (
-        <TableCaption {...props}>{children}</TableCaption>)
+      return (<TableCaption {...props}>{children}</TableCaption>)
     },
 
     // Admonitions
