@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { AppSidebar } from '@/components/blocks-app/app-sidebar'
 import { useWindowSize } from '@/hooks/use-window-size'
 import { useTranslations } from '@/hooks/use-translations'
 import { LanguageSwitcher } from '@/components/shared/language-switcher'
@@ -10,10 +9,9 @@ import { PROJECT_SETTINGS, NAVIGATION_ITEMS } from '../../../settings'
 import { SearchEngine } from '@/components/shared/search-engine'
 import { Button } from '@/components/ui/button'
 import { MDXContent } from '@/components/shared/mdx-content'
-import { ArrowRight, Menu, X, List, Sun, Moon } from 'lucide-react'
+import { ArrowRight, Menu, X, List, Sun, Moon, PanelLeftClose } from 'lucide-react'
 import { NavigationItem } from '@/types/proposal'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { SidebarProvider } from '@/components/ui/sidebar'
 import { useRouter, useParams } from 'next/navigation'
 
 interface MDXFrontmatter {
@@ -75,6 +73,10 @@ export default function SectionPage() {
   // Find section by slug
   const currentSection = NAVIGATION_ITEMS.find(item => item.href === `/${slug}`)
   const activeSection = currentSection?.id || '1'
+  
+  console.log('Page: slug from URL:', slug)
+  console.log('Page: currentSection:', currentSection)
+  console.log('Page: activeSection:', activeSection)
   const { mdx,  } = useMdx()
 
 
@@ -90,6 +92,7 @@ export default function SectionPage() {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(rightSectionState !== 'close')
   const [isRightOffcanvasOpen, setIsRightOffcanvasOpen] = useState(false)
   const { width } = useWindowSize()
+  const isClient = typeof window !== 'undefined'
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // During server-side rendering, always return false
@@ -261,27 +264,63 @@ export default function SectionPage() {
     <div className="min-h-screen relative">
       {/* Desktop left sidebar */}
       <div
-        className={`hidden lg:block fixed top-0 left-0 h-full transition-transform duration-300 ease-in-out z-40 ${isLeftSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        className={`hidden lg:block fixed top-0 left-0 h-full w-64 z-40 transition-all duration-300 ease-in-out ${isLeftSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <SidebarProvider defaultOpen={true}>
-          <AppSidebar
-            items={navigationItemsWithIcons}
-            activeSection={activeSection}
-            onSectionChange={handleSectionChange}
-            onToggle={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
-          />
-        </SidebarProvider>
+        <div className="h-full w-full bg-sidebar text-sidebar-foreground flex flex-col">
+          <div className="px-6 py-3 flex justify-between" style={{ height: '72px' }}>
+            <div className="flex items-center gap-2">
+              <div>
+                <h2 className="text-lg font-semibold">{t('project.name')}</h2>
+                <p className="text-xs text-muted-foreground">{t('project.description')}</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 flex-shrink-0 cursor-pointer hover:bg-muted hover:text-muted-foreground"
+             onClick={() => {
+              console.log('Sidebar toggle called, current state:', isLeftSidebarOpen)
+              setIsLeftSidebarOpen(!isLeftSidebarOpen)
+             }}>
+              <PanelLeftClose className="h-3 w-3" />
+            </Button>
+          </div>
+          <div className="p-4 flex-1">
+            <div className="space-y-1">
+              {navigationItemsWithIcons.map((item) => {
+                const Icon = item.icon
+                const isActive = activeSection === item.id
+                
+                return (
+                  <Button
+                    key={item.id}
+                    variant="ghost"
+                    className={`w-full gap-0 justify-start h-9 px-3 cursor-pointer ${isActive ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "hover:bg-muted hover:text-muted-foreground"}`}
+                    onClick={() => handleSectionChange(item.id)}
+                  >
+                    <Icon className="w-4 h-4 mr-3" />
+                    <span>{item.title}</span>
+                  </Button>
+                )
+              })}
+            </div>
+          </div>
+          
+          <div className="px-6 py-2 h-16 flex flex-col items-start justify-center gap-2 border-sidebar-border">
+            <img 
+              src="/logo.svg" 
+              alt="Logo" 
+              className="h-8 w-auto"
+              style={{ WebkitWritingMode: 'vertical-lr' }}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Central section: Header, Content, Footer */}
       <div
-        className="flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out w-full lg:w-auto"
-        style={{
-          width: width < 1024 ? '100%' : `calc(100% - ${isLeftSidebarOpen ? '256px' : '0px'} - ${isRightSidebarOpen ? '320px' : '0px'})`,
-          marginLeft: width < 1024 ? '0px' : (isLeftSidebarOpen ? '256px' : '0px'),
-          marginRight: width < 1024 ? '0px' : (isRightSidebarOpen ? '320px' : '0px'),
-        }}
+        className={`flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out ${
+          !isClient || width < 1024 
+            ? 'w-full ml-0 mr-0' 
+            : `w-auto ${isLeftSidebarOpen ? 'ml-64' : 'ml-0'} ${isRightSidebarOpen ? 'mr-80' : 'mr-0'}`
+        }`}
       >
         {/* Sticky Header for desktop */}
         <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
@@ -367,7 +406,7 @@ export default function SectionPage() {
                               <Button
                                 key={item.id}
                                 variant="ghost"
-                                className={`w-full justify-start h-9 px-3 ${isActive ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"}`}
+                                className={`w-full justify-start h-9 px-3 cursor-pointer ${isActive ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "hover:bg-muted hover:text-muted-foreground"}`}
                                 onClick={() => handleSectionChange(item.id)}
                               >
                                 <Icon className="w-4 h-4 mr-3" />
@@ -423,13 +462,13 @@ export default function SectionPage() {
                           <Button 
                             variant="ghost" 
                             size="sm"
-                            className="h-8 w-8 p-4 hover:bg-muted transition-colors duration-200 border-0 focus:ring-0 focus:outline-none mr-5"
+                            className="h-6 w-6 p-0 cursor-pointer hover:bg-muted hover:text-muted-foreground mr-5"
                             onClick={toggleTheme}
                           >
                             {isDarkMode ? (
-                              <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
+                              <Sun className="h-4 w-4 transition-colors duration-200" />
                             ) : (
-                              <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
+                              <Moon className="h-4 w-4 transition-colors duration-200" />
                             )}
                           </Button>
                         </div>
@@ -508,7 +547,7 @@ export default function SectionPage() {
           </div>
 
           {/* Content */}
-          <div className="pb-16 px-4 sm:px-6 md:px-6 lg:px-10 mobile-header-offset">
+          <div className="pb-24 lg:pb-16 px-4 sm:px-6 md:px-6 lg:px-10 mobile-header-offset">
             <div className="w-full">
               <section>
                 <div className="mb-8">
@@ -560,15 +599,17 @@ export default function SectionPage() {
                   : 'justify-end'
               }`}>
               {(currentFrontmatter?.prevButtonText || prevFrontmatter?.prevButtonText) && (
-                <Button variant="outline" size="sm" onClick={handlePrevSection}>
+                <Button variant="outline" size="sm" onClick={handlePrevSection} className="flex-1 sm:flex-none">
                   <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
-                  {t('common.back')}
+                  <span className="hidden sm:inline">{t('common.back')}</span>
+                  <span className="sm:hidden">{t('common.back')}</span>
                 </Button>
               )}
 
               {!isContentLoading && (currentFrontmatter?.nextButtonText || prevFrontmatter?.nextButtonText) && (
-                <Button variant="outline" size="sm" onClick={handleNextSection}>
-                  <span>{t('common.forward')}</span>
+                <Button variant="outline" size="sm" onClick={handleNextSection} className="flex-1 sm:flex-none">
+                  <span className="hidden sm:inline">{t('common.forward')}</span>
+                  <span className="sm:hidden">{t('common.forward')}</span>
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               )}

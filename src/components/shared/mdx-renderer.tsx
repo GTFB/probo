@@ -171,7 +171,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h1
             id={id}
-            className="text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20"
+            className="text-3xl sm:text-4xl font-sans font-extrabold mb-6 text-foreground scroll-mt-20"
             {...props}
           >
             {children}
@@ -203,7 +203,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h2
             id={id}
-            className="text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20 mt-8"
+            className="text-2xl sm:text-3xl font-sans font-bold mb-4 text-foreground scroll-mt-20 mt-8"
             {...props}
           >
             {children}
@@ -235,7 +235,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h3
             id={id}
-            className="text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20 mt-8"
+            className="text-xl sm:text-2xl font-sans font-semibold mb-3 text-foreground scroll-mt-20 mt-8"
             {...props}
           >
             {children}

@@ -43,7 +43,7 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
   const t = useTranslations()
   
   return (
-    <Sidebar className="sidebar hidden lg:block transition-transform duration-300 ease-in-out theme-transition">
+    <Sidebar className="sidebar hidden lg:block transition-transform duration-300 ease-in-out theme-transition" style={{ width: '256px', minWidth: '256px', maxWidth: '256px' }}>
       <SidebarHeader className="px-6 h-25 flex justify-between flex-nowrap" style={{ height: 'calc(6.25rem + 1px)', flexFlow: 'nowrap' }}>
         <div className="flex items-center gap-2">
           <div>
@@ -52,8 +52,9 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
           </div>
         </div>
         {onToggle && (
-          <Button variant="ghost" size="sm" className="mt-2 h-6 w-6 p-0 flex-shrink-0"
+          <Button variant="ghost" size="sm" className="mt-2 h-6 w-6 p-0 flex-shrink-0 cursor-pointer"
            onClick={() => {
+            console.log('Sidebar close button clicked')
             onToggle()
             setLeftSectionState('close')
            }}>

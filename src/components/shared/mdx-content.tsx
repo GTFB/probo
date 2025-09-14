@@ -358,6 +358,9 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
 
   useEffect(() => {
     const loadMDX = async () => {
+      console.log('MDXContent: Loading content for sectionId:', sectionId)
+      console.log('MDXContent: isAuthenticated:', isAuthenticated)
+      
       // Don't load content if we're still checking access
 
 
@@ -392,7 +395,10 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
 
         onLoadingChangeRef.current?.(true)
 
+        console.log('MDXContent: Fetching from API:', `/api/mdx/${sectionId}`)
         const response = await fetch(`/api/mdx/${sectionId}`)
+        console.log('MDXContent: API response status:', response.status)
+        
         if (!response.ok) {
           const errorText = await response.text()
           console.error(`API Error ${response.status}:`, errorText)

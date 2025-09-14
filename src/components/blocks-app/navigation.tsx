@@ -45,7 +45,7 @@ export function Navigation({ items, activeSection, onSectionChange, className }:
                 variant={activeSection === item.id ? "default" : "outline"}
                 size="sm"
                 onClick={() => onSectionChange(item.id)}
-                className="flex-shrink-0 whitespace-nowrap"
+                className="flex-shrink-0 whitespace-nowrap cursor-pointer"
               >
                 {index + 1}
               </Button>
@@ -68,7 +68,7 @@ export function Navigation({ items, activeSection, onSectionChange, className }:
               key={item.id}
               variant={activeSection === item.id ? "default" : "ghost"}
               className={cn(
-                "justify-start gap-3",
+                "justify-start gap-3 cursor-pointer",
                 activeSection === item.id && "bg-foreground text-background font-semibold"
               )}
               onClick={() => onSectionChange(item.id)}

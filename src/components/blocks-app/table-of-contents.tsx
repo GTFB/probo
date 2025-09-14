@@ -171,41 +171,44 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
       <div className="h-full overflow-y-auto scrollbar-hide relative">
         <div className="sticky top-0 backdrop-blur-sm z-10 flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
               onClick={() => setActiveTab('toc')}
-              className={`h-7 px-0 text-sm ${activeTab === 'toc' ? '' : 'bg-muted text-muted-foreground'}`}
+              className={`h-7 px-0 text-sm hover:bg-muted dark:hover:bg-transparent hover:text-foreground dark:hover:text-white transition-colors duration-200 cursor-pointer ${activeTab === 'toc' ? '' : 'bg-muted text-muted-foreground'}`}
             >
               {t('common.tableOfContents')}
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
+            </button>
+            <button
               onClick={() => setActiveTab('search')}
-              className={`h-7 px-0 text-sm ${activeTab === 'search' ? '' : 'bg-muted text-muted-foreground'}`}
+              className={`h-7 px-0 text-sm hover:bg-muted dark:hover:bg-transparent hover:text-foreground dark:hover:text-white transition-colors duration-200 cursor-pointer ${activeTab === 'search' ? '' : 'bg-muted text-muted-foreground'}`}
             >
               {t('common.search')}
-            </Button>
+            </button>
           </div>
           <div className="flex items-center">
             <LanguageSwitcher variant="minimal" />
             <Button 
               variant="ghost" 
               size="sm" 
-              className="h-6 w-6 p-0 hover:bg-muted transition-colors duration-200" 
+              className="h-6 w-6 p-0 cursor-pointer hover:bg-muted hover:text-muted-foreground" 
               onClick={toggleTheme}
               suppressHydrationWarning
             >
-              <Moon className="h-4 w-4 text-black dark:text-white transition-colors duration-200 dark:hidden" />
-              <Sun className="h-4 w-4 text-black dark:text-white transition-colors duration-200 hidden dark:block" />
+              {theme === 'dark' ? (
+                <Sun className="h-4 w-4 transition-colors duration-200" />
+              ) : (
+                <Moon className="h-4 w-4 transition-colors duration-200" />
+              )}
             </Button>
-            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-muted transition-colors duration-200" 
-            onClick={() => {
-              setRightSectionState(rightSectionState !== 'open' ? 'open' : 'close')
-              onToggle?.()
-            }}>
-              <PanelRightClose className="h-4 w-4 text-black dark:text-white transition-colors duration-200" />
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-6 w-6 p-0 cursor-pointer hover:bg-muted hover:text-muted-foreground" 
+              onClick={() => {
+                setRightSectionState(rightSectionState !== 'open' ? 'open' : 'close')
+                onToggle?.()
+              }}
+            >
+              <PanelRightClose className="h-4 w-4 transition-colors duration-200" />
             </Button>
           </div>
         </div>
@@ -219,11 +222,9 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
             ) : (
               <div className="relative" style={{ border: 'none', outline: 'none' }}>
                 {items.map((item) => (
-                <Button
+                <button
                   key={item.id}
-                  variant="ghost"
-                  size="sm"
-                  className={`group w-full justify-start text-left h-auto py-1 px-2 text-sm relative ${currentActive === item.id ? 'text-foreground' : ''}`}
+                  className={`group w-full justify-start text-left h-auto py-1 px-2 text-sm relative hover:bg-muted dark:hover:bg-transparent dark:bg-transparent transition-colors duration-200 cursor-pointer ${currentActive === item.id ? 'text-foreground' : 'text-muted-foreground'}`}
                   style={{ 
                     paddingLeft: `${(item.level - 1) * 12 + 8}px`,
                     border: 'none !important',
@@ -274,7 +275,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                   <div className={`absolute left-0 top-0 bottom-0 w-[1px] transition-colors ${
                     currentActive === item.id 
                       ? 'bg-primary group-hover:bg-primary/80' 
-                      : 'bg-border group-hover:bg-muted-foreground/60'
+                      : 'bg-border group-hover:bg-muted-foreground/60 dark:group-hover:bg-border'
                   }`} 
                   style={{
                     border: 'none',
@@ -288,7 +289,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                         : 'font-normal text-muted-foreground group-hover:text-foreground'
                     }`}>{item.title}</span>
                   </div>
-                </Button>
+                </button>
                 ))}
               </div>
             )}

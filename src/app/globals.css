@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @import url('https://fonts.bunny.net/css?family=inter:400,500,600,700,800|inter-tight:400,500,600,700,800');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css');
@@ -306,9 +304,6 @@
 }
 
 @layer components {
-  .font-heading {
-    font-family: 'Inter Tight', sans-serif;
-  }
   
   mark {
     @apply bg-yellow-200 dark:bg-yellow-800 dark:text-yellow-200 px-1 py-0.5 rounded-sm font-medium;
@@ -326,9 +321,9 @@
     overflow-wrap: break-word;
     hyphens: auto;
   }
-  .mdx-content h1 { @apply text-3xl sm:text-4xl font-heading font-extrabold mb-6 text-foreground scroll-mt-20; }
-  .mdx-content h2 { @apply text-2xl sm:text-3xl font-heading font-bold mb-4 text-foreground scroll-mt-20; }
-  .mdx-content h3 { @apply text-xl sm:text-2xl font-heading font-semibold mb-3 text-foreground scroll-mt-20; }
+  .mdx-content h1 { @apply text-3xl sm:text-4xl font-sans font-extrabold mb-6 text-foreground scroll-mt-20; }
+  .mdx-content h2 { @apply text-2xl sm:text-3xl font-sans font-bold mb-4 text-foreground scroll-mt-20; }
+  .mdx-content h3 { @apply text-xl sm:text-2xl font-sans font-semibold mb-3 text-foreground scroll-mt-20; }
   .mdx-content h4 { @apply text-lg font-bold mb-2 text-foreground; }
   .mdx-content h5 { @apply text-base font-semibold mb-2 text-foreground; }
   .mdx-content h6 { @apply text-sm font-medium mb-2 text-muted-foreground; }
@@ -483,6 +478,7 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
 
   .mermaid-tooltip svg { @apply flex-shrink-0; }
   .mermaid-tooltip span { @apply leading-tight; }
@@ -683,6 +679,7 @@
     --right-sidebar-open: 1;
     --left-sidebar-width: 256px;
     --right-sidebar-width: 320px;
+    --sidebar-width: 16rem;
   }
   
   /* Classes for open state */
