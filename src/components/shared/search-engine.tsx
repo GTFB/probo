@@ -5,7 +5,7 @@ import { Search, X, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { MDX_FILES } from '../../settings'
+import { MDX_FILES } from '../../../settings'
 import { useTranslations } from '@/hooks/use-translations'
 
 interface SearchIndex {

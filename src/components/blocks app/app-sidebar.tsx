@@ -1,6 +1,6 @@
 "use client"
 
-import { PROJECT_SETTINGS } from '../../settings'
+import { PROJECT_SETTINGS } from '../../../settings'
 import { useTranslations } from '@/hooks/use-translations'
 import {
   Lightbulb,

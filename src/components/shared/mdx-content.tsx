@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { MDXLayout } from './mdx-layout'
 import { MDXRenderer } from './mdx-renderer'
 import { PasswordPrompt } from './password-prompt'
-import { NAVIGATION_ITEMS } from '../../settings'
+import { NAVIGATION_ITEMS } from '../../../settings'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { useMdx } from '../providers/MdxProvider'
 

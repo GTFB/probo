@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { PASSWORD_GROUPS } from '../../settings'
+import { PASSWORD_GROUPS } from '../../../settings'
 import { useTranslations } from '@/hooks/use-translations'
 
 export function PasswordGroupsInfo() {
