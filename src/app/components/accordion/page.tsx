@@ -1,110 +1,142 @@
+import Link from "next/link";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { 
-  AccordionDemo,
-  AccordionOutlineDemo,
-  AccordionBoxDemo,
-  AccordionBoxContainedDemo,
-  AccordionTabsDemo,
-  AccordionHighlightActiveDemo,
-  AccordionCustomTriggerDemo,
-  AccordionMediaContentDemo,
-  AccordionDisabledDemo,
-  ComponentLayout,
-  VariantDemo,
-  DemoGrid,
-  CodeExample
-} from "@/components/demo";
+  ArrowLeft,
+  ChevronRight,
+  Code,
+  Eye,
+  Copy
+} from "lucide-react";
+
+const accordionVariants = [
+  {
+    title: "Default Accordion",
+    description: "Standard accordion with basic styling and functionality.",
+    component: "AccordionDemo",
+    href: "/components/accordion/default"
+  },
+  {
+    title: "Outline Accordion", 
+    description: "Accordion with outline border styling for better visual separation.",
+    component: "AccordionOutlineDemo",
+    href: "/components/accordion/outline"
+  },
+  {
+    title: "Box Accordion",
+    description: "Accordion with box-style containers for each item.",
+    component: "AccordionBoxDemo", 
+    href: "/components/accordion/box"
+  },
+  {
+    title: "Box Contained",
+    description: "Box accordion with contained styling and rounded corners.",
+    component: "AccordionBoxContainedDemo",
+    href: "/components/accordion/box-contained"
+  },
+  {
+    title: "Tabs Accordion",
+    description: "Accordion styled to look like tabs with horizontal layout.",
+    component: "AccordionTabsDemo",
+    href: "/components/accordion/tabs"
+  },
+  {
+    title: "Custom Trigger",
+    description: "Accordion with custom trigger elements and styling.",
+    component: "AccordionCustomTriggerDemo",
+    href: "/components/accordion/custom-trigger"
+  },
+  {
+    title: "Disabled State",
+    description: "Accordion with disabled items and proper accessibility.",
+    component: "AccordionDisabledDemo",
+    href: "/components/accordion/disabled"
+  },
+  {
+    title: "Highlight Active",
+    description: "Accordion that highlights the currently active item.",
+    component: "AccordionHighlightActiveDemo",
+    href: "/components/accordion/highlight-active"
+  },
+  {
+    title: "Media Content",
+    description: "Accordion with rich media content like images and videos.",
+    component: "AccordionMediaContentDemo",
+    href: "/components/accordion/media-content"
+  }
+];
 
 export default function AccordionPage() {
-  const codeExample = `import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-<Accordion type="single" collapsible className="w-full">
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-    <AccordionContent>
-      Yes. It adheres to the WAI-ARIA design pattern.
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>`;
-
   return (
-    <div className="container mx-auto py-8 space-y-12">
-      <ComponentLayout
-        title="Accordion Component"
-        description="A vertically stacked set of interactive headings that each reveal a section of content."
-      >
-        <DemoGrid columns={1}>
-          <VariantDemo
-            title="Default"
-            description="Basic accordion with default styling."
-          >
-            <AccordionDemo />
-          </VariantDemo>
+    <div className="container mx-auto py-8 space-y-8">
+      <div className="flex items-center space-x-4">
+        <Link href="/components">
+          <Button variant="ghost" size="sm">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Назад к компонентам
+          </Button>
+        </Link>
+      </div>
 
-          <VariantDemo
-            title="Outline"
-            description="Accordion with outline borders around each item."
-          >
-            <AccordionOutlineDemo />
-          </VariantDemo>
+      <div className="space-y-4">
+        <h1 className="text-4xl font-bold">Accordion Components</h1>
+        <p className="text-muted-foreground text-lg max-w-3xl">
+          A vertically stacked set of interactive headings that each reveal a section of content. 
+          Choose from various styling options and configurations.
+        </p>
+        <div className="flex items-center space-x-2">
+          <Badge variant="secondary">10 вариантов</Badge>
+          <Badge variant="outline">shadcn/ui</Badge>
+        </div>
+      </div>
 
-          <VariantDemo
-            title="Box"
-            description="Accordion items styled as connected boxes."
-          >
-            <AccordionBoxDemo />
-          </VariantDemo>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {accordionVariants.map((variant) => (
+          <Link key={variant.title} href={variant.href}>
+            <Card className="group hover:shadow-lg transition-all duration-200 hover:scale-[1.02] cursor-pointer">
+              <CardHeader className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="p-2 rounded-lg bg-blue-500 text-white">
+                    <Code className="h-5 w-5" />
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">{variant.title}</CardTitle>
+                  <CardDescription className="text-sm">
+                    {variant.description}
+                  </CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <Badge variant="outline" className="text-xs">
+                    {variant.component}
+                  </Badge>
+                  <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+                    <Eye className="h-3 w-3" />
+                    <span>Просмотр</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </div>
 
-          <VariantDemo
-            title="Box Contained"
-            description="Accordion with contained styling and background color."
-          >
-            <AccordionBoxContainedDemo />
-          </VariantDemo>
-
-          <VariantDemo
-            title="Tabs Style"
-            description="Accordion styled to look like tabs with active state highlighting."
-          >
-            <AccordionTabsDemo />
-          </VariantDemo>
-
-          <VariantDemo
-            title="Highlight Active"
-            description="Accordion with highlighted active item using colored borders and text."
-          >
-            <AccordionHighlightActiveDemo />
-          </VariantDemo>
-
-          <VariantDemo
-            title="Custom Trigger"
-            description="Accordion with custom trigger using Plus icon that rotates on open."
-          >
-            <AccordionCustomTriggerDemo />
-          </VariantDemo>
-
-          <VariantDemo
-            title="Media Content"
-            description="Accordion with icons and media content in the accordion items."
-          >
-            <AccordionMediaContentDemo />
-          </VariantDemo>
-
-          <VariantDemo
-            title="Disabled Items"
-            description="Accordion with some disabled items that cannot be opened."
-          >
-            <AccordionDisabledDemo />
-          </VariantDemo>
-        </DemoGrid>
-      </ComponentLayout>
-
-      {/* Usage Example */}
-      <CodeExample>{codeExample}</CodeExample>
+      <div className="mt-12 p-6 bg-muted/50 rounded-lg">
+        <div className="flex items-start space-x-4">
+          <Code className="h-6 w-6 text-muted-foreground mt-1" />
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold">Использование</h3>
+            <p className="text-sm text-muted-foreground">
+              Нажмите на любой вариант выше, чтобы увидеть интерактивную демонстрацию, 
+              примеры кода и подробную документацию по использованию компонента.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
