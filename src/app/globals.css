@@ -8,38 +8,38 @@
 
 /* CSS Variables */
 :root {
-  --background: 223.8136 -172.5242% 100.0000%;
-  --foreground: 223.8136 0.0000% 3.9388%;
-  --card: 223.8136 -172.5242% 100.0000%;
-  --card-foreground: 223.8136 0.0000% 3.9388%;
-  --popover: 223.8136 -172.5242% 100.0000%;
-  --popover-foreground: 223.8136 0.0000% 3.9388%;
-  --primary: 216.8916 105.6530% 59.6083%;
-  --primary-foreground: 223.8136 0.0004% 98.0256%;
-  --secondary: 223.8136 0.0002% 96.0587%;
-  --secondary-foreground: 223.8136 0.0000% 9.0527%;
-  --muted: 223.8136 0.0002% 96.0587%;
-  --muted-foreground: 223.8136 0.0000% 45.1519%;
-  --accent: 223.8136 0.0002% 96.0587%;
-  --accent-foreground: 223.8136 0.0000% 9.0527%;
-  --destructive: 351.7303 123.6748% 40.5257%;
-  --destructive-foreground: 223.8136 -172.5242% 100.0000%;
-  --border: 223.8136 0.0001% 89.8161%;
-  --input: 223.8136 0.0001% 89.8161%;
-  --ring: 223.8136 0.0000% 63.0163%;
-  --chart-1: 211.7880 101.9718% 78.6759%;
-  --chart-2: 217.4076 91.3672% 59.5787%;
-  --chart-3: 221.4336 86.3731% 54.0624%;
-  --chart-4: 223.6587 78.7180% 47.8635%;
-  --chart-5: 226.5426 70.0108% 39.9224%;
-  --sidebar: 60 5% 96%;
-  --sidebar-foreground: 223.8136 0.0000% 3.9388%;
-  --sidebar-primary: 223.8136 0.0000% 9.0527%;
-  --sidebar-primary-foreground: 223.8136 0.0004% 98.0256%;
-  --sidebar-accent: 223.8136 0.0002% 96.0587%;
-  --sidebar-accent-foreground: 223.8136 0.0000% 9.0527%;
-  --sidebar-border: 223.8136 0.0001% 89.8161%;
-  --sidebar-ring: 223.8136 0.0000% 63.0163%;
+  --background: hsl(223.8136 -172.5242% 100.0000%);
+  --foreground: hsl(223.8136 0.0000% 3.9388%);
+  --card: hsl(223.8136 -172.5242% 100.0000%);
+  --card-foreground: hsl(223.8136 0.0000% 3.9388%);
+  --popover: hsl(223.8136 -172.5242% 100.0000%);
+  --popover-foreground: hsl(223.8136 0.0000% 3.9388%);
+  --primary: hsl(216.8916 105.6530% 59.6083%);
+  --primary-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --secondary: hsl(223.8136 0.0002% 96.0587%);
+  --secondary-foreground: hsl(223.8136 0.0000% 9.0527%);
+  --muted: hsl(223.8136 0.0002% 96.0587%);
+  --muted-foreground: hsl(223.8136 0.0000% 45.1519%);
+  --accent: hsl(223.8136 0.0002% 96.0587%);
+  --accent-foreground: hsl(223.8136 0.0000% 9.0527%);
+  --destructive: hsl(351.7303 123.6748% 40.5257%);
+  --destructive-foreground: hsl(223.8136 -172.5242% 100.0000%);
+  --border: hsl(223.8136 0.0001% 89.8161%);
+  --input: hsl(223.8136 0.0001% 89.8161%);
+  --ring: hsl(223.8136 0.0000% 63.0163%);
+  --chart-1: hsl(211.7880 101.9718% 78.6759%);
+  --chart-2: hsl(217.4076 91.3672% 59.5787%);
+  --chart-3: hsl(221.4336 86.3731% 54.0624%);
+  --chart-4: hsl(223.6587 78.7180% 47.8635%);
+  --chart-5: hsl(226.5426 70.0108% 39.9224%);
+  --sidebar: hsl(60 5% 96%);
+  --sidebar-foreground: hsl(223.8136 0.0000% 3.9388%);
+  --sidebar-primary: hsl(223.8136 0.0000% 9.0527%);
+  --sidebar-primary-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --sidebar-accent: hsl(223.8136 0.0002% 96.0587%);
+  --sidebar-accent-foreground: hsl(223.8136 0.0000% 9.0527%);
+  --sidebar-border: hsl(223.8136 0.0001% 89.8161%);
+  --sidebar-ring: hsl(223.8136 0.0000% 63.0163%);
   --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: IBM Plex Mono, ui-monospace, monospace;
@@ -57,38 +57,38 @@
 }
 
 .dark {
-  --background: 223.8136 0.0000% 3.9388%;
-  --foreground: 223.8136 0.0004% 98.0256%;
-  --card: 223.8136 0.0000% 9.0527%;
-  --card-foreground: 223.8136 0.0004% 98.0256%;
-  --popover: 223.8136 0.0000% 14.9382%;
-  --popover-foreground: 223.8136 0.0004% 98.0256%;
-  --primary: 212.7908 106.3272% 66.8390%;
-  --primary-foreground: 223.8136 0.0000% 9.0527%;
-  --secondary: 223.8136 0.0000% 14.9382%;
-  --secondary-foreground: 223.8136 0.0004% 98.0256%;
-  --muted: 223.8136 0.0000% 14.9382%;
-  --muted-foreground: 223.8136 0.0000% 63.0163%;
-  --accent: 223.8136 0.0000% 25.0471%;
-  --accent-foreground: 223.8136 0.0004% 98.0256%;
-  --destructive: 358.7594 101.8439% 69.8357%;
-  --destructive-foreground: 223.8136 0.0004% 98.0256%;
-  --border: 223.8136 0.0000% 15.5096%;
-  --input: 223.8136 0.0000% 20.3885%;
-  --ring: 223.8136 0.0000% 45.1519%;
-  --chart-1: 211.7880 101.9718% 78.6759%;
-  --chart-2: 217.4076 91.3672% 59.5787%;
-  --chart-3: 221.4336 86.3731% 54.0624%;
-  --chart-4: 223.6587 78.7180% 47.8635%;
-  --chart-5: 226.5426 70.0108% 39.9224%;
-  --sidebar: 20 6% 15%;
-  --sidebar-foreground: 223.8136 0.0004% 98.0256%;
-  --sidebar-primary: 225.3451 84.0953% 48.9841%;
-  --sidebar-primary-foreground: 223.8136 0.0004% 98.0256%;
-  --sidebar-accent: 223.8136 0.0000% 14.9382%;
-  --sidebar-accent-foreground: 223.8136 0.0004% 98.0256%;
-  --sidebar-border: 223.8136 0.0000% 15.5096%;
-  --sidebar-ring: 223.8136 0.0000% 32.1993%;
+  --background: hsl(223.8136 0.0000% 3.9388%);
+  --foreground: hsl(223.8136 0.0004% 98.0256%);
+  --card: hsl(223.8136 0.0000% 9.0527%);
+  --card-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --popover: hsl(223.8136 0.0000% 14.9382%);
+  --popover-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --primary: hsl(212.7908 106.3272% 66.8390%);
+  --primary-foreground: hsl(223.8136 0.0000% 9.0527%);
+  --secondary: hsl(223.8136 0.0000% 14.9382%);
+  --secondary-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --muted: hsl(223.8136 0.0000% 14.9382%);
+  --muted-foreground: hsl(223.8136 0.0000% 63.0163%);
+  --accent: hsl(223.8136 0.0000% 25.0471%);
+  --accent-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --destructive: hsl(358.7594 101.8439% 69.8357%);
+  --destructive-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --border: hsl(223.8136 0.0000% 15.5096%);
+  --input: hsl(223.8136 0.0000% 20.3885%);
+  --ring: hsl(223.8136 0.0000% 45.1519%);
+  --chart-1: hsl(211.7880 101.9718% 78.6759%);
+  --chart-2: hsl(217.4076 91.3672% 59.5787%);
+  --chart-3: hsl(221.4336 86.3731% 54.0624%);
+  --chart-4: hsl(223.6587 78.7180% 47.8635%);
+  --chart-5: hsl(226.5426 70.0108% 39.9224%);
+  --sidebar: hsl(20 6% 15%);
+  --sidebar-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --sidebar-primary: hsl(225.3451 84.0953% 48.9841%);
+  --sidebar-primary-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --sidebar-accent: hsl(223.8136 0.0000% 14.9382%);
+  --sidebar-accent-foreground: hsl(223.8136 0.0004% 98.0256%);
+  --sidebar-border: hsl(223.8136 0.0000% 15.5096%);
+  --sidebar-ring: hsl(223.8136 0.0000% 32.1993%);
   --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: IBM Plex Mono, ui-monospace, monospace;
@@ -128,7 +128,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -180,14 +180,24 @@
     display: none;  /* Safari and Chrome */
   }
 
-  /* Sidebar hover styles - same for all buttons */
-  [data-sidebar="menu-button"]:hover {
-    background-color: hsl(var(--sidebar-accent)) !important;
+  /* Sidebar hover styles - only for non-active buttons */
+  .sidebar button[data-sidebar="menu-button"]:not([data-active="true"]):hover,
+  [data-sidebar="menu-button"]:not([data-active="true"]):hover {
+    background-color: color-mix(in srgb, var(--sidebar) 90%, var(--foreground) 10%) !important;
+    color: var(--sidebar-foreground) !important;
   }
   
-  /* Active buttons - lighter on light theme, darker on dark theme */
-  [data-sidebar="menu-button"].bg-primary:hover {
-    background-color: hsl(var(--primary) / 0.9) !important;
+  /* Active button normal state */
+  [data-sidebar="menu-button"][data-active="true"] {
+    background-color: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+  }
+  
+  /* Active button hover - only background changes, text color stays the same */
+  [data-sidebar="menu-button"][data-active="true"]:hover {
+    background-color: color-mix(in srgb, var(--primary) 90%, transparent) !important;
+    color: var(--primary-foreground) !important;
+    opacity: 0.9;
   }
 
 
@@ -306,7 +316,8 @@
   
   /* Bold underlined text */
   .bold-underline {
-    @apply font-semibold underline decoration-2 decoration-primary/50;
+    @apply font-semibold underline decoration-2;
+    text-decoration-color: color-mix(in srgb, var(--primary) 50%, transparent);
   }
   
   .mdx-content {
@@ -347,7 +358,9 @@
   }
 
   .mdx-content blockquote {
-    @apply my-6 border-l-4 border-primary/50 pl-6 py-4 italic text-muted-foreground bg-secondary/30 rounded-r-lg;
+    @apply my-6 border-l-4 pl-6 py-4 italic text-muted-foreground rounded-r-lg;
+    border-left-color: color-mix(in srgb, var(--primary) 50%, transparent);
+    background-color: color-mix(in srgb, var(--secondary) 50%, transparent);
   }
   .mdx-content blockquote p {
     @apply mb-2 last:mb-0 text-base;
@@ -363,10 +376,10 @@
     @apply bg-muted font-semibold text-foreground;
   }
   .mdx-content tbody tr:nth-child(even) {
-    @apply bg-secondary/30;
+    background-color: color-mix(in srgb, var(--secondary) 30%, transparent);
   }
   .mdx-content tbody tr:hover {
-    @apply bg-secondary/50;
+    background-color: color-mix(in srgb, var(--secondary) 50%, transparent);
   }
   .mdx-content tr {
     @apply border-b border-border;
@@ -402,8 +415,8 @@
   }
 
   .mermaid-diagram-container {
-    @apply rounded-lg border bg-background transition-all duration-200;
-    @apply hover:shadow-md hover:border-border/50;
+    @apply rounded-xl border bg-background transition-all duration-200;
+    @apply hover:shadow-md;
     height: 100%;
     overflow: hidden;
     position: relative;
@@ -441,7 +454,8 @@
 
    .zoom-controls {
     @apply absolute top-3 right-3 z-10 flex items-center gap-1;
-    @apply bg-background/70 backdrop-blur-sm border rounded-md p-1;
+    @apply backdrop-blur-sm border rounded-md p-1;
+    background-color: color-mix(in srgb, var(--background) 70%, transparent);
     @apply transition-all duration-200 ease-in-out opacity-0 scale-95 pointer-events-none;
   }
 
@@ -480,14 +494,14 @@
     height: auto;
   }
 
-  /* Стили для текста в Mermaid диаграммах */
+  /* Styles for text in Mermaid diagrams */
   .mermaid-diagram-container text {
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
   }
 
-  /* Стили для узлов в диаграммах */
+  /* Styles for nodes in diagrams */
   .mermaid-diagram-container .node rect,
   .mermaid-diagram-container .node circle,
   .mermaid-diagram-container .node ellipse {
@@ -498,17 +512,17 @@
   .dark .mermaid-diagram-container .edgePath .path,
   .dark .mermaid-diagram-container .arrowheadPath,
   .dark .mermaid-diagram-container .relation-line {
-    stroke: hsl(var(--muted-foreground)) !important;
+    stroke: var(--muted-foreground) !important;
   }
 
   .mermaid-diagram-container.is-active {
-    @apply border border-primary;
-    box-shadow: inset 0 0 0 1px hsl(var(--primary));
+    @apply border-foreground rounded-xl;
   }
 
   /* Styles for code blocks with syntax highlighting */
   .code-block {
-    @apply relative my-6 rounded-lg overflow-visible border bg-muted/50;
+    @apply relative my-6 rounded-lg overflow-visible border;
+    background-color: color-mix(in srgb, var(--muted) 50%, transparent);
     position: relative;
     max-width: 100%;
     word-wrap: break-word;
@@ -563,19 +577,19 @@
 
   /* Styles for highlight.js */
   .dark .hljs {
-    background: hsl(var(--muted)) !important;
-    color: hsl(var(--foreground)) !important;
+    background: var(--muted) !important;
+    color: var(--foreground) !important;
   }
 
   .hljs {
-    background: hsl(var(--muted)) !important;
-    color: hsl(var(--foreground)) !important;
+    background: var(--muted) !important;
+    color: var(--foreground) !important;
   }
 
   /* Remove conflicting styles for code blocks */
   pre.hljs {
-    background: hsl(var(--muted)) !important;
-    color: hsl(var(--foreground)) !important;
+    background: var(--muted) !important;
+    color: var(--foreground) !important;
     padding: 1rem !important;
     border-radius: 0.5rem !important;
     overflow-x: visible !important;
@@ -661,9 +675,9 @@
   border: none;
 }
 
-/* Управление состоянием сайдбаров через CSS */
+/* Sidebar state management through CSS */
 @media (min-width: 1024px) {
-  /* CSS переменные для состояния сайдбаров */
+  /* CSS variables for sidebar state */
   :root {
     --left-sidebar-open: 1;
     --right-sidebar-open: 1;
@@ -671,7 +685,7 @@
     --right-sidebar-width: 320px;
   }
   
-  /* Классы для открытого состояния */
+  /* Classes for open state */
   .left-sidebar-open {
     --left-sidebar-open: 1;
   }
@@ -680,7 +694,7 @@
     --right-sidebar-open: 1;
   }
   
-  /* Классы для закрытого состояния */
+  /* Classes for closed state */
   .left-sidebar-closed {
     --left-sidebar-open: 0;
   }
@@ -689,7 +703,7 @@
     --right-sidebar-open: 0;
   }
   
-  /* Левый сайдбар - открытое состояние */
+  /* Left sidebar - open state */
   .left-sidebar-open .left-sidebar-open-state {
     opacity: 1;
     pointer-events: auto;
@@ -704,7 +718,7 @@
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
   
-  /* Левый сайдбар - закрытое состояние */
+  /* Left sidebar - closed state */
   .left-sidebar-closed .left-sidebar-open-state {
     opacity: 0;
     pointer-events: none;
@@ -719,7 +733,7 @@
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
   
-  /* Правый сайдбар - открытое состояние */
+  /* Right sidebar - open state */
   .right-sidebar-open .right-sidebar-open-state {
     opacity: 1;
     pointer-events: auto;
@@ -734,7 +748,7 @@
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
   
-  /* Правый сайдбар - закрытое состояние */
+  /* Right sidebar - closed state */
   .right-sidebar-closed .right-sidebar-open-state {
     opacity: 0;
     pointer-events: none;
@@ -749,7 +763,7 @@
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
   
-  /* Управление шириной контента */
+  /* Content width management */
   .main-content {
     width: 100%;
     margin-left: 0;
@@ -757,28 +771,28 @@
     transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out, margin-right 0.3s ease-in-out;
   }
   
-  /* Ширина контента когда оба сайдбара открыты */
+  /* Content width when both sidebars are open */
   .left-sidebar-open.right-sidebar-open .main-content {
     width: calc(100% - var(--left-sidebar-width) - var(--right-sidebar-width));
     margin-left: var(--left-sidebar-width);
     margin-right: var(--right-sidebar-width);
   }
   
-  /* Ширина контента когда только левый сайдбар открыт */
+  /* Content width when only left sidebar is open */
   .left-sidebar-open.right-sidebar-closed .main-content {
     width: calc(100% - var(--left-sidebar-width));
     margin-left: var(--left-sidebar-width);
     margin-right: 0;
   }
   
-  /* Ширина контента когда только правый сайдбар открыт */
+  /* Content width when only right sidebar is open */
   .left-sidebar-closed.right-sidebar-open .main-content {
     width: calc(100% - var(--right-sidebar-width));
     margin-left: 0;
     margin-right: var(--right-sidebar-width);
   }
   
-  /* Управление видимостью кнопок навигации */
+  /* Navigation buttons visibility management */
   .nav-buttons {
     opacity: 0;
     pointer-events: none;
@@ -790,13 +804,13 @@
     pointer-events: none;
   }
   
-  /* Показать кнопки навигации когда левый сайдбар закрыт */
+  /* Show navigation buttons when left sidebar is closed */
   .left-sidebar-closed .nav-buttons {
     opacity: 1;
     pointer-events: auto;
   }
   
-  /* Управление видимостью кнопок Table of Contents */
+  /* Table of Contents buttons visibility management */
   .toc-buttons {
     opacity: 0;
     pointer-events: none;
@@ -808,13 +822,13 @@
     pointer-events: none;
   }
   
-  /* Показать кнопки Table of Contents когда правый сайдбар закрыт */
+  /* Show Table of Contents buttons when right sidebar is closed */
   .right-sidebar-closed .toc-buttons {
     opacity: 1;
     pointer-events: auto;
   }
   
-  /* Плавные переходы */
+  /* Smooth transitions */
   .left-sidebar-open-state,
   .left-sidebar-closed-state,
   .right-sidebar-open-state,
@@ -839,9 +853,9 @@
 
 /* Custom sidebar background class */
 .bg-sidebar {
-  background-color: hsl(var(--sidebar));
+  background-color: var(--sidebar);
 }
 
 .bg-sidebar-right {
-  background-color: hsl(var(--sidebar));
+  background-color: var(--sidebar);
 }

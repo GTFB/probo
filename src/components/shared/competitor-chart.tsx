@@ -24,29 +24,29 @@ export function CompetitorChart({ data }: CompetitorChartProps) {
         <Radar
           name="Dozen"
           dataKey="Dozen"
-          stroke="hsl(var(--primary))"
-          fill="hsl(var(--primary))"
+          stroke="var(--primary)"
+          fill="var(--primary)"
           fillOpacity={0.2}
         />
         <Radar
           name="WalletFactory"
           dataKey="WalletFactory"
-          stroke="hsl(var(--muted-foreground))"
-          fill="hsl(var(--muted-foreground))"
+          stroke="var(--muted-foreground)"
+          fill="var(--muted-foreground)"
           fillOpacity={0.2}
         />
         <Radar
           name="OSMI Cards"
           dataKey="OSMI Cards"
-          stroke="hsl(var(--secondary-foreground))"
-          fill="hsl(var(--secondary-foreground))"
+          stroke="var(--secondary-foreground)"
+          fill="var(--secondary-foreground)"
           fillOpacity={0.2}
         />
         <Radar
           name="CardPR"
           dataKey="CardPR"
-          stroke="hsl(var(--accent-foreground))"
-          fill="hsl(var(--accent-foreground))"
+          stroke="var(--accent-foreground)"
+          fill="var(--accent-foreground)"
           fillOpacity={0.2}
         />
         <Legend />

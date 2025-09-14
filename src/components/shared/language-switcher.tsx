@@ -177,7 +177,7 @@ export function LanguageSwitcher({
             onClick={() => handleLanguageChange(language.code)}
             className={`cursor-pointer ${locale === language.code ? 'bg-accent' : ''}`}
           >
-            <span className="mr-2">{language.flag}</span>
+            <language.flag className="w-4 h-3 mr-2" />
             <span>{language.name}</span>
             {locale === language.code && (
               <span className="ml-auto text-xs text-muted-foreground">✓</span>

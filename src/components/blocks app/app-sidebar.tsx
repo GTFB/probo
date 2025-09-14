@@ -43,7 +43,7 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
   const t = useTranslations()
   
   return (
-    <Sidebar className="hidden lg:block transition-transform duration-300 ease-in-out theme-transition">
+    <Sidebar className="sidebar hidden lg:block transition-transform duration-300 ease-in-out theme-transition">
       <SidebarHeader className="px-6 h-25 flex justify-between flex-nowrap" style={{ height: 'calc(6.25rem + 1px)', flexFlow: 'nowrap' }}>
         <div className="flex items-center gap-2">
           <div>
@@ -72,6 +72,8 @@ export function AppSidebar({ items, activeSection, onSectionChange, onToggle }: 
                 <SidebarMenuButton
                   onClick={() => onSectionChange(item.id)}
                   className={isActive ? "bg-primary text-primary-foreground" : ""}
+                  data-sidebar="menu-button"
+                  data-active={isActive}
                 >
                   <Icon className="w-4 h-4" />
                   <span>{item.title}</span>

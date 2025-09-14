@@ -20,7 +20,7 @@ export default function HomePage() {
           <img 
             src="/logo.svg" 
             alt="Probo Logo" 
-            className="w-32 h-16 mx-auto mb-4"
+            className="w-64 h-32 mx-auto mb-4"
           />
         </div>
         <h1 className="text-2xl font-semibold mb-2">{t('common.loadingApplication')}</h1>

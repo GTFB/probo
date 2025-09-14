@@ -307,7 +307,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
       <div 
         className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-20"
         style={{
-          background: 'linear-gradient(to top, hsl(var(--sidebar)) 0%, transparent 100%)',
+          background: 'linear-gradient(to top, var(--sidebar) 0%, transparent 100%)',
           border: 'none',
           outline: 'none',
           boxShadow: 'none'
