@@ -111,6 +111,45 @@ export function SearchEngine({ onResultClick, onSectionChange, className }: Sear
                 level: 3,
                 position: position++
               })
+            } else if (trimmedLine.startsWith('#### ')) {
+              const title = trimmedLine.substring(5)
+              const id = `h4-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
+              
+              index.push({
+                id,
+                title,
+                content: title,
+                section: currentSection,
+                sectionId: file.id,
+                level: 4,
+                position: position++
+              })
+            } else if (trimmedLine.startsWith('##### ')) {
+              const title = trimmedLine.substring(6)
+              const id = `h5-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
+              
+              index.push({
+                id,
+                title,
+                content: title,
+                section: currentSection,
+                sectionId: file.id,
+                level: 5,
+                position: position++
+              })
+            } else if (trimmedLine.startsWith('###### ')) {
+              const title = trimmedLine.substring(7)
+              const id = `h6-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`
+              
+              index.push({
+                id,
+                title,
+                content: title,
+                section: currentSection,
+                sectionId: file.id,
+                level: 6,
+                position: position++
+              })
             } else if (trimmedLine && !trimmedLine.startsWith('---')) {
               // Regular content
               const words = trimmedLine.split(' ')

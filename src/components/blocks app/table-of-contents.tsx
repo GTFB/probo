@@ -44,6 +44,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
       .map(i => document.getElementById(i.id))
       .filter((el): el is HTMLElement => Boolean(el))
 
+
     if (headingElements.length === 0) return
 
     let ticking = false
@@ -105,12 +106,26 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
   const handleSearchResultClick = (result: any) => {
     const element = document.getElementById(result.id)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const elementRect = element.getBoundingClientRect()
+      const absoluteElementTop = elementRect.top + window.pageYOffset
+      const offset = 100
+      
+      window.scrollTo({
+        top: absoluteElementTop - offset,
+        behavior: 'smooth'
+      })
     } else {
-      const headings = document.querySelectorAll('h1, h2, h3')
+      const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
       headings.forEach(heading => {
         if (heading.textContent?.trim() === result.title) {
-          heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          const elementRect = heading.getBoundingClientRect()
+          const absoluteElementTop = elementRect.top + window.pageYOffset
+          const offset = 100
+          
+          window.scrollTo({
+            top: absoluteElementTop - offset,
+            behavior: 'smooth'
+          })
         }
       })
     }
@@ -152,9 +167,9 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
   }
 
   return (
-    <div className="hidden lg:block w-80 bg-sidebar h-screen theme-transition sticky top-0 scrollbar-hide">
+    <div className="hidden lg:block w-80 bg-sidebar-right h-screen theme-transition sticky top-0 scrollbar-hide">
       <div className="h-full overflow-y-auto scrollbar-hide">
-        <div className="sticky top-0 bg-sidebar backdrop-blur-sm z-10 flex items-center justify-between p-4 mb-4">
+        <div className="sticky top-0 backdrop-blur-sm z-10 flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
@@ -196,7 +211,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
         </div>
         
         {/* Tab content */}
-        <div className="px-4 pt-4 pb-8">
+        <div className="px-4 pt-3 pb-8">
         {activeTab === 'toc' && (
           <div 
             className="space-y-1 relative"
@@ -214,12 +229,21 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                   key={item.id}
                   variant="ghost"
                   size="sm"
-                  className={`w-full justify-start text-left h-auto py-1 px-2 text-sm relative ${currentActive === item.id ? 'text-foreground' : ''}`}
+                  className={`group w-full justify-start text-left h-auto py-1 px-2 text-sm relative ${currentActive === item.id ? 'text-foreground' : ''}`}
                   style={{ paddingLeft: `${(item.level - 1) * 12 + 8}px` }}
                   onClick={() => {
                     const element = document.getElementById(item.id)
                     if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      // Calculate the position with proper offset
+                      const elementRect = element.getBoundingClientRect()
+                      const absoluteElementTop = elementRect.top + window.pageYOffset
+                      const offset = 100 // Account for header and scroll-mt-20
+                      
+                      window.scrollTo({
+                        top: absoluteElementTop - offset,
+                        behavior: 'smooth'
+                      })
+                      
                       if (item.slug) {
                         const newUrl = `${window.location.pathname}#${item.slug}`
                         window.history.pushState(null, '', newUrl)
@@ -230,7 +254,15 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                       const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
                       headings.forEach(heading => {
                         if (heading.textContent?.trim() === item.title) {
-                          heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                          const elementRect = heading.getBoundingClientRect()
+                          const absoluteElementTop = elementRect.top + window.pageYOffset
+                          const offset = 100
+                          
+                          window.scrollTo({
+                            top: absoluteElementTop - offset,
+                            behavior: 'smooth'
+                          })
+                          
                           if (item.slug) {
                             const newUrl = `${window.location.pathname}#${item.slug}`
                             window.history.pushState(null, '', newUrl)
@@ -240,11 +272,17 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                     }
                   }}
                 >
-                  {currentActive === item.id && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-sm" />
-                  )}
+                  <div className={`absolute left-0 top-0 bottom-0 w-px rounded-l-sm transition-colors ${
+                    currentActive === item.id 
+                      ? 'bg-primary group-hover:bg-primary/80' 
+                      : 'bg-border group-hover:bg-muted-foreground/60'
+                  }`} />
                   <div className="flex flex-col items-start w-full">
-                    <span className={`text-sm truncate w-full ${currentActive === item.id ? 'font-medium' : ''}`}>{item.title}</span>
+                    <span className={`text-sm truncate w-full transition-colors ${
+                      currentActive === item.id 
+                        ? 'font-medium text-foreground group-hover:text-foreground' 
+                        : 'font-normal text-muted-foreground group-hover:text-foreground'
+                    }`}>{item.title}</span>
                   </div>
                 </Button>
                 ))}

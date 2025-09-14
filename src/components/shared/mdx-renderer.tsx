@@ -150,6 +150,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
       item.title.trim() === cleanTitle
     )
 
+
     return tocItem?.id
   }
 
@@ -266,7 +267,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h4
             id={id}
-            className="text-lg font-bold mb-2 text-foreground"
+            className="text-lg font-bold mb-2 text-foreground scroll-mt-20"
             {...props}
           >
             {children}
@@ -298,7 +299,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h5
             id={id}
-            className="text-base font-semibold mb-2 text-foreground"
+            className="text-base font-semibold mb-2 text-foreground scroll-mt-20"
             {...props}
           >
             {children}
@@ -330,7 +331,7 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
         <div className="group relative">
           <h6
             id={id}
-            className="text-sm font-medium mb-2 text-muted-foreground"
+            className="text-sm font-medium mb-2 text-muted-foreground scroll-mt-20"
             {...props}
           >
             {children}

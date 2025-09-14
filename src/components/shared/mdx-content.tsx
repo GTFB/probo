@@ -309,6 +309,7 @@ function extractToc(markdown: string, pageSlug?: string): Array<{ id: string; ti
 
         const id = headingSlug // Use only slug as ID for URL compatibility
         toc.push({ id, title, level, slug: headingSlug })
+        
       }
     }
   })

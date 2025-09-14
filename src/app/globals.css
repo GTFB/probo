@@ -822,7 +822,6 @@
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
 
-  /* Убираем бордеры у кнопок переключателя языков */
   [data-radix-collection-item] button,
   [data-radix-dropdown-menu-trigger] button,
   button[data-state="open"],
@@ -832,7 +831,6 @@
     outline: none !important;
   }
 
-  /* Дополнительная защита от фокуса */
   button:focus-visible {
     outline: none !important;
     box-shadow: none !important;
@@ -841,5 +839,9 @@
 
 /* Custom sidebar background class */
 .bg-sidebar {
+  background-color: hsl(var(--sidebar));
+}
+
+.bg-sidebar-right {
   background-color: hsl(var(--sidebar));
 }
