@@ -20,7 +20,12 @@
     "verifying": "验证中...",
     "theme": "主题",
     "light": "浅色",
-    "dark": "深色"
+    "dark": "深色",
+    "sectionOf": "第 {current} 节，共 {total} 节",
+    "tableOfContents": "目录",
+    "indexingContent": "正在索引内容...",
+    "forward": "前进",
+    "sectionNavigation": "章节导航"
   },
   "navigation": {
     "tableOfContents": "目录",

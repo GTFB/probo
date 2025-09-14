@@ -33,7 +33,8 @@
     "theme": "Design",
     "light": "Hell",
     "dark": "Dunkel",
-    "sectionOf": "Abschnitt {current} von {total}"
+    "sectionOf": "Abschnitt {current} von {total}",
+    "tableOfContents": "Inhaltsverzeichnis"
   },
   "navigation": {
     "tableOfContents": "Inhaltsverzeichnis",

@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { cookies } from 'next/headers'
 import './globals.css'
-import { PROJECT_SETTINGS } from '../settings'
+import { PROJECT_SETTINGS } from '../../settings'
 import { getServerTheme, getThemeClasses, getThemeAttributes, getServerLeftSidebarState, getServerRightSidebarState, getAllSidebarClasses } from '@/lib/server-theme'
 import { getSessionDataFromCookies } from '@/lib/cookies'
 import AuthProvider, { SessionData } from '@/components/providers/AuthProvider';

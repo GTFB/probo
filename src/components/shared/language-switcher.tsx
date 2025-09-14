@@ -11,21 +11,29 @@ import {
 import { Globe } from 'lucide-react'
 import { useLocale } from '@/hooks/use-locale'
 import { US, RU, ES, FR, DE, IT, PT, JP, KR, CN, SA, IN } from 'country-flag-icons/react/3x2'
+import { LANGUAGES } from '../../../settings'
 
-const languages = [
-  { code: 'en', name: 'English', shortName: 'EN', flag: US },
-  { code: 'ru', name: 'Русский', shortName: 'RU', flag: RU },
-  { code: 'es', name: 'Español', shortName: 'ES', flag: ES },
-  { code: 'fr', name: 'Français', shortName: 'FR', flag: FR },
-  { code: 'de', name: 'Deutsch', shortName: 'DE', flag: DE },
-  { code: 'it', name: 'Italiano', shortName: 'IT', flag: IT },
-  { code: 'pt', name: 'Português', shortName: 'PT', flag: PT },
-  { code: 'ja', name: '日本語', shortName: 'JP', flag: JP },
-  { code: 'ko', name: '한국어', shortName: 'KR', flag: KR },
-  { code: 'zh', name: '中文', shortName: 'CN', flag: CN },
-  { code: 'ar', name: 'العربية', shortName: 'AR', flag: SA },
-  { code: 'hi', name: 'हिन्दी', shortName: 'IN', flag: IN },
-]
+// Map language codes to flag components
+const FLAG_MAP = {
+  'en': US,
+  'ru': RU,
+  'es': ES,
+  'fr': FR,
+  'de': DE,
+  'it': IT,
+  'pt': PT,
+  'ja': JP,
+  'ko': KR,
+  'zh': CN,
+  'ar': SA,
+  'hi': IN,
+} as const
+
+// Create languages array with flags from settings
+const languages = LANGUAGES.map(lang => ({
+  ...lang,
+  flag: FLAG_MAP[lang.code as keyof typeof FLAG_MAP]
+}))
 
 type LanguageSwitcherVariant = 'default' | 'compact' | 'minimal' | 'inline'
 type LanguageSwitcherSize = 'sm' | 'md' | 'lg'

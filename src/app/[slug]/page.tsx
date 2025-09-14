@@ -74,7 +74,7 @@ export default function SectionPage() {
   const t = useTranslations()
 
   // Find section by slug
-  const currentSection = NAVIGATION_ITEMS.find(item => item.slug === slug)
+  const currentSection = NAVIGATION_ITEMS.find(item => item.href === `/${slug}`)
   const activeSection = currentSection?.id || '1'
   const { mdx,  } = useMdx()
 
@@ -176,7 +176,7 @@ export default function SectionPage() {
   const handleSectionChange = useCallback((sectionId: string) => {
     const section = NAVIGATION_ITEMS.find(item => item.id === sectionId)
     if (section) {
-      router.push(`/${section.slug}`)
+      router.push(section.href)
     }
     setIsMobileMenuOpen(false)
   }, [router])

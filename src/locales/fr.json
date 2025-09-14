@@ -33,7 +33,8 @@
     "theme": "Thème",
     "light": "Clair",
     "dark": "Sombre",
-    "sectionOf": "Section {current} sur {total}"
+    "sectionOf": "Section {current} sur {total}",
+    "tableOfContents": "Table des Matières"
   },
   "navigation": {
     "tableOfContents": "Table des matières",

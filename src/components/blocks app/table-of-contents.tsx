@@ -175,7 +175,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               variant="ghost"
               size="sm"
               onClick={() => setActiveTab('toc')}
-              className={`h-7 px-2 text-sm ${activeTab === 'toc' ? 'bg-muted text-muted-foreground' : ''}`}
+              className={`h-7 px-0 text-sm ${activeTab === 'toc' ? '' : 'bg-muted text-muted-foreground'}`}
             >
               {t('common.tableOfContents')}
             </Button>
@@ -183,12 +183,12 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
               variant="ghost"
               size="sm"
               onClick={() => setActiveTab('search')}
-              className={`h-7 px-2 text-sm ${activeTab === 'search' ? 'bg-muted text-muted-foreground' : ''}`}
+              className={`h-7 px-0 text-sm ${activeTab === 'search' ? '' : 'bg-muted text-muted-foreground'}`}
             >
               {t('common.search')}
             </Button>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <LanguageSwitcher variant="minimal" />
             <Button 
               variant="ghost" 

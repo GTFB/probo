@@ -464,7 +464,7 @@ export function MDXContent({ sectionId, onFrontmatterChange, onTocChange, onH1Ch
     if (currentIndex > 0) {
       // Go to previous section
       const prevSection = NAVIGATION_ITEMS[currentIndex - 1]
-      router.push(`/${prevSection.slug}`)
+      router.push(prevSection.href)
     } else {
       // If it's the first section, reload to show password prompt again
       window.location.reload()

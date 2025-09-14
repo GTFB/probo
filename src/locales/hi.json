@@ -20,7 +20,12 @@
     "verifying": "सत्यापन...",
     "theme": "थीम",
     "light": "हल्का",
-    "dark": "गहरा"
+    "dark": "गहरा",
+    "sectionOf": "अनुभाग {current} / {total}",
+    "tableOfContents": "विषय सूची",
+    "indexingContent": "सामग्री अनुक्रमणिका बन रही है...",
+    "forward": "आगे",
+    "sectionNavigation": "अनुभाग नेविगेशन"
   },
   "navigation": {
     "tableOfContents": "विषय सूची",

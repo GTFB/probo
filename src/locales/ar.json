@@ -20,7 +20,12 @@
     "verifying": "جاري التحقق...",
     "theme": "المظهر",
     "light": "فاتح",
-    "dark": "داكن"
+    "dark": "داكن",
+    "sectionOf": "القسم {current} من {total}",
+    "tableOfContents": "جدول المحتويات",
+    "indexingContent": "جاري فهرسة المحتوى...",
+    "forward": "إلى الأمام",
+    "sectionNavigation": "تنقل الأقسام"
   },
   "navigation": {
     "tableOfContents": "جدول المحتويات",

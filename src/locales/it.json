@@ -20,7 +20,12 @@
     "verifying": "Verifica...",
     "theme": "Tema",
     "light": "Chiaro",
-    "dark": "Scuro"
+    "dark": "Scuro",
+    "sectionOf": "Sezione {current} di {total}",
+    "tableOfContents": "Indice",
+    "indexingContent": "Indicizzazione contenuto...",
+    "forward": "Avanti",
+    "sectionNavigation": "Navigazione Sezioni"
   },
   "navigation": {
     "tableOfContents": "Indice",

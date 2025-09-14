@@ -20,7 +20,12 @@
     "verifying": "確認中...",
     "theme": "テーマ",
     "light": "ライト",
-    "dark": "ダーク"
+    "dark": "ダーク",
+    "sectionOf": "セクション {current} / {total}",
+    "tableOfContents": "目次",
+    "indexingContent": "コンテンツをインデックス中...",
+    "forward": "進む",
+    "sectionNavigation": "セクションナビゲーション"
   },
   "navigation": {
     "tableOfContents": "目次",

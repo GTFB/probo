@@ -1,24 +1,37 @@
-import {
-  FileText,
-  Component,
-  Users,
-  Cpu,
-  Share2,
-  TestTube,
-  CheckCircle,
-  Code,
-} from 'lucide-react'
+import { NAVIGATION_ITEMS } from './src/lib/mdx-utils'
 
 export const PROJECT_SETTINGS = {
   name: 'Probo',
   description: 'Commercial Proposal Generator',
+  defaultLanguage: 'en',
+  defaultTheme: 'system',
+  supportedThemes: ['light', 'dark', 'system'],
 } as const;
+
+// Language configuration (ordered by popularity)
+export const LANGUAGES = [
+  { code: 'en', name: 'English', shortName: 'EN' },
+  { code: 'zh', name: '中文', shortName: 'CN' },
+  { code: 'hi', name: 'हिन्दी', shortName: 'IN' },
+  { code: 'es', name: 'Español', shortName: 'ES' },
+  { code: 'fr', name: 'Français', shortName: 'FR' },
+  { code: 'ar', name: 'العربية', shortName: 'AR' },
+  { code: 'pt', name: 'Português', shortName: 'PT' },
+  { code: 'ru', name: 'Русский', shortName: 'RU' },
+  { code: 'ja', name: '日本語', shortName: 'JP' },
+  { code: 'de', name: 'Deutsch', shortName: 'DE' },
+  { code: 'ko', name: '한국어', shortName: 'KR' },
+  { code: 'it', name: 'Italiano', shortName: 'IT' },
+] as const;
+
+// Get supported language codes
+export const SUPPORTED_LANGUAGES = LANGUAGES.map(lang => lang.code);
 
 // Password groups configuration
 export const PASSWORD_GROUPS = {
   'group1': {
     password: 'password1',
-    sections: ['1', '2', '3'], // Sections A, B, C
+    sections: ['2', '3'], // Sections A, B, C
     name: 'Group 1 - Basic Access',
     description: 'Access to basic content sections'
   },
@@ -36,20 +49,11 @@ export const PASSWORD_GROUPS = {
   }
 } as const;
 
-const SECTIONS = [
-  { id: '1', title: 'Demo', icon: CheckCircle, slug: 'demo', translationKey: 'demo' },
-  { id: '2', title: 'Group 1 - Section A', icon: CheckCircle, slug: 'group-1-section-a', translationKey: 'group1SectionA' },
-  { id: '4', title: 'Group 2 - Section D', icon: CheckCircle, slug: 'group-2-section-d', translationKey: 'group2SectionD' },
-] as const;
+// Re-export navigation items
+export { NAVIGATION_ITEMS }
 
 
-export const NAVIGATION_ITEMS = SECTIONS.map(section => ({
-  ...section,
-  href: `/${section.slug}`
-}));
-
-
-export const MDX_FILES = SECTIONS.map(section => ({
-  id: section.id,
-  name: section.title
+export const MDX_FILES = NAVIGATION_ITEMS.map(item => ({
+  id: item.id,
+  name: item.title
 }));

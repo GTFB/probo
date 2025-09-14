@@ -32,7 +32,8 @@
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "sectionOf": "Section {current} of {total}"
+    "sectionOf": "Section {current} of {total}",
+    "tableOfContents": "Table of Contents"
   },
   "navigation": {
     "tableOfContents": "Table of Contents",

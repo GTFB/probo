@@ -33,7 +33,8 @@
     "theme": "Tema",
     "light": "Claro",
     "dark": "Oscuro",
-    "sectionOf": "Sección {current} de {total}"
+    "sectionOf": "Sección {current} de {total}",
+    "tableOfContents": "Tabla de Contenidos"
   },
   "navigation": {
     "tableOfContents": "Tabla de contenidos",

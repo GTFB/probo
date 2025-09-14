@@ -20,7 +20,12 @@
     "verifying": "확인 중...",
     "theme": "테마",
     "light": "라이트",
-    "dark": "다크"
+    "dark": "다크",
+    "sectionOf": "섹션 {current} / {total}",
+    "tableOfContents": "목차",
+    "indexingContent": "콘텐츠 인덱싱 중...",
+    "forward": "앞으로",
+    "sectionNavigation": "섹션 네비게이션"
   },
   "navigation": {
     "tableOfContents": "목차",
