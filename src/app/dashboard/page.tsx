@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { AppSidebar } from "@/components/blocks app/app-sidebar"
-import { SiteHeader } from "@/components/blocks app/site-header"
+import { AppSidebar } from "@/components/blocks-app/app-sidebar"
+import { SiteHeader } from "@/components/blocks-app/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { TrendingUp, Package, Cpu, ShieldCheck } from "lucide-react"
 

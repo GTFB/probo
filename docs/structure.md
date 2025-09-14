@@ -81,7 +81,7 @@ probo/
 │   │   │   ├── toggle-group.tsx
 │   │   │   ├── toggle.tsx
 │   │   │   └── tooltip.tsx
-│   │   ├── blocks app/
+│   │   ├── blocks-app/
 │   │   │   ├── app-sidebar.tsx
 │   │   │   ├── nav-documents.tsx
 │   │   │   ├── nav-main.tsx

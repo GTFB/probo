@@ -1,127 +1,74 @@
-# UI Component Demo Templates
+# Demo Components
 
-Этот набор компонентов предоставляет шаблоны для создания страниц демонстрации UI компонентов.
+This directory contains demo components organized by category for better maintainability and discoverability.
 
-## Компоненты
+## Structure
 
-### ComponentLayout
-Основной layout для страниц компонентов.
+```
+demo/
+├── accordion/          # Accordion component demos
+│   ├── accordion-demo.tsx
+│   ├── accordion-demos.tsx
+│   ├── accordion-box-demo.tsx
+│   ├── accordion-box-contained-demo.tsx
+│   ├── accordion-custom-trigger-demo.tsx
+│   ├── accordion-disabled-demo.tsx
+│   ├── accordion-highlight-active-demo.tsx
+│   ├── accordion-media-content-demo.tsx
+│   ├── accordion-outline-demo.tsx
+│   ├── accordion-tabs-demo.tsx
+│   └── index.tsx
+├── basic/              # Basic UI component demos
+│   ├── alert-demo.tsx
+│   ├── alert-dialog-demo.tsx
+│   ├── avatar-demo.tsx
+│   ├── badge-demo.tsx
+│   ├── button-demo.tsx
+│   └── index.tsx
+├── layout/             # Layout and utility component demos
+│   ├── code-example.tsx
+│   ├── component-layout.tsx
+│   ├── demo-grid.tsx
+│   ├── inline-code-example.tsx
+│   ├── variant-demo.tsx
+│   └── index.tsx
+├── index.tsx           # Main export file
+└── README.md           # This file
+```
 
+## Usage
+
+### Import specific demo components:
 ```tsx
-import ComponentLayout from "@/components/demo/component-layout";
-
-<ComponentLayout
-  title="Component Name"
-  description="Description of the component"
-  showCodeExample={true}
-  codeExample="code string"
->
-  {/* Content */}
-</ComponentLayout>
+import { AlertDemo, ButtonDemo } from '@/components/demo';
+import { AccordionDemo } from '@/components/demo/accordion';
+import { ComponentLayout } from '@/components/demo/layout';
 ```
 
-**Props:**
-- `title: string` - заголовок компонента
-- `description: string` - описание компонента
-- `children: ReactNode` - содержимое страницы
-- `className?: string` - дополнительные CSS классы
-- `showCodeExample?: boolean` - показывать ли пример кода
-- `codeExample?: string` - пример кода для отображения
-
-### VariantDemo
-Компонент для демонстрации вариантов использования.
-
+### Import all demos from a category:
 ```tsx
-import VariantDemo from "@/components/demo/variant-demo";
-
-<VariantDemo
-  title="Variant Name"
-  description="Description of this variant"
->
-  {/* Demo component */}
-</VariantDemo>
+import * as AccordionDemos from '@/components/demo/accordion';
+import * as BasicDemos from '@/components/demo/basic';
+import * as LayoutDemos from '@/components/demo/layout';
 ```
 
-**Props:**
-- `title: string` - название варианта
-- `description: string` - описание варианта
-- `children: ReactNode` - демо-компонент
-- `className?: string` - дополнительные CSS классы
+## Categories
 
-### DemoGrid
-Сетка для размещения демо-компонентов.
+### Accordion Demos
+- Various accordion component variations and configurations
+- Includes box styles, custom triggers, disabled states, and more
 
-```tsx
-import DemoGrid from "@/components/demo/demo-grid";
+### Basic Demos
+- Core UI component demonstrations
+- Alert, AlertDialog, Avatar, Badge, Button components
 
-<DemoGrid columns={2}>
-  {/* Demo components */}
-</DemoGrid>
-```
+### Layout Demos
+- Layout and utility components
+- Code examples, demo grids, component layouts, and variant demonstrations
 
-**Props:**
-- `children: ReactNode` - демо-компоненты
-- `className?: string` - дополнительные CSS классы
-- `columns?: 1 | 2 | 3 | 4` - количество колонок (по умолчанию 1)
+## Adding New Demos
 
-## Пример использования
-
-```tsx
-import ComponentLayout from "@/components/demo/component-layout";
-import VariantDemo from "@/components/demo/variant-demo";
-import DemoGrid from "@/components/demo/demo-grid";
-
-export default function MyComponentPage() {
-  const codeExample = `import { MyComponent } from "@/components/ui/my-component";
-
-<MyComponent>Hello World</MyComponent>`;
-
-  return (
-    <div className="container mx-auto py-8">
-      <ComponentLayout
-        title="My Component"
-        description="Description of my component"
-        showCodeExample={true}
-        codeExample={codeExample}
-      >
-        <DemoGrid columns={2}>
-          <VariantDemo
-            title="Default"
-            description="Default variant"
-          >
-            <MyComponentDemo />
-          </VariantDemo>
-          
-          <VariantDemo
-            title="Custom"
-            description="Custom variant"
-          >
-            <MyComponentCustomDemo />
-          </VariantDemo>
-        </DemoGrid>
-      </ComponentLayout>
-    </div>
-  );
-}
-```
-
-## Структура файлов
-
-```
-src/components/demo/
-├── component-layout.tsx    # Основной layout
-├── variant-demo.tsx        # Компонент для вариантов
-├── demo-grid.tsx          # Сетка для демо
-├── accordion-demos.tsx    # Демо для Accordion
-├── alert-demo.tsx         # Демо для Alert
-├── button-demo.tsx        # Демо для Button
-└── index.tsx              # Экспорты
-```
-
-## Создание новой страницы компонента
-
-1. Создайте папку в `src/app/components/[component-name]/`
-2. Создайте файл `page.tsx`
-3. Импортируйте необходимые демо-компоненты
-4. Используйте шаблоны для создания страницы
-5. Добавьте ссылку на страницу в главное меню
+1. Create your demo component in the appropriate category folder
+2. Export it from the category's `index.tsx` file
+3. The main `index.tsx` will automatically re-export it
+4. Update this README if adding new categories

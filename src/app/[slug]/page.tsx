@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { AppSidebar } from '@/components/blocks app/app-sidebar'
+import { AppSidebar } from '@/components/blocks-app/app-sidebar'
 import { useWindowSize } from '@/hooks/use-window-size'
 import { useTranslations } from '@/hooks/use-translations'
 import { LanguageSwitcher } from '@/components/shared/language-switcher'
-import { TableOfContents } from '@/components/blocks app/table-of-contents'
+import { TableOfContents } from '@/components/blocks-app/table-of-contents'
 import { PROJECT_SETTINGS, NAVIGATION_ITEMS } from '../../../settings'
 import { SearchEngine } from '@/components/shared/search-engine'
 import { Button } from '@/components/ui/button'
