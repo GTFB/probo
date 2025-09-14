@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import crypto from 'crypto'
-import { PASSWORD_GROUPS } from '@/lib/settings'
+import { PASSWORD_GROUPS } from '../../../settings'
 
 // Helper function to get password hash
 function getPasswordHash(password: string): string {
