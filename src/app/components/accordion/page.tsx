@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ComponentsHeader } from "@/components/shared/components-header";
 import { 
   ArrowLeft,
   ChevronRight,
@@ -69,27 +70,19 @@ const accordionVariants = [
 
 export default function AccordionPage() {
   return (
-    <div className="container mx-auto py-8 space-y-8">
-      <div className="flex items-center space-x-4">
-        <Link href="/components">
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Назад к компонентам
-          </Button>
-        </Link>
-      </div>
-
-      <div className="space-y-4">
-        <h1 className="text-4xl font-bold">Accordion Components</h1>
-        <p className="text-muted-foreground text-lg max-w-3xl">
-          A vertically stacked set of interactive headings that each reveal a section of content. 
-          Choose from various styling options and configurations.
-        </p>
-        <div className="flex items-center space-x-2">
-          <Badge variant="secondary">10 вариантов</Badge>
-          <Badge variant="outline">shadcn/ui</Badge>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background">
+      <ComponentsHeader
+        title="Accordion Components"
+        description="A vertically stacked set of interactive headings that each reveal a section of content. Choose from various styling options and configurations."
+        showBackButton={true}
+        backHref="/components"
+        badges={[
+          { text: "10 вариантов", variant: "secondary" },
+          { text: "shadcn/ui", variant: "outline" }
+        ]}
+      />
+      
+      <div className="container mx-auto py-8 space-y-8">
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {accordionVariants.map((variant) => (
@@ -136,6 +129,7 @@ export default function AccordionPage() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

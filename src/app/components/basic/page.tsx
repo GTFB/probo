@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ComponentsHeader } from "@/components/shared/components-header";
 import { 
   ArrowLeft,
   ChevronRight,
@@ -59,27 +60,19 @@ const basicComponents = [
 
 export default function BasicComponentsPage() {
   return (
-    <div className="container mx-auto py-8 space-y-8">
-      <div className="flex items-center space-x-4">
-        <Link href="/components">
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Назад к компонентам
-          </Button>
-        </Link>
-      </div>
-
-      <div className="space-y-4">
-        <h1 className="text-4xl font-bold">Basic Components</h1>
-        <p className="text-muted-foreground text-lg max-w-3xl">
-          Core UI components that form the foundation of your application. 
-          These essential components provide basic functionality and styling.
-        </p>
-        <div className="flex items-center space-x-2">
-          <Badge variant="secondary">5 компонентов</Badge>
-          <Badge variant="outline">shadcn/ui</Badge>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background">
+      <ComponentsHeader
+        title="Basic Components"
+        description="Core UI components that form the foundation of your application. These essential components provide basic functionality and styling."
+        showBackButton={true}
+        backHref="/components"
+        badges={[
+          { text: "5 компонентов", variant: "secondary" },
+          { text: "shadcn/ui", variant: "outline" }
+        ]}
+      />
+      
+      <div className="container mx-auto py-8 space-y-8">
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {basicComponents.map((component) => {
@@ -130,6 +123,7 @@ export default function BasicComponentsPage() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

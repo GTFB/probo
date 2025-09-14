@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ComponentsHeader } from "@/components/shared/components-header";
 import { 
   ChevronDown, 
   AlertTriangle, 
@@ -45,13 +46,18 @@ const componentCategories = [
 
 export default function ComponentsPage() {
   return (
-    <div className="container mx-auto py-8 space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold">UI Components Library</h1>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Изучите и протестируйте все компоненты shadcn/ui. Выберите категорию для просмотра примеров и вариантов использования.
-        </p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <ComponentsHeader
+        title="UI Components Library"
+        description="Изучите и протестируйте все компоненты shadcn/ui. Выберите категорию для просмотра примеров и вариантов использования."
+        showHomeButton={true}
+        badges={[
+          { text: "shadcn/ui", variant: "outline" },
+          { text: "3 категории", variant: "secondary" }
+        ]}
+      />
+      
+      <div className="container mx-auto py-8 space-y-8">
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {componentCategories.map((category) => {
@@ -113,6 +119,7 @@ export default function ComponentsPage() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -33,7 +33,8 @@
     "light": "Light",
     "dark": "Dark",
     "sectionOf": "Section {current} of {total}",
-    "tableOfContents": "Table of Contents"
+    "tableOfContents": "Table of Contents",
+    "noHeadings": "No headings"
   },
   "navigation": {
     "tableOfContents": "Table of Contents",
