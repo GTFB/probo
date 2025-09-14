@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import crypto from 'crypto'
-import { PASSWORD_GROUPS } from '../../../settings'
+import { PASSWORD_GROUPS } from '../../../../settings'
 
 // Helper function to get password hash
 function getPasswordHash(password: string): string {
@@ -12,7 +12,7 @@ function getPasswordHash(password: string): string {
 function findGroupBySection(sectionId: string): string {
   // Check each group to see if the section ID is in its sections array
   for (const [groupName, config] of Object.entries(PASSWORD_GROUPS)) {
-    const sections = config.sections as readonly (string | '*')[]
+    const sections = (config as any).sections as readonly (string | '*')[]
     if (sections.some((s) => s === sectionId)) {
       return groupName
     }
@@ -20,7 +20,7 @@ function findGroupBySection(sectionId: string): string {
   
   // If no specific group found, check if any group has '*' (wildcard)
   for (const [groupName, config] of Object.entries(PASSWORD_GROUPS)) {
-    const sections = config.sections as readonly (string | '*')[]
+    const sections = (config as any).sections as readonly (string | '*')[]
     if (sections.some((s) => s === '*')) {
       return groupName
     }

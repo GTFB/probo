@@ -1,7 +1,7 @@
-import { ButtonDemo } from "@/components/demo";
-import ComponentLayout from "@/components/demo/component-layout";
-import VariantDemo from "@/components/demo/variant-demo";
-import DemoGrid from "@/components/demo/demo-grid";
+import { ButtonDemo } from "@/components/demo/basic";
+import ComponentLayout from "@/components/demo/layout/component-layout";
+import VariantDemo from "@/components/demo/layout/variant-demo";
+import DemoGrid from "@/components/demo/layout/demo-grid";
 
 export default function ButtonPage() {
   const codeExample = `import { Button } from "@/components/ui/button";
