@@ -30,8 +30,7 @@ const navigationItems: NavigationItem[] = NAVIGATION_ITEMS.map(item => ({
   id: item.id,
   title: item.title,
   icon: item.icon,
-  href: item.href,
-  slug: item.slug
+  href: item.href
 }))
 
 // Import icons for navigation (keep only those used in getIconByName)
@@ -185,7 +184,7 @@ export default function SectionPage() {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const nextIndex = (currentIndex + 1) % navigationItems.length
     const nextSection = navigationItems[nextIndex]
-    router.push(`/${nextSection.slug}`)
+    router.push(nextSection.href)
     // Scroll to top of page
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection, router])
@@ -194,7 +193,7 @@ export default function SectionPage() {
     const currentIndex = navigationItems.findIndex(item => item.id === activeSection)
     const prevIndex = currentIndex > 0 ? currentIndex - 1 : navigationItems.length - 1
     const prevSection = navigationItems[prevIndex]
-    router.push(`/${prevSection.slug}`)
+    router.push(prevSection.href)
     // Scroll to top of page
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeSection, router])
@@ -453,8 +452,8 @@ export default function SectionPage() {
                                     element.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
                                     // Update URL with hash
-                                    if (item.slug) {
-                                      const newUrl = `${window.location.pathname}#${item.slug}`
+                                    if (item.id) {
+                                      const newUrl = `${window.location.pathname}#${item.id}`
                                       window.history.pushState(null, '', newUrl)
                                     }
                                   } else {
@@ -464,8 +463,8 @@ export default function SectionPage() {
                                         heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
                                         // Update URL with hash
-                                        if (item.slug) {
-                                          const newUrl = `${window.location.pathname}#${item.slug}`
+                                        if (item.id) {
+                                          const newUrl = `${window.location.pathname}#${item.id}`
                                           window.history.pushState(null, '', newUrl)
                                         }
                                       }
