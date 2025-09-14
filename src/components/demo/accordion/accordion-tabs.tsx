@@ -22,16 +22,23 @@ const items = [
   },
 ];
 
-export default function AccordionBoxContainedDemo() {
+export default function AccordionTabsDemo() {
   return (
-    <Accordion type="single" collapsible className="max-w-lg my-4 w-full">
+    <Accordion
+      type="single"
+      collapsible
+      defaultValue="item-0"
+      className="w-full space-y-2"
+    >
       {items.map(({ title, content }, index) => (
         <AccordionItem
           key={index}
           value={`item-${index}`}
-          className="last:border-none first:rounded-t-md last:rounded-b-md px-4 bg-muted"
+          className="border-none rounded-md px-4 data-[state=open]:bg-secondary"
         >
-          <AccordionTrigger>{title}</AccordionTrigger>
+          <AccordionTrigger className="data-[state=closed]:py-2">
+            {title}
+          </AccordionTrigger>
           <AccordionContent>{content}</AccordionContent>
         </AccordionItem>
       ))}

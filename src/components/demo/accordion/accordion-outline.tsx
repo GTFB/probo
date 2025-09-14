@@ -22,23 +22,20 @@ const items = [
   },
 ];
 
-export default function AccordionHighlightActiveItemDemo() {
+export default function AccordionOutlineDemo() {
   return (
     <Accordion
-      defaultValue="item-0"
       type="single"
       collapsible
-      className="max-w-lg my-4 w-full"
+      className="w-full space-y-2"
     >
       {items.map(({ title, content }, index) => (
         <AccordionItem
           key={index}
           value={`item-${index}`}
-          className="data-[state=open]:border-b-2 data-[state=open]:border-indigo-600 dark:data-[state=open]:border-indigo-500"
+          className="border last:border-b rounded-md px-4"
         >
-          <AccordionTrigger className="data-[state=open]:text-indigo-600 dark:data-[state=open]:text-indigo-500">
-            {title}
-          </AccordionTrigger>
+          <AccordionTrigger>{title}</AccordionTrigger>
           <AccordionContent>{content}</AccordionContent>
         </AccordionItem>
       ))}

@@ -4,50 +4,40 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
-import { Contrast, Palette, Zap } from "lucide-react";
 
 const items = [
   {
     title: "Is it accessible?",
     content: "Yes. It adheres to the WAI-ARIA design pattern.",
-    icon: Contrast,
   },
   {
     title: "Is it styled?",
     content:
       "Yes. It comes with default styles that matches the other components' aesthetic.",
-    icon: Palette,
-    disabled: true,
   },
   {
     title: "Is it animated?",
     content:
       "Yes. It's animated by default, but you can disable it if you prefer.",
-    icon: Zap,
   },
 ];
 
-export default function AccordionDisabledDemo() {
+export default function AccordionHighlightActiveItemDemo() {
   return (
     <Accordion
       defaultValue="item-0"
       type="single"
       collapsible
-      className="max-w-lg my-4 w-full"
+      className="w-full"
     >
-      {items.map(({ title, content, icon: Icon, disabled }, index) => (
-        <AccordionItem key={index} value={`item-${index}`}>
-          <AccordionTrigger
-            disabled={disabled}
-            className={cn({
-              "opacity-50": disabled,
-            })}
-          >
-            <div className="flex items-start gap-3">
-              <Icon />
-              {title}
-            </div>
+      {items.map(({ title, content }, index) => (
+        <AccordionItem
+          key={index}
+          value={`item-${index}`}
+          className="data-[state=open]:border-b-2 data-[state=open]:border-indigo-600 dark:data-[state=open]:border-indigo-500"
+        >
+          <AccordionTrigger className="data-[state=open]:text-indigo-600 dark:data-[state=open]:text-indigo-500">
+            {title}
           </AccordionTrigger>
           <AccordionContent>{content}</AccordionContent>
         </AccordionItem>

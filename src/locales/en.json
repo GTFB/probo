@@ -47,6 +47,92 @@
     "group1SectionA": "Group 1 - Section A",
     "group2SectionD": "Group 2 - Section D"
   },
+  "components": {
+    "title": "UI Components Library",
+    "accordion": {
+      "title": "Accordion",
+      "description": "A vertically stacked set of interactive headings that each reveal a section of content."
+    },
+    "basic": {
+      "title": "Basic Components",
+      "description": "Core UI components for alerts, dialogs, avatars, badges, and buttons."
+    },
+    "layout": {
+      "title": "Layout & Utilities",
+      "description": "Layout components, code examples, and utility components for demonstrations."
+    },
+    "count": "components",
+    "variants": "Variants:",
+    "more": "more",
+    "howToUse": {
+      "title": "How to use",
+      "description": "Select a component category above to view all available options, code examples, and interactive demonstrations. Each component includes detailed documentation and usage examples."
+    }
+  },
+  "accordion": {
+    "title": "Accordion Components",
+    "description": "Interactive accordion components with various styles and configurations",
+    "variants": {
+      "default": {
+        "title": "Default Accordion",
+        "description": "Standard accordion with basic styling and functionality."
+      },
+      "outline": {
+        "title": "Outline Accordion",
+        "description": "Accordion with outline border styling for better visual separation."
+      },
+      "box": {
+        "title": "Box Accordion",
+        "description": "Accordion with box-style containers for each item."
+      },
+      "boxContained": {
+        "title": "Box Contained",
+        "description": "Box accordion with contained styling and rounded corners."
+      },
+      "tabs": {
+        "title": "Tabs Accordion",
+        "description": "Accordion styled to look like tabs with horizontal layout."
+      },
+      "customTrigger": {
+        "title": "Custom Trigger",
+        "description": "Accordion with custom trigger elements and styling."
+      },
+      "disabled": {
+        "title": "Disabled State",
+        "description": "Accordion with disabled items and proper accessibility."
+      },
+      "highlightActive": {
+        "title": "Highlight Active",
+        "description": "Accordion that highlights the currently active item."
+      },
+      "mediaContent": {
+        "title": "Media Content",
+        "description": "Accordion with rich media content like images and videos."
+      }
+    },
+    "demo": {
+      "title": "Interactive Demo",
+      "description": "Try out the accordion component below. Click on any item to expand or collapse it.",
+      "items": {
+        "accessible": {
+          "title": "Is it accessible?",
+          "content": "Yes. It adheres to the WAI-ARIA design pattern."
+        },
+        "styled": {
+          "title": "Is it styled?",
+          "content": "Yes. It comes with default styles that matches the other components' aesthetic."
+        },
+        "animated": {
+          "title": "Is it animated?",
+          "content": "Yes. It's animated by default, but you can disable it if you prefer."
+        }
+      }
+    },
+    "usage": {
+      "title": "Usage",
+      "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+    }
+  },
   "auth": {
     "protectedContent": "Protected Content",
     "passwordProtected": "This content is password protected. Please enter the password to continue.",
@@ -79,5 +165,65 @@
   },
   "tariff": {
     "popular": "Popular"
+  },
+  "basic": {
+    "title": "Basic Components",
+    "description": "Core UI components for alerts, dialogs, avatars, badges, and buttons.",
+    "components": {
+      "alert": {
+        "title": "Alert",
+        "description": "Displays a callout for user attention with different variants and styles."
+      },
+      "alertDialog": {
+        "title": "Alert Dialog",
+        "description": "A modal dialog that interrupts the user with important content and expects a response."
+      },
+      "avatar": {
+        "title": "Avatar",
+        "description": "An image element with a fallback for representing the user."
+      },
+      "badge": {
+        "title": "Badge",
+        "description": "Displays a badge or a component that looks like a badge."
+      },
+      "button": {
+        "title": "Button",
+        "description": "Displays a button or a component that looks like a button with various styles."
+      }
+    },
+    "info": {
+      "title": "Basic Components",
+      "description": "Essential UI components that form the foundation of modern web interfaces. Each component is designed for accessibility, customization, and ease of use."
+    }
+  },
+  "layout": {
+    "title": "Layout & Utility Components",
+    "description": "Layout components, code examples, and utility components for demonstrations.",
+    "components": {
+      "componentLayout": {
+        "title": "Component Layout",
+        "description": "Layout wrapper for organizing and displaying component demonstrations."
+      },
+      "demoGrid": {
+        "title": "Demo Grid",
+        "description": "Grid layout for organizing multiple component demonstrations."
+      },
+      "codeExample": {
+        "title": "Code Example",
+        "description": "Component for displaying code examples with syntax highlighting."
+      },
+      "inlineCodeExample": {
+        "title": "Inline Code Example",
+        "description": "Inline code display component for small code snippets."
+      },
+      "variantDemo": {
+        "title": "Variant Demo",
+        "description": "Component for demonstrating different variants of UI elements."
+      }
+    },
+    "info": {
+      "title": "Layout & Utilities",
+      "description": "Layout components and utilities that help organize and structure your application interface. These components provide flexible and responsive layouts for various use cases."
+    }
   }
 }

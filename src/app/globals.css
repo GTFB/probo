@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import url('https://fonts.bunny.net/css?family=inter:400,500,600,700,800|inter-tight:400,500,600,700,800');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css');
@@ -41,6 +43,7 @@
   --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: IBM Plex Mono, ui-monospace, monospace;
+  --font-heading: Inter Tight, ui-sans-serif, sans-serif, system-ui;
   --radius: 0.3rem;
   --shadow-2xs: 0 1px 5px 0px 0 0% 0% / 0.00;
   --shadow-xs: 0 1px 5px 0px 0 0% 0% / 0.00;
@@ -90,6 +93,7 @@
   --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Merriweather, ui-serif, serif;
   --font-mono: IBM Plex Mono, ui-monospace, monospace;
+  --font-heading: Inter Tight, ui-sans-serif, sans-serif, system-ui;
   --radius: 0.3rem;
   --shadow-2xs: 0 1px 5px 0px 0 0% 0% / 0.00;
   --shadow-xs: 0 1px 5px 0px 0 0% 0% / 0.00;
@@ -321,9 +325,9 @@
     overflow-wrap: break-word;
     hyphens: auto;
   }
-  .mdx-content h1 { @apply text-3xl sm:text-4xl font-sans font-extrabold mb-6 text-foreground scroll-mt-20; }
-  .mdx-content h2 { @apply text-2xl sm:text-3xl font-sans font-bold mb-4 text-foreground scroll-mt-20; }
-  .mdx-content h3 { @apply text-xl sm:text-2xl font-sans font-semibold mb-3 text-foreground scroll-mt-20; }
+  .mdx-content h1 { @apply text-3xl sm:text-4xl font-extrabold mb-6 text-foreground scroll-mt-20; font-family: var(--font-heading); }
+  .mdx-content h2 { @apply text-2xl sm:text-3xl font-bold mb-4 text-foreground scroll-mt-20; font-family: var(--font-heading); }
+  .mdx-content h3 { @apply text-xl sm:text-2xl font-semibold mb-3 text-foreground scroll-mt-20; font-family: var(--font-heading); }
   .mdx-content h4 { @apply text-lg font-bold mb-2 text-foreground; }
   .mdx-content h5 { @apply text-base font-semibold mb-2 text-foreground; }
   .mdx-content h6 { @apply text-sm font-medium mb-2 text-muted-foreground; }
@@ -649,6 +653,137 @@
     @apply bg-green-600 border-green-600;
     content: '✓';
     @apply text-white text-xs flex items-center justify-center;
+  }
+
+  /* Component Styles */
+  .component-card {
+    @apply group hover:shadow-lg hover:bg-muted/60 transition-all duration-200 cursor-pointer h-full flex flex-col;
+  }
+
+  .component-card-header {
+    @apply space-y-4 flex-1;
+  }
+
+  .component-card-icon-container {
+    @apply flex items-center justify-between;
+  }
+
+  .component-card-icon {
+    @apply p-3 rounded-lg text-white;
+  }
+
+  .component-card-chevron {
+    @apply h-5 w-5 text-muted-foreground group-hover:translate-x-1 transition-transform;
+  }
+
+  .component-card-content {
+    @apply flex-1;
+  }
+
+  .component-card-title {
+    @apply text-xl mb-2;
+    font-family: var(--font-heading);
+  }
+
+  .component-card-description {
+    @apply text-sm leading-relaxed line-clamp-3;
+  }
+
+  .component-card-footer {
+    @apply space-y-4 mt-auto;
+  }
+
+  .component-card-badge {
+    @apply text-xs;
+  }
+
+  .component-card-variants {
+    @apply space-y-2;
+  }
+
+  .component-card-variants-label {
+    @apply text-xs font-medium text-muted-foreground;
+  }
+
+  .component-card-variants-list {
+    @apply flex flex-wrap gap-1 min-h-[24px];
+  }
+
+  .component-card-variant-badge {
+    @apply text-xs;
+  }
+
+  /* Layout Styles */
+  .components-grid {
+    @apply grid gap-6 md:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .components-container {
+    @apply container mx-auto py-8 space-y-8;
+  }
+
+  .components-page {
+    @apply min-h-screen bg-background;
+  }
+
+  /* Info Section Styles */
+  .info-section {
+    @apply mt-12 bg-muted/50 rounded-lg;
+  }
+
+  .info-section-content {
+    @apply p-6;
+  }
+
+  .info-section-layout {
+    @apply flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4;
+  }
+
+  .info-section-icon {
+    @apply h-6 w-6 text-muted-foreground flex-shrink-0;
+  }
+
+  .info-section-text {
+    @apply space-y-2;
+  }
+
+  .info-section-title {
+    @apply text-lg font-semibold;
+    font-family: var(--font-heading);
+  }
+
+  .info-section-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* Accordion Page Styles */
+  .accordion-section {
+    @apply space-y-4;
+  }
+
+  .accordion-section-header {
+    @apply space-y-2;
+  }
+
+  .accordion-section-title {
+    @apply text-2xl font-semibold;
+    font-family: var(--font-heading);
+  }
+
+  .accordion-section-description {
+    @apply text-muted-foreground;
+  }
+
+  .accordion-section-content {
+    @apply w-full;
+  }
+
+  .accordion-page-description {
+    @apply text-center space-y-4;
+  }
+
+  .accordion-page-description-text {
+    @apply text-lg text-muted-foreground max-w-2xl mx-auto;
   }
 }
 
@@ -1004,4 +1139,17 @@
 
 [data-state="closed"] .sheet-overlay {
   animation: fade-out 0.3s ease-in;
+}
+
+/* Group utility classes for Tailwind CSS v4 */
+.group {
+  /* Base group class */
+}
+
+.group:hover .group-hover\:translate-x-1 {
+  transform: translateX(0.25rem);
+}
+
+.group:hover .group-hover\:bg-muted\/60 {
+  background-color: hsl(var(--muted) / 0.6);
 }

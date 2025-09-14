@@ -6,6 +6,8 @@ export const PROJECT_SETTINGS = {
   defaultLanguage: 'en',
   defaultTheme: 'system',
   supportedThemes: ['light', 'dark', 'system'],
+  containerWidth: 'max-w-7xl',
+  mobilePadding: 'px-4',
 } as const;
 
 // Language configuration (ordered by popularity)

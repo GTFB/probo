@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ComponentsHeader } from "@/components/shared/components-header";
+import { PROJECT_SETTINGS } from "../../../../settings";
 import { 
   ArrowLeft,
   ChevronRight,
@@ -63,33 +64,30 @@ export default function LayoutComponentsPage() {
     <div className="min-h-screen bg-background">
       <ComponentsHeader
         title="Layout & Utility Components"
-        description="Layout components, code examples, and utility components for organizing and displaying content in your application."
+        description=""
         showBackButton={true}
         backHref="/components"
-        badges={[
-          { text: "5 компонентов", variant: "secondary" },
-          { text: "shadcn/ui", variant: "outline" }
-        ]}
+        badges={[]}
       />
       
-      <div className="container mx-auto py-8 space-y-8">
+      <div className={`container mx-auto py-8 space-y-8 ${PROJECT_SETTINGS.containerWidth} ${PROJECT_SETTINGS.mobilePadding}`}>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {layoutComponents.map((component) => {
           const IconComponent = component.icon;
           return (
             <Link key={component.title} href={component.href}>
-              <Card className="group hover:shadow-lg transition-all duration-200 hover:scale-[1.02] cursor-pointer">
-                <CardHeader className="space-y-4">
+              <Card className="group hover:shadow-lg transition-all duration-200 cursor-pointer h-full">
+                <CardHeader className="space-y-4 flex-1">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${component.color} text-white`}>
                       <IconComponent className="h-6 w-6" />
                     </div>
                     <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
                   </div>
-                  <div>
-                    <CardTitle className="text-lg">{component.title}</CardTitle>
-                    <CardDescription className="text-sm">
+                  <div className="flex-1">
+                    <CardTitle className="text-lg mb-2">{component.title}</CardTitle>
+                    <CardDescription className="text-sm line-clamp-3">
                       {component.description}
                     </CardDescription>
                   </div>

@@ -4,40 +4,48 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Plus } from "lucide-react";
+import { Contrast, Palette, Zap } from "lucide-react";
 
 const items = [
   {
     title: "Is it accessible?",
     content: "Yes. It adheres to the WAI-ARIA design pattern.",
+    icon: Contrast,
   },
   {
     title: "Is it styled?",
     content:
       "Yes. It comes with default styles that matches the other components' aesthetic.",
+    icon: Palette,
   },
   {
     title: "Is it animated?",
     content:
       "Yes. It's animated by default, but you can disable it if you prefer.",
+    icon: Zap,
   },
 ];
 
-export default function AccordionCustomTriggerDemo() {
+export default function AccordionMediaContentDemo() {
   return (
     <Accordion
       defaultValue="item-0"
       type="single"
       collapsible
-      className="max-w-lg my-4 w-full"
+      className="w-full"
     >
-      {items.map(({ title, content }, index) => (
+      {items.map(({ title, content, icon: Icon }, index) => (
         <AccordionItem key={index} value={`item-${index}`}>
-          <AccordionTrigger className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-45 text-sm">
-            {title}
-            <Plus className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200" />
+          <AccordionTrigger>
+            <div className="flex items-start gap-3">
+              <Icon />
+              {title}
+            </div>
           </AccordionTrigger>
-          <AccordionContent>{content}</AccordionContent>
+          <AccordionContent>
+            {content}
+            <div className="mt-4 w-full aspect-18/9 bg-muted rounded-xl" />
+          </AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

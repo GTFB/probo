@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Plus } from "lucide-react";
 
 const items = [
   {
@@ -22,22 +23,19 @@ const items = [
   },
 ];
 
-export default function AccordionTabsDemo() {
+export default function AccordionCustomTriggerDemo() {
   return (
     <Accordion
+      defaultValue="item-0"
       type="single"
       collapsible
-      defaultValue="item-0"
-      className="max-w-lg my-4 w-full space-y-2"
+      className="w-full"
     >
       {items.map(({ title, content }, index) => (
-        <AccordionItem
-          key={index}
-          value={`item-${index}`}
-          className="border-none rounded-md px-4 data-[state=open]:bg-secondary"
-        >
-          <AccordionTrigger className="data-[state=closed]:py-2">
+        <AccordionItem key={index} value={`item-${index}`}>
+          <AccordionTrigger className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-45 text-sm [&>svg]:hidden">
             {title}
+            <Plus className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200" />
           </AccordionTrigger>
           <AccordionContent>{content}</AccordionContent>
         </AccordionItem>
