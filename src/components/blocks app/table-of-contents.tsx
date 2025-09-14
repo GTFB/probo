@@ -168,7 +168,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
 
   return (
     <div className="hidden lg:block w-80 bg-sidebar-right h-screen theme-transition sticky top-0 scrollbar-hide">
-      <div className="h-full overflow-y-auto scrollbar-hide">
+      <div className="h-full overflow-y-auto scrollbar-hide relative">
         <div className="sticky top-0 backdrop-blur-sm z-10 flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
             <Button
@@ -213,24 +213,23 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
         {/* Tab content */}
         <div className="px-4 pt-3 pb-8">
         {activeTab === 'toc' && (
-          <div 
-            className="space-y-1 relative"
-            style={{
-              maskImage: 'linear-gradient(to bottom, black 0%, black 80%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 80%, transparent 100%)'
-            }}
-          >
+          <div className="space-y-1 relative">
             {items.length === 0 ? (
               <p className="text-sm text-muted-foreground">{t('search.noHeadings')}</p>
             ) : (
-              <div className="relative">
+              <div className="relative" style={{ border: 'none', outline: 'none' }}>
                 {items.map((item) => (
                 <Button
                   key={item.id}
                   variant="ghost"
                   size="sm"
                   className={`group w-full justify-start text-left h-auto py-1 px-2 text-sm relative ${currentActive === item.id ? 'text-foreground' : ''}`}
-                  style={{ paddingLeft: `${(item.level - 1) * 12 + 8}px` }}
+                  style={{ 
+                    paddingLeft: `${(item.level - 1) * 12 + 8}px`,
+                    border: 'none !important',
+                    outline: 'none !important',
+                    boxShadow: 'none !important'
+                  }}
                   onClick={() => {
                     const element = document.getElementById(item.id)
                     if (element) {
@@ -272,11 +271,16 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                     }
                   }}
                 >
-                  <div className={`absolute left-0 top-0 bottom-0 w-px rounded-l-sm transition-colors ${
+                  <div className={`absolute left-0 top-0 bottom-0 w-[1px] transition-colors ${
                     currentActive === item.id 
                       ? 'bg-primary group-hover:bg-primary/80' 
                       : 'bg-border group-hover:bg-muted-foreground/60'
-                  }`} />
+                  }`} 
+                  style={{
+                    border: 'none',
+                    outline: 'none',
+                    boxShadow: 'none'
+                  }} />
                   <div className="flex flex-col items-start w-full">
                     <span className={`text-sm truncate w-full transition-colors ${
                       currentActive === item.id 
@@ -299,6 +303,16 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
         )}
         </div>
       </div>
+      {/* Fixed gradient overlay at bottom of screen */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-20"
+        style={{
+          background: 'linear-gradient(to top, hsl(var(--sidebar)) 0%, transparent 100%)',
+          border: 'none',
+          outline: 'none',
+          boxShadow: 'none'
+        }}
+      />
     </div>
   )
 }
