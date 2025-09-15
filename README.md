@@ -474,6 +474,64 @@ const { locale } = useLocale()
 {locale !== 'ru' && <div>Content for non-Russian language</div>}
 ```
 
+## Font Styling Guidelines
+
+### ✅ Correct Font Styling
+
+Use Tailwind CSS utility classes for font styling:
+
+```jsx
+// ✅ CORRECT - Using Tailwind CSS classes
+<h3 className="text-2xl font-semibold font-heading">
+  Section Title
+</h3>
+```
+
+### ❌ Incorrect Font Styling
+
+Avoid mixing Tailwind classes with inline styles for the same property:
+
+```jsx
+// ❌ INCORRECT - Redundant and conflicting styles
+<h3 className="text-2xl font-semibold font-heading" style={{ fontFamily: 'var(--font-heading)' }}>
+  Section Title
+</h3>
+
+// ❌ INCORRECT - Inline styles override Tailwind classes
+<h3 className="font-heading" style={{ fontFamily: 'Arial, sans-serif' }}>
+  Section Title
+</h3>
+```
+
+### Best Practices
+
+1. **Use Tailwind classes first** - `font-heading`, `font-sans`, `font-mono`
+2. **CSS variables only when needed** - for dynamic values or complex calculations
+3. **Avoid redundancy** - don't set the same property in both class and style
+4. **Consistent approach** - choose one method and stick to it throughout the project
+
+### Available Font Classes
+
+```jsx
+// Font families
+<div className="font-sans">Sans-serif text</div>
+<div className="font-heading">Heading font</div>
+<div className="font-mono">Monospace text</div>
+
+// Font weights
+<div className="font-normal">Normal weight</div>
+<div className="font-medium">Medium weight</div>
+<div className="font-semibold">Semibold weight</div>
+<div className="font-bold">Bold weight</div>
+
+// Font sizes
+<div className="text-sm">Small text</div>
+<div className="text-base">Base text</div>
+<div className="text-lg">Large text</div>
+<div className="text-xl">Extra large text</div>
+<div className="text-2xl">2x large text</div>
+```
+
 ## Environment Setup
 - All terminal operations use Makefile commands
 - File structure changes are automatically reflected in structure.md

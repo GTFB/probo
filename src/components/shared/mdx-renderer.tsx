@@ -512,7 +512,24 @@ const createHeadingComponents = (toc?: Array<{ id: string; title: string; level:
           if (match) {
             const language = match[1]
             
-            const code = String(codeElement.props.children || '')
+            // Extract text content from children (can be string, array, or React elements)
+            const extractTextContent = (children: any): string => {
+              if (typeof children === 'string') {
+                return children
+              }
+              if (typeof children === 'number') {
+                return String(children)
+              }
+              if (Array.isArray(children)) {
+                return children.map(extractTextContent).join('')
+              }
+              if (children && typeof children === 'object' && children.props) {
+                return extractTextContent(children.props.children)
+              }
+              return ''
+            }
+            
+            const code = extractTextContent(codeElement.props.children)
             
             return (
               <CodeHighlight 

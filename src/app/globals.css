@@ -6,6 +6,12 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css');
 
+/* Global styles do not remove */
+
+:root {
+  --font-heading: Inter, sans-serif;
+
+}
 /* CSS Variables */
 :root {
   --background: hsl(330 47.0588% 93.3333%);
@@ -180,25 +186,6 @@
     display: none;  /* Safari and Chrome */
   }
 
-  /* Sidebar hover styles - only for non-active buttons */
-  .sidebar button[data-sidebar="menu-button"]:not([data-active="true"]):hover,
-  [data-sidebar="menu-button"]:not([data-active="true"]):hover {
-    background-color: color-mix(in srgb, var(--sidebar) 90%, var(--foreground) 10%) !important;
-    color: var(--sidebar-foreground) !important;
-  }
-  
-  /* Active button normal state */
-  [data-sidebar="menu-button"][data-active="true"] {
-    background-color: var(--primary) !important;
-    color: var(--primary-foreground) !important;
-  }
-  
-  /* Active button hover - only background changes, text color stays the same */
-  [data-sidebar="menu-button"][data-active="true"]:hover {
-    background-color: color-mix(in srgb, var(--primary) 90%, transparent) !important;
-    color: var(--primary-foreground) !important;
-    opacity: 0.9;
-  }
 
 
   /* Mermaid diagram styles */
@@ -388,11 +375,11 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
-  .shiki-code-block pre {
+  .shiki-code-block.shiki-code-block pre {
     @apply m-0 py-4 pl-4 pr-6 text-sm;
     font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
     line-height: 1.7;
-    background-color: var(--shiki-light-bg, #ffffff) !important;
+    background-color: var(--shiki-light-bg, #ffffff);
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: pre-wrap;
@@ -400,8 +387,8 @@
     white-space: -pre-wrap;
     white-space: -o-pre-wrap;
   }
-  .dark .shiki-code-block pre {
-    background-color: var(--shiki-dark-bg, #121212) !important;
+  .dark .shiki-code-block.shiki-code-block pre {
+    background-color: var(--shiki-dark-bg, #121212);
   }
   .shiki-code-block::before {
     content: attr(data-language);
@@ -966,19 +953,6 @@
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
 
-  [data-radix-collection-item] button,
-  [data-radix-dropdown-menu-trigger] button,
-  button[data-state="open"],
-  button[data-state="closed"] {
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
-  }
-
-  button:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-  }
 }
 
 /* Custom sidebar background class */

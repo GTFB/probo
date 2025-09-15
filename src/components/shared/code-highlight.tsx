@@ -15,23 +15,26 @@ export function CodeHighlight({ code, language, className = '' }: CodeHighlightP
   const [isLoading, setIsLoading] = useState(true)
   const { theme } = useTheme()
 
+  // Ensure code is a string
+  const codeString = typeof code === 'string' ? code : String(code || '')
+
   useEffect(() => {
     const highlight = async () => {
       try {
         setIsLoading(true)
-        const html = await highlightCode(code, language, theme as 'light' | 'dark')
+        const html = await highlightCode(codeString, language, theme as 'light' | 'dark')
         setHighlightedCode(html)
       } catch (error) {
         console.error('Error highlighting code:', error)
         // Fallback to plain text
-        setHighlightedCode(`<pre><code>${code}</code></pre>`)
+        setHighlightedCode(`<pre><code>${codeString}</code></pre>`)
       } finally {
         setIsLoading(false)
       }
     }
 
     highlight()
-  }, [code, language, theme])
+  }, [codeString, language, theme])
 
   if (isLoading) {
     return (

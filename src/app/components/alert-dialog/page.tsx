@@ -92,8 +92,8 @@ export default function AlertDialogPage() {
         {demoSections.map((section, index) => (
           <div key={index} className="space-y-4">
             <div className="space-y-2">
-              <h3 className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{section.title}</h3>
-              <p className="text-muted-foreground">{section.description}</p>
+            <h3 className="text-2xl font-semibold font-heading">{section.title}</h3>
+            <p className="text-muted-foreground">{section.description}</p>
             </div>
             <div className="w-full">
               {section.component}
