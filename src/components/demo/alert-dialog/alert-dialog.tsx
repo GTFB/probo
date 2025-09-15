@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -18,7 +19,12 @@ export default function AlertDialogDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="btn-outline">{t('default.trigger')}</Button>
+        <Button 
+          variant="outline" 
+          className={buttonStyles.outline}
+        >
+          {t('default.trigger')}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -28,8 +34,12 @@ export default function AlertDialogDemo() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="btn-outline">{t('default.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">{t('default.continue')}</AlertDialogAction>
+          <AlertDialogCancel className={buttonStyles.outline}>
+            {t('default.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction className={buttonStyles.primary}>
+            {t('default.continue')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { PROJECT_SETTINGS } from "../../../settings";
 import { ArrowLeft, Home, Code } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 interface ComponentsHeaderProps {
   title: string;
@@ -37,10 +38,10 @@ export function ComponentsHeader({
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
             {showHomeButton && (
               <Link href="/">
-                <Button variant="ghost" size="sm" className="btn-nav">
-                  <Home className="h-4 w-4 mr-2" />
-                  {t('home')}
-                </Button>
+                    <Button variant="ghost" size="sm" className={buttonStyles.nav}>
+                      <Home className="h-4 w-4 mr-2" />
+                      {t('home')}
+                    </Button>
               </Link>
             )}
           </div>
@@ -48,7 +49,7 @@ export function ComponentsHeader({
           <div className="flex items-center space-x-2">
             {showBackButton && (
               <Link href={backHref}>
-                <Button variant="ghost" size="sm" className="btn-nav p-1 gap-0 h-6">
+                <Button variant="ghost" size="sm" className={buttonStyles.nav}>
                   <ArrowLeft className="h-4 w-4 sm:mr-2" />
                   <span className="hidden sm:inline">{t('back')}</span>
                 </Button>

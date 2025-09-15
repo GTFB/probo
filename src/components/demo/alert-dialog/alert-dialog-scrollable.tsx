@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogScrollableDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -19,7 +20,7 @@ export default function AlertDialogScrollableDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="btn-outline">
+        <Button variant="outline" className={buttonStyles.outline}>
           {t('scrollable.trigger')}
         </Button>
       </AlertDialogTrigger>
@@ -42,10 +43,10 @@ export default function AlertDialogScrollableDemo() {
         </ScrollArea>
         
         <AlertDialogFooter>
-          <AlertDialogCancel className="btn-outline">
+          <AlertDialogCancel className={buttonStyles.outline}>
             {t('scrollable.cancel')}
           </AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">
+          <AlertDialogAction className={buttonStyles.primary}>
             {t('scrollable.accept')}
           </AlertDialogAction>
         </AlertDialogFooter>

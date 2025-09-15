@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { OctagonAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogWithIconDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -19,7 +20,7 @@ export default function AlertDialogWithIconDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="btn-outline">
+        <Button variant="outline" className={buttonStyles.outline}>
           {t('withIcon.trigger')}
         </Button>
       </AlertDialogTrigger>
@@ -36,8 +37,8 @@ export default function AlertDialogWithIconDemo() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="btn-outline">{t('withIcon.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">{t('withIcon.continue')}</AlertDialogAction>
+          <AlertDialogCancel className={buttonStyles.outline}>{t('withIcon.cancel')}</AlertDialogCancel>
+          <AlertDialogAction className={buttonStyles.primary}>{t('withIcon.continue')}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

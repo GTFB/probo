@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
+import { buttonStyles } from "@/lib/button-styles";
 
 export function ToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +37,7 @@ export function ToTopButton() {
     <Button
       onClick={scrollToTop}
       size="icon"
-      className="btn-primary fixed bottom-5 right-5 z-[9999]"
+      className={`${buttonStyles.primary} fixed bottom-5 right-5 z-[9999]`}
       aria-label="Scroll to top"
     >
       <ArrowUp className="h-4 w-4" />

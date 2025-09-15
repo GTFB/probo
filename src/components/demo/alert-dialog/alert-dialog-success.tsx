@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { CircleCheckBig } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogSuccessDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -19,7 +20,7 @@ export default function AlertDialogSuccessDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="btn-outline">
+        <Button variant="outline" className={buttonStyles.outline}>
           {t('success.trigger')}
         </Button>
       </AlertDialogTrigger>
@@ -35,7 +36,7 @@ export default function AlertDialogSuccessDemo() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t('success.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">
+          <AlertDialogAction className={buttonStyles.primary}>
             {t('success.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>

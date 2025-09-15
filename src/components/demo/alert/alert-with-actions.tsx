@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { CircleFadingArrowUpIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertWithActionsDemo() {
   const t = useTranslations('demo.alert.items');
@@ -43,7 +44,7 @@ export default function AlertWithActionsDemo() {
       )}
       {!isAlertVisible && (
         <div className="flex justify-center">
-          <Button className="mt-2 mx-auto btn-primary" onClick={showAlert}>
+          <Button className={`mt-2 mx-auto ${buttonStyles.primary}`} onClick={showAlert}>
             {tCommon('open')}
           </Button>
         </div>

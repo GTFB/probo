@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogCustomDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -20,7 +21,7 @@ export default function AlertDialogCustomDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="btn-outline">
+        <Button variant="outline" className={buttonStyles.outline}>
           {t('custom.trigger')}
         </Button>
       </AlertDialogTrigger>
@@ -47,10 +48,10 @@ export default function AlertDialogCustomDemo() {
         </div>
         
         <AlertDialogFooter>
-          <AlertDialogCancel className="btn-outline">
+          <AlertDialogCancel className={buttonStyles.outline}>
             {t('custom.cancel')}
           </AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">
+          <AlertDialogAction className={buttonStyles.primary}>
             {t('custom.upgrade')}
           </AlertDialogAction>
         </AlertDialogFooter>

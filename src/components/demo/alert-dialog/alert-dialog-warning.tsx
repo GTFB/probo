@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogWarningDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -19,7 +20,7 @@ export default function AlertDialogWarningDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="btn-outline">
+        <Button variant="outline" className={buttonStyles.outline}>
           {t('warning.trigger')}
         </Button>
       </AlertDialogTrigger>
@@ -35,7 +36,7 @@ export default function AlertDialogWarningDemo() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t('warning.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">
+          <AlertDialogAction className={buttonStyles.primary}>
             {t('warning.proceed')}
           </AlertDialogAction>
         </AlertDialogFooter>

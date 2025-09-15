@@ -3,6 +3,7 @@ import { ComponentsHeader } from "@/components/shared/components-header";
 import { ToTopButton } from "@/components/shared/to-top-button";
 import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
+import { cardStyles } from "@/lib/button-styles";
 import { Code } from "lucide-react";
 import AccordionDemo from "@/components/demo/accordion/accordion";
 import AccordionOutlineDemo from "@/components/demo/accordion/accordion-outline";
@@ -114,7 +115,7 @@ export default function AccordionPage() {
         ))}
 
         {/* Usage Section */}
-        <Card className="mt-12 info-card">
+        <Card className={`mt-12 ${cardStyles.info}`}>
           <CardContent className="p-6">
             <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
               <div className="h-6 w-6 text-secondary-foreground flex-shrink-0">ℹ️</div>

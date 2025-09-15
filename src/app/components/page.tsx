@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   AlertCircle
 } from "lucide-react";
+import { cardStyles } from "@/lib/button-styles";
 
 export default function ComponentsPage() {
   const t = useTranslations('components');
@@ -122,7 +123,7 @@ export default function ComponentsPage() {
           })}
         </div>
 
-        <Card className="mt-12 info-card">
+        <Card className={`mt-12 ${cardStyles.info}`}>
           <CardContent className="p-6">
             <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
               <Code className="h-6 w-6 text-muted-foreground flex-shrink-0" />

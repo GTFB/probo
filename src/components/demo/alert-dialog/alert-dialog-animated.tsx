@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogAnimatedDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -44,10 +45,10 @@ export default function AlertDialogAnimatedDemo() {
         </div>
         
         <AlertDialogFooter>
-          <AlertDialogCancel className="btn-outline">
+          <AlertDialogCancel className={buttonStyles.outline}>
             {t('animated.cancel')}
           </AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">
+          <AlertDialogAction className={buttonStyles.primary}>
             {t('animated.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>

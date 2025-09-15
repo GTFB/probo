@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/hooks/use-theme'
 import { Sun, Moon } from 'lucide-react'
+import { buttonStyles } from '@/lib/button-styles'
 
 interface ThemeToggleProps {
   variant?: 'default' | 'minimal'

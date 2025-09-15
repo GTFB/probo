@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { OctagonAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogDestructiveDemo() {
   const t = useTranslations('demo.alertDialog.items');
@@ -19,7 +20,7 @@ export default function AlertDialogDestructiveDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" className="btn-primary">{t('destructive.trigger')}</Button>
+        <Button variant="destructive" className={buttonStyles.primary}>{t('destructive.trigger')}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -32,8 +33,8 @@ export default function AlertDialogDestructiveDemo() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('destructive.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="btn-primary">
+          <AlertDialogCancel className={buttonStyles.outline}>{t('destructive.cancel')}</AlertDialogCancel>
+          <AlertDialogAction className={buttonStyles.primary}>
             {t('destructive.delete')}
           </AlertDialogAction>
         </AlertDialogFooter>
