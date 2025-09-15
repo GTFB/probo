@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default function AvatarDemo() {
   return (
     <Avatar>
-      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+      <AvatarImage src="https://github.com/probo.png" alt="@probo" />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
   );
@@ -18,9 +18,9 @@ import Link from "next/link";
 
 export default function ClickableAvatarDemo() {
   return (
-    <Link href="https://github.com/shadcn" target="_blank">
+    <Link href="https://github.com/probo" target="_blank">
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     </Link>
@@ -41,11 +41,11 @@ export default function AvatarWithTooltipDemo() {
     <Tooltip>
       <TooltipTrigger asChild>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </TooltipTrigger>
-      <TooltipContent className="font-semibold">shadcn</TooltipContent>
+      <TooltipContent className="font-semibold">probo</TooltipContent>
     </Tooltip>
   );
 }
@@ -58,15 +58,15 @@ export default function AvatarDemo() {
   return (
     <div className="flex items-start gap-3">
       <Avatar className="size-9">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <div className="flex flex-col gap-1">
         <span className="font-semibold tracking-tight leading-none">
-          shadcn
+          probo
         </span>
         <span className="leading-none text-sm text-muted-foreground">
-          Shadcn UI
+          probo UI
         </span>
       </div>
     </div>
@@ -88,20 +88,20 @@ export default function AvatarHoverCardDemo() {
     <HoverCard>
       <HoverCardTrigger className="cursor-pointer">
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </HoverCardTrigger>
       <HoverCardContent className="w-full max-w-xs">
         <div className="flex justify-between space-x-4">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarImage src="https://github.com/probo.png" alt="@probo" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
-            <h4 className="text-sm font-semibold">@shadcn</h4>
+            <h4 className="text-sm font-semibold">@probo</h4>
             <p className="text-sm">
-              The founder of Shadcn UI. I own a computer.
+              The founder of probo UI. I own a computer.
             </p>
             <div className="flex items-center pt-2">
               <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
@@ -124,23 +124,23 @@ export default function AvatarSizeDemo() {
   return (
     <div className="flex items-center gap-4">
       <Avatar className="size-8">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Avatar className="size-10">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Avatar className="size-11">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Avatar className="size-12">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Avatar className="size-14">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     </div>
@@ -296,7 +296,7 @@ export default function AvatarRing() {
   return (
     <div className="flex items-center gap-4">
       <Avatar className="ring-2 ring-ring ring-offset-2 ring-offset-background">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback className="rounded-none">ER</AvatarFallback>
       </Avatar>
       <Avatar className="ring-2 ring-green-500 ring-offset-2 ring-offset-background">
@@ -326,7 +326,7 @@ export default function AvatarWithStatusDemo() {
       {/* Online */}
       <div className="relative">
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="size-2 ring-2 ring-background rounded-full bg-green-500 absolute bottom-0 right-0"></div>
@@ -335,7 +335,7 @@ export default function AvatarWithStatusDemo() {
       {/* DND */}
       <div className="relative">
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="size-2 ring-2 ring-background rounded-full bg-red-500 absolute bottom-0 right-0"></div>
@@ -344,7 +344,7 @@ export default function AvatarWithStatusDemo() {
       {/* Busy */}
       <div className="relative">
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="size-2 ring-2 ring-background rounded-full bg-yellow-500 absolute bottom-0 right-0"></div>
@@ -353,7 +353,7 @@ export default function AvatarWithStatusDemo() {
       {/* Offline */}
       <div className="relative">
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="size-2 ring-2 ring-background border-2 border-muted-foreground rounded-full bg-background absolute bottom-0 right-0"></div>
@@ -372,7 +372,7 @@ export default function AvatarBadge() {
     <div className="flex items-center gap-4">
       <div className="relative">
         <Avatar className="size-10">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="absolute -bottom-0.5 -right-0.5 size-3.5 ring-2 ring-background rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center leading-none">
@@ -381,21 +381,21 @@ export default function AvatarBadge() {
       </div>
       <div className="relative">
         <Avatar className="size-10">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <BadgeCheck className="absolute -bottom-1 -right-1 size-4.5 rounded-full fill-blue-500 text-white"></BadgeCheck>
       </div>
       <div className="relative">
         <Avatar className="size-10">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <BadgeMinus className="absolute -bottom-1 -right-1 size-4.5 rounded-full fill-amber-500 text-white"></BadgeMinus>
       </div>
       <div className="relative">
         <Avatar className="size-10">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage src="https://github.com/probo.png" alt="@probo" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <BadgeX className="absolute -bottom-1 -right-1 size-4.5 rounded-full fill-red-500 text-white"></BadgeX>
@@ -461,7 +461,7 @@ export default function AvatarGroupDemo() {
   return (
     <AvatarGroup>
       <Avatar className="-ml-2 first:ml-0 cursor-pointer">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback className="bg-indigo-500 text-white">CN</AvatarFallback>
       </Avatar>
       <Avatar className="-ml-2 first:ml-0 cursor-pointer">
@@ -537,7 +537,7 @@ export default function AvatarGroupMaxAvatarDemo() {
   return (
     <AvatarGroup className="flex items-center" max={3}>
       <Avatar className="-ml-2 first:ml-0 cursor-pointer">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback className="bg-indigo-500 text-white">CN</AvatarFallback>
       </Avatar>
       <Avatar className="-ml-2 first:ml-0 cursor-pointer">

@@ -4,7 +4,7 @@ export default function AvatarDemo() {
   return (
     <div className="flex items-center space-x-4">
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://github.com/probo.png" alt="@probo" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Avatar>
