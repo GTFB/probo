@@ -19,7 +19,7 @@ export default function AlertDialogSuccessDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="border-green-500 text-green-500 hover:bg-green-50 border-2">
+        <Button variant="outline" className="btn-outline">
           {t('success.trigger')}
         </Button>
       </AlertDialogTrigger>
@@ -35,7 +35,7 @@ export default function AlertDialogSuccessDemo() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t('success.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="bg-green-500 text-white hover:bg-green-600">
+          <AlertDialogAction className="btn-primary">
             {t('success.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -20,7 +20,9 @@ export default function AlertDialogCustomDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="border-border">{t('custom.trigger')}</Button>
+        <Button variant="outline" className="btn-outline">
+          {t('custom.trigger')}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-md">
         <AlertDialogHeader>
@@ -45,8 +47,12 @@ export default function AlertDialogCustomDemo() {
         </div>
         
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('custom.cancel')}</AlertDialogCancel>
-          <AlertDialogAction>{t('custom.upgrade')}</AlertDialogAction>
+          <AlertDialogCancel className="btn-outline">
+            {t('custom.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction className="btn-primary">
+            {t('custom.upgrade')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

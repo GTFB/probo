@@ -1,5 +1,6 @@
 import { ComponentsHeader } from "@/components/shared/components-header";
 import { ToTopButton } from "@/components/shared/to-top-button";
+import { Card, CardContent } from "@/components/ui/card";
 import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
 import AlertDemo from "@/components/demo/alert/alert";
@@ -100,17 +101,19 @@ export default function AlertPage() {
         ))}
 
         {/* Usage Section */}
-        <div className="mt-12 p-6 bg-foreground/5 rounded-lg">
-          <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
-            <div className="h-6 w-6 text-muted-foreground flex-shrink-0">ℹ️</div>
-            <div className="space-y-2">
-              <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{t('usage.title')}</h3>
-              <p className="text-sm text-muted-foreground">
-                {t('usage.description')}
-              </p>
+        <Card className="mt-12 info-card">
+          <CardContent className="p-6">
+            <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
+              <div className="h-6 w-6 text-secondary-foreground flex-shrink-0">ℹ️</div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{t('usage.title')}</h3>
+                <p className="text-sm text-secondary-foreground">
+                  {t('usage.description')}
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
       
       <ToTopButton />

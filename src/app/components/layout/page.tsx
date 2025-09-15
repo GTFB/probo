@@ -77,7 +77,7 @@ export default function LayoutComponentsPage() {
           const IconComponent = component.icon;
           return (
             <Link key={component.title} href={component.href}>
-              <Card className="group transition-all duration-200 cursor-pointer h-full">
+              <Card className="group cursor-pointer h-full">
                 <CardHeader className="space-y-4 flex-1">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${component.color} text-white`}>
@@ -109,7 +109,7 @@ export default function LayoutComponentsPage() {
         })}
       </div>
 
-      <div className="mt-12 p-6 bg-foreground/5 rounded-lg">
+      <div className="mt-12 p-6 bg-secondary rounded-lg">
         <div className="flex items-start space-x-4">
           <Code className="h-6 w-6 text-muted-foreground mt-1" />
           <div className="space-y-2">

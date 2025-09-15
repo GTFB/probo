@@ -18,7 +18,7 @@ export default function AlertDialogDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="border-border">{t('default.trigger')}</Button>
+        <Button variant="outline" className="btn-outline">{t('default.trigger')}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -28,8 +28,8 @@ export default function AlertDialogDemo() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('default.cancel')}</AlertDialogCancel>
-          <AlertDialogAction>{t('default.continue')}</AlertDialogAction>
+          <AlertDialogCancel className="btn-outline">{t('default.cancel')}</AlertDialogCancel>
+          <AlertDialogAction className="btn-primary">{t('default.continue')}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

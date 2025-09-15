@@ -19,7 +19,7 @@ export default function AlertDialogAnimatedDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="relative overflow-hidden border-border">
+        <Button variant="outline" className="btn-outline relative overflow-hidden">
           <span className="relative z-10">{t('animated.trigger')}</span>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse" />
         </Button>
@@ -44,8 +44,10 @@ export default function AlertDialogAnimatedDemo() {
         </div>
         
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('animated.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
+          <AlertDialogCancel className="btn-outline">
+            {t('animated.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction className="btn-primary">
             {t('animated.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>

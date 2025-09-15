@@ -26,7 +26,9 @@ export default function AlertDialogFormDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="border-border">{t('form.trigger')}</Button>
+        <Button variant="outline" className="btn-outline">
+          {t('form.trigger')}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -58,8 +60,13 @@ export default function AlertDialogFormDemo() {
         </div>
         
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('form.cancel')}</AlertDialogCancel>
-          <AlertDialogAction disabled={!name || !message}>
+          <AlertDialogCancel className="btn-outline">
+            {t('form.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction 
+            disabled={!name || !message}
+            className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             {t('form.submit')}
           </AlertDialogAction>
         </AlertDialogFooter>

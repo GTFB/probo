@@ -19,7 +19,9 @@ export default function AlertDialogScrollableDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="border-border">{t('scrollable.trigger')}</Button>
+        <Button variant="outline" className="btn-outline">
+          {t('scrollable.trigger')}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-md">
         <AlertDialogHeader>
@@ -40,8 +42,12 @@ export default function AlertDialogScrollableDemo() {
         </ScrollArea>
         
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('scrollable.cancel')}</AlertDialogCancel>
-          <AlertDialogAction>{t('scrollable.accept')}</AlertDialogAction>
+          <AlertDialogCancel className="btn-outline">
+            {t('scrollable.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction className="btn-primary">
+            {t('scrollable.accept')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

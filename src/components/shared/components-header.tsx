@@ -30,14 +30,14 @@ export function ComponentsHeader({
   const t = useTranslations('common');
   
   return (
-    <div className="border-b bg-white/50 backdrop-blur supports-[backdrop-filter]:bg-white/80 sticky top-0 z-50">
+    <div className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
       <div className={`mx-auto py-4 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
             {showHomeButton && (
               <Link href="/">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="btn-nav">
                   <Home className="h-4 w-4 mr-2" />
                   {t('home')}
                 </Button>
@@ -48,7 +48,7 @@ export function ComponentsHeader({
           <div className="flex items-center space-x-2">
             {showBackButton && (
               <Link href={backHref}>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="btn-nav p-1 gap-0 h-6">
                   <ArrowLeft className="h-4 w-4 sm:mr-2" />
                   <span className="hidden sm:inline">{t('back')}</span>
                 </Button>

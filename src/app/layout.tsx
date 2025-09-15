@@ -98,6 +98,6 @@ export default async function RootLayout({
           </AuthProvider>
         </NextIntlClientProvider>
       </body>
-    </html >
+    </html>
   )
 }

@@ -43,7 +43,7 @@ export default function AlertWithActionsDemo() {
       )}
       {!isAlertVisible && (
         <div className="flex justify-center">
-          <Button className="mt-2 mx-auto" onClick={showAlert}>
+          <Button className="mt-2 mx-auto btn-primary" onClick={showAlert}>
             {tCommon('open')}
           </Button>
         </div>

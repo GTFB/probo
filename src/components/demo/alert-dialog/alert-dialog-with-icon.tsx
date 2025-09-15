@@ -19,7 +19,9 @@ export default function AlertDialogWithIconDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="border-border">{t('withIcon.trigger')}</Button>
+        <Button variant="outline" className="btn-outline">
+          {t('withIcon.trigger')}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -34,8 +36,8 @@ export default function AlertDialogWithIconDemo() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('withIcon.cancel')}</AlertDialogCancel>
-          <AlertDialogAction>{t('withIcon.continue')}</AlertDialogAction>
+          <AlertDialogCancel className="btn-outline">{t('withIcon.cancel')}</AlertDialogCancel>
+          <AlertDialogAction className="btn-primary">{t('withIcon.continue')}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

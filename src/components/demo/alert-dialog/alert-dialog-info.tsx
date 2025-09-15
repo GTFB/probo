@@ -19,7 +19,7 @@ export default function AlertDialogInfoDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-50 border-2">
+        <Button variant="outline" className="btn-outline">
           {t('info.trigger')}
         </Button>
       </AlertDialogTrigger>
@@ -35,7 +35,7 @@ export default function AlertDialogInfoDemo() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t('info.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="bg-blue-500 text-white hover:bg-blue-600">
+          <AlertDialogAction className="btn-primary">
             {t('info.learnMore')}
           </AlertDialogAction>
         </AlertDialogFooter>

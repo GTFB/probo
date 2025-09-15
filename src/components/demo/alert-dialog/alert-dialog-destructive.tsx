@@ -19,7 +19,7 @@ export default function AlertDialogDestructiveDemo() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">{t('destructive.trigger')}</Button>
+        <Button variant="destructive" className="btn-primary">{t('destructive.trigger')}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -33,7 +33,7 @@ export default function AlertDialogDestructiveDemo() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t('destructive.cancel')}</AlertDialogCancel>
-          <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+          <AlertDialogAction className="btn-primary">
             {t('destructive.delete')}
           </AlertDialogAction>
         </AlertDialogFooter>
