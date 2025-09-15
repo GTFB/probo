@@ -5,28 +5,21 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Contrast, Palette, Zap } from "lucide-react";
-
-const items = [
-  {
-    title: "Is it accessible?",
-    content: "Yes. It adheres to the WAI-ARIA design pattern.",
-    icon: Contrast,
-  },
-  {
-    title: "Is it styled?",
-    content:
-      "Yes. It comes with default styles that matches the other components' aesthetic.",
-    icon: Palette,
-  },
-  {
-    title: "Is it animated?",
-    content:
-      "Yes. It's animated by default, but you can disable it if you prefer.",
-    icon: Zap,
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function AccordionMediaContentDemo() {
+  const t = useTranslations('demo.accordion.items');
+
+  const itemKeys = ['accessible', 'styled', 'animated'] as const;
+  const icons = [Contrast, Palette, Zap];
+  const colors = ['blue', 'green', 'purple'];
+  
+  const items = itemKeys.map((key, index) => ({
+    title: t(`${key}.title`),
+    content: t(`${key}.content`),
+    icon: icons[index],
+    image: `https://placehold.co/1000x400/${colors[index]}/white?font=inter&text=${key}`
+  }));
   return (
     <Accordion
       defaultValue="item-0"
@@ -34,7 +27,7 @@ export default function AccordionMediaContentDemo() {
       collapsible
       className="w-full"
     >
-      {items.map(({ title, content, icon: Icon }, index) => (
+      {items.map(({ title, content, icon: Icon, image }, index) => (
         <AccordionItem key={index} value={`item-${index}`}>
           <AccordionTrigger>
             <div className="flex items-start gap-3">
@@ -44,7 +37,13 @@ export default function AccordionMediaContentDemo() {
           </AccordionTrigger>
           <AccordionContent>
             {content}
-            <div className="mt-4 w-full aspect-18/9 bg-muted rounded-xl" />
+            <div className="mt-4 w-full aspect-18/9 rounded-xl overflow-hidden">
+              <img 
+                src={image} 
+                alt={`${title} Media Content`} 
+                className="w-full h-full object-cover"
+              />
+            </div>
           </AccordionContent>
         </AccordionItem>
       ))}

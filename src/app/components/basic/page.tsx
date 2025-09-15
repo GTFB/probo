@@ -72,13 +72,13 @@ export default function BasicComponentsPage() {
         badges={[]}
       />
       
-      <div className={`container mx-auto py-8 space-y-8 ${PROJECT_SETTINGS.containerWidth} ${PROJECT_SETTINGS.mobilePadding}`}>
+      <div className={`mx-auto py-8 space-y-8 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {basicComponents.map((component) => {
             const IconComponent = component.icon;
             return (
               <Link key={component.title} href={component.href}>
-                <Card className="group hover:shadow-lg transition-all duration-200 cursor-pointer h-full">
+                <Card className="group transition-all duration-200 cursor-pointer h-full">
                   <CardHeader className="space-y-4 flex-1">
                     <div className="flex items-center justify-between">
                       <div className={`p-3 rounded-lg ${component.color} text-white`}>
@@ -110,7 +110,7 @@ export default function BasicComponentsPage() {
           })}
         </div>
 
-        <Card className="mt-12 bg-muted/50">
+        <Card className="mt-12 bg-foreground/5">
           <CardContent className="p-6">
             <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
               <Code className="h-6 w-6 text-muted-foreground flex-shrink-0" />

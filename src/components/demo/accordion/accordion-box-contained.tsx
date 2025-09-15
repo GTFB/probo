@@ -4,25 +4,25 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const items = [
-  {
-    title: "Is it accessible?",
-    content: "Yes. It adheres to the WAI-ARIA design pattern.",
-  },
-  {
-    title: "Is it styled?",
-    content:
-      "Yes. It comes with default styles that matches the other components' aesthetic.",
-  },
-  {
-    title: "Is it animated?",
-    content:
-      "Yes. It's animated by default, but you can disable it if you prefer.",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function AccordionBoxContainedDemo() {
+  const t = useTranslations('demo.accordion.items');
+
+  const items = [
+    {
+      title: t('accessible.title'),
+      content: t('accessible.content'),
+    },
+    {
+      title: t('styled.title'),
+      content: t('styled.content'),
+    },
+    {
+      title: t('animated.title'),
+      content: t('animated.content'),
+    },
+  ];
   return (
     <Accordion type="single" collapsible className="w-full">
       {items.map(({ title, content }, index) => (

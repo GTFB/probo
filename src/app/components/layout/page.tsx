@@ -70,14 +70,14 @@ export default function LayoutComponentsPage() {
         badges={[]}
       />
       
-      <div className={`container mx-auto py-8 space-y-8 ${PROJECT_SETTINGS.containerWidth} ${PROJECT_SETTINGS.mobilePadding}`}>
+      <div className={`mx-auto py-8 space-y-8 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {layoutComponents.map((component) => {
           const IconComponent = component.icon;
           return (
             <Link key={component.title} href={component.href}>
-              <Card className="group hover:shadow-lg transition-all duration-200 cursor-pointer h-full">
+              <Card className="group transition-all duration-200 cursor-pointer h-full">
                 <CardHeader className="space-y-4 flex-1">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${component.color} text-white`}>
@@ -109,7 +109,7 @@ export default function LayoutComponentsPage() {
         })}
       </div>
 
-      <div className="mt-12 p-6 bg-muted/50 rounded-lg">
+      <div className="mt-12 p-6 bg-foreground/5 rounded-lg">
         <div className="flex items-start space-x-4">
           <Code className="h-6 w-6 text-muted-foreground mt-1" />
           <div className="space-y-2">

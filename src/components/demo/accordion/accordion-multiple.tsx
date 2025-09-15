@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { useTranslations } from "next-intl";
 
-export default function AccordionBoxDemo() {
+export default function AccordionMultipleDemo() {
   const t = useTranslations('demo.accordion.items');
 
   const items = [
@@ -23,14 +23,15 @@ export default function AccordionBoxDemo() {
       content: t('animated.content'),
     },
   ];
+
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion
+      defaultValue={["item-0", "item-1"]}
+      type="multiple"
+      className="w-full"
+    >
       {items.map(({ title, content }, index) => (
-        <AccordionItem
-          key={index}
-          value={`item-${index}`}
-          className="border border-b-0 last:border-b first:rounded-t-md last:rounded-b-md px-4"
-        >
+        <AccordionItem key={index} value={`item-${index}`}>
           <AccordionTrigger>{title}</AccordionTrigger>
           <AccordionContent>{content}</AccordionContent>
         </AccordionItem>

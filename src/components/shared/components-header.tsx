@@ -5,6 +5,7 @@ import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { PROJECT_SETTINGS } from "../../../settings";
 import { ArrowLeft, Home, Code } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ComponentsHeaderProps {
   title: string;
@@ -26,9 +27,11 @@ export function ComponentsHeader({
   badges = [],
   showHomeButton = false
 }: ComponentsHeaderProps) {
+  const t = useTranslations('common');
+  
   return (
-    <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-      <div className={`container mx-auto py-4 ${PROJECT_SETTINGS.containerWidth} ${PROJECT_SETTINGS.mobilePadding}`}>
+    <div className="border-b bg-white/50 backdrop-blur supports-[backdrop-filter]:bg-white/80 sticky top-0 z-50">
+      <div className={`mx-auto py-4 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
@@ -36,7 +39,7 @@ export function ComponentsHeader({
               <Link href="/">
                 <Button variant="ghost" size="sm">
                   <Home className="h-4 w-4 mr-2" />
-                  Главная
+                  {t('home')}
                 </Button>
               </Link>
             )}
@@ -47,7 +50,7 @@ export function ComponentsHeader({
               <Link href={backHref}>
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="h-4 w-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Назад</span>
+                  <span className="hidden sm:inline">{t('back')}</span>
                 </Button>
               </Link>
             )}

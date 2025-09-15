@@ -1,0 +1,119 @@
+import { ComponentsHeader } from "@/components/shared/components-header";
+import { ToTopButton } from "@/components/shared/to-top-button";
+import { PROJECT_SETTINGS } from "../../../../settings";
+import { useTranslations } from "next-intl";
+import AlertDialogDemo from "@/components/demo/alert-dialog/alert-dialog";
+import AlertDialogWithIconDemo from "@/components/demo/alert-dialog/alert-dialog-with-icon";
+import AlertDialogDestructiveDemo from "@/components/demo/alert-dialog/alert-dialog-destructive";
+import AlertDialogSuccessDemo from "@/components/demo/alert-dialog/alert-dialog-success";
+import AlertDialogWarningDemo from "@/components/demo/alert-dialog/alert-dialog-warning";
+import AlertDialogInfoDemo from "@/components/demo/alert-dialog/alert-dialog-info";
+import AlertDialogCustomDemo from "@/components/demo/alert-dialog/alert-dialog-custom";
+import AlertDialogFormDemo from "@/components/demo/alert-dialog/alert-dialog-form";
+import AlertDialogScrollableDemo from "@/components/demo/alert-dialog/alert-dialog-scrollable";
+import AlertDialogAnimatedDemo from "@/components/demo/alert-dialog/alert-dialog-animated";
+
+export default function AlertDialogPage() {
+  const t = useTranslations('alertDialog');
+
+  const demoSections = [
+    {
+      title: t('variants.default.title'),
+      description: t('variants.default.description'),
+      component: <AlertDialogDemo />
+    },
+    {
+      title: t('variants.withIcon.title'),
+      description: t('variants.withIcon.description'),
+      component: <AlertDialogWithIconDemo />
+    },
+    {
+      title: t('variants.destructive.title'),
+      description: t('variants.destructive.description'),
+      component: <AlertDialogDestructiveDemo />
+    },
+    {
+      title: t('variants.success.title'),
+      description: t('variants.success.description'),
+      component: <AlertDialogSuccessDemo />
+    },
+    {
+      title: t('variants.warning.title'),
+      description: t('variants.warning.description'),
+      component: <AlertDialogWarningDemo />
+    },
+    {
+      title: t('variants.info.title'),
+      description: t('variants.info.description'),
+      component: <AlertDialogInfoDemo />
+    },
+    {
+      title: t('variants.custom.title'),
+      description: t('variants.custom.description'),
+      component: <AlertDialogCustomDemo />
+    },
+    {
+      title: t('variants.form.title'),
+      description: t('variants.form.description'),
+      component: <AlertDialogFormDemo />
+    },
+    {
+      title: t('variants.scrollable.title'),
+      description: t('variants.scrollable.description'),
+      component: <AlertDialogScrollableDemo />
+    },
+    {
+      title: t('variants.animated.title'),
+      description: t('variants.animated.description'),
+      component: <AlertDialogAnimatedDemo />
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <ComponentsHeader
+        title={t('title')}
+        description=""
+        showBackButton={true}
+        backHref="/components"
+        badges={[]}
+      />
+      
+      <div className={`mx-auto py-8 space-y-12 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
+        {/* Description Section */}
+        <div className="space-y-4">
+          <p className="text-lg text-muted-foreground">
+            {t('description')}
+          </p>
+        </div>
+
+        {demoSections.map((section, index) => (
+          <div key={index} className="space-y-4">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{section.title}</h3>
+              <p className="text-muted-foreground">{section.description}</p>
+            </div>
+            <div className="w-full">
+              {section.component}
+            </div>
+          </div>
+        ))}
+
+        {/* Usage Section */}
+        <div className="mt-12 p-6 bg-foreground/5 rounded-lg">
+          <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
+            <div className="h-6 w-6 text-muted-foreground flex-shrink-0">ℹ️</div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{t('usage.title')}</h3>
+              <p className="text-sm text-muted-foreground">
+                {t('usage.description')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <ToTopButton />
+    </div>
+  );
+}

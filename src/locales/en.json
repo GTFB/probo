@@ -34,7 +34,8 @@
     "dark": "Dark",
     "sectionOf": "Section {current} of {total}",
     "tableOfContents": "Table of Contents",
-    "noHeadings": "No headings"
+    "noHeadings": "No headings",
+    "home": "Home"
   },
   "navigation": {
     "tableOfContents": "Table of Contents",
@@ -52,6 +53,14 @@
     "accordion": {
       "title": "Accordion",
       "description": "A vertically stacked set of interactive headings that each reveal a section of content."
+    },
+    "alert": {
+      "title": "Alert",
+      "description": "Alert components for displaying important information to users with various styles and variants."
+    },
+    "alertDialog": {
+      "title": "Alert Dialog",
+      "description": "Modal dialogs for action confirmation and displaying important information with various styles and variants."
     },
     "basic": {
       "title": "Basic Components",
@@ -108,6 +117,22 @@
       "mediaContent": {
         "title": "Media Content",
         "description": "Accordion with rich media content like images and videos."
+      },
+      "multiple": {
+        "title": "Multiple Expanded",
+        "description": "Accordion that allows multiple items to be expanded at the same time."
+      },
+      "expandIcon": {
+        "title": "Expand Icon",
+        "description": "Accordion with custom expand icon instead of the default arrow."
+      },
+      "icon": {
+        "title": "With Icons",
+        "description": "Accordion with icons for each item for better visual identification."
+      },
+      "contained": {
+        "title": "Contained Accordion",
+        "description": "Accordion with box-style containers for each item."
       }
     },
     "demo": {
@@ -166,6 +191,106 @@
   "tariff": {
     "popular": "Popular"
   },
+  "alert": {
+    "title": "Alert Components",
+    "description": "Interactive alert components with various styles and configurations",
+    "variants": {
+      "primary": {
+        "title": "Primary Alert",
+        "description": "Standard alert with basic styling and functionality."
+      },
+      "destructive": {
+        "title": "Destructive Alert",
+        "description": "Error alert with red color for critical messages."
+      },
+      "success": {
+        "title": "Success Alert",
+        "description": "Success alert with green color for completed operations."
+      },
+      "warning": {
+        "title": "Warning Alert",
+        "description": "Warning alert with yellow color for important messages."
+      },
+      "info": {
+        "title": "Info Alert",
+        "description": "Information alert with blue color for additional information."
+      },
+      "withBackground": {
+        "title": "Alert with Background",
+        "description": "Alert with background color for better visual emphasis."
+      },
+      "soft": {
+        "title": "Soft Alert",
+        "description": "Alerts with soft colors and transparent backgrounds."
+      },
+      "bootstrap": {
+        "title": "Bootstrap Style",
+        "description": "Bootstrap-style alerts with borders and backgrounds."
+      },
+      "callout": {
+        "title": "Callout Alert",
+        "description": "Callout-style alerts with left border."
+      },
+      "withActions": {
+        "title": "Alert with Actions",
+        "description": "Alerts with action buttons for interactivity."
+      }
+    },
+    "usage": {
+      "title": "Usage",
+      "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+    }
+  },
+  "alertDialog": {
+    "title": "Alert Dialog Components",
+    "description": "Interactive modal dialogs with various styles and configurations",
+    "variants": {
+      "default": {
+        "title": "Default Alert Dialog",
+        "description": "Basic modal dialog with action confirmation."
+      },
+      "withIcon": {
+        "title": "Alert Dialog with Icon",
+        "description": "Dialog with icon for better visual perception."
+      },
+      "destructive": {
+        "title": "Destructive Alert Dialog",
+        "description": "Dialog for critical actions with red color."
+      },
+      "success": {
+        "title": "Success Alert Dialog",
+        "description": "Dialog for confirming successful operations with green color."
+      },
+      "warning": {
+        "title": "Warning Alert Dialog",
+        "description": "Warning dialog with yellow color for important messages."
+      },
+      "info": {
+        "title": "Info Alert Dialog",
+        "description": "Information dialog with blue color for additional information."
+      },
+      "custom": {
+        "title": "Custom Alert Dialog",
+        "description": "Dialog with additional elements and custom structure."
+      },
+      "form": {
+        "title": "Alert Dialog with Form",
+        "description": "Dialog with input fields for collecting user data."
+      },
+      "scrollable": {
+        "title": "Scrollable Alert Dialog",
+        "description": "Dialog with scrollable content for long messages."
+      },
+      "animated": {
+        "title": "Animated Alert Dialog",
+        "description": "Dialog with animations and visual effects."
+      }
+    },
+    "usage": {
+      "title": "Usage",
+      "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+    }
+  },
   "basic": {
     "title": "Basic Components",
     "description": "Core UI components for alerts, dialogs, avatars, badges, and buttons.",
@@ -194,6 +319,131 @@
     "info": {
       "title": "Basic Components",
       "description": "Essential UI components that form the foundation of modern web interfaces. Each component is designed for accessibility, customization, and ease of use."
+    }
+  },
+  "demo": {
+    "accordion": {
+      "items": {
+        "accessible": {
+          "title": "Is it accessible?",
+          "content": "Yes. It adheres to the WAI-ARIA design pattern."
+        },
+        "styled": {
+          "title": "Is it styled?",
+          "content": "Yes. It comes with default styles that matches the other components' aesthetic."
+        },
+        "animated": {
+          "title": "Is it animated?",
+          "content": "Yes. It's animated by default, but you can disable it if you prefer."
+        }
+      }
+    },
+    "alert": {
+      "items": {
+        "update": {
+          "title": "Update Available",
+          "content": "A new version of the app is now available."
+        },
+        "error": {
+          "title": "Something Went Wrong",
+          "content": "An error occurred while processing your request."
+        },
+        "success": {
+          "title": "Operation Successful",
+          "content": "Your action has been completed successfully"
+        },
+        "warning": {
+          "title": "Proceed with Caution",
+          "content": "This action might have unintended consequences."
+        },
+        "info": {
+          "title": "Important Information",
+          "content": "Make sure to review the recent updates before proceeding."
+        }
+      }
+    },
+    "alertDialog": {
+      "items": {
+        "default": {
+          "trigger": "Show Dialog",
+          "title": "Are you absolutely sure?",
+          "description": "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+          "cancel": "Cancel",
+          "continue": "Continue"
+        },
+        "withIcon": {
+          "trigger": "Show Dialog with Icon",
+          "title": "Are you absolutely sure?",
+          "description": "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+          "cancel": "Cancel",
+          "continue": "Continue"
+        },
+        "destructive": {
+          "trigger": "Delete Account",
+          "title": "Delete Account",
+          "description": "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+          "cancel": "Cancel",
+          "delete": "Delete"
+        },
+        "success": {
+          "trigger": "Confirm Operation",
+          "title": "Operation Successful",
+          "description": "Your operation has been completed successfully. All changes have been saved.",
+          "cancel": "Close",
+          "confirm": "Confirm"
+        },
+        "warning": {
+          "trigger": "Show Warning",
+          "title": "Warning!",
+          "description": "This action might have unintended consequences. Please make sure you understand what you're doing.",
+          "cancel": "Cancel",
+          "proceed": "Proceed"
+        },
+        "info": {
+          "trigger": "Show Information",
+          "title": "Information",
+          "description": "This is important information you should know before proceeding.",
+          "cancel": "Close",
+          "learnMore": "Learn More"
+        },
+        "custom": {
+          "trigger": "Show Custom Dialog",
+          "title": "Premium Features",
+          "description": "Upgrade to premium version to get access to additional features.",
+          "features": "New features:",
+          "feature1": "Unlimited storage",
+          "feature2": "Priority support",
+          "feature3": "Advanced analytics",
+          "cancel": "Cancel",
+          "upgrade": "Upgrade"
+        },
+        "form": {
+          "trigger": "Open Form",
+          "title": "Contact Us",
+          "description": "Fill out the form below and we'll get back to you soon.",
+          "name": "Name",
+          "namePlaceholder": "Enter your name",
+          "message": "Message",
+          "messagePlaceholder": "Enter your message",
+          "cancel": "Cancel",
+          "submit": "Submit"
+        },
+        "scrollable": {
+          "trigger": "Show Long Content",
+          "title": "Terms of Service",
+          "description": "Please review our terms of service:",
+          "item": "Item {number}: Terms of service",
+          "cancel": "Decline",
+          "accept": "Accept"
+        },
+        "animated": {
+          "trigger": "Show Animated Dialog",
+          "title": "Loading...",
+          "description": "Please wait while we process your request.",
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        }
+      }
     }
   },
   "layout": {

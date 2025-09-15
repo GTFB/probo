@@ -9,7 +9,9 @@ import {
   ChevronRight,
   Code,
   Layout,
-  Palette
+  Palette,
+  AlertTriangle,
+  AlertCircle
 } from "lucide-react";
 
 export default function ComponentsPage() {
@@ -24,6 +26,24 @@ export default function ComponentsPage() {
       count: 10,
       color: "bg-blue-500",
       variants: ["Default", "Outline", "Box", "Tabs", "Custom Trigger", "Disabled", "Media Content", "Highlight Active", "Box Contained"]
+    },
+    {
+      title: t('alert.title'),
+      description: t('alert.description'),
+      href: "/components/alert",
+      icon: AlertTriangle,
+      count: 10,
+      color: "bg-orange-500",
+      variants: ["Primary", "Destructive", "Success", "Warning", "Info", "With Background", "Soft", "Bootstrap", "Callout", "With Actions"]
+    },
+    {
+      title: t('alertDialog.title'),
+      description: t('alertDialog.description'),
+      href: "/components/alert-dialog",
+      icon: AlertCircle,
+      count: 10,
+      color: "bg-red-500",
+      variants: ["Default", "With Icon", "Destructive", "Success", "Warning", "Info", "Custom", "Form", "Scrollable", "Animated"]
     },
     {
       title: t('basic.title'),
@@ -53,13 +73,13 @@ export default function ComponentsPage() {
         badges={[]}
       />
 
-      <div className={`container mx-auto py-8 space-y-8 ${PROJECT_SETTINGS.containerWidth} ${PROJECT_SETTINGS.mobilePadding}`}>
+      <div className={`mx-auto py-8 space-y-8 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {componentCategories.map((category) => {
             const IconComponent = category.icon;
             return (
               <Link key={category.title} href={category.href}>
-                <Card className="group hover:shadow-lg hover:bg-muted/60 transition-all duration-200 cursor-pointer h-full flex flex-col">
+                <Card className="group hover:bg-muted/60 transition-all duration-200 cursor-pointer h-full flex flex-col">
                   <CardHeader className="space-y-4 flex-1">
                     <div className="flex items-center justify-between">
                       <div className={`p-3 rounded-lg ${category.color} text-white`}>
@@ -102,7 +122,7 @@ export default function ComponentsPage() {
           })}
         </div>
 
-        <Card className="mt-12 bg-muted/50">
+        <Card className="mt-12 bg-foreground/5">
           <CardContent className="p-6">
             <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
               <Code className="h-6 w-6 text-muted-foreground flex-shrink-0" />

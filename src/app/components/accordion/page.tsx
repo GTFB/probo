@@ -1,17 +1,21 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ComponentsHeader } from "@/components/shared/components-header";
+import { ToTopButton } from "@/components/shared/to-top-button";
 import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
 import { Code } from "lucide-react";
 import AccordionDemo from "@/components/demo/accordion/accordion";
 import AccordionOutlineDemo from "@/components/demo/accordion/accordion-outline";
 import AccordionBoxDemo from "@/components/demo/accordion/accordion-box";
+import AccordionContainedDemo from "@/components/demo/accordion/accordion-contained";
 import AccordionBoxContainedDemo from "@/components/demo/accordion/accordion-box-contained";
 import AccordionTabsDemo from "@/components/demo/accordion/accordion-tabs";
-import AccordionCustomTriggerDemo from "@/components/demo/accordion/accordion-custom-trigger";
-import AccordionDisabledDemo from "@/components/demo/accordion/accordion-disabled";
 import AccordionHighlightActiveDemo from "@/components/demo/accordion/accordion-highlight-active";
+import AccordionMultipleDemo from "@/components/demo/accordion/accordion-multiple";
+import AccordionExpandIconDemo from "@/components/demo/accordion/accordion-expand-icon";
+import AccordionIconDemo from "@/components/demo/accordion/accordion-icon";
 import AccordionMediaContentDemo from "@/components/demo/accordion/accordion-media-content";
+import AccordionDisabledDemo from "@/components/demo/accordion/accordion-disabled";
 
 export default function AccordionPage() {
   const t = useTranslations('accordion');
@@ -33,6 +37,11 @@ export default function AccordionPage() {
       component: <AccordionBoxDemo />
     },
     {
+      title: t('variants.contained.title'),
+      description: t('variants.contained.description'),
+      component: <AccordionContainedDemo />
+    },
+    {
       title: t('variants.boxContained.title'),
       description: t('variants.boxContained.description'),
       component: <AccordionBoxContainedDemo />
@@ -43,24 +52,34 @@ export default function AccordionPage() {
       component: <AccordionTabsDemo />
     },
     {
-      title: t('variants.customTrigger.title'),
-      description: t('variants.customTrigger.description'),
-      component: <AccordionCustomTriggerDemo />
-    },
-    {
-      title: t('variants.disabled.title'),
-      description: t('variants.disabled.description'),
-      component: <AccordionDisabledDemo />
-    },
-    {
       title: t('variants.highlightActive.title'),
       description: t('variants.highlightActive.description'),
       component: <AccordionHighlightActiveDemo />
     },
     {
+      title: t('variants.multiple.title'),
+      description: t('variants.multiple.description'),
+      component: <AccordionMultipleDemo />
+    },
+    {
+      title: t('variants.expandIcon.title'),
+      description: t('variants.expandIcon.description'),
+      component: <AccordionExpandIconDemo />
+    },
+    {
+      title: t('variants.icon.title'),
+      description: t('variants.icon.description'),
+      component: <AccordionIconDemo />
+    },
+    {
       title: t('variants.mediaContent.title'),
       description: t('variants.mediaContent.description'),
       component: <AccordionMediaContentDemo />
+    },
+    {
+      title: t('variants.disabled.title'),
+      description: t('variants.disabled.description'),
+      component: <AccordionDisabledDemo />
     }
   ];
 
@@ -74,10 +93,10 @@ export default function AccordionPage() {
         badges={[]}
       />
       
-      <div className={`container mx-auto py-8 space-y-12 ${PROJECT_SETTINGS.containerWidth} ${PROJECT_SETTINGS.mobilePadding}`}>
+      <div className={`mx-auto py-8 space-y-12 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
         {/* Description Section */}
-        <div className="text-center space-y-4">
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <div className="space-y-4">
+          <p className="text-lg text-muted-foreground">
             {t('description')}
           </p>
         </div>
@@ -95,20 +114,20 @@ export default function AccordionPage() {
         ))}
 
         {/* Usage Section */}
-        <Card className="mt-12 bg-muted/50">
-          <CardContent className="p-6">
-            <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
-              <Code className="h-6 w-6 text-muted-foreground flex-shrink-0" />
-              <div className="space-y-2">
-                <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{t('usage.title')}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {t('usage.description')}
-                </p>
-              </div>
+        <div className="mt-12 p-6 bg-foreground/5 rounded-lg">
+          <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
+            <div className="h-6 w-6 text-muted-foreground flex-shrink-0">ℹ️</div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{t('usage.title')}</h3>
+              <p className="text-sm text-muted-foreground">
+                {t('usage.description')}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
+      
+      <ToTopButton />
     </div>
   );
 }

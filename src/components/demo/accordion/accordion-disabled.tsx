@@ -6,29 +6,29 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { Contrast, Palette, Zap } from "lucide-react";
-
-const items = [
-  {
-    title: "Is it accessible?",
-    content: "Yes. It adheres to the WAI-ARIA design pattern.",
-    icon: Contrast,
-  },
-  {
-    title: "Is it styled?",
-    content:
-      "Yes. It comes with default styles that matches the other components' aesthetic.",
-    icon: Palette,
-    disabled: true,
-  },
-  {
-    title: "Is it animated?",
-    content:
-      "Yes. It's animated by default, but you can disable it if you prefer.",
-    icon: Zap,
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function AccordionDisabledDemo() {
+  const t = useTranslations('demo.accordion.items');
+
+  const items = [
+    {
+      title: t('accessible.title'),
+      content: t('accessible.content'),
+      icon: Contrast,
+    },
+    {
+      title: t('styled.title'),
+      content: t('styled.content'),
+      icon: Palette,
+      disabled: true,
+    },
+    {
+      title: t('animated.title'),
+      content: t('animated.content'),
+      icon: Zap,
+    },
+  ];
   return (
     <Accordion
       defaultValue="item-0"
