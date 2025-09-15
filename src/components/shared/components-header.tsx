@@ -49,7 +49,7 @@ export function ComponentsHeader({
           <div className="flex items-center space-x-2">
             {showBackButton && (
               <Link href={backHref}>
-                <Button variant="ghost" size="sm" className={buttonStyles.nav}>
+                <Button variant="ghost" size="sm" className={buttonStyles.navSm}>
                   <ArrowLeft className="h-4 w-4 sm:mr-2" />
                   <span className="hidden sm:inline">{t('back')}</span>
                 </Button>
