@@ -368,6 +368,112 @@ All Shadcn/ui components are available with `ui` suffix:
 - `videoplayerui`
 - `tableui`, `tableheaderui`, `tablebodyui`, `tablefooterui`, `tableheadui`, `tablerowui`, `tablecellui`, `tablecaptionui`
 
+## CSS Language Selectors
+
+The project uses a special Tailwind CSS syntax for conditional content display based on the page language.
+
+### Syntax
+
+```css
+[html[lang='LANGUAGE']_&]:CLASS
+```
+
+### Usage Examples
+
+#### Hiding elements for specific languages
+
+```jsx
+// Hide element only for Russian language
+<div className="[html[lang='ru']_&]:hidden">
+  This content is hidden on Russian language
+</div>
+
+// Hide element only for English language  
+<div className="[html[lang='en']_&]:hidden">
+  This content is hidden on English
+</div>
+```
+
+#### Showing elements only for specific languages
+
+```jsx
+// Show element only for Russian language
+<div className="hidden [html[lang='ru']_&]:block">
+  This content is visible only on Russian language
+</div>
+
+// Show element only for English language
+<div className="hidden [html[lang='en']_&]:block">
+  This content is visible only on English
+</div>
+```
+
+#### Combining with responsive classes
+
+```jsx
+// Hide on mobile devices for Russian language
+<div className="[html[lang='ru']_&]:hidden sm:[html[lang='ru']_&]:block">
+  Hidden on mobile, visible on desktop for Russian language
+</div>
+
+// Different styles for different languages
+<div className="text-sm [html[lang='ru']_&]:text-base [html[lang='en']_&]:text-lg">
+  Responsive text size depending on language
+</div>
+```
+
+#### Multiple languages
+
+```jsx
+// Hide for multiple languages
+<div className="[html[lang='ru']_&]:hidden [html[lang='de']_&]:hidden">
+  Hidden for Russian and German languages
+</div>
+
+// Show only for specific languages
+<div className="hidden [html[lang='en']_&]:block [html[lang='es']_&]:block">
+  Visible only for English and Spanish languages
+</div>
+```
+
+### Supported Languages
+
+The project supports the following languages (defined in `src/i18n.ts`):
+
+- `en` - English
+- `ru` - Русский  
+- `es` - Español
+- `fr` - Français
+- `de` - Deutsch
+- `it` - Italiano
+- `pt` - Português
+- `ja` - 日本語
+- `ko` - 한국어
+- `zh` - 中文
+- `ar` - العربية
+- `hi` - हिन्दी
+
+### Advantages of this approach
+
+1. **Pure CSS** - no JavaScript logic required
+2. **Performance** - works at CSS level
+3. **Readability** - clear syntax
+4. **Flexibility** - can be combined with any Tailwind classes
+5. **Automatic** - works with `lang` attribute in HTML
+
+### Alternative approaches
+
+If CSS selectors don't fit your needs, you can use:
+
+```jsx
+// JavaScript approach with useLocale hook
+const { locale } = useLocale()
+<div className={locale === 'ru' ? 'hidden' : 'block'}>
+
+// Conditional rendering
+{locale !== 'ru' && <div>Content for non-Russian language</div>}
+```
+
 ## Environment Setup
 - All terminal operations use Makefile commands
 - File structure changes are automatically reflected in structure.md

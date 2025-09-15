@@ -90,9 +90,8 @@ export default function SectionPage() {
   const [currentToc, setCurrentToc] = useState<Array<{ id: string; title: string; level: number; slug?: string }>>([])
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(leftSectionState !== 'close')
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(rightSectionState !== 'close')
+
   const [isRightOffcanvasOpen, setIsRightOffcanvasOpen] = useState(false)
-  const { width } = useWindowSize()
-  const isClient = typeof window !== 'undefined'
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // During server-side rendering, always return false
@@ -276,7 +275,6 @@ export default function SectionPage() {
             </div>
             <Button variant="ghost" size="sm" className="h-6 w-6 p-0 flex-shrink-0 cursor-pointer hover:bg-muted hover:text-muted-foreground"
              onClick={() => {
-              console.log('Sidebar toggle called, current state:', isLeftSidebarOpen)
               setIsLeftSidebarOpen(!isLeftSidebarOpen)
              }}>
               <PanelLeftClose className="h-3 w-3" />
@@ -316,11 +314,8 @@ export default function SectionPage() {
 
       {/* Central section: Header, Content, Footer */}
       <div
-        className={`flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out ${
-          !isClient || width < 1024 
-            ? 'w-full ml-0 mr-0' 
-            : `w-auto ${isLeftSidebarOpen ? 'ml-64' : 'ml-0'} ${isRightSidebarOpen ? 'mr-80' : 'mr-0'}`
-        }`}
+        className={`flex flex-col min-h-screen relative z-10 transition-all duration-300 ease-in-out w-auto ml-0 mr-0 ${
+          isLeftSidebarOpen ? 'lg:ml-64' : ''} ${isRightSidebarOpen ? 'lg:mr-80' : ''}`}
       >
         {/* Sticky Header for desktop */}
         <div className="hidden lg:block sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
