@@ -1151,7 +1151,6 @@
 .group:hover .group-hover\:bg-muted\/60 {
   background-color: hsl(var(--muted) / 0.6);
 }
-<<<<<<< HEAD
 
 /* Background transparency utilities */
 .bg-background\/80 {
@@ -1278,7 +1277,7 @@ button.btn-nav:hover,
   background-color: var(--secondary) !important;
   color: var(--secondary-foreground) !important;
 }
-=======
+
 /* prevent Scroll locked */
 
 body[data-scroll-locked][data-scroll-locked] {
@@ -1293,4 +1292,3 @@ body[data-scroll-locked][data-scroll-locked] {
   margin-top: 0;
   margin-right: 0 !important;
 }
->>>>>>> e4225cd6c08a019080ece0b27dfaf9861455cc4d
