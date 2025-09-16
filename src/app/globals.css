@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 
 @import url('https://fonts.bunny.net/css?family=inter:400,500,600,700,800|inter-tight:400,500,600,700,800');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css');
@@ -642,7 +642,7 @@
 
   /* Component Styles */
   .component-card {
-    @apply group hover:shadow-lg hover:bg-muted/60 transition-all duration-200 cursor-pointer h-full flex flex-col;
+    @apply hover:shadow-lg hover:bg-muted/60 transition-all duration-200 cursor-pointer h-full flex flex-col;
   }
 
   .component-card-header {
