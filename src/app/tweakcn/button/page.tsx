@@ -25,7 +25,7 @@ export default function ButtonPage() {
           >
             <ButtonDemo />
           </VariantDemo>
-        </widgetsGrid>
+        </DemoGrid>
       </ComponentLayout>
     </div>
   );

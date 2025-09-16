@@ -31,7 +31,7 @@ import {
 } from "@/components/widgets/button";
 
 export default function ButtonPage() {
-  const t = useTranslations('demo.button');
+  const t = useTranslations('button');
 
   const demoSections = [
     {

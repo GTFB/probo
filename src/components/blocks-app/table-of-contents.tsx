@@ -220,16 +220,13 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
             {items.length === 0 ? (
               <p className="text-sm text-muted-foreground">{t('search.noHeadings')}</p>
             ) : (
-              <div className="relative" style={{ border: 'none', outline: 'none' }}>
+              <div className="relative border-0 outline-0">
                 {items.map((item) => (
                 <button
                   key={item.id}
-                  className={`group w-full justify-start text-left h-auto py-1 px-2 text-sm relative hover:bg-muted dark:hover:bg-transparent dark:bg-transparent transition-colors duration-200 cursor-pointer ${currentActive === item.id ? 'text-foreground' : 'text-muted-foreground'}`}
+                  className={`group w-full justify-start text-left h-auto py-1 px-2 text-sm relative hover:bg-muted dark:hover:bg-transparent dark:bg-transparent transition-colors duration-200 cursor-pointer border-0 outline-0 ${currentActive === item.id ? 'text-foreground' : 'text-muted-foreground'}`}
                   style={{ 
-                    paddingLeft: `${(item.level - 1) * 12 + 8}px`,
-                    border: 'none !important',
-                    outline: 'none !important',
-                    boxShadow: 'none !important'
+                    paddingLeft: `${(item.level - 1) * 12 + 8}px`
                   }}
                   onClick={() => {
                     const element = document.getElementById(item.id)
@@ -272,16 +269,11 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
                     }
                   }}
                 >
-                  <div className={`absolute left-0 top-0 bottom-0 w-[1px] transition-colors ${
+                  <div className={`absolute left-0 top-0 bottom-0 w-[1px] transition-colors border-0 outline-0 shadow-none ${
                     currentActive === item.id 
                       ? 'bg-primary group-hover:bg-primary/80' 
                       : 'bg-border group-hover:bg-muted-foreground/60 dark:group-hover:bg-border'
-                  }`} 
-                  style={{
-                    border: 'none',
-                    outline: 'none',
-                    boxShadow: 'none'
-                  }} />
+                  }`} />
                   <div className="flex flex-col items-start w-full">
                     <span className={`text-sm truncate w-full transition-colors ${
                       currentActive === item.id 
@@ -306,13 +298,7 @@ export function TableOfContents({ items, activeSection, onSectionClick, onSectio
       </div>
       {/* Fixed gradient overlay at bottom of screen */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-20"
-        style={{
-          background: 'linear-gradient(to top, var(--sidebar) 0%, transparent 100%)',
-          border: 'none',
-          outline: 'none',
-          boxShadow: 'none'
-        }}
+        className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-20 bg-gradient-to-t from-sidebar to-transparent border-0 outline-0 shadow-none"
       />
     </div>
   )

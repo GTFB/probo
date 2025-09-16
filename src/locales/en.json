@@ -109,6 +109,48 @@
       "title": "Layout & Utilities",
       "description": "Layout components, code examples, and utility components for demonstrations."
     },
+    "input": {
+      "title": "Input Components",
+      "description": "Form input components with various styles and functionalities for user data entry."
+    },
+    "inputOtp": {
+      "title": "Input OTP Components",
+      "description": "One-time password input components with various layouts and styling options.",
+      "variants": {
+        "default": {
+          "title": "Default Input OTP",
+          "description": "Standard OTP input with separator between groups."
+        },
+        "withoutSeparator": {
+          "title": "Without Separator",
+          "description": "OTP input without visual separator between slots."
+        },
+        "separated": {
+          "title": "Separated",
+          "description": "OTP input with custom spacing and borders."
+        },
+        "separated2": {
+          "title": "Separated 2",
+          "description": "OTP input with separator and custom spacing."
+        },
+        "secondary": {
+          "title": "Secondary",
+          "description": "OTP input with secondary background styling."
+        },
+        "customSeparator": {
+          "title": "Custom Separator",
+          "description": "OTP input with custom dot separator icon."
+        },
+        "innerShadow": {
+          "title": "Inner Shadow",
+          "description": "OTP input with inner shadow effects."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
     "count": "components",
     "variants": "Variants:",
     "more": "more",
@@ -427,28 +469,534 @@
     }
   },
   "demo": {
-    "button": {
+    "accordion": {
+      "title": "Accordion Components",
+      "description": "Interactive accordion components with various styles and configurations",
       "variants": {
-        "default": "Default",
+        "default": {
+          "title": "Default Accordion",
+          "description": "Standard accordion with basic styling and functionality."
+        },
+        "outline": {
+          "title": "Outline Accordion",
+          "description": "Accordion with outline border styling for better visual separation."
+        },
+        "box": {
+          "title": "Box Accordion",
+          "description": "Accordion with box-style containers for each item."
+        },
+        "boxContained": {
+          "title": "Box Contained",
+          "description": "Box accordion with contained styling and rounded corners."
+        },
+        "tabs": {
+          "title": "Tabs Accordion",
+          "description": "Accordion styled to look like tabs with horizontal layout."
+        },
+        "customTrigger": {
+          "title": "Custom Trigger",
+          "description": "Accordion with custom trigger elements and styling."
+        },
+        "disabled": {
+          "title": "Disabled State",
+          "description": "Accordion with disabled items and proper accessibility."
+        },
+        "highlightActive": {
+          "title": "Highlight Active",
+          "description": "Accordion that highlights the currently active item."
+        },
+        "mediaContent": {
+          "title": "Media Content",
+          "description": "Accordion with rich media content like images and videos."
+        },
+        "multiple": {
+          "title": "Multiple Expanded",
+          "description": "Accordion that allows multiple items to be expanded at the same time."
+        },
+        "expandIcon": {
+          "title": "Expand Icon",
+          "description": "Accordion with custom expand icon instead of the default arrow."
+        },
+        "contained": {
+          "title": "Contained",
+          "description": "Accordion with contained styling and rounded corners."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "alert": {
+      "title": "Alert Components",
+      "description": "Interactive alert components with various styles and configurations",
+      "variants": {
+        "primary": {
+          "title": "Primary Alert",
+          "description": "Standard alert with basic styling and functionality."
+        },
+        "destructive": {
+          "title": "Destructive Alert",
+          "description": "Error alert with red color for critical messages."
+        },
+        "success": {
+          "title": "Success Alert",
+          "description": "Success alert with green color for completed operations."
+        },
+        "warning": {
+          "title": "Warning Alert",
+          "description": "Warning alert with yellow color for important messages."
+        },
+        "info": {
+          "title": "Info Alert",
+          "description": "Information alert with blue color for additional information."
+        },
+        "withBackground": {
+          "title": "With Background",
+          "description": "Alert with background color for better visibility."
+        },
+        "soft": {
+          "title": "Soft Alert",
+          "description": "Alert with soft, muted colors for subtle notifications."
+        },
+        "bootstrap": {
+          "title": "Bootstrap Style",
+          "description": "Alert styled to match Bootstrap design patterns."
+        },
+        "callout": {
+          "title": "Callout Alert",
+          "description": "Alert designed as a callout box for important information."
+        },
+        "withActions": {
+          "title": "With Actions",
+          "description": "Alert with action buttons for user interaction."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "alertDialog": {
+      "title": "Alert Dialog Components",
+      "description": "Interactive modal dialogs with various styles and configurations",
+      "variants": {
+        "default": {
+          "title": "Default Alert Dialog",
+          "description": "Basic modal dialog with action confirmation."
+        },
+        "withIcon": {
+          "title": "Alert Dialog with Icon",
+          "description": "Dialog with icon for better visual perception."
+        },
+        "destructive": {
+          "title": "Destructive Alert Dialog",
+          "description": "Dialog for critical actions with red color."
+        },
+        "success": {
+          "title": "Success Alert Dialog",
+          "description": "Dialog for confirming successful operations with green color."
+        },
+        "warning": {
+          "title": "Warning Alert Dialog",
+          "description": "Warning dialog with yellow color for important messages."
+        },
+        "info": {
+          "title": "Info Alert Dialog",
+          "description": "Information dialog with blue color for additional information."
+        },
+        "custom": {
+          "title": "Custom Alert Dialog",
+          "description": "Dialog with additional elements and custom structure."
+        },
+        "form": {
+          "title": "Alert Dialog with Form",
+          "description": "Dialog with input fields for collecting user data."
+        },
+        "scrollable": {
+          "title": "Scrollable Alert Dialog",
+          "description": "Dialog with scrollable content for long messages."
+        },
+        "animated": {
+          "title": "Animated Alert Dialog",
+          "description": "Dialog with animations and visual effects."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "avatar": {
+      "title": "Avatar Components",
+      "description": "An image element with a fallback for representing the user with various styles and configurations.",
+      "variants": {
+        "default": {
+          "title": "Default Avatar",
+          "description": "Basic avatar with standard styling and behavior."
+        },
+        "clickable": {
+          "title": "Clickable Avatar",
+          "description": "Avatar that can be clicked for user interaction."
+        },
+        "tooltip": {
+          "title": "Avatar with Tooltip",
+          "description": "Avatar with tooltip showing user information on hover."
+        },
+        "withText": {
+          "title": "Avatar with Text",
+          "description": "Avatar paired with text content for user identification."
+        },
+        "hoverCard": {
+          "title": "Avatar with Hover Card",
+          "description": "Avatar that shows additional information in a hover card."
+        },
+        "sizes": {
+          "title": "Different Sizes",
+          "description": "Avatars in various sizes from small to large."
+        },
+        "fallback": {
+          "title": "Fallback Avatar",
+          "description": "Avatar with fallback content when image fails to load."
+        },
+        "colors": {
+          "title": "Color Variants",
+          "description": "Avatars with different background colors for user identification."
+        },
+        "shapes": {
+          "title": "Shape Variants",
+          "description": "Avatars with different shapes like circle, square, and rounded."
+        },
+        "ring": {
+          "title": "Avatar with Ring",
+          "description": "Avatar with a colored ring around it for status indication."
+        },
+        "status": {
+          "title": "Status Avatar",
+          "description": "Avatar with status indicator showing online/offline state."
+        },
+        "badge": {
+          "title": "Avatar with Badge",
+          "description": "Avatar with a badge overlay for notifications or status."
+        },
+        "group": {
+          "title": "Avatar Group",
+          "description": "Multiple avatars displayed together in a group."
+        },
+        "groupMax": {
+          "title": "Avatar Group with Max",
+          "description": "Avatar group with a maximum number of visible avatars and overflow indicator."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "breadcrumb": {
+      "title": "Breadcrumb Components",
+      "description": "Navigation components that show the current page's location within a site hierarchy.",
+      "variants": {
+        "default": {
+          "title": "Default Breadcrumb",
+          "description": "Basic breadcrumb with standard styling and functionality."
+        },
+        "slashSeparator": {
+          "title": "Slash Separator",
+          "description": "Breadcrumb with slash separators between items."
+        },
+        "chevronsSeparator": {
+          "title": "Chevrons Separator",
+          "description": "Breadcrumb with chevron separators for better visual hierarchy."
+        },
+        "dotSeparator": {
+          "title": "Dot Separator",
+          "description": "Breadcrumb with dot separators for a minimalist look."
+        },
+        "withIcon": {
+          "title": "With Icon",
+          "description": "Breadcrumb with icons for better visual identification."
+        },
+        "withIcon2": {
+          "title": "With Icon 2",
+          "description": "Alternative breadcrumb with different icon styling."
+        },
+        "withIconAndLabel": {
+          "title": "With Icon and Label",
+          "description": "Breadcrumb combining icons with descriptive labels."
+        },
+        "withIconAndLabel2": {
+          "title": "With Icon and Label 2",
+          "description": "Alternative breadcrumb with different icon and label styling."
+        },
+        "withBackground": {
+          "title": "With Background",
+          "description": "Breadcrumb with background color for better visibility."
+        },
+        "tabActive": {
+          "title": "Tab Active",
+          "description": "Breadcrumb styled to look like active tabs."
+        },
+        "tabs": {
+          "title": "Tabs",
+          "description": "Breadcrumb styled as tabs for navigation."
+        },
+        "tabsOutline": {
+          "title": "Tabs Outline",
+          "description": "Breadcrumb with outline tab styling."
+        },
+        "withDropdown": {
+          "title": "With Dropdown",
+          "description": "Breadcrumb with dropdown menu for additional navigation options."
+        },
+        "collapsed": {
+          "title": "Collapsed",
+          "description": "Breadcrumb with collapsed middle sections using ellipsis."
+        },
+        "steps": {
+          "title": "Steps",
+          "description": "Breadcrumb styled as a step indicator for processes."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "button": {
+      "title": "Button Components",
+      "description": "Interactive elements for user actions with various styles, sizes, and states.",
+      "variants": {
+        "primary": "Primary",
+        "primaryDescription": "Primary button for main actions and call-to-action elements.",
         "secondary": "Secondary",
+        "secondaryDescription": "Secondary button for supporting actions and alternative choices.",
         "destructive": "Destructive",
+        "destructiveDescription": "Destructive button for dangerous or irreversible actions.",
         "outline": "Outline",
+        "outlineDescription": "Outline button with transparent background and border.",
         "ghost": "Ghost",
-        "link": "Link"
+        "ghostDescription": "Ghost button with transparent background and hover effects.",
+        "link": "Link",
+        "linkDescription": "Button styled as a link for navigation and subtle actions.",
+        "icon": "Icon",
+        "iconDescription": "Button with icons for better visual identification.",
+        "loading": "Loading",
+        "loadingDescription": "Button with loading state and spinner animation.",
+        "split": "Split",
+        "splitDescription": "Button with dropdown menu for additional options.",
+        "gradient": "Gradient",
+        "gradientDescription": "Button with gradient background colors.",
+        "social": "Social",
+        "socialDescription": "Social media buttons with brand colors.",
+        "socialLogin": "Social Login",
+        "socialLoginDescription": "Buttons for social media authentication.",
+        "neon": "Neon",
+        "neonDescription": "Button with neon glow effect for attention-grabbing actions.",
+        "rounded": "Rounded",
+        "roundedDescription": "Button with fully rounded corners for a softer appearance.",
+        "toggle": "Toggle",
+        "toggleDescription": "Button that toggles between active and inactive states.",
+        "themeToggle": "Theme Toggle",
+        "themeToggleDescription": "Button for switching between light and dark themes.",
+        "fullWidth": "Full Width",
+        "fullWidthDescription": "Button that spans the full width of its container.",
+        "group": "Group",
+        "groupDescription": "Multiple buttons grouped together for related actions.",
+        "group2": "Group 2",
+        "group2Description": "Alternative button group with different styling.",
+        "copy": "Copy",
+        "copyDescription": "Button for copying content to clipboard.",
+        "withBadge": "With Badge",
+        "withBadgeDescription": "Button with a badge overlay for notifications or counts.",
+        "withTooltip": "With Tooltip",
+        "withTooltipDescription": "Button with tooltip for additional information.",
+        "withTapAnimation": "With Tap Animation",
+        "withTapAnimationDescription": "Button with tap animation for mobile-like interaction."
       },
-      "sizes": {
-        "small": "Small",
-        "default": "Default",
-        "large": "Large"
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "card": {
+      "title": "Card Components",
+      "description": "Flexible containers for grouping related content and actions with various layouts and styles.",
+      "variants": {
+        "default": {
+          "title": "Default Card",
+          "description": "Basic card with standard styling and layout."
+        },
+        "withBackground": {
+          "title": "With Background",
+          "description": "Card with background color for better visual separation."
+        },
+        "signUp": {
+          "title": "Sign Up Card",
+          "description": "Card designed for user registration and sign-up forms."
+        },
+        "banner": {
+          "title": "Banner Card",
+          "description": "Card styled as a banner for promotional content."
+        },
+        "pricing": {
+          "title": "Pricing Card",
+          "description": "Card designed for displaying pricing plans and features."
+        },
+        "post": {
+          "title": "Post Card",
+          "description": "Card for displaying social media posts and content."
+        },
+        "product": {
+          "title": "Product Card",
+          "description": "Card for showcasing products with images and details."
+        },
+        "testimonial": {
+          "title": "Testimonial Card",
+          "description": "Card for displaying customer testimonials and reviews."
+        }
       },
-      "states": {
-        "disabled": "Disabled",
-        "disabledOutline": "Disabled Outline"
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "carousel": {
+      "title": "Carousel Components",
+      "description": "Interactive carousels for displaying content in a sliding format with various navigation options.",
+      "variants": {
+        "default": {
+          "title": "Default Carousel",
+          "description": "Basic carousel with standard navigation and controls."
+        },
+        "multipleSlides": {
+          "title": "Multiple Slides",
+          "description": "Carousel displaying multiple slides at once for better content visibility."
+        },
+        "vertical": {
+          "title": "Vertical Carousel",
+          "description": "Carousel with vertical sliding animation for different layouts."
+        },
+        "slideStatus": {
+          "title": "Slide Status",
+          "description": "Carousel with status indicators showing current slide position."
+        },
+        "slideStatus2": {
+          "title": "Slide Status 2",
+          "description": "Alternative slide status display with different styling."
+        },
+        "pagination": {
+          "title": "Pagination",
+          "description": "Carousel with pagination dots for slide navigation."
+        },
+        "footer": {
+          "title": "Footer",
+          "description": "Carousel with footer content and additional information."
+        },
+        "progress": {
+          "title": "Progress",
+          "description": "Carousel with progress bar showing slide completion."
+        },
+        "thumbs": {
+          "title": "Thumbnails",
+          "description": "Carousel with thumbnail navigation for better content preview."
+        },
+        "opacity": {
+          "title": "Opacity",
+          "description": "Carousel with opacity transitions for smooth slide changes."
+        },
+        "scale": {
+          "title": "Scale",
+          "description": "Carousel with scale animations for dynamic slide transitions."
+        }
       },
-      "actions": {
-        "download": "Download",
-        "like": "Like",
-        "share": "Share"
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "checkbox": {
+      "title": "Checkbox Components",
+      "description": "Interactive checkboxes for forms, selections, and user input with various styles and states.",
+      "variants": {
+        "withText": {
+          "title": "With Text",
+          "description": "Checkbox with accompanying text label for better usability."
+        },
+        "disabled": {
+          "title": "Disabled",
+          "description": "Checkbox in disabled state for preventing user interaction."
+        },
+        "indeterminate": {
+          "title": "Indeterminate",
+          "description": "Checkbox with indeterminate state for partial selections."
+        },
+        "horizontalGroup": {
+          "title": "Horizontal Group",
+          "description": "Multiple checkboxes arranged horizontally for space efficiency."
+        },
+        "verticalGroup": {
+          "title": "Vertical Group",
+          "description": "Multiple checkboxes arranged vertically for better readability."
+        },
+        "controlled": {
+          "title": "Controlled",
+          "description": "Checkbox with controlled state management for complex forms."
+        },
+        "colors": {
+          "title": "Colors",
+          "description": "Checkboxes with different color schemes for visual categorization."
+        },
+        "sizes": {
+          "title": "Sizes",
+          "description": "Checkboxes in various sizes for different use cases."
+        },
+        "icon": {
+          "title": "Icon",
+          "description": "Checkbox with custom icons for enhanced visual appeal."
+        },
+        "multiColorPicker": {
+          "title": "Multi Color Picker",
+          "description": "Checkbox used for color selection with multiple options."
+        },
+        "card": {
+          "title": "Card",
+          "description": "Checkbox integrated into card layouts for better organization."
+        },
+        "withForm": {
+          "title": "With Form",
+          "description": "Checkbox as part of a complete form with validation and submission."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
+    },
+    "collapsible": {
+      "title": "Collapsible Components",
+      "description": "Expandable and collapsible content areas with smooth animations and various trigger styles.",
+      "variants": {
+        "default": {
+          "title": "Default Collapsible",
+          "description": "Basic collapsible with standard styling and behavior."
+        },
+        "showMore": {
+          "title": "Show More",
+          "description": "Collapsible with 'Show More' trigger for content expansion."
+        },
+        "fileTree": {
+          "title": "File Tree",
+          "description": "Collapsible styled as a file tree for hierarchical content."
+        },
+        "filters": {
+          "title": "Filters",
+          "description": "Collapsible filter sections with various input controls and options."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
       }
     },
     "sectionCards": {
@@ -476,20 +1024,47 @@
     "badge": {
       "title": "Badge Components",
       "description": "Small status descriptors for UI elements with various styles and configurations.",
-      "usage": {
-        "title": "How to use",
-        "description": "Badge components are perfect for status indicators, labels, and small pieces of information. Use different variants based on your design needs."
-      },
       "variants": {
-        "default": "Default",
-        "secondary": "Secondary",
-        "outline": "Outline",
-        "destructive": "Destructive",
-        "rounded": "Rounded",
-        "gradient": "Gradient",
-        "purple": "Purple",
-        "gradientOutline": "Gradient Outline",
-        "purpleOutline": "Purple Outline"
+        "default": {
+          "title": "Default Badge",
+          "description": "Basic badge with standard styling and behavior."
+        },
+        "secondary": {
+          "title": "Secondary Badge",
+          "description": "Secondary badge with muted styling."
+        },
+        "outline": {
+          "title": "Outline Badge",
+          "description": "Badge with outline border and transparent background."
+        },
+        "destructive": {
+          "title": "Destructive Badge",
+          "description": "Badge with destructive styling for errors and warnings."
+        },
+        "rounded": {
+          "title": "Rounded Badge",
+          "description": "Badge with rounded corners for a softer appearance."
+        },
+        "gradient": {
+          "title": "Gradient Badge",
+          "description": "Badge with gradient background colors for visual appeal."
+        },
+        "purple": {
+          "title": "Purple Badge",
+          "description": "Badge with purple color scheme."
+        },
+        "gradientOutline": {
+          "title": "Gradient Outline Badge",
+          "description": "Badge with gradient outline and transparent background."
+        },
+        "purpleOutline": {
+          "title": "Purple Outline Badge",
+          "description": "Badge with purple outline and transparent background."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
       },
       "status": {
         "inProgress": "In Progress",
@@ -1136,6 +1711,195 @@
     "info": {
       "title": "Layout & Utilities",
       "description": "Layout components and utilities that help organize and structure your application interface. These components provide flexible and responsive layouts for various use cases."
+    }
+  },
+  "input": {
+    "title": "Input Components",
+    "description": "Form input components with various styles and functionalities for user data entry.",
+    "components": {
+      "default": {
+        "title": "Default Input",
+        "description": "Basic input field with standard styling and behavior."
+      },
+      "withRing": {
+        "title": "Input with Ring",
+        "description": "Input field with custom focus ring styling for enhanced visual feedback."
+      },
+      "filled": {
+        "title": "Filled Input",
+        "description": "Input field with filled background styling for a more prominent appearance."
+      },
+      "disabled": {
+        "title": "Disabled Input",
+        "description": "Input field in disabled state to prevent user interaction."
+      },
+      "withLabel": {
+        "title": "Input with Label",
+        "description": "Input field paired with a descriptive label for better accessibility."
+      },
+      "withButton": {
+        "title": "Input with Button",
+        "description": "Input field combined with an action button for immediate user actions."
+      },
+      "withAdornment": {
+        "title": "Input with Adornments",
+        "description": "Input field enhanced with icons and interactive elements for better UX."
+      },
+      "withHelperText": {
+        "title": "Input with Helper Text",
+        "description": "Input field with additional guidance text to help users understand requirements."
+      },
+      "withError": {
+        "title": "Input with Error State",
+        "description": "Input field displaying error state with appropriate styling and messaging."
+      },
+      "withForm": {
+        "title": "Input with Form Integration",
+        "description": "Input field integrated with form validation and state management."
+      },
+      "file": {
+        "title": "File Input",
+        "description": "Specialized input for file uploads with proper file type handling."
+      },
+      "dropzone": {
+        "title": "Dropzone Input",
+        "description": "Drag-and-drop input area for file uploads with visual feedback."
+      }
+    },
+    "usage": {
+      "title": "How to use",
+      "description": "Input components provide various ways to collect user data. Choose the appropriate variant based on your form requirements and user experience goals."
+    },
+    "info": {
+      "title": "Input Components",
+      "description": "Comprehensive collection of input components for forms and data entry. Each component is designed for accessibility, validation, and optimal user experience."
+    }
+  },
+  "hero": {
+    "badge": "New Feature Available",
+    "title": "Build Amazing Interfaces with Modern Components",
+    "description": "Create beautiful, accessible, and performant user interfaces using our comprehensive library of React components built with Tailwind CSS.",
+    "primaryButton": "Get Started",
+    "secondaryButton": "View Documentation",
+    "stats": {
+      "users": "Active Users",
+      "uptime": "Uptime",
+      "support": "Support"
+    },
+    "features": {
+      "performance": {
+        "title": "Lightning Fast",
+        "description": "Optimized for performance with minimal bundle size and maximum efficiency."
+      },
+      "collaboration": {
+        "title": "Team Ready",
+        "description": "Built for teams with comprehensive documentation and design system support."
+      },
+      "quality": {
+        "title": "Production Ready",
+        "description": "Battle-tested components used by thousands of developers worldwide."
+      }
+    }
+  },
+  "demoArchitecture": {
+    "principles": {
+      "title": "Architecture Principles",
+      "description": "Our components follow strict architectural rules to ensure consistency, maintainability, and scalability.",
+      "tailwind": {
+        "title": "Tailwind CSS Only",
+        "description": "All styling through Tailwind utility classes, no custom CSS or inline styles."
+      },
+      "i18n": {
+        "title": "Full Internationalization",
+        "description": "All user-facing text wrapped in translation functions for multi-language support."
+      },
+      "components": {
+        "title": "Component Hierarchy",
+        "description": "Clear separation between UI primitives, widgets, blocks, and pages."
+      },
+      "clean": {
+        "title": "Clean Code",
+        "description": "No hardcoded values, magic numbers, or architectural shortcuts."
+      }
+    },
+    "examples": {
+      "title": "Component Examples",
+      "description": "See how our architecture principles are applied in practice.",
+      "inputLabel": {
+        "title": "Input with Label",
+        "description": "Basic input widget with proper labeling and internationalization."
+      },
+      "inputButton": {
+        "title": "Input with Button",
+        "description": "Input widget combined with action button for user interactions."
+      },
+      "inputAdornment": {
+        "title": "Input with Adornments",
+        "description": "Enhanced input with icons and interactive elements."
+      },
+      "inputHelper": {
+        "title": "Input with Helper Text",
+        "description": "Input widget with additional guidance text for users."
+      },
+      "inputError": {
+        "title": "Input with Error State",
+        "description": "Input widget showing error state with proper styling."
+      },
+      "hero": {
+        "title": "Hero Section Block",
+        "description": "Complete marketing block built from multiple widgets and UI primitives.",
+        "note": "This is a Level 3 Block component that combines multiple widgets and UI primitives to create a complete section."
+      }
+    },
+    "codeExamples": {
+      "title": "Code Examples",
+      "description": "Compare correct and incorrect implementations to understand our standards.",
+      "correct": {
+        "title": "✅ Correct Implementation",
+        "description": "Follows all architectural rules: uses t() for text, Tailwind for styling, proper component structure."
+      },
+      "incorrect": {
+        "title": "❌ Incorrect Implementation",
+        "description": "Violates architectural rules: hardcoded text, inline styles, poor component structure."
+      }
+    },
+    "inputOtp": {
+      "title": "Input OTP Components",
+      "description": "One-time password input components with various layouts and styling options.",
+      "variants": {
+        "default": {
+          "title": "Default Input OTP",
+          "description": "Standard OTP input with separator between groups."
+        },
+        "withoutSeparator": {
+          "title": "Without Separator",
+          "description": "OTP input without visual separator between slots."
+        },
+        "separated": {
+          "title": "Separated",
+          "description": "OTP input with custom spacing and borders."
+        },
+        "separated2": {
+          "title": "Separated 2",
+          "description": "OTP input with separator and custom spacing."
+        },
+        "secondary": {
+          "title": "Secondary",
+          "description": "OTP input with secondary background styling."
+        },
+        "customSeparator": {
+          "title": "Custom Separator",
+          "description": "OTP input with custom dot separator icon."
+        },
+        "innerShadow": {
+          "title": "Inner Shadow",
+          "description": "OTP input with inner shadow effects."
+        }
+      },
+      "usage": {
+        "title": "Usage",
+        "description": "Click on any variant above to see interactive demonstrations, code examples, and detailed documentation for using the component."
+      }
     }
   }
 }

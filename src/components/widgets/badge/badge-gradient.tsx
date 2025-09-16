@@ -7,10 +7,10 @@ export default function BadgeGradientDemo() {
   return (
     <div className="flex items-center space-x-2">
       <Badge className="rounded-full border-none bg-gradient-to-r from-sky-500 to-indigo-600 text-white">
-        {t('variants.gradient')}
+        {t('variants.gradient.title')}
       </Badge>
       <Badge className="rounded-full border-none bg-gradient-to-r from-purple-500 to-pink-600 text-white">
-        {t('variants.purple')}
+        {t('variants.purple.title')}
       </Badge>
     </div>
   );

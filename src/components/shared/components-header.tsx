@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { PROJECT_SETTINGS } from "../../../settings";
-import { ArrowLeft, Home, Code } from "lucide-react";
+import { ArrowLeft} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { buttonStyles } from "@/lib/button-styles";
 
@@ -34,14 +34,6 @@ export function ComponentsHeader({
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
-            {showHomeButton && (
-              <Link href="/">
-                    <Button variant="ghost" size="sm" className={buttonStyles.nav}>
-                      <Home className="h-4 w-4 mr-2" />
-                      {t('home')}
-                    </Button>
-              </Link>
-            )}
           </div>
 
           <div className="flex items-center space-x-2">

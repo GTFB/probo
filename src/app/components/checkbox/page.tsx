@@ -20,7 +20,7 @@ import {
 } from "@/components/widgets/checkbox";
 
 export default function CheckboxComponentsPage() {
-  const t = useTranslations('demo.checkbox');
+  const t = useTranslations('checkbox');
 
   const demoSections = [
     {
@@ -89,7 +89,6 @@ export default function CheckboxComponentsPage() {
     <div className="min-h-screen bg-background">
       <ComponentsHeader
         title={t('title')}
-        description=""
         showBackButton={true}
         backHref="/components"
         badges={[]}

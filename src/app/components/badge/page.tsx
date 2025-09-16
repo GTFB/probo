@@ -18,7 +18,7 @@ import {
 } from "@/components/widgets/badge";
 
 export default function BadgePage() {
-  const t = useTranslations('demo.badge');
+  const t = useTranslations('badge');
 
   const demoSections = [
     {

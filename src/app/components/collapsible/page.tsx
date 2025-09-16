@@ -12,7 +12,7 @@ import {
 } from "@/components/widgets/collapsible";
 
 export default function CollapsibleComponentsPage() {
-  const t = useTranslations('demo.collapsible');
+  const t = useTranslations('collapsible');
 
   const demoSections = [
     {
@@ -41,7 +41,6 @@ export default function CollapsibleComponentsPage() {
     <div className="min-h-screen bg-background">
       <ComponentsHeader
         title={t('title')}
-        description=""
         showBackButton={true}
         backHref="/components"
         badges={[]}

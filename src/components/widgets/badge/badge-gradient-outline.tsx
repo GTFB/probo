@@ -8,12 +8,12 @@ export default function BadgeGradientOutlineDemo() {
     <div className="flex items-center space-x-2">
       <div className="bg-gradient-to-r from-sky-400 to-indigo-600 rounded-full p-0.5 flex items-center justify-center">
         <Badge className="bg-background text-foreground rounded-full border-none">
-          {t('variants.gradientOutline')}
+          {t('variants.gradientOutline.title')}
         </Badge>
       </div>
       <div className="bg-gradient-to-r from-purple-400 to-pink-600 rounded-full p-0.5 flex items-center justify-center">
         <Badge className="bg-background text-foreground rounded-full border-none">
-          {t('variants.purpleOutline')}
+          {t('variants.purpleOutline.title')}
         </Badge>
       </div>
     </div>

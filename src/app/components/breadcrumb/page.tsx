@@ -23,7 +23,7 @@ import {
 } from "@/components/widgets/breadcrumb";
 
 export default function BreadcrumbPage() {
-  const t = useTranslations('demo.breadcrumb');
+  const t = useTranslations('breadcrumb');
 
   const demoSections = [
     {

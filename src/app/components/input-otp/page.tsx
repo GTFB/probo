@@ -5,59 +5,53 @@ import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
 import { cardStyles } from "@/lib/button-styles";
 import {
-  CardDefaultDemo,
-  CardWithBackgroundDemo,
-  CardSignUpDemo,
-  CardBannerDemo,
-  CardPricingDemo,
-  CardPostDemo,
-  CardProductDemo,
-  CardTestimonialDemo
-} from "@/components/widgets/card";
+  InputOTPDefault,
+  InputOTPWithoutSeparator,
+  InputOTPSeparated,
+  InputOTPSeparated2,
+  InputOTPSecondary,
+  InputOTPCustomSeparator,
+  InputOTPInnerShadow,
+} from "@/components/widgets/input-otp";
 
-export default function CardPage() {
-  const t = useTranslations('card');
+export default function InputOTPComponentsPage() {
+  const t = useTranslations('components.inputOtp');
 
   const demoSections = [
     {
       title: t('variants.default.title'),
       description: t('variants.default.description'),
-      component: <CardDefaultDemo />
+      component: <InputOTPDefault />
     },
     {
-      title: t('variants.withBackground.title'),
-      description: t('variants.withBackground.description'),
-      component: <CardWithBackgroundDemo />
+      title: t('variants.withoutSeparator.title'),
+      description: t('variants.withoutSeparator.description'),
+      component: <InputOTPWithoutSeparator />
     },
     {
-      title: t('variants.signUp.title'),
-      description: t('variants.signUp.description'),
-      component: <CardSignUpDemo />
+      title: t('variants.separated.title'),
+      description: t('variants.separated.description'),
+      component: <InputOTPSeparated />
     },
     {
-      title: t('variants.banner.title'),
-      description: t('variants.banner.description'),
-      component: <CardBannerDemo />
+      title: t('variants.separated2.title'),
+      description: t('variants.separated2.description'),
+      component: <InputOTPSeparated2 />
     },
     {
-      title: t('variants.pricing.title'),
-      description: t('variants.pricing.description'),
-      component: <CardPricingDemo />
+      title: t('variants.secondary.title'),
+      description: t('variants.secondary.description'),
+      component: <InputOTPSecondary />
     },
     {
-      title: t('variants.post.title'),
-      description: t('variants.post.description'),
-      component: <CardPostDemo />
+      title: t('variants.customSeparator.title'),
+      description: t('variants.customSeparator.description'),
+      component: <InputOTPCustomSeparator />
     },
     {
-      title: t('variants.product.title'),
-      description: t('variants.product.description'),
-      component: <CardProductDemo />
-    },
-    {
-      title: t('variants.testimonial.title'),
-      description: t('variants.testimonial.description'),
-      component: <CardTestimonialDemo />
+      title: t('variants.innerShadow.title'),
+      description: t('variants.innerShadow.description'),
+      component: <InputOTPInnerShadow />
     }
   ];
 

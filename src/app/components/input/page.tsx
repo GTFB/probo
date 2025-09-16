@@ -5,59 +5,83 @@ import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
 import { cardStyles } from "@/lib/button-styles";
 import {
-  CardDefaultDemo,
-  CardWithBackgroundDemo,
-  CardSignUpDemo,
-  CardBannerDemo,
-  CardPricingDemo,
-  CardPostDemo,
-  CardProductDemo,
-  CardTestimonialDemo
-} from "@/components/widgets/card";
+  InputDefault,
+  InputWithRing,
+  InputFilled,
+  InputDisabled,
+  InputWithLabel,
+  InputWithButton,
+  InputWithAdornment,
+  InputWithHelperText,
+  InputWithError,
+  InputWithForm,
+  InputFile,
+  InputDropzone,
+} from "@/components/widgets/input";
 
-export default function CardPage() {
-  const t = useTranslations('card');
+export default function InputComponentsPage() {
+  const t = useTranslations('input');
 
   const demoSections = [
     {
-      title: t('variants.default.title'),
-      description: t('variants.default.description'),
-      component: <CardDefaultDemo />
+      title: t('components.default.title'),
+      description: t('components.default.description'),
+      component: <InputDefault />
     },
     {
-      title: t('variants.withBackground.title'),
-      description: t('variants.withBackground.description'),
-      component: <CardWithBackgroundDemo />
+      title: t('components.withRing.title'),
+      description: t('components.withRing.description'),
+      component: <InputWithRing />
     },
     {
-      title: t('variants.signUp.title'),
-      description: t('variants.signUp.description'),
-      component: <CardSignUpDemo />
+      title: t('components.filled.title'),
+      description: t('components.filled.description'),
+      component: <InputFilled />
     },
     {
-      title: t('variants.banner.title'),
-      description: t('variants.banner.description'),
-      component: <CardBannerDemo />
+      title: t('components.disabled.title'),
+      description: t('components.disabled.description'),
+      component: <InputDisabled />
     },
     {
-      title: t('variants.pricing.title'),
-      description: t('variants.pricing.description'),
-      component: <CardPricingDemo />
+      title: t('components.withLabel.title'),
+      description: t('components.withLabel.description'),
+      component: <InputWithLabel />
     },
     {
-      title: t('variants.post.title'),
-      description: t('variants.post.description'),
-      component: <CardPostDemo />
+      title: t('components.withButton.title'),
+      description: t('components.withButton.description'),
+      component: <InputWithButton />
     },
     {
-      title: t('variants.product.title'),
-      description: t('variants.product.description'),
-      component: <CardProductDemo />
+      title: t('components.withAdornment.title'),
+      description: t('components.withAdornment.description'),
+      component: <InputWithAdornment />
     },
     {
-      title: t('variants.testimonial.title'),
-      description: t('variants.testimonial.description'),
-      component: <CardTestimonialDemo />
+      title: t('components.withHelperText.title'),
+      description: t('components.withHelperText.description'),
+      component: <InputWithHelperText />
+    },
+    {
+      title: t('components.withError.title'),
+      description: t('components.withError.description'),
+      component: <InputWithError />
+    },
+    {
+      title: t('components.withForm.title'),
+      description: t('components.withForm.description'),
+      component: <InputWithForm />
+    },
+    {
+      title: t('components.file.title'),
+      description: t('components.file.description'),
+      component: <InputFile />
+    },
+    {
+      title: t('components.dropzone.title'),
+      description: t('components.dropzone.description'),
+      component: <InputDropzone />
     }
   ];
 

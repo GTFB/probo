@@ -16,7 +16,7 @@ import {
 } from "@/components/widgets/dropdown";
 
 export default function DropdownComponentsPage() {
-  const t = useTranslations('demo.dropdown');
+  const t = useTranslations('dropdown');
 
   const demoSections = [
     {
@@ -65,7 +65,6 @@ export default function DropdownComponentsPage() {
     <div className="min-h-screen bg-background">
       <ComponentsHeader
         title={t('title')}
-        description=""
         showBackButton={true}
         backHref="/components"
         badges={[]}

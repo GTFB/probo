@@ -22,7 +22,7 @@ import {
 } from "@/components/widgets/avatar";
 
 export default function AvatarPage() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('avatar');
 
   const demoSections = [
     {
@@ -101,7 +101,6 @@ export default function AvatarPage() {
     <div className="min-h-screen bg-background">
       <ComponentsHeader
         title={t('title')}
-        description=""
         showBackButton={true}
         backHref="/components"
         badges={[]}

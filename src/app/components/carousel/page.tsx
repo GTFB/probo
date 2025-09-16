@@ -19,7 +19,7 @@ import {
 } from "@/components/widgets/carousel";
 
 export default function CarouselPage() {
-  const t = useTranslations('demo.carousel');
+  const t = useTranslations('carousel');
 
   const demoSections = [
     {

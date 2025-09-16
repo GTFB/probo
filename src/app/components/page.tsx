@@ -143,13 +143,31 @@ export default function ComponentsPage() {
       count: 5,
       color: "bg-gray-500",
       variants: ["Component Layout", "Demo Grid", "Code Example", "Inline Code", "Variant Demo"]
+    },
+    {
+      title: t('input.title'),
+      description: t('input.description'),
+      href: "/components/input",
+      icon: MousePointer,
+      count: 12,
+      color: "bg-green-500",
+      variants: ["Default", "With Ring", "Filled", "Disabled", "With Label", "With Button", "With Adornment", "With Helper Text", "With Error", "With Form", "File Input", "Dropzone"]
+    },
+    {
+      title: t('inputOtp.title'),
+      description: t('inputOtp.description'),
+      href: "/components/input-otp",
+      icon: Code,
+      count: 7,
+      color: "bg-purple-500",
+      variants: ["Default", "Without Separator", "Separated", "Separated 2", "Secondary", "Custom Separator", "Inner Shadow"]
     }
   ];
   return (
     <div className="min-h-screen bg-background">
       <ComponentsHeader
         title={t('title')}
-        showHomeButton={false}
+        showHomeButton={true}
         badges={[]}
       />
 
