@@ -89,7 +89,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     id: '1',
     title: 'MDX Styling Examples',
     icon: Code,
-    href: '/demo'
+    href: '/widgets'
   },
   {
     id: '2',

@@ -1070,8 +1070,7 @@
     opacity: 0;
   }
 }
-
-/* Enhanced sheet animations - smooth with overlay */
+/* Enhanced sheet animations - smooth with overlay
 [data-side="left"][data-state="open"] {
   animation: slide-in-from-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1104,14 +1103,14 @@
   animation: slide-out-to-bottom 0.3s cubic-bezier(0.4, 0, 1, 1);
 }
 
-/* Enhanced overlay animations */
+Enhanced overlay animations 
 [data-state="open"] .sheet-overlay {
   animation: fade-in 0.4s ease-out;
 }
 
 [data-state="closed"] .sheet-overlay {
   animation: fade-out 0.3s ease-in;
-}
+} */
 
 /* Group utility classes for Tailwind CSS v4 */
 .group {

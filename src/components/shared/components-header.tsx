@@ -10,7 +10,6 @@ import { buttonStyles } from "@/lib/button-styles";
 
 interface ComponentsHeaderProps {
   title: string;
-  description: string;
   showBackButton?: boolean;
   backHref?: string;
   badges?: Array<{
@@ -22,7 +21,6 @@ interface ComponentsHeaderProps {
 
 export function ComponentsHeader({
   title,
-  description,
   showBackButton = false,
   backHref = "/components",
   badges = [],
@@ -59,14 +57,6 @@ export function ComponentsHeader({
             <ThemeToggle variant="minimal" size="sm" />
           </div>
         </div>
-
-        {description && (
-          <div className="mt-4">
-            <p className="text-muted-foreground text-lg max-w-3xl">
-              {description}
-            </p>
-          </div>
-        )}
 
         {badges.length > 0 && (
           <div className="mt-4 flex items-center space-x-2">

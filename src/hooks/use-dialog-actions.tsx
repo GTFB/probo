@@ -1,7 +1,7 @@
-import { CodePanelDialog } from "@/components/editor/code-panel-dialog";
-import CssImportDialog from "@/components/editor/css-import-dialog";
-import { ShareDialog } from "@/components/editor/share-dialog";
-import { ThemeSaveDialog } from "@/components/editor/theme-save-dialog";
+import { CodePanelDialog } from "@/components/tweakcn/editor/code-panel-dialog";
+import CssImportDialog from "@/components/tweakcn/editor/css-import-dialog";
+import { ShareDialog } from "@/components/tweakcn/editor/share-dialog";
+import { ThemeSaveDialog } from "@/components/tweakcn/editor/theme-save-dialog";
 import { toast } from "@/components/ui/use-toast";
 import { useCreateTheme } from "@/hooks/themes";
 import { useAIThemeGenerationCore } from "@/hooks/use-ai-theme-generation-core";

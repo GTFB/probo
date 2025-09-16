@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { useTheme } from '@/hooks/use-theme'
 import { Sun, Moon } from 'lucide-react'
 import { buttonStyles } from '@/lib/button-styles'
+import { useTranslations } from 'next-intl'
 
 interface ThemeToggleProps {
   variant?: 'default' | 'minimal'
@@ -17,6 +18,7 @@ export function ThemeToggle({
   className = ''
 }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme()
+  const t = useTranslations('common')
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
@@ -55,12 +57,12 @@ export function ThemeToggle({
       {theme === 'light' ? (
         <>
           <Moon className="h-4 w-4 mr-2" />
-          <span className="hidden sm:inline">Dark</span>
+          <span className="hidden sm:inline">{t('dark')}</span>
         </>
       ) : (
         <>
           <Sun className="h-4 w-4 mr-2" />
-          <span className="hidden sm:inline">Light</span>
+          <span className="hidden sm:inline">{t('light')}</span>
         </>
       )}
     </Button>

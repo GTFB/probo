@@ -255,7 +255,7 @@ export default function SectionPage() {
   // Redirect to first section if slug not found
   useEffect(() => {
     if (!currentSection && slug) {
-      router.push('/demo')
+      router.push('/widgets')
     }
   }, [currentSection, slug, router])
 

@@ -4,16 +4,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
 import { cardStyles } from "@/lib/button-styles";
-import AlertDemo from "@/components/demo/alert/alert";
-import AlertDestructiveDemo from "@/components/demo/alert/alert-destructive";
-import AlertSuccessDemo from "@/components/demo/alert/alert-success";
-import AlertWarningDemo from "@/components/demo/alert/alert-warning";
-import AlertInfoDemo from "@/components/demo/alert/alert-info";
-import AlertWithBackgroundDemo from "@/components/demo/alert/alert-with-background";
-import AlertSoftDemo from "@/components/demo/alert/alert-soft";
-import AlertBootstrapDemo from "@/components/demo/alert/alert-bootstrap";
-import AlertCalloutDemo from "@/components/demo/alert/alert-callout";
-import AlertWithActionsDemo from "@/components/demo/alert/alert-with-actions";
+import AlertDemo from "@/components/widgets/alert/alert";
+import AlertDestructiveDemo from "@/components/widgets/alert/alert-destructive";
+import AlertSuccessDemo from "@/components/widgets/alert/alert-success";
+import AlertWarningDemo from "@/components/widgets/alert/alert-warning";
+import AlertInfoDemo from "@/components/widgets/alert/alert-info";
+import AlertWithBackgroundDemo from "@/components/widgets/alert/alert-with-background";
+import AlertSoftDemo from "@/components/widgets/alert/alert-soft";
+import AlertBootstrapDemo from "@/components/widgets/alert/alert-bootstrap";
+import AlertCalloutDemo from "@/components/widgets/alert/alert-callout";
+import AlertWithActionsDemo from "@/components/widgets/alert/alert-with-actions";
 
 export default function AlertPage() {
   const t = useTranslations('alert');

@@ -10,7 +10,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // Redirect to demo page
-    router.push('/demo')
+    router.push('/widgets')
   }, [router])
 
   return (

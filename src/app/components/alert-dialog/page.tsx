@@ -4,16 +4,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
 import { cardStyles } from "@/lib/button-styles";
-import AlertDialogDemo from "@/components/demo/alert-dialog/alert-dialog";
-import AlertDialogWithIconDemo from "@/components/demo/alert-dialog/alert-dialog-with-icon";
-import AlertDialogDestructiveDemo from "@/components/demo/alert-dialog/alert-dialog-destructive";
-import AlertDialogSuccessDemo from "@/components/demo/alert-dialog/alert-dialog-success";
-import AlertDialogWarningDemo from "@/components/demo/alert-dialog/alert-dialog-warning";
-import AlertDialogInfoDemo from "@/components/demo/alert-dialog/alert-dialog-info";
-import AlertDialogCustomDemo from "@/components/demo/alert-dialog/alert-dialog-custom";
-import AlertDialogFormDemo from "@/components/demo/alert-dialog/alert-dialog-form";
-import AlertDialogScrollableDemo from "@/components/demo/alert-dialog/alert-dialog-scrollable";
-import AlertDialogAnimatedDemo from "@/components/demo/alert-dialog/alert-dialog-animated";
+import AlertDialogDemo from "@/components/widgets/alert-dialog/alert-dialog";
+import AlertDialogWithIconDemo from "@/components/widgets/alert-dialog/alert-dialog-with-icon";
+import AlertDialogDestructiveDemo from "@/components/widgets/alert-dialog/alert-dialog-destructive";
+import AlertDialogSuccessDemo from "@/components/widgets/alert-dialog/alert-dialog-success";
+import AlertDialogWarningDemo from "@/components/widgets/alert-dialog/alert-dialog-warning";
+import AlertDialogInfoDemo from "@/components/widgets/alert-dialog/alert-dialog-info";
+import AlertDialogCustomDemo from "@/components/widgets/alert-dialog/alert-dialog-custom";
+import AlertDialogFormDemo from "@/components/widgets/alert-dialog/alert-dialog-form";
+import AlertDialogScrollableDemo from "@/components/widgets/alert-dialog/alert-dialog-scrollable";
+import AlertDialogAnimatedDemo from "@/components/widgets/alert-dialog/alert-dialog-animated";
 
 export default function AlertDialogPage() {
   const t = useTranslations('alertDialog');

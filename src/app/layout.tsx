@@ -11,6 +11,7 @@ import { getSessionDataFromCookies } from '@/lib/cookies'
 import AuthProvider, { SessionData } from '@/components/providers/AuthProvider';
 import LeftSectionStateProvider from '@/components/providers/LeftSectionStateProvider'
 import RightSectionStateProvider from '@/components/providers/RightSectionStateProvider'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -91,7 +92,9 @@ export default async function RootLayout({
                   themes={['light', 'dark']}
                   disableTransitionOnChange
                 >
-                  {children}
+                  <TooltipProvider>
+                    {children}
+                  </TooltipProvider>
                 </ThemeProvider>
               </RightSectionStateProvider>
             </LeftSectionStateProvider>

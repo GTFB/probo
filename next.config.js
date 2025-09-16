@@ -5,7 +5,7 @@ const withNextIntl = require('next-intl/plugin')(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'github.com'],
   },
   experimental: {
     serverComponentsExternalPackages: [],

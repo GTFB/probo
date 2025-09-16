@@ -1,128 +1,93 @@
-import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ComponentsHeader } from "@/components/shared/components-header";
+import { ToTopButton } from "@/components/shared/to-top-button";
+import { Card, CardContent } from "@/components/ui/card";
 import { PROJECT_SETTINGS } from "../../../../settings";
-import { 
-  ArrowLeft,
-  ChevronRight,
-  Code,
-  Eye,
-  Layout,
-  Grid3X3,
-  FileText,
-  Terminal,
-  Palette
-} from "lucide-react";
-
-const layoutComponents = [
-  {
-    title: "Component Layout",
-    description: "Layout wrapper for organizing and displaying component demonstrations.",
-    component: "ComponentLayout",
-    href: "/components/layout/component-layout",
-    icon: Layout,
-    color: "bg-blue-500"
-  },
-  {
-    title: "Demo Grid",
-    description: "Grid layout for organizing multiple component demonstrations.",
-    component: "DemoGrid",
-    href: "/components/layout/demo-grid",
-    icon: Grid3X3,
-    color: "bg-green-500"
-  },
-  {
-    title: "Code Example",
-    description: "Component for displaying code examples with syntax highlighting.",
-    component: "CodeExample",
-    href: "/components/layout/code-example",
-    icon: FileText,
-    color: "bg-purple-500"
-  },
-  {
-    title: "Inline Code Example",
-    description: "Inline code display component for small code snippets.",
-    component: "InlineCodeExample",
-    href: "/components/layout/inline-code",
-    icon: Terminal,
-    color: "bg-orange-500"
-  },
-  {
-    title: "Variant Demo",
-    description: "Component for demonstrating different variants of UI elements.",
-    component: "VariantDemo",
-    href: "/components/layout/variant-demo",
-    icon: Palette,
-    color: "bg-pink-500"
-  }
-];
+import { useTranslations } from "next-intl";
+import { cardStyles } from "@/lib/button-styles";
+import ComponentLayoutDemo from "@/components/widgets/layout/component-layout-demo";
+import DemoGridDemo from "@/components/widgets/layout/demo-grid-demo";
+import CodeExampleDemo from "@/components/widgets/layout/code-example-demo";
+import InlineCodeExampleDemo from "@/components/widgets/layout/inline-code-example-demo";
+import VariantDemoDemo from "@/components/widgets/layout/variant-demo-demo";
 
 export default function LayoutComponentsPage() {
+  const t = useTranslations('layout');
+
+  const demoSections = [
+    {
+      title: t('components.componentLayout.title'),
+      description: t('components.componentLayout.description'),
+      component: <ComponentLayoutDemo />
+    },
+    {
+      title: t('components.demoGrid.title'),
+      description: t('components.demoGrid.description'),
+      component: <DemoGridDemo />
+    },
+    {
+      title: t('components.codeExample.title'),
+      description: t('components.codeExample.description'),
+      component: <CodeExampleDemo />
+    },
+    {
+      title: t('components.inlineCodeExample.title'),
+      description: t('components.inlineCodeExample.description'),
+      component: <InlineCodeExampleDemo />
+    },
+    {
+      title: t('components.variantDemo.title'),
+      description: t('components.variantDemo.description'),
+      component: <VariantDemoDemo />
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <ComponentsHeader
-        title="Layout & Utility Components"
+        title={t('title')}
         description=""
         showBackButton={true}
         backHref="/components"
         badges={[]}
       />
       
-      <div className={`mx-auto py-8 space-y-8 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {layoutComponents.map((component) => {
-          const IconComponent = component.icon;
-          return (
-            <Link key={component.title} href={component.href}>
-              <Card className="group cursor-pointer h-full">
-                <CardHeader className="space-y-4 flex-1">
-                  <div className="flex items-center justify-between">
-                    <div className={`p-3 rounded-lg ${component.color} text-white`}>
-                      <IconComponent className="h-6 w-6" />
-                    </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
-                  </div>
-                  <div className="flex-1">
-                    <CardTitle className="text-lg mb-2">{component.title}</CardTitle>
-                    <CardDescription className="text-sm line-clamp-3">
-                      {component.description}
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <Badge variant="outline" className="text-xs">
-                      {component.component}
-                    </Badge>
-                    <div className="flex items-center space-x-1 text-xs text-muted-foreground">
-                      <Eye className="h-3 w-3" />
-                      <span>Просмотр</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          );
-        })}
-      </div>
-
-      <div className="mt-12 p-6 bg-secondary rounded-lg">
-        <div className="flex items-start space-x-4">
-          <Code className="h-6 w-6 text-muted-foreground mt-1" />
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold">Утилиты и макеты</h3>
-            <p className="text-sm text-muted-foreground">
-              Эти компоненты помогают организовать контент, отображать код, 
-              создавать сетки и демонстрировать различные варианты компонентов. 
-              Идеально подходят для документации и демонстраций.
-            </p>
-          </div>
+      <div className={`mx-auto py-8 space-y-12 max-w-7xl ${PROJECT_SETTINGS.mobilePadding}`}>
+        {/* Description Section */}
+        <div className="space-y-4">
+          <p className="text-lg text-muted-foreground">
+            {t('description')}
+          </p>
         </div>
+
+        {demoSections.map((section, index) => (
+          <div key={index} className="space-y-4">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{section.title}</h3>
+              <p className="text-muted-foreground">{section.description}</p>
+            </div>
+            <div className="w-full">
+              {section.component}
+            </div>
+          </div>
+        ))}
+
+        {/* Usage Section */}
+        <Card className={`mt-12 ${cardStyles.info}`}>
+          <CardContent className="p-6">
+            <div className="flex flex-col items-center text-center space-y-4 sm:flex-row sm:items-center sm:text-left sm:space-y-0 sm:space-x-4">
+              <div className="h-6 w-6 text-secondary-foreground flex-shrink-0">ℹ️</div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>{t('usage.title')}</h3>
+                <p className="text-sm text-secondary-foreground">
+                  {t('usage.description')}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-      </div>
+      
+      <ToTopButton />
     </div>
   );
 }
