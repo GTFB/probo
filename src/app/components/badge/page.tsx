@@ -1,9 +1,11 @@
-import { ComponentsHeader } from "@/components/shared/components-header";
-import { ToTopButton } from "@/components/shared/to-top-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { PROJECT_SETTINGS } from "../../../../settings";
-import { useTranslations } from "next-intl";
-import { cardStyles } from "@/lib/button-styles";
+'use client';
+
+import { ComponentsHeader } from '@/components/shared/components-header';
+import { ToTopButton } from '@/components/shared/to-top-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { PROJECT_SETTINGS } from '../../../../settings';
+import { useTranslations } from 'next-intl';
+import { cardStyles } from '@/lib/button-styles';
 import {
   BadgeDemo,
   BadgeRoundedDemo,

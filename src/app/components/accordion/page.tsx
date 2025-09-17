@@ -1,5 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
+'use client';
+
 import { ComponentsHeader } from "@/components/shared/components-header";
+import { Card, CardContent } from "@/components/ui/card";
 import { ToTopButton } from "@/components/shared/to-top-button";
 import { PROJECT_SETTINGS } from "../../../../settings";
 import { useTranslations } from "next-intl";
@@ -88,7 +90,6 @@ export default function AccordionPage() {
     <div className="min-h-screen bg-background">
       <ComponentsHeader
         title={t('title')}
-        description=""
         showBackButton={true}
         backHref="/components"
         badges={[]}

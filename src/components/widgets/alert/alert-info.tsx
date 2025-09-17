@@ -3,7 +3,7 @@ import { InfoIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AlertInfoDemo() {
-  const t = useTranslations('demo.alert.items');
+  const t = useTranslations('widgets.alert.items');
 
   return (
     <Alert className="border-cyan-600/50 text-cyan-600 dark:border-cyan-600 [&>svg]:text-cyan-600">

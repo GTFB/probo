@@ -7,7 +7,7 @@ import {
 import { useTranslations } from "next-intl";
 
 export default function AccordionDemo() {
-  const t = useTranslations('demo.accordion.items');
+  const t = useTranslations('widgets.accordion.items');
 
   const items = [
     {

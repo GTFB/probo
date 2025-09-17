@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useTranslations } from "next-intl";
 
 export default function AvatarColorDemo() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('widgets.avatar');
 
   return (
     <div className="grid gap-4">

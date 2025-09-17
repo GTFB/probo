@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +21,11 @@ import {
   RotateCcw,
   CheckSquare,
   ChevronsUpDown,
-  MoreHorizontal
+  MoreHorizontal,
+  Menu,
+  ChevronsLeft,
+  Radio,
+  BarChart3
 } from "lucide-react";
 import { cardStyles } from "@/lib/button-styles";
 
@@ -161,6 +167,42 @@ export default function ComponentsPage() {
       count: 7,
       color: "bg-purple-500",
       variants: ["Default", "Without Separator", "Separated", "Separated 2", "Secondary", "Custom Separator", "Inner Shadow"]
+    },
+    {
+      title: t('menu.title'),
+      description: t('menu.description'),
+      href: "/components/menu",
+      icon: Menu,
+      count: 8,
+      color: "bg-slate-500",
+      variants: ["Default", "With Icon", "Dropdown", "Active Item", "Underlined", "Rich Navigation", "Icon", "Mobile"]
+    },
+    {
+      title: t('pagination.title'),
+      description: t('pagination.description'),
+      href: "/components/pagination",
+      icon: ChevronsLeft,
+      count: 14,
+      color: "bg-rose-500",
+      variants: ["Default", "Primary Button", "Secondary Button", "Rounded Button", "With Icon", "First and Last Page", "Bordered", "Tabs", "Tabs Secondary", "With Icon and Label", "Numberless", "Numberless with Text", "With Ellipsis", "Table Pagination"]
+    },
+    {
+      title: t('radio.title'),
+      description: t('radio.description'),
+      href: "/components/radio",
+      icon: Radio,
+      count: 9,
+      color: "bg-blue-500",
+      variants: ["Default", "Horizontal", "Disabled", "Color", "Size", "Variant", "Cards 1", "Cards 2", "Cards 3"]
+    },
+    {
+      title: t('progress.title'),
+      description: t('progress.description'),
+      href: "/components/progress",
+      icon: BarChart3,
+      count: 12,
+      color: "bg-emerald-500",
+      variants: ["Default", "With Label", "Color", "Rounded", "Gradient", "Animation", "Circular", "Circular with Label", "Circular Custom Label", "Circular Color", "Circular Shape", "Circular Stroke Width"]
     }
   ];
   return (

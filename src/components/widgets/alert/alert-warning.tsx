@@ -3,7 +3,7 @@ import { AlertTriangleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AlertWarningDemo() {
-  const t = useTranslations('demo.alert.items');
+  const t = useTranslations('widgets.alert.items');
 
   return (
     <Alert className="border-amber-500/50 text-amber-500 dark:border-amber-500 [&>svg]:text-amber-500">

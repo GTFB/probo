@@ -1,0 +1,14 @@
+export { default as PaginationDefault } from './pagination-default';
+export { default as PaginationPrimary } from './pagination-primary';
+export { default as PaginationSecondary } from './pagination-secondary';
+export { default as PaginationRounded } from './pagination-rounded';
+export { default as PaginationWithIcon } from './pagination-with-icon';
+export { default as PaginationFirstLast } from './pagination-first-last';
+export { default as PaginationBordered } from './pagination-bordered';
+export { default as PaginationTabs } from './pagination-tabs';
+export { default as PaginationTabsSecondary } from './pagination-tabs-secondary';
+export { default as PaginationWithIconLabel } from './pagination-with-icon-label';
+export { default as PaginationNumberless } from './pagination-numberless';
+export { default as PaginationNumberlessText } from './pagination-numberless-text';
+export { default as PaginationWithEllipsis } from './pagination-with-ellipsis';
+export { default as PaginationTable } from './pagination-table';

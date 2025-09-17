@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useTranslations } from "next-intl";
 
 export default function AvatarWithTextDemo() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('widgets.avatar');
 
   return (
     <div className="flex items-start gap-3">

@@ -3,7 +3,7 @@ import { BuildingIcon, StoreIcon, UserRoundIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AvatarFallbackDemo() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('widgets.avatar');
 
   return (
     <div className="grid gap-5">

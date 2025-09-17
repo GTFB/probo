@@ -8,7 +8,7 @@ import { Contrast, Palette, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AccordionIconDemo() {
-  const t = useTranslations('demo.accordion.items');
+  const t = useTranslations('widgets.accordion.items');
 
   const items = [
     {

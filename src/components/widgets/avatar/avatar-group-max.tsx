@@ -50,7 +50,7 @@ const AvatarGroup = ({
 };
 
 export default function AvatarGroupMaxAvatarDemo() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('widgets.avatar');
 
   return (
     <AvatarGroup className="flex items-center" max={3}>

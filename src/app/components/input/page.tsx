@@ -1,3 +1,5 @@
+'use client';
+
 import { ComponentsHeader } from "@/components/shared/components-header";
 import { ToTopButton } from "@/components/shared/to-top-button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -24,63 +26,63 @@ export default function InputComponentsPage() {
 
   const demoSections = [
     {
-      title: t('components.default.title'),
-      description: t('components.default.description'),
+      title: t('variants.default.title'),
+      description: t('variants.default.description'),
       component: <InputDefault />
     },
     {
-      title: t('components.withRing.title'),
-      description: t('components.withRing.description'),
+      title: t('variants.withRing.title'),
+      description: t('variants.withRing.description'),
       component: <InputWithRing />
     },
     {
-      title: t('components.filled.title'),
-      description: t('components.filled.description'),
+      title: t('variants.filled.title'),
+      description: t('variants.filled.description'),
       component: <InputFilled />
     },
     {
-      title: t('components.disabled.title'),
-      description: t('components.disabled.description'),
+      title: t('variants.disabled.title'),
+      description: t('variants.disabled.description'),
       component: <InputDisabled />
     },
     {
-      title: t('components.withLabel.title'),
-      description: t('components.withLabel.description'),
+      title: t('variants.withLabel.title'),
+      description: t('variants.withLabel.description'),
       component: <InputWithLabel />
     },
     {
-      title: t('components.withButton.title'),
-      description: t('components.withButton.description'),
+      title: t('variants.withButton.title'),
+      description: t('variants.withButton.description'),
       component: <InputWithButton />
     },
     {
-      title: t('components.withAdornment.title'),
-      description: t('components.withAdornment.description'),
+      title: t('variants.withAdornment.title'),
+      description: t('variants.withAdornment.description'),
       component: <InputWithAdornment />
     },
     {
-      title: t('components.withHelperText.title'),
-      description: t('components.withHelperText.description'),
+      title: t('variants.withHelperText.title'),
+      description: t('variants.withHelperText.description'),
       component: <InputWithHelperText />
     },
     {
-      title: t('components.withError.title'),
-      description: t('components.withError.description'),
+      title: t('variants.withError.title'),
+      description: t('variants.withError.description'),
       component: <InputWithError />
     },
     {
-      title: t('components.withForm.title'),
-      description: t('components.withForm.description'),
+      title: t('variants.withForm.title'),
+      description: t('variants.withForm.description'),
       component: <InputWithForm />
     },
     {
-      title: t('components.file.title'),
-      description: t('components.file.description'),
+      title: t('variants.file.title'),
+      description: t('variants.file.description'),
       component: <InputFile />
     },
     {
-      title: t('components.dropzone.title'),
-      description: t('components.dropzone.description'),
+      title: t('variants.dropzone.title'),
+      description: t('variants.dropzone.description'),
       component: <InputDropzone />
     }
   ];

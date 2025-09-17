@@ -1,3 +1,5 @@
+'use client';
+
 import { ComponentsHeader } from "@/components/shared/components-header";
 import { ToTopButton } from "@/components/shared/to-top-button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,28 +17,28 @@ export default function LayoutComponentsPage() {
 
   const demoSections = [
     {
-      title: t('components.componentLayout.title'),
-      description: t('components.componentLayout.description'),
+      title: t('variants.componentLayout.title'),
+      description: t('variants.componentLayout.description'),
       component: <ComponentLayoutDemo />
     },
     {
-      title: t('components.demoGrid.title'),
-      description: t('components.demoGrid.description'),
+      title: t('variants.demoGrid.title'),
+      description: t('variants.demoGrid.description'),
       component: <DemoGridDemo />
     },
     {
-      title: t('components.codeExample.title'),
-      description: t('components.codeExample.description'),
+      title: t('variants.codeExample.title'),
+      description: t('variants.codeExample.description'),
       component: <CodeExampleDemo />
     },
     {
-      title: t('components.inlineCodeExample.title'),
-      description: t('components.inlineCodeExample.description'),
+      title: t('variants.inlineCodeExample.title'),
+      description: t('variants.inlineCodeExample.description'),
       component: <InlineCodeExampleDemo />
     },
     {
-      title: t('components.variantDemo.title'),
-      description: t('components.variantDemo.description'),
+      title: t('variants.variantDemo.title'),
+      description: t('variants.variantDemo.description'),
       component: <VariantDemoDemo />
     }
   ];

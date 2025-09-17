@@ -50,7 +50,7 @@ const AvatarGroup = ({
 };
 
 export default function AvatarGroupDemo() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('widgets.avatar');
 
   return (
     <AvatarGroup>

@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertDialogDemo() {
-  const t = useTranslations('demo.alertDialog.items');
+  const t = useTranslations('widgets.alertDialog.items');
 
   return (
     <AlertDialog>

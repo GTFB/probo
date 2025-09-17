@@ -8,7 +8,7 @@ import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AccordionExpandIconDemo() {
-  const t = useTranslations('demo.accordion.items');
+  const t = useTranslations('widgets.accordion.items');
 
   const items = [
     {

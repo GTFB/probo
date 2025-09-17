@@ -3,7 +3,7 @@ import { BadgeCheck, BadgeMinus, BadgeX } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AvatarBadge() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('widgets.avatar');
 
   return (
     <div className="flex items-center gap-4">

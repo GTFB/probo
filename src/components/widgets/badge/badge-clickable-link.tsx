@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 export default function ClickableLinkBadgeDemo() {
-  const t = useTranslations('demo.badge');
+  const t = useTranslations('components.badge.variants');
 
   return (
     <div className="flex items-center space-x-2">
@@ -26,7 +26,7 @@ export default function ClickableLinkBadgeDemo() {
           height={20}
           width={20}
         />
-        {t('withImage.shadcn')}
+        {t('shadcn')}
       </Link>
       <Link
         href="https://github.com/vercel"
@@ -38,7 +38,7 @@ export default function ClickableLinkBadgeDemo() {
           "rounded-full pr-[3px]"
         )}
       >
-        {t('withImage.vercel')}
+        {t('vercel')}
         <Image
           src="https://github.com/vercel.png"
           className="ml-2 h-5 w-5 rounded-full"

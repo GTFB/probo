@@ -7,7 +7,7 @@ import {
 import { useTranslations } from "next-intl";
 
 export default function AlertSoftDemo() {
-  const t = useTranslations('demo.alert.items');
+  const t = useTranslations('widgets.alert.items');
 
   return (
     <div className="w-full space-y-4">

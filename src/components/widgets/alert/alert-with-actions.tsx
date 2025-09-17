@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { buttonStyles } from "@/lib/button-styles";
 
 export default function AlertWithActionsDemo() {
-  const t = useTranslations('demo.alert.items');
+  const t = useTranslations('widgets.alert.items');
   const tCommon = useTranslations('common');
   const [isAlertVisible, setIsAlertVisible] = useState(true);
 

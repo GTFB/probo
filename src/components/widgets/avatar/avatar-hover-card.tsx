@@ -8,7 +8,7 @@ import { CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AvatarHoverCardDemo() {
-  const t = useTranslations('demo.avatar');
+  const t = useTranslations('widgets.avatar');
 
   return (
     <div className="flex items-center space-x-4">

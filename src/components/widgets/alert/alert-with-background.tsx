@@ -3,7 +3,7 @@ import { OctagonAlertIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function AlertWithBackgroundDemo() {
-  const t = useTranslations('demo.alert.items');
+  const t = useTranslations('widgets.alert.items');
 
   return (
     <Alert className="bg-muted">
